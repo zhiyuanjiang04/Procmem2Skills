@@ -1,8 +1,5 @@
 # ProcMem2Skills
 
-English: see [README.en.md](./README.en.md)  
-中文：见 [README.zh-CN.md](./README.zh-CN.md)
-
 ## Repository Status
 
 This repository is prepared for GitHub push with a code-first layout:
@@ -25,12 +22,3 @@ Short server script entrypoints:
 - SkillsBench live: `python scripts/server/study/live/skills.py --help`
 - Terminal-Bench live: `python scripts/server/study/live/terminal.py --help`
 - Transfer study: `python scripts/server/study/transfer/run.py --help`
-
-For complete documentation, use the language-specific README files above.
-
-## Open Source
-
-- [LICENSE](./LICENSE)
-- [Contributing Guide](./CONTRIBUTING.md)
-- [Code of Conduct](./CODE_OF_CONDUCT.md)
-- [Security Policy](./SECURITY.md)
