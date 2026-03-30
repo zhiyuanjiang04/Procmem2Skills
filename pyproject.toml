@@ -1,0 +1,22 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "procmem2skills"
+version = "0.1.0"
+description = "Unified trajectory-to-skill pipeline for cross-harness agent memory research"
+readme = "README.md"
+requires-python = ">=3.10"
+dependencies = [
+  "numpy>=1.26,<3",
+  "pydantic>=2.6,<3",
+  "scikit-learn>=1.4,<2",
+  "typer>=0.12,<1",
+]
+
+[project.scripts]
+procmem2skills = "procmem2skills.cli:app"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/procmem2skills"]
