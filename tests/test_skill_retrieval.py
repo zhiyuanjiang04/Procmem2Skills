@@ -47,6 +47,27 @@ Use grep for pattern search.
         hits = index.search("need quick python diagnostics", top_k=2, scope="metadata")
         self.assertEqual(hits[0].skill_id, "terminal-python-inline")
 
+    def test_skill_index_supports_nested_skill_layouts(self) -> None:
+        self._write_skill(
+            "created_skills/4s1f/task-a/run-pytest/success",
+            """---
+name: run-pytest
+description: Run pytest before code edits.
+---
+
+# Run Pytest
+Use this for test-first debugging.
+""",
+        )
+
+        index = SkillIndex.from_repository(self.temp_dir)
+        nested_id = "created_skills/4s1f/task-a/run-pytest/success"
+        self.assertIn(nested_id, index.records)
+
+        cards = index.cards([nested_id])
+        self.assertEqual(cards[0].name, "run-pytest")
+        self.assertEqual(cards[0].skill_id, nested_id)
+
     def _write_skill(self, skill_id: str, body: str) -> None:
         skill_dir = self.temp_dir / skill_id
         skill_dir.mkdir(parents=True, exist_ok=True)

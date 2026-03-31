@@ -43,7 +43,7 @@ class SkillWriter:
         output_dir: Path,
         generated_artifact: GeneratedSkillArtifact,
     ) -> Path:
-        skill_dir = output_dir / generated_artifact.skill_id
+        skill_dir = _resolve_variant_dir(output_dir=output_dir, skill=skill, generated_artifact=generated_artifact)
         references_dir = skill_dir / "references"
         scripts_dir = skill_dir / "scripts"
         assets_dir = skill_dir / "assets"
@@ -54,8 +54,16 @@ class SkillWriter:
             (assets_dir / ".gitkeep").write_text("", encoding="utf-8")
 
         (skill_dir / "SKILL.md").write_text(_ensure_trailing_newline(generated_artifact.skill_md), encoding="utf-8")
-        (references_dir / "provenance.md").write_text(
+        (references_dir / "source-evidence.md").write_text(
             _ensure_trailing_newline(generated_artifact.provenance_md),
+            encoding="utf-8",
+        )
+        related_skills_md = generated_artifact.related_skills_md or _render_related_skills_reference(
+            skill=skill,
+            generated_artifact=generated_artifact,
+        )
+        (references_dir / "related-skills.md").write_text(
+            _ensure_trailing_newline(related_skills_md),
             encoding="utf-8",
         )
         if generated_artifact.apply_script:
@@ -131,7 +139,7 @@ def _render_skill_md(skill: AtomicSkill, *, channel: str) -> str:
     )
     lines = [
         "---",
-        f"name: {skill.skill_id}--{channel}",
+        f"name: {_skill_frontmatter_name(skill, channel=channel)}",
         f"description: {_channel_description(skill, channel=channel)}",
         "---",
         "",
@@ -160,7 +168,8 @@ def _render_skill_md(skill: AtomicSkill, *, channel: str) -> str:
         [
             "## References",
             "",
-            "- Read `references/provenance.md` for source benchmarks, harnesses, and tasks.",
+            "- Read `references/source-evidence.md` for evidence from trajectories.",
+            "- Read `references/related-skills.md` for cross-skill and content references.",
             "- Run `scripts/verify.sh` for deterministic verification checks.",
             "- Execute the strict script in `scripts/` (`apply.sh` for success or `recover.sh` for failure).",
             "",
@@ -197,7 +206,7 @@ def _channel_description(skill: AtomicSkill, *, channel: str) -> str:
 
 def _render_provenance(skill: AtomicSkill, *, channel: str) -> str:
     lines = [
-        f"# Provenance for {skill.skill_id} ({channel})",
+        f"# Source Evidence for {skill.skill_id} ({channel})",
         "",
         f"- Support: {skill.support}",
         f"- Benchmarks: {', '.join(skill.benchmark_origins) or 'n/a'}",
@@ -297,3 +306,74 @@ def _extract_command(operation: str) -> str | None:
 
 def _ensure_trailing_newline(text: str) -> str:
     return text if text.endswith("\n") else text + "\n"
+
+
+def _resolve_variant_dir(
+    *,
+    output_dir: Path,
+    skill: AtomicSkill,
+    generated_artifact: GeneratedSkillArtifact,
+) -> Path:
+    layout = skill.metadata.get("output_layout") if isinstance(skill.metadata, dict) else None
+    if not isinstance(layout, dict):
+        return output_dir / generated_artifact.skill_id
+
+    root = _layout_value(layout.get("root"), default="created_skills")
+    root = re.sub(r"[^a-zA-Z0-9_-]+", "-", root).strip("-_") or "created_skills"
+    condition = _slug(_layout_value(layout.get("condition"), default="unknown-condition"))
+    task = _slug(_layout_value(layout.get("task"), default="unknown-task"))
+    skill_name = _slug(_layout_value(layout.get("skill_name"), default=generated_artifact.base_skill_id))
+    channel = "success" if generated_artifact.channel == "success" else "failure"
+    return output_dir / root / condition / task / skill_name / channel
+
+
+def _layout_value(value: object, *, default: str) -> str:
+    text = str(value or "").strip()
+    return text if text else default
+
+
+def _slug(value: str) -> str:
+    normalized = re.sub(r"[^a-z0-9]+", "-", str(value or "").strip().lower())
+    normalized = re.sub(r"-{2,}", "-", normalized).strip("-")
+    return normalized or "unknown"
+
+
+def _skill_frontmatter_name(skill: AtomicSkill, *, channel: str) -> str:
+    metadata_name = ""
+    if isinstance(skill.metadata, dict):
+        metadata_name = str(skill.metadata.get("skill_name") or "").strip()
+    if metadata_name:
+        return _slug(metadata_name)
+    suffix = "success" if channel == "success" else "failure"
+    return f"{_slug(skill.skill_id)}-{suffix}"
+
+
+def _render_related_skills_reference(
+    *,
+    skill: AtomicSkill,
+    generated_artifact: GeneratedSkillArtifact,
+) -> str:
+    other_channel = "failure" if generated_artifact.channel == "success" else "success"
+    lines = [
+        f"# Related Skills for {generated_artifact.base_skill_id}",
+        "",
+        f"- Current channel: {generated_artifact.channel}",
+        f"- Companion channel: {other_channel}",
+        f"- Base skill family id: {generated_artifact.base_skill_id}",
+    ]
+    output_layout = skill.metadata.get("output_layout") if isinstance(skill.metadata, dict) else {}
+    if isinstance(output_layout, dict):
+        lines.extend(
+            [
+                f"- Collection condition: {_layout_value(output_layout.get('condition'), default='n/a')}",
+                f"- Task key: {_layout_value(output_layout.get('task'), default='n/a')}",
+                f"- Functional skill name: {_layout_value(output_layout.get('skill_name'), default='n/a')}",
+            ]
+        )
+    if skill.task_origins:
+        lines.append(f"- Task origins: {', '.join(skill.task_origins)}")
+    if skill.source_workflow_ids:
+        lines.append(f"- Workflow ids: {', '.join(skill.source_workflow_ids)}")
+    lines.append("")
+    lines.append("Use these keys to locate sibling skills or related references in the repository.")
+    return "\n".join(lines)

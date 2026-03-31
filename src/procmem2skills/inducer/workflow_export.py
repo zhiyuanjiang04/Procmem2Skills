@@ -150,17 +150,12 @@ def induce_workflows_grouped_by_task(
         llm_max_retries=llm_max_retries,
         llm_strict=llm_strict,
     )
-    degraded_reason = ""
     if mode in (WorkflowInductionMode.LLM, WorkflowInductionMode.HYBRID) and llm_inducer is not None:
         resolved_api_key = str(getattr(llm_inducer, "api_key", "") or "").strip()
         if not resolved_api_key:
-            if mode == WorkflowInductionMode.LLM:
-                raise RuntimeError(
-                    "LLM workflow induction mode requires OPENROUTER_API_KEY/OPENAI_API_KEY or --llm-api-key."
-                )
-            mode = WorkflowInductionMode.RULE
-            llm_inducer = None
-            degraded_reason = "hybrid requested without LLM API key; downgraded to rule induction"
+            raise RuntimeError(
+                "LLM/hybrid workflow induction requires OPENROUTER_API_KEY/OPENAI_API_KEY or --llm-api-key."
+            )
 
     grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
     summary = {
@@ -177,10 +172,6 @@ def induce_workflows_grouped_by_task(
     checkpoint_writes = 0
     if checkpoint_interval > 0 and checkpoint_output_path is not None:
         summary["checkpoint_every"] = checkpoint_interval
-    if degraded_reason:
-        summary["mode_degraded"] = True
-        summary["mode_degraded_reason"] = degraded_reason
-
     retained_attempt_count = 0
     for trajectory in trajectories:
         status = classify_trajectory_status(trajectory)
@@ -408,10 +399,15 @@ def _build_llm_inducer(
         return None
     from procmem2skills.inducer.llm_workflow import LLMWorkflowInducer
 
+    api_key_override = llm_api_key
+    if llm_api_key is not None and not str(llm_api_key).strip():
+        # Preserve explicit "empty key" intent and avoid silently falling back to env vars.
+        api_key_override = " "
+
     return LLMWorkflowInducer(
         model=llm_model,
         base_url=llm_base_url,
-        api_key=llm_api_key,
+        api_key=api_key_override,
         timeout_sec=llm_timeout_sec,
         max_retries=llm_max_retries,
         strict=llm_strict,
@@ -431,14 +427,6 @@ def _induce_workflow_for_segment(
         return rule_workflow
 
     if llm_inducer is None:
-        if mode == WorkflowInductionMode.HYBRID:
-            rule_workflow.metadata = {
-                **(rule_workflow.metadata if isinstance(rule_workflow.metadata, dict) else {}),
-                "induction_mode": "hybrid",
-                "llm_fallback": True,
-                "llm_error": "llm inducer unavailable",
-            }
-            return rule_workflow
         raise RuntimeError("LLM workflow inducer is required for llm/hybrid mode")
 
     try:
@@ -448,15 +436,7 @@ def _induce_workflow_for_segment(
             attempt_status=status.value,
             base_metadata=rule_workflow.metadata,
         )
-    except Exception as exc:
-        if mode == WorkflowInductionMode.HYBRID:
-            rule_workflow.metadata = {
-                **(rule_workflow.metadata if isinstance(rule_workflow.metadata, dict) else {}),
-                "induction_mode": "hybrid",
-                "llm_fallback": True,
-                "llm_error": str(exc)[:400],
-            }
-            return rule_workflow
+    except Exception:
         raise
 
     if mode == WorkflowInductionMode.LLM:
@@ -565,6 +545,7 @@ def _write_json_payload(output_path: Path, payload: dict[str, Any]) -> None:
 
 
 def _sort_attempts_for_collection(attempts: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    status_rank = {"success": 0, "failure": 1}
     indexed = []
     for fallback_index, attempt in enumerate(attempts, start=1):
         index = attempt.get("attempt_index")
@@ -572,9 +553,18 @@ def _sort_attempts_for_collection(attempts: list[dict[str, Any]]) -> list[dict[s
             numeric_index = int(index)
         except Exception:
             numeric_index = fallback_index
-        indexed.append((numeric_index, fallback_index, attempt))
-    indexed.sort(key=lambda item: (item[0], item[1], str(item[2].get("episode_id", ""))))
-    return [item[2] for item in indexed]
+        status = _normalize_attempt_status_for_collection(attempt.get("status"))
+        indexed.append(
+            (
+                status_rank.get(status, 2),
+                numeric_index,
+                fallback_index,
+                str(attempt.get("episode_id", "")),
+                attempt,
+            )
+        )
+    indexed.sort(key=lambda item: (item[0], item[1], item[2], item[3]))
+    return [item[4] for item in indexed]
 
 
 def _normalize_attempt_status_for_collection(value: Any) -> str:

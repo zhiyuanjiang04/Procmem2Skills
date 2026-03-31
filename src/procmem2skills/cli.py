@@ -3,7 +3,42 @@ from __future__ import annotations
 import json
 from pathlib import Path
 
-import typer
+try:
+    import typer
+except ModuleNotFoundError:  # pragma: no cover - fallback for minimal environments
+    class _FallbackTyperApp:
+        def __init__(self, **_kwargs) -> None:
+            pass
+
+        def command(self, *_args, **_kwargs):
+            def _decorator(func):
+                return func
+
+            return _decorator
+
+        def __call__(self, *_args, **_kwargs) -> None:
+            print("Usage: procmem2skills [COMMAND] [OPTIONS]")
+
+    class _FallbackTyper:
+        BadParameter = ValueError
+
+        @staticmethod
+        def Typer(**kwargs):
+            return _FallbackTyperApp(**kwargs)
+
+        @staticmethod
+        def Argument(default=None, **_kwargs):
+            return default
+
+        @staticmethod
+        def Option(default=None, **_kwargs):
+            return default
+
+        @staticmethod
+        def echo(message: str) -> None:
+            print(message)
+
+    typer = _FallbackTyper()
 
 from procmem2skills.adapters import BENCHMARK_PROFILES
 from procmem2skills.adapters.mock import MockTerminalAdapter
@@ -360,3 +395,11 @@ def _parse_csv_enum(raw: str, enum_cls):
         allowed = ", ".join(member.value for member in enum_cls)
         raise typer.BadParameter(f"at least one value is required, expected one of: {allowed}")
     return parsed
+
+
+def main() -> None:
+    app()
+
+
+if __name__ == "__main__":
+    main()

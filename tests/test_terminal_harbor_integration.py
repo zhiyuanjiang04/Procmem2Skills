@@ -8,8 +8,10 @@ from pathlib import Path
 from procmem2skills.integrations.harbor_terminal_experiment import (
     build_harbor_job_name,
     build_harbor_run_command,
+    collect_harbor_progress_snapshot,
     dataset_storage_slug,
     ensure_job_dir_alias,
+    format_harbor_progress_line,
     normalize_experiment_name,
     resolve_import_benchmark,
     render_command,
@@ -235,6 +237,54 @@ class HarborExperimentHelpersTest(unittest.TestCase):
         self.assertNotIn("skill_repository=", rendered)
         self.assertIn("--ak prompt_template_path=/tmp/native-skill-prompt.j2", rendered)
         self.assertIn("--ae OPENAI_BASE_URL=https://openrouter.ai/api/v1", rendered)
+
+    def test_collect_harbor_progress_snapshot_counts_results(self) -> None:
+        with tempfile.TemporaryDirectory(prefix="procmem2skills-progress-") as temp:
+            jobs_dir = Path(temp) / "jobs"
+            job_dir = jobs_dir / "tb-live"
+            trial_success = job_dir / "task-a__1"
+            trial_failure = job_dir / "task-a__2"
+            trial_running = job_dir / "task-b__1"
+            (trial_success / "agent").mkdir(parents=True, exist_ok=True)
+            (trial_failure / "agent").mkdir(parents=True, exist_ok=True)
+            (trial_running / "agent").mkdir(parents=True, exist_ok=True)
+            (trial_success / "agent" / "trajectory.json").write_text("{}", encoding="utf-8")
+            (trial_failure / "agent" / "trajectory.json").write_text("{}", encoding="utf-8")
+            (trial_running / "agent" / "trajectory.json").write_text("{}", encoding="utf-8")
+            (trial_success / "result.json").write_text(
+                json.dumps({"verifier_result": {"rewards": {"reward": 1.0}}}),
+                encoding="utf-8",
+            )
+            (trial_failure / "result.json").write_text(
+                json.dumps({"verifier_result": {"rewards": {"reward": 0.0}}}),
+                encoding="utf-8",
+            )
+
+            snapshot = collect_harbor_progress_snapshot(jobs_dir=jobs_dir, job_name="tb-live")
+
+        self.assertIsNotNone(snapshot)
+        assert snapshot is not None
+        self.assertEqual(snapshot["completed"], 2)
+        self.assertEqual(snapshot["success"], 1)
+        self.assertEqual(snapshot["failure"], 1)
+        self.assertEqual(snapshot["trajectory_count"], 3)
+
+    def test_format_harbor_progress_line_contains_eta_when_total_known(self) -> None:
+        line = format_harbor_progress_line(
+            snapshot={
+                "job_name": "tb-live",
+                "completed": 2,
+                "success": 1,
+                "failure": 1,
+                "trajectory_count": 3,
+            },
+            elapsed_sec=20.0,
+            expected_trials=4,
+        )
+        self.assertIn("tb-live", line)
+        self.assertIn("2/4", line)
+        self.assertIn("50.0%", line)
+        self.assertIn("eta", line)
 
 
 if __name__ == "__main__":

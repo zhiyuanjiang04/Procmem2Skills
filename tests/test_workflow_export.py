@@ -198,7 +198,7 @@ class WorkflowExportTest(unittest.TestCase):
         self.assertEqual(summary.get("checkpoint_every"), 1)
         self.assertEqual(summary.get("checkpoint_writes"), 2)
 
-    def test_hybrid_without_api_key_degrades_to_rule_mode(self) -> None:
+    def test_hybrid_without_api_key_raises(self) -> None:
         trajectories = [
             self._build_trajectory(
                 episode_id="ep-a-1",
@@ -209,17 +209,12 @@ class WorkflowExportTest(unittest.TestCase):
             )
         ]
 
-        grouped, summary = induce_workflows_grouped_by_task(
-            trajectories,
-            induction_mode="hybrid",
-            llm_api_key="",
-        )
-
-        self.assertIn("task-a", grouped)
-        self.assertEqual(summary["requested_induction_mode"], "hybrid")
-        self.assertEqual(summary["induction_mode"], "rule")
-        self.assertTrue(summary.get("mode_degraded"))
-        self.assertIn("mode_degraded_reason", summary)
+        with self.assertRaises(RuntimeError):
+            induce_workflows_grouped_by_task(
+                trajectories,
+                induction_mode="hybrid",
+                llm_api_key="",
+            )
 
     def test_hybrid_merge_keeps_rule_and_llm_preconditions(self) -> None:
         llm_workflow = WorkflowCandidate(

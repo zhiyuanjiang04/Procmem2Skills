@@ -310,6 +310,43 @@ def sample_workflows_for_condition(
     )
 
 
+def sample_workflows_fixed_count(
+    pool: TaskWorkflowPool,
+    *,
+    sample_count: int,
+    random_seed: int = 0,
+    seed_label: str | None = None,
+) -> WorkflowSelection:
+    total = int(sample_count)
+    if total <= 0:
+        raise ValueError(f"sample_count must be > 0, got {sample_count}")
+    if pool.total_count < total:
+        raise ValueError(
+            f"task {pool.task_id!r} does not have enough workflows for fixed-count sampling: "
+            f"{pool.total_count}<{total}"
+        )
+
+    combined = [*pool.success_workflows, *pool.failure_workflows]
+    label = str(seed_label or f"fixed-{total}").strip() or f"fixed-{total}"
+    rng = random.Random(_stable_seed(pool.task_id, label, random_seed))
+    sampled = _sample_items(rng, combined, total)
+
+    success_sample = [item for item in sampled if item.attempt_status == "success"]
+    failure_sample = [item for item in sampled if item.attempt_status == "failure"]
+    condition = WorkflowMixCondition(
+        label=f"{len(success_sample)}s{len(failure_sample)}f",
+        success_count=len(success_sample),
+        failure_count=len(failure_sample),
+    )
+    return WorkflowSelection(
+        task_id=pool.task_id,
+        condition=condition,
+        success_workflows=success_sample,
+        failure_workflows=failure_sample,
+        random_seed=random_seed,
+    )
+
+
 def build_atomic_skill_from_selection(
     *,
     task_id: str,
@@ -328,9 +365,7 @@ def build_atomic_skill_from_selection(
         if str(item.workflow.workflow_id or "").strip()
     )
 
-    trigger = _first_non_empty(item.workflow.trigger for item in workflow_items) or (
-        f"When solving task {effective_task_id} under workflow-mix {selection.condition.label}."
-    )
+    trigger = _first_non_empty(item.workflow.trigger for item in workflow_items) or f"When solving task {effective_task_id}."
 
     preconditions = _ordered_unique(
         precondition
@@ -370,6 +405,13 @@ def build_atomic_skill_from_selection(
             )
             order += 1
 
+    functional_name = _derive_functional_skill_name(
+        workflow_items=workflow_items,
+        task_key=task_key,
+        fallback=f"{namespace_key}-{task_key}",
+    )
+    title = _humanize_skill_name(functional_name) or f"Task Workflow Skill {task_key}"
+
     metadata = {
         "workflow_mix": {
             "success": selection.condition.success_count,
@@ -386,14 +428,20 @@ def build_atomic_skill_from_selection(
             }
             for item in workflow_items
         ],
+        "skill_name": functional_name,
+        "output_layout": {
+            "root": "created_skills",
+            "condition": selection.condition.label,
+            "task": task_key,
+            "skill_name": functional_name,
+        },
     }
 
     return AtomicSkill(
         skill_id=skill_id,
-        title=f"Task Skill: {effective_task_id} [{selection.condition.label}]",
+        title=title,
         description=(
-            f"Task-level controlled skill induced from {len(source_workflow_ids)} workflows "
-            f"({selection.condition.success_count} success / {selection.condition.failure_count} failure)."
+            f"Reusable procedure distilled from {len(source_workflow_ids)} workflows for task {effective_task_id}."
         ),
         canonical_key=f"{task_key}:{selection.condition.label}",
         trigger=trigger,
@@ -406,6 +454,52 @@ def build_atomic_skill_from_selection(
         support=len(source_workflow_ids),
         metadata=metadata,
     )
+
+
+def _derive_functional_skill_name(
+    *,
+    workflow_items: list[TaskWorkflowItem],
+    task_key: str,
+    fallback: str,
+) -> str:
+    task_tokens = set(token for token in task_key.split("-") if token)
+    for candidate in _derive_functional_name_candidates(workflow_items):
+        slug = normalize_task_key(candidate)
+        if not slug:
+            continue
+        tokens = [token for token in slug.split("-") if token and token not in task_tokens]
+        if len(tokens) >= 2:
+            return "-".join(tokens[:8])
+        if tokens:
+            return "-".join(tokens)
+    normalized_fallback = normalize_task_key(fallback)
+    return normalized_fallback or "workflow-playbook"
+
+
+def _derive_functional_name_candidates(workflow_items: list[TaskWorkflowItem]) -> list[str]:
+    candidates: list[str] = []
+    for item in workflow_items:
+        for step in item.workflow.steps[:3]:
+            intent = str(step.intent or "").strip()
+            if intent:
+                candidates.append(intent)
+            operation = str(step.operation or "").strip()
+            command_match = re.search(r"command=([^\)]+)\)", operation)
+            if command_match:
+                candidates.append(command_match.group(1).strip())
+            elif operation and "(" not in operation and ")" not in operation:
+                candidates.append(operation)
+        objective = str(item.workflow.objective or "").strip()
+        if objective:
+            candidates.append(objective)
+    return candidates
+
+
+def _humanize_skill_name(skill_name: str) -> str:
+    tokens = [token for token in str(skill_name or "").strip().split("-") if token]
+    if not tokens:
+        return ""
+    return " ".join(token.capitalize() for token in tokens[:8])
 
 
 def _normalize_attempt_status(value: Any) -> str:
@@ -584,6 +678,7 @@ __all__ = [
     "collect_task_workflow_pools",
     "evaluate_task_eligibility",
     "parse_condition_specs",
+    "sample_workflows_fixed_count",
     "sample_workflows_for_condition",
     "select_eligible_tasks",
 ]

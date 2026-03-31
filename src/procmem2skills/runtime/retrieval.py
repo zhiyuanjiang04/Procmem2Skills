@@ -49,17 +49,18 @@ class SkillIndex:
         records: dict[str, SkillRecord] = {}
         if not repo_dir.exists():
             return cls(records, repo_dir=repo_dir)
-        for skill_dir in repo_dir.iterdir():
+        for skill_dir in sorted(_iter_skill_dirs(repo_dir)):
             skill_md = skill_dir / "SKILL.md"
             if not skill_md.is_file():
                 continue
             body = skill_md.read_text(encoding="utf-8")
             frontmatter = _parse_frontmatter(body)
+            relative_id = skill_dir.relative_to(repo_dir).as_posix()
             name = str(frontmatter.get("name") or skill_dir.name)
             description = str(frontmatter.get("description") or _first_nonempty_line(body) or skill_dir.name)
             metadata_text = f"{name}\n{description}"
-            records[skill_dir.name] = SkillRecord(
-                skill_id=skill_dir.name,
+            records[relative_id] = SkillRecord(
+                skill_id=relative_id,
                 body=body,
                 name=name,
                 description=description,
@@ -158,3 +159,12 @@ def _first_nonempty_line(markdown: str) -> str:
         if text and not text.startswith("---"):
             return text
     return ""
+
+
+def _iter_skill_dirs(repo_dir: Path):
+    for skill_md in repo_dir.rglob("SKILL.md"):
+        parent = skill_md.parent
+        parts = parent.relative_to(repo_dir).parts
+        if any(part.startswith(".") for part in parts):
+            continue
+        yield parent

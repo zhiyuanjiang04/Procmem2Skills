@@ -7,6 +7,7 @@ from procmem2skills.research.controlled_workflow_skill_study import (
     build_atomic_skill_from_selection,
     collect_task_workflow_pools,
     parse_condition_specs,
+    sample_workflows_fixed_count,
     sample_workflows_for_condition,
     select_eligible_tasks,
 )
@@ -152,6 +153,27 @@ class ControlledWorkflowSkillStudyTest(unittest.TestCase):
         self.assertTrue(all("-s-" in skill_id for skill_id in success_ids))
         self.assertTrue(all("-f-" in skill_id for skill_id in failure_ids))
 
+    def test_sample_workflows_fixed_count_is_stable(self) -> None:
+        pools = collect_task_workflow_pools(self._grouped_payload())
+        first = sample_workflows_fixed_count(
+            pools["task-mix"],
+            sample_count=5,
+            random_seed=17,
+            seed_label="fixed-5",
+        )
+        second = sample_workflows_fixed_count(
+            pools["task-mix"],
+            sample_count=5,
+            random_seed=17,
+            seed_label="fixed-5",
+        )
+        self.assertEqual(len(first.workflows), 5)
+        self.assertEqual(
+            [item.workflow.workflow_id for item in first.workflows],
+            [item.workflow.workflow_id for item in second.workflows],
+        )
+        self.assertEqual(first.condition.total_count, 5)
+
     def test_build_atomic_skill_from_selection_keeps_provenance(self) -> None:
         pools = collect_task_workflow_pools(self._grouped_payload())
         condition = WorkflowMixCondition(label="4s1f", success_count=4, failure_count=1)
@@ -165,6 +187,7 @@ class ControlledWorkflowSkillStudyTest(unittest.TestCase):
             selection=selection,
             skill_namespace="controlled",
         )
+        self.assertEqual(skill.skill_id, "controlled--task-mix--4s1f")
         self.assertEqual(skill.task_origins, ["task-mix"])
         self.assertEqual(skill.support, 5)
         self.assertEqual(len(skill.source_workflow_ids), 5)
@@ -172,6 +195,14 @@ class ControlledWorkflowSkillStudyTest(unittest.TestCase):
             skill.metadata.get("workflow_mix"),
             {"success": 4, "failure": 1, "label": "4s1f"},
         )
+        layout = skill.metadata.get("output_layout")
+        self.assertIsInstance(layout, dict)
+        assert isinstance(layout, dict)
+        self.assertEqual(layout.get("root"), "created_skills")
+        self.assertEqual(layout.get("condition"), "4s1f")
+        self.assertEqual(layout.get("task"), "task-mix")
+        self.assertTrue(str(layout.get("skill_name") or "").strip())
+        self.assertNotIn("4s1f", str(layout.get("skill_name") or ""))
 
 
 if __name__ == "__main__":

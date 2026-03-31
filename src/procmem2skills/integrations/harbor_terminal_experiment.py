@@ -6,6 +6,7 @@ import re
 import shlex
 import subprocess
 import sys
+import time
 from pathlib import Path
 
 from procmem2skills.analysis.failure import build_failure_analysis_from_trajectories
@@ -310,10 +311,156 @@ def run_harbor_job(
     *,
     command: list[str],
     project_root: Path,
+    jobs_dir: Path | None = None,
+    job_name: str | None = None,
+    show_progress: bool = True,
+    progress_interval_sec: int = 20,
+    expected_trials: int | None = None,
 ) -> None:
     env = os.environ.copy()
     env["PYTHONPATH"] = str(project_root / "src") + (f":{env['PYTHONPATH']}" if env.get("PYTHONPATH") else "")
-    subprocess.run(command, check=True, env=env)
+    if not show_progress:
+        subprocess.run(command, check=True, env=env)
+        return
+
+    process = subprocess.Popen(command, env=env)
+    interval = max(2, int(progress_interval_sec))
+    start = time.monotonic()
+
+    while True:
+        try:
+            return_code = process.wait(timeout=interval)
+            break
+        except subprocess.TimeoutExpired:
+            snapshot = collect_harbor_progress_snapshot(jobs_dir=jobs_dir, job_name=job_name)
+            if snapshot is None:
+                continue
+            line = format_harbor_progress_line(
+                snapshot=snapshot,
+                elapsed_sec=time.monotonic() - start,
+                expected_trials=expected_trials,
+            )
+            print(line, file=sys.stderr, flush=True)
+
+    final_snapshot = collect_harbor_progress_snapshot(jobs_dir=jobs_dir, job_name=job_name)
+    if final_snapshot is not None:
+        line = format_harbor_progress_line(
+            snapshot=final_snapshot,
+            elapsed_sec=time.monotonic() - start,
+            expected_trials=expected_trials,
+        )
+        print(f"{line} | finished", file=sys.stderr, flush=True)
+    if return_code != 0:
+        raise subprocess.CalledProcessError(return_code, command)
+
+
+def collect_harbor_progress_snapshot(*, jobs_dir: Path | None, job_name: str | None) -> dict | None:
+    if jobs_dir is None:
+        return None
+    if not jobs_dir.exists():
+        return None
+    job_dir = _resolve_progress_job_dir(jobs_dir=jobs_dir, job_name=job_name)
+    if job_dir is None:
+        return None
+
+    completed = 0
+    success = 0
+    failure = 0
+    trajectory_count = 0
+    result_files = sorted(job_dir.glob("*/result.json"))
+    for result_file in result_files:
+        completed += 1
+        reward = _extract_reward_from_result(result_file)
+        if reward is None:
+            continue
+        if reward >= 1.0:
+            success += 1
+        else:
+            failure += 1
+    trajectory_count = sum(1 for _ in job_dir.glob("*/agent/trajectory.json"))
+    return {
+        "job_name": job_dir.name,
+        "job_dir": str(job_dir),
+        "completed": completed,
+        "success": success,
+        "failure": failure,
+        "trajectory_count": trajectory_count,
+    }
+
+
+def format_harbor_progress_line(*, snapshot: dict, elapsed_sec: float, expected_trials: int | None) -> str:
+    elapsed = _format_seconds(max(0.0, float(elapsed_sec)))
+    completed = int(snapshot.get("completed", 0))
+    success = int(snapshot.get("success", 0))
+    failure = int(snapshot.get("failure", 0))
+    trajectory_count = int(snapshot.get("trajectory_count", 0))
+    job_name = str(snapshot.get("job_name", "harbor-job"))
+
+    parts = [f"[progress] {job_name}", f"elapsed {elapsed}"]
+    if expected_trials is not None and expected_trials > 0:
+        percent = min(100.0, max(0.0, 100.0 * completed / expected_trials))
+        parts.append(f"completed {completed}/{expected_trials} ({percent:.1f}%)")
+        if completed > 0 and completed < expected_trials:
+            eta_sec = (elapsed_sec / completed) * (expected_trials - completed)
+            parts.append(f"eta {_format_seconds(max(0.0, eta_sec))}")
+    else:
+        parts.append(f"completed {completed}")
+    parts.append(f"success {success}")
+    parts.append(f"failure {failure}")
+    parts.append(f"traj {trajectory_count}")
+    return " | ".join(parts)
+
+
+def estimate_expected_trials(*, n_tasks: int | None, task_names: list[str] | None, n_attempts: int) -> int | None:
+    attempts = max(1, int(n_attempts))
+    if n_tasks is not None and n_tasks > 0:
+        return n_tasks * attempts
+    if task_names:
+        return len(task_names) * attempts
+    return None
+
+
+def _resolve_progress_job_dir(*, jobs_dir: Path, job_name: str | None) -> Path | None:
+    candidate: Path | None = None
+    if job_name:
+        direct = jobs_dir / job_name
+        if direct.exists() and direct.is_dir():
+            candidate = direct
+        else:
+            normalized = normalize_experiment_name(job_name, max_length=72)
+            alt = jobs_dir / normalized
+            if alt.exists() and alt.is_dir():
+                candidate = alt
+    if candidate is not None:
+        return candidate
+    candidates = sorted((path for path in jobs_dir.iterdir() if path.is_dir()), key=lambda path: path.stat().st_mtime, reverse=True)
+    if not candidates:
+        return None
+    return candidates[0]
+
+
+def _extract_reward_from_result(path: Path) -> float | None:
+    try:
+        payload = json.loads(path.read_text(encoding="utf-8"))
+    except Exception:
+        return None
+    candidates = [
+        payload.get("reward"),
+        (payload.get("verifier_result") or {}).get("rewards", {}).get("reward"),
+        (payload.get("agent_result") or {}).get("score"),
+    ]
+    for value in candidates:
+        if isinstance(value, (int, float)):
+            return float(value)
+    return None
+
+
+def _format_seconds(raw_seconds: float) -> str:
+    seconds = int(round(raw_seconds))
+    hours = seconds // 3600
+    minutes = (seconds % 3600) // 60
+    remain = seconds % 60
+    return f"{hours:02d}:{minutes:02d}:{remain:02d}"
 
 
 def dump_manifest(path: Path, payload: dict) -> None:
@@ -414,6 +561,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--skill-generation-strict-llm", action="store_true")
     parser.add_argument("--working-dir")
     parser.add_argument("--base-url")
+    parser.add_argument(
+        "--no-progress-display",
+        action="store_true",
+        help="Disable periodic progress display while Harbor is running.",
+    )
+    parser.add_argument(
+        "--progress-interval-sec",
+        type=int,
+        default=20,
+        help="Progress display refresh interval in seconds.",
+    )
     parser.add_argument("--dry-run", action="store_true")
     args, harbor_passthrough_args = parser.parse_known_args(argv)
 
@@ -507,6 +665,8 @@ def main(argv: list[str] | None = None) -> int:
         "harbor_command": render_command(command),
         "harbor_job_name": harbor_job_name,
         "harbor_passthrough_args": harbor_passthrough_args,
+        "progress_display_enabled": not args.no_progress_display,
+        "progress_interval_sec": args.progress_interval_sec,
         "jobs_dir": str(jobs_dir),
         "imported_path": str(imported_dir / "live-trajectories.jsonl"),
         "manifest_path": str(manifest_path),
@@ -545,7 +705,20 @@ def main(argv: list[str] | None = None) -> int:
         manifest["bootstrap_skill_count"] = bootstrap_skill_count
         manifest["skill_generation"] = generation_meta
 
-    run_harbor_job(command=command, project_root=project_root)
+    expected_trials = estimate_expected_trials(
+        n_tasks=args.n_tasks,
+        task_names=args.task_name,
+        n_attempts=args.n_attempts,
+    )
+    run_harbor_job(
+        command=command,
+        project_root=project_root,
+        jobs_dir=jobs_dir,
+        job_name=harbor_job_name,
+        show_progress=not args.no_progress_display,
+        progress_interval_sec=args.progress_interval_sec,
+        expected_trials=expected_trials,
+    )
     job_dir = discover_job_dir(jobs_dir, harbor_job_name)
     alias_path = ensure_job_dir_alias(jobs_dir=jobs_dir, alias_name=harbor_job_name, actual_job_dir=job_dir)
     imported_path = imported_dir / "live-trajectories.jsonl"

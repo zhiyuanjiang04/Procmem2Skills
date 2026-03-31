@@ -215,17 +215,20 @@ def _list_skill_entries(skill_repository: Path) -> list[SkillEntry]:
         raise FileNotFoundError(f"skills repository not found: {skill_repository}")
 
     entries: list[SkillEntry] = []
-    for child in sorted(skill_repository.iterdir()):
-        if not child.is_dir():
+    skill_dirs: list[Path] = []
+    for skill_md in sorted(skill_repository.rglob("SKILL.md")):
+        child = skill_md.parent
+        parts = child.relative_to(skill_repository).parts
+        if any(part.startswith(".") for part in parts):
             continue
-        if child.name.startswith("."):
-            continue
-        skill_md = child / "SKILL.md"
-        if not skill_md.is_file():
-            continue
-        body = skill_md.read_text(encoding="utf-8")
-        blob = _slug(child.name + "\n" + body)
-        entries.append(SkillEntry(skill_id=child.name, path=child, search_blob=blob))
+        skill_dirs.append(child)
+
+    for child in skill_dirs:
+        body = (child / "SKILL.md").read_text(encoding="utf-8")
+        relative = child.relative_to(skill_repository).as_posix()
+        skill_id = relative.replace("/", "__")
+        blob = _slug(relative + "\n" + body)
+        entries.append(SkillEntry(skill_id=skill_id, path=child, search_blob=blob))
     return entries
 
 

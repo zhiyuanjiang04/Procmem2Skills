@@ -10,6 +10,7 @@ from pathlib import Path
 from procmem2skills.integrations.harbor_terminal_experiment import (
     discover_job_dir,
     dump_manifest,
+    estimate_expected_trials,
     ensure_job_dir_alias,
     ensure_openrouter_env,
     import_harbor_job,
@@ -267,6 +268,17 @@ def _build_arg_parser() -> argparse.ArgumentParser:
     parser.add_argument("--command-timeout-sec", type=int, default=180)
     parser.add_argument("--base-url")
     parser.add_argument("--working-dir")
+    parser.add_argument(
+        "--no-progress-display",
+        action="store_true",
+        help="Disable periodic progress display while Harbor is running.",
+    )
+    parser.add_argument(
+        "--progress-interval-sec",
+        type=int,
+        default=20,
+        help="Progress display refresh interval in seconds.",
+    )
 
     parser.add_argument("--dry-run", action="store_true")
     return parser
@@ -386,6 +398,8 @@ def main(argv: list[str] | None = None) -> int:
         "manifest_path": str(manifest_path),
         "runbook_path": str(runbook_path),
         "harbor_passthrough_args": passthrough_args,
+        "progress_display_enabled": not args.no_progress_display,
+        "progress_interval_sec": args.progress_interval_sec,
     }
 
     if args.dry_run:
@@ -393,7 +407,20 @@ def main(argv: list[str] | None = None) -> int:
         return 0
 
     ensure_openrouter_env()
-    run_harbor_job(command=command, project_root=project_root)
+    expected_trials = estimate_expected_trials(
+        n_tasks=args.n_tasks,
+        task_names=args.task_name,
+        n_attempts=args.n_attempts,
+    )
+    run_harbor_job(
+        command=command,
+        project_root=project_root,
+        jobs_dir=jobs_dir,
+        job_name=harbor_job_name,
+        show_progress=not args.no_progress_display,
+        progress_interval_sec=args.progress_interval_sec,
+        expected_trials=expected_trials,
+    )
     job_dir = discover_job_dir(jobs_dir, harbor_job_name)
     alias_path = ensure_job_dir_alias(jobs_dir=jobs_dir, alias_name=harbor_job_name, actual_job_dir=job_dir)
     imported_count = import_harbor_job(

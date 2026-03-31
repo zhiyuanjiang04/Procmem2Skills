@@ -8,10 +8,12 @@ from typing import Any
 
 from procmem2skills.packager.materialize import materialize_skill_repository_standard_llm
 from procmem2skills.research.controlled_workflow_skill_study import (
+    TaskEligibility,
     WorkflowMixCondition,
     build_atomic_skill_from_selection,
     collect_task_workflow_pools,
     evaluate_task_eligibility,
+    sample_workflows_fixed_count,
     sample_workflows_for_condition,
 )
 
@@ -56,6 +58,14 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument("--success-count", type=int, help="Single-condition success count m.")
     parser.add_argument("--failure-count", type=int, help="Single-condition failure count n.")
+    parser.add_argument(
+        "--fixed-trajectory-count",
+        type=int,
+        help=(
+            "Coarse sampling mode: sample a fixed number of workflows per task "
+            "(ignores success/failure split and m/n mix constraints)."
+        ),
+    )
 
     parser.add_argument("--task-name", action="append", default=[], help="Only include selected task IDs.")
     parser.add_argument("--exclude-task-name", action="append", default=[], help="Exclude selected task IDs.")
@@ -148,6 +158,11 @@ def _condition_from_pair(success_count: int, failure_count: int) -> WorkflowMixC
 
 
 def _resolve_conditions(args: argparse.Namespace) -> list[WorkflowMixCondition]:
+    if args.fixed_trajectory_count is not None:
+        if args.mix or args.success_count is not None or args.failure_count is not None:
+            raise ValueError("--fixed-trajectory-count cannot be combined with --mix/--success-count/--failure-count")
+        return []
+
     if args.mix:
         dedup: dict[str, WorkflowMixCondition] = {}
         for pair in args.mix:
@@ -261,10 +276,34 @@ def _selection_payload(selection) -> dict[str, Any]:
     }
 
 
+def _evaluate_fixed_count_eligibility(
+    pools: dict[str, Any],
+    *,
+    fixed_count: int,
+) -> dict[str, TaskEligibility]:
+    report: dict[str, TaskEligibility] = {}
+    for task_id, pool in pools.items():
+        reasons: list[str] = []
+        if int(pool.total_count) < fixed_count:
+            reasons.append(f"insufficient-total:{pool.total_count}<{fixed_count}")
+        report[task_id] = TaskEligibility(
+            task_id=task_id,
+            eligible=len(reasons) == 0,
+            reasons=reasons,
+            success_count=int(pool.success_count),
+            failure_count=int(pool.failure_count),
+        )
+    return dict(sorted(report.items(), key=lambda item: item[0]))
+
+
 def main() -> int:
     args = parse_args()
 
     conditions = _resolve_conditions(args)
+    fixed_trajectory_count = int(args.fixed_trajectory_count) if args.fixed_trajectory_count is not None else None
+    if fixed_trajectory_count is not None and fixed_trajectory_count <= 0:
+        raise ValueError("--fixed-trajectory-count must be > 0")
+    selection_mode = "fixed-count" if fixed_trajectory_count is not None else "conditioned"
 
     workflow_input = args.workflow_input.resolve()
     output_dir = args.output_dir.resolve()
@@ -282,43 +321,53 @@ def main() -> int:
         collection_metadata = _load_collection_metadata(collection_metadata_path)
     pools = collect_task_workflow_pools(grouped_payload)
 
-    inferred_require_success = any(condition.success_count > 0 for condition in conditions)
-    inferred_require_failure_for_mixed = any(
-        condition.success_count > 0 and condition.failure_count > 0 for condition in conditions
-    )
+    if selection_mode == "conditioned":
+        inferred_require_success = any(condition.success_count > 0 for condition in conditions)
+        inferred_require_failure_for_mixed = any(
+            condition.success_count > 0 and condition.failure_count > 0 for condition in conditions
+        )
 
-    if args.allow_no_success:
+        if args.allow_no_success:
+            require_success = False
+        elif args.require_success is True:
+            require_success = True
+        else:
+            require_success = inferred_require_success
+
+        if args.allow_mixed_without_failure:
+            require_failure_for_mixed = False
+        elif args.require_failure_for_mixed is True:
+            require_failure_for_mixed = True
+        else:
+            require_failure_for_mixed = inferred_require_failure_for_mixed
+
+        if args.allow_partial_condition_coverage:
+            require_counts_for_all_conditions = False
+        elif args.require_counts_for_all_conditions is True:
+            require_counts_for_all_conditions = True
+        else:
+            require_counts_for_all_conditions = True
+
+        eligibility = evaluate_task_eligibility(
+            pools,
+            conditions,
+            require_success=require_success,
+            require_failure_for_mixed=require_failure_for_mixed,
+            require_counts_for_all_conditions=require_counts_for_all_conditions,
+            minimum_mixed_success_count=max(0, int(args.minimum_mixed_success_count)),
+            minimum_mixed_failure_count=max(0, int(args.minimum_mixed_failure_count)),
+            minimum_success_pool_size=args.minimum_success_pool_size,
+            minimum_failure_pool_size=args.minimum_failure_pool_size,
+        )
+    else:
         require_success = False
-    elif args.require_success is True:
-        require_success = True
-    else:
-        require_success = inferred_require_success
-
-    if args.allow_mixed_without_failure:
         require_failure_for_mixed = False
-    elif args.require_failure_for_mixed is True:
-        require_failure_for_mixed = True
-    else:
-        require_failure_for_mixed = inferred_require_failure_for_mixed
-
-    if args.allow_partial_condition_coverage:
         require_counts_for_all_conditions = False
-    elif args.require_counts_for_all_conditions is True:
-        require_counts_for_all_conditions = True
-    else:
-        require_counts_for_all_conditions = True
-
-    eligibility = evaluate_task_eligibility(
-        pools,
-        conditions,
-        require_success=require_success,
-        require_failure_for_mixed=require_failure_for_mixed,
-        require_counts_for_all_conditions=require_counts_for_all_conditions,
-        minimum_mixed_success_count=max(0, int(args.minimum_mixed_success_count)),
-        minimum_mixed_failure_count=max(0, int(args.minimum_mixed_failure_count)),
-        minimum_success_pool_size=args.minimum_success_pool_size,
-        minimum_failure_pool_size=args.minimum_failure_pool_size,
-    )
+        assert fixed_trajectory_count is not None
+        eligibility = _evaluate_fixed_count_eligibility(
+            pools,
+            fixed_count=fixed_trajectory_count,
+        )
 
     eligible_tasks = sorted(task_id for task_id, item in eligibility.items() if item.eligible)
     eligible_tasks, collection_labels_by_task, dropped_by_collection_label = _filter_tasks_by_collection_label(
@@ -338,20 +387,41 @@ def main() -> int:
     for task_id in selected_tasks:
         pool = pools[task_id]
         per_condition: dict[str, dict[str, Any]] = {}
-        for condition in conditions:
-            selection = sample_workflows_for_condition(
-                pool,
-                condition=condition,
-                random_seed=args.random_seed,
-            )
-            per_condition[condition.label] = _selection_payload(selection)
-            atomic_skills.append(
-                build_atomic_skill_from_selection(
-                    task_id=task_id,
-                    selection=selection,
-                    skill_namespace=args.skill_namespace,
+        if selection_mode == "conditioned":
+            for condition in conditions:
+                selection = sample_workflows_for_condition(
+                    pool,
+                    condition=condition,
+                    random_seed=args.random_seed,
                 )
+                per_condition[condition.label] = _selection_payload(selection)
+                atomic_skills.append(
+                    build_atomic_skill_from_selection(
+                        task_id=task_id,
+                        selection=selection,
+                        skill_namespace=args.skill_namespace,
+                    )
+                )
+        else:
+            assert fixed_trajectory_count is not None
+            fixed_label = f"fixed-{fixed_trajectory_count}"
+            selection = sample_workflows_fixed_count(
+                pool,
+                sample_count=fixed_trajectory_count,
+                random_seed=args.random_seed,
+                seed_label=fixed_label,
             )
+            per_condition[fixed_label] = _selection_payload(selection)
+            skill = build_atomic_skill_from_selection(
+                task_id=task_id,
+                selection=selection,
+                skill_namespace=args.skill_namespace,
+            )
+            if isinstance(skill.metadata, dict):
+                output_layout = skill.metadata.get("output_layout")
+                if isinstance(output_layout, dict):
+                    output_layout["condition"] = fixed_label
+            atomic_skills.append(skill)
         selections_by_task[task_id] = per_condition
 
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -401,6 +471,7 @@ def main() -> int:
     manifest = {
         "workflow_input": str(workflow_input),
         "output_dir": str(output_dir),
+        "selection_mode": selection_mode,
         "conditions": [condition.model_dump() if hasattr(condition, "model_dump") else condition.__dict__ for condition in conditions],
         "filtering": {
             "require_success": require_success,
@@ -423,6 +494,7 @@ def main() -> int:
             "mix": args.mix,
             "success_count": args.success_count,
             "failure_count": args.failure_count,
+            "fixed_trajectory_count": fixed_trajectory_count,
         },
         "task_counts": {
             "total_with_workflows": len(pools),

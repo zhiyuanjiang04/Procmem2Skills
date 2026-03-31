@@ -37,7 +37,7 @@ Return one JSON object with exactly these top-level keys:
 
 Each channel object must contain:
 - skill_md
-- provenance_md
+- source_evidence_md
 - verify_script
 
 The success channel must also contain:
@@ -55,7 +55,7 @@ Requirements:
   - Steps
   - Verify
   - References
-- In References, point only to references/provenance.md and scripts/*.sh.
+- In References, point only to references/source-evidence.md, references/related-skills.md, and scripts/*.sh.
 - Every script must be valid bash and start with:
   #!/usr/bin/env bash
   set -euo pipefail
@@ -95,6 +95,7 @@ class GeneratedSkillArtifact:
     recover_script: str | None
     verify_script: str
     raw_response: str
+    related_skills_md: str | None = None
     integration_payload: dict[str, Any] | None = None
 
 
@@ -248,12 +249,14 @@ def _build_dual_channel_prompt(skill: AtomicSkill) -> str:
         "- failure (object)\n\n"
         "success object must include:\n"
         "- skill_md (SKILL.md)\n"
-        "- provenance_md (references/provenance.md)\n"
+        "- source_evidence_md (references/source-evidence.md)\n"
+        "- related_skills_md (references/related-skills.md, optional)\n"
         "- apply_script (scripts/apply.sh)\n"
         "- verify_script (scripts/verify.sh)\n\n"
         "failure object must include:\n"
         "- skill_md (SKILL.md)\n"
-        "- provenance_md (references/provenance.md)\n"
+        "- source_evidence_md (references/source-evidence.md)\n"
+        "- related_skills_md (references/related-skills.md, optional)\n"
         "- recover_script (scripts/recover.sh)\n"
         "- verify_script (scripts/verify.sh)\n\n"
         "Do not invent extra files (no README/CHANGELOG/installation guides).\n\n"
@@ -384,24 +387,31 @@ def _legacy_artifact_from_payload(
     integration_payload: dict[str, Any] | None = None,
 ) -> GeneratedSkillArtifact:
     skill_md = str(payload.get("skill_md") or "").strip()
-    provenance_md = str(payload.get("provenance_md") or "").strip()
+    provenance_md = str(payload.get("source_evidence_md") or payload.get("provenance_md") or "").strip()
+    related_skills_md = str(payload.get("related_skills_md") or "").strip() or None
     verify_script = _normalize_script(payload.get("verify_script"), default=_default_verify_script(skill, channel="success"))
     apply_script = _normalize_script(payload.get("apply_script"), default=_default_apply_script(skill))
     if not skill_md:
         raise ValueError("LLM skill creator response missing `skill_md`")
     if not provenance_md:
-        raise ValueError("LLM skill creator response missing `provenance_md`")
-    skill_id = _variant_skill_id(skill.skill_id, "success")
+        raise ValueError("LLM skill creator response missing `source_evidence_md`/`provenance_md`")
+    skill_id = _variant_skill_id(skill, "success")
     return GeneratedSkillArtifact(
         base_skill_id=skill.skill_id,
         skill_id=skill_id,
         channel="success",
-        skill_md=_ensure_skill_frontmatter(skill_md, skill_id, channel="success", base_description=skill.description),
+        skill_md=_ensure_skill_frontmatter(
+            skill_md,
+            _preferred_frontmatter_name(skill, channel="success"),
+            channel="success",
+            base_description=skill.description,
+        ),
         provenance_md=provenance_md,
         apply_script=apply_script,
         recover_script=None,
         verify_script=verify_script,
         raw_response=raw_response,
+        related_skills_md=related_skills_md,
         integration_payload=integration_payload,
     )
 
@@ -428,13 +438,18 @@ def _build_channel_artifact(
     raw_response: str,
     integration_payload: dict[str, Any] | None = None,
 ) -> GeneratedSkillArtifact:
-    skill_id = _variant_skill_id(skill.skill_id, channel)
+    skill_id = _variant_skill_id(skill, channel)
     skill_md = str(channel_payload.get("skill_md") or "").strip()
-    provenance_md = str(channel_payload.get("provenance_md") or "").strip()
+    provenance_md = str(
+        channel_payload.get("source_evidence_md")
+        or channel_payload.get("provenance_md")
+        or ""
+    ).strip()
+    related_skills_md = str(channel_payload.get("related_skills_md") or "").strip() or None
     if not skill_md:
         raise ValueError(f"LLM skill creator response missing `{channel}.skill_md`")
     if not provenance_md:
-        raise ValueError(f"LLM skill creator response missing `{channel}.provenance_md`")
+        raise ValueError(f"LLM skill creator response missing `{channel}.source_evidence_md`/`{channel}.provenance_md`")
 
     verify_script = _normalize_script(
         channel_payload.get("verify_script"),
@@ -457,31 +472,56 @@ def _build_channel_artifact(
         base_skill_id=skill.skill_id,
         skill_id=skill_id,
         channel=channel,
-        skill_md=_ensure_skill_frontmatter(skill_md, skill_id, channel=channel, base_description=skill.description),
+        skill_md=_ensure_skill_frontmatter(
+            skill_md,
+            _preferred_frontmatter_name(skill, channel=channel),
+            channel=channel,
+            base_description=skill.description,
+        ),
         provenance_md=provenance_md,
         apply_script=apply_script,
         recover_script=recover_script,
         verify_script=verify_script,
         raw_response=raw_response,
+        related_skills_md=related_skills_md,
         integration_payload=integration_payload,
     )
 
 
-def _variant_skill_id(skill_id: str, channel: str) -> str:
+def _variant_skill_id(skill: AtomicSkill, channel: str) -> str:
     suffix = "success" if channel == "success" else "failure"
-    return f"{skill_id}--{suffix}"
+    functional_name = ""
+    if isinstance(skill.metadata, dict):
+        functional_name = str(skill.metadata.get("skill_name") or "").strip()
+    base = _slug(functional_name) if functional_name else _slug(skill.skill_id)
+    return f"{base}--{suffix}"
 
 
-def _ensure_skill_frontmatter(markdown: str, skill_id: str, *, channel: str, base_description: str) -> str:
+def _preferred_frontmatter_name(skill: AtomicSkill, *, channel: str) -> str:
+    if isinstance(skill.metadata, dict):
+        functional_name = str(skill.metadata.get("skill_name") or "").strip()
+        if functional_name:
+            return _slug(functional_name)
+    suffix = "success" if channel == "success" else "failure"
+    return f"{_slug(skill.skill_id)}-{suffix}"
+
+
+def _slug(value: str) -> str:
+    normalized = re.sub(r"[^a-z0-9]+", "-", str(value or "").strip().lower())
+    normalized = re.sub(r"-{2,}", "-", normalized).strip("-")
+    return normalized or "skill"
+
+
+def _ensure_skill_frontmatter(markdown: str, skill_name: str, *, channel: str, base_description: str) -> str:
     text = markdown.replace("\r\n", "\n").strip()
     lines = text.splitlines()
     if len(lines) < 3 or lines[0].strip() != "---":
         description = _channel_description(channel, base_description)
-        body = text if text else f"# {skill_id}\n\n## Steps\n\n- Fill in deterministic steps."
+        body = text if text else f"# {skill_name}\n\n## Steps\n\n- Fill in deterministic steps."
         return "\n".join(
             [
                 "---",
-                f"name: {skill_id}",
+                f"name: {skill_name}",
                 f"description: {description}",
                 "---",
                 "",
@@ -495,7 +535,7 @@ def _ensure_skill_frontmatter(markdown: str, skill_id: str, *, channel: str, bas
     description_written = False
     for line in lines:
         if in_frontmatter and line.strip().startswith("name:"):
-            out.append(f"name: {skill_id}")
+            out.append(f"name: {skill_name}")
             name_written = True
             continue
         if in_frontmatter and line.strip().startswith("description:"):
@@ -505,7 +545,7 @@ def _ensure_skill_frontmatter(markdown: str, skill_id: str, *, channel: str, bas
         out.append(line)
         if in_frontmatter and line.strip() == "---" and len(out) > 1:
             if not name_written:
-                out.insert(1, f"name: {skill_id}")
+                out.insert(1, f"name: {skill_name}")
                 name_written = True
             if not description_written:
                 out.insert(2 if name_written else 1, f"description: {_channel_description(channel, base_description)}")

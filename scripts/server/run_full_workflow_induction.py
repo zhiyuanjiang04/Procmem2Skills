@@ -26,9 +26,9 @@ def parse_args() -> argparse.Namespace:
     )
     parser.add_argument(
         "--induction-mode",
-        choices=["rule", "llm", "hybrid"],
-        default="hybrid",
-        help="Workflow induction mode.",
+        choices=["llm", "hybrid"],
+        default="llm",
+        help="Workflow induction mode (rule-only mode removed from standard pipeline).",
     )
     parser.add_argument("--llm-model", type=str, default=None, help="LLM model for workflow induction.")
     parser.add_argument("--llm-base-url", type=str, default=None, help="LLM base URL for chat completions.")
