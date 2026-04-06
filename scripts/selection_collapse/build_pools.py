@@ -22,6 +22,8 @@ SELECTED_TASKS_PATH = ROOT / "data" / "selection_collapse" / "skillsbench" / "se
 CORPUS_PATH = ROOT / "data" / "processed" / "skill_corpus.jsonl"
 POOLS_DIR = ROOT / "data" / "selection_collapse" / "pools"
 
+HARD_NEG_DIR = ROOT / "data" / "selection_collapse" / "hard_negatives"
+
 POOL_SIZES = [5, 50, 200, 1000]
 N_TRIALS = 3
 BASE_SEED = 42_000
@@ -170,6 +172,75 @@ def build_all_pools() -> None:
                 total += 1
 
     print(f"Done. Wrote {total} pool files to {POOLS_DIR}")
+
+
+def build_hard_negative_pools(n_trials: int = 3) -> None:
+    """Build N=50 pools using hard negatives as distractors.
+
+    Reads pre-computed hard negatives from HARD_NEG_DIR and creates
+    pools at pool_size=50 with ``condition: hard_negative``.
+    """
+    print("Loading corpus ...")
+    corpus = _load_jsonl(CORPUS_PATH)
+    print(f"  {len(corpus)} skills")
+
+    print("Loading tasks ...")
+    tasks = _load_jsonl(SELECTED_TASKS_PATH)
+    task_by_id = {t["task_id"]: t for t in tasks}
+    print(f"  {len(tasks)} tasks")
+
+    POOLS_DIR.mkdir(parents=True, exist_ok=True)
+
+    pool_size = 50
+    total = 0
+
+    for hn_path in sorted(HARD_NEG_DIR.glob("*_hard_negatives.json")):
+        with open(hn_path) as f:
+            hn_data = json.load(f)
+
+        task_id = hn_data["task_id"]
+        task = task_by_id.get(task_id)
+        if task is None:
+            print(f"  SKIP {task_id}: not found in selected tasks")
+            continue
+
+        gt_ids = [s["skill_id"] for s in task["gt_skills"]]
+        n_gt = len(gt_ids)
+
+        if pool_size < n_gt:
+            print(f"  SKIP {task_id}: pool_size={pool_size} < n_gt={n_gt}")
+            continue
+
+        hard_negatives = hn_data["hard_negatives"]
+
+        for trial in range(n_trials):
+            seed = BASE_SEED + hash((task_id, "hard_neg", pool_size, trial)) % 100_000
+            pool = build_pool(
+                task,
+                corpus,
+                pool_size=pool_size,
+                seed=seed,
+                hard_negatives=hard_negatives,
+            )
+
+            record = {
+                "task_id": task_id,
+                "pool_size": pool_size,
+                "trial": trial,
+                "seed": seed,
+                "condition": "hard_negative",
+                "n_hard_negatives_available": len(hard_negatives),
+                "pool": pool,
+                "gt_skill_ids": gt_ids,
+            }
+
+            fname = f"{task_id}_n50_hard_t{trial}.json"
+            out_path = POOLS_DIR / fname
+            with open(out_path, "w") as f:
+                json.dump(record, f, indent=2)
+            total += 1
+
+    print(f"Done. Wrote {total} hard-negative pool files to {POOLS_DIR}")
 
 
 if __name__ == "__main__":
