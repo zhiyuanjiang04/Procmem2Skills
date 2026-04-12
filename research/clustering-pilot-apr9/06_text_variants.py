@@ -19,7 +19,7 @@ from sklearn.cluster import AgglomerativeClustering
 from transformers import AutoModel, AutoTokenizer
 
 ROOT = Path(__file__).parent
-DATA = ROOT / "data"
+DATA = ROOT / "outputs"
 TASKS_FILE = DATA / "tasks.jsonl"
 OUT_FILE = DATA / "text_variants_comparison.json"
 

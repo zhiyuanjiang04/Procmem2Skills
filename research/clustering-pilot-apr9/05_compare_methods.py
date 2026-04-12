@@ -18,7 +18,7 @@ from sklearn.cluster import DBSCAN, AgglomerativeClustering
 from sklearn.metrics import silhouette_score
 
 ROOT = Path(__file__).parent
-DATA = ROOT / "data"
+DATA = ROOT / "outputs"
 EMB_FILE = DATA / "embeddings.npy"
 IDS_FILE = DATA / "task_ids.json"
 TASKS_FILE = DATA / "tasks.jsonl"

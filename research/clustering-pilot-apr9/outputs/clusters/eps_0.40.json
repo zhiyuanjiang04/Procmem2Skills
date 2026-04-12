@@ -1,0 +1,302 @@
+{
+  "eps": 0.4,
+  "n_clusters": 26,
+  "n_noise": 171,
+  "clusters": {
+    "0": [
+      "bank-trans-filter",
+      "csv-to-parquet",
+      "organization-json-generator"
+    ],
+    "1": [
+      "blind-maze-explorer-5x5",
+      "blind-maze-explorer-algorithm",
+      "interactive-maze-game"
+    ],
+    "2": [
+      "break-filter-js-from-html",
+      "filter-js-from-html"
+    ],
+    "3": [
+      "broken-networking",
+      "cron-broken-network"
+    ],
+    "4": [
+      "build-initramfs-qemu",
+      "build-linux-kernel-qemu"
+    ],
+    "5": [
+      "build-stp",
+      "install-klee-minimal"
+    ],
+    "6": [
+      "chess-best-move",
+      "gomoku-planner",
+      "regex-chess"
+    ],
+    "7": [
+      "configure-git-webserver",
+      "git-multibranch"
+    ],
+    "8": [
+      "count-dataset-tokens",
+      "download-youtube",
+      "extract-moves-from-video",
+      "hf-model-inference",
+      "incompatible-python-fasttext",
+      "mlflow-register",
+      "mteb-eval",
+      "mteb-leaderboard",
+      "mteb-retrieve",
+      "oom",
+      "play-zork",
+      "play-zork-easy",
+      "png-generation",
+      "speech-to-text",
+      "train-fasttext",
+      "word2vec-from-scratch"
+    ],
+    "9": [
+      "crack-7z-hash",
+      "extract-safely",
+      "git-leak-recovery"
+    ],
+    "10": [
+      "db-wal-recovery",
+      "sqlite-db-truncate"
+    ],
+    "11": [
+      "dna-assembly",
+      "dna-insert"
+    ],
+    "12": [
+      "feal-differential-cryptanalysis",
+      "feal-linear-cryptanalysis"
+    ],
+    "13": [
+      "fix-permissions",
+      "processing-pipeline"
+    ],
+    "14": [
+      "get-bitcoin-nodes",
+      "solana-data"
+    ],
+    "15": [
+      "hf-lora-adapter",
+      "hf-train-lora-adapter"
+    ],
+    "16": [
+      "implement-eigenvectors-from-eigenvalues-research-paper",
+      "largest-eigenval"
+    ],
+    "17": [
+      "install-windows-3.11",
+      "install-windows-xp"
+    ],
+    "18": [
+      "log-summary",
+      "log-summary-date-ranges"
+    ],
+    "19": [
+      "make-doom-for-mips",
+      "make-mips-interpreter"
+    ],
+    "20": [
+      "mcmc-sampling-stan",
+      "rstan-to-pystan"
+    ],
+    "21": [
+      "new-encrypt-command",
+      "recover-obfuscated-files"
+    ],
+    "22": [
+      "polyglot-c-py",
+      "polyglot-rust-c"
+    ],
+    "23": [
+      "qemu-alpine-ssh",
+      "qemu-startup"
+    ],
+    "24": [
+      "sparql-professors-universities",
+      "sparql-university"
+    ],
+    "25": [
+      "torch-pipeline-parallelism",
+      "torch-tensor-parallelism"
+    ]
+  },
+  "noise": [
+    "3d-model-format-legacy",
+    "accelerate-maximal-square",
+    "acl-permissions-inheritance",
+    "adaptive-rejection-sampler",
+    "add-benchmark-lm-eval-harness",
+    "aimo-airline-departures",
+    "amuse-install",
+    "analyze-access-logs",
+    "ancient-puzzle",
+    "assign-seats",
+    "attention-mil",
+    "audio-synth-stft-peaks",
+    "bn-fit-modify",
+    "broken-python",
+    "build-cython-ext",
+    "build-pmars",
+    "build-pov-ray",
+    "build-tcc-qemu",
+    "caffe-cifar-10",
+    "cancel-async-tasks",
+    "cartpole-rl-training",
+    "catch-me-if-you-can",
+    "causal-inference-r",
+    "chem-property-targeting",
+    "chem-rf",
+    "circuit-fibsqrt",
+    "classifier-debug",
+    "cobol-modernization",
+    "code-from-image",
+    "compile-compcert",
+    "conda-env-conflict-resolution",
+    "constraints-scheduling",
+    "count-call-stack",
+    "countdown-game",
+    "cpp-compatibility",
+    "cprofiling-python",
+    "create-bucket",
+    "cross-entropy-method",
+    "custom-memory-heap-crash",
+    "debug-long-program",
+    "decommissioning-service-with-sensitive-data",
+    "deterministic-tarball",
+    "distribution-search",
+    "enemy-grid-escape",
+    "extract-elf",
+    "fibonacci-server",
+    "financial-document-processor",
+    "find-official-code",
+    "find-restaurant",
+    "fix-code-vulnerability",
+    "fix-git",
+    "fix-ocaml-gc",
+    "fix-pandas-version",
+    "flood-monitoring-basic",
+    "fmri-encoding-r",
+    "form-filling",
+    "gcc-compiler-optimization",
+    "gcode-to-text",
+    "git-workflow-hack",
+    "gpt2-codegolf",
+    "grid-pattern-transform",
+    "hdfs-deployment",
+    "hello-world",
+    "heterogeneous-dates",
+    "home-server-https",
+    "html-finance-verify",
+    "huarong-dao-solver",
+    "hydra-debug-slurm-mode",
+    "ilp-solver",
+    "intrusion-detection",
+    "jq-data-processing",
+    "jsonl-aggregator",
+    "jupyter-notebook-server",
+    "kv-store-grpc",
+    "large-scale-text-editing",
+    "lean4-proof",
+    "leelachess0-pytorch-conversion",
+    "llm-inference-batching-scheduler",
+    "llm-spec-decoding",
+    "logistic-regression-divergence",
+    "magsac-install",
+    "mahjong-winninghand",
+    "mailman",
+    "matlab-python-conversion",
+    "merge-diff-arc-agi-task",
+    "mixed-integer-programming",
+    "mnist-learning-fix",
+    "model-extraction-relu-logits",
+    "modernize-fortran-build",
+    "modernize-scientific-stack",
+    "movie-helper",
+    "multi-source-data-merger",
+    "multistep-definite-integral",
+    "neuron-to-jaxley-conversion",
+    "nginx-request-logging",
+    "npm-conflict-resolution",
+    "ode-solver-rk4",
+    "openssl-selfsigned-cert",
+    "optimal-transport",
+    "overfull-hbox",
+    "pandas-etl",
+    "pandas-sql-query",
+    "parallel-particle-simulator",
+    "parallelize-compute-squares",
+    "parallelize-graph",
+    "password-recovery",
+    "path-tracing",
+    "path-tracing-reverse",
+    "pcap-to-netflow",
+    "play-lord",
+    "port-compressor",
+    "portfolio-optimization",
+    "postgres-csv-clean",
+    "predicate-pushdown-bench",
+    "predict-customer-churn",
+    "privilege-escalation",
+    "protein-assembly",
+    "protocol-analysis-rs",
+    "prove-plus-comm",
+    "puzzle-solver",
+    "pypi-server",
+    "pytorch-model-cli",
+    "pytorch-model-recovery",
+    "query-optimize",
+    "raman-fitting",
+    "rare-mineral-allocation",
+    "recover-accuracy-log",
+    "regex-log",
+    "reshard-c4-data",
+    "reverse-engineering",
+    "run-pdp11-code",
+    "sam-cell-seg",
+    "sanitize-git-repo",
+    "schedule-vacation",
+    "schemelike-metacircular-eval",
+    "security-celery-redis-rce",
+    "security-vulhub-minio",
+    "setup-custom-dev-env",
+    "sha-puzzle",
+    "shell-deobfuscation",
+    "simple-sheets-put",
+    "simple-web-scraper",
+    "slurm-simple-node-monitoring",
+    "solve-maze-challenge",
+    "solve-sudoku",
+    "spinning-up-rl",
+    "spring-messaging-vul",
+    "sql-injection-attack",
+    "sqlite-with-gcov",
+    "stable-parallel-kmeans",
+    "sudo-llvm-ir",
+    "swe-bench-astropy-1",
+    "swe-bench-astropy-2",
+    "swe-bench-fsspec",
+    "swe-bench-langcodes",
+    "tmux-advanced-workflow",
+    "train-bpe-tokenizer",
+    "tree-directory-parser",
+    "triton-interpret",
+    "tune-mjcf",
+    "unprivileged-headless-pyrender",
+    "vertex-solver",
+    "video-processing",
+    "vimscript-vim-quine",
+    "vul-flask",
+    "vul-flink",
+    "vulnerable-secret",
+    "wasm-pipeline",
+    "weighted-max-sat-solver",
+    "winning-avg-corewars",
+    "write-compressor"
+  ]
+}

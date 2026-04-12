@@ -6,7 +6,7 @@ import yaml
 
 ROOT = Path(__file__).parent
 TASKS_DIR = ROOT.parent / "terminal-bench" / "original-tasks"
-OUT = ROOT / "data" / "tasks.jsonl"
+OUT = ROOT / "outputs" / "tasks.jsonl"
 
 
 def main():

@@ -8,11 +8,11 @@ import numpy as np
 from sklearn.cluster import DBSCAN
 
 ROOT = Path(__file__).parent
-EMB = ROOT / "data" / "embeddings.npy"
-IDS = ROOT / "data" / "task_ids.json"
-TASKS = ROOT / "data" / "tasks.jsonl"
-OUT_DIR = ROOT / "data" / "clusters"
-SUMMARY = ROOT / "data" / "sweep_summary.json"
+EMB = ROOT / "outputs" / "embeddings.npy"
+IDS = ROOT / "outputs" / "task_ids.json"
+TASKS = ROOT / "outputs" / "tasks.jsonl"
+OUT_DIR = ROOT / "outputs" / "clusters"
+SUMMARY = ROOT / "outputs" / "sweep_summary.json"
 
 EPS_VALUES = [0.20, 0.30, 0.40, 0.45, 0.50, 0.55, 0.60, 0.65, 0.70]
 MIN_SAMPLES = 2

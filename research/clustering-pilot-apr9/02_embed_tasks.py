@@ -7,9 +7,9 @@ import torch
 from transformers import AutoModel, AutoTokenizer
 
 ROOT = Path(__file__).parent
-TASKS = ROOT / "data" / "tasks.jsonl"
-EMB_OUT = ROOT / "data" / "embeddings.npy"
-IDS_OUT = ROOT / "data" / "task_ids.json"
+TASKS = ROOT / "outputs" / "tasks.jsonl"
+EMB_OUT = ROOT / "outputs" / "embeddings.npy"
+IDS_OUT = ROOT / "outputs" / "task_ids.json"
 
 MODEL_NAME = "Qwen/Qwen3-Embedding-0.6B"
 MAX_LEN = 1024
