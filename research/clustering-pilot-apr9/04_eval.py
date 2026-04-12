@@ -37,19 +37,18 @@ def main():
         )
     lines.append("")
 
-    # Sweet spot analysis
-    lines.append("## Observation\n")
+    lines.append("## Findings\n")
     lines.append(
-        "Two regimes separated by a sharp transition at eps≈0.45:\n"
-        "- **eps ≤ 0.40**: many small clusters, very high noise (71-98%), high purity (0.84-0.88). "
-        "Tight semantic groups, but most tasks remain isolated.\n"
-        "- **eps ≥ 0.50**: chain merging collapses everything into one giant cluster. "
-        "At eps=0.50, the largest cluster contains 103 tasks (43% of all tasks) spanning "
-        "software-engineering, security, file-operations, model-training all at once. "
-        "Purity drops accordingly.\n"
-        "\n"
-        "Sweet spot is **eps=0.40**: 26 clusters, max size 16, average category purity 0.84. "
-        "Beyond this, DBSCAN's transitive linking pulls in unrelated tasks.\n"
+        "DBSCAN behavior changes abruptly between eps=0.45 and eps=0.50.\n\n"
+        "Below 0.45 the algorithm produces small clusters (max size 2-16) with category "
+        "purity around 0.84, but 71-98% of tasks stay as singletons. At 0.50 the largest "
+        "cluster jumps to 103 tasks (43% of all tasks) and mixes software-engineering, "
+        "security, file-operations, model-training together — DBSCAN's single-linkage "
+        "creates chain-merging through bridging tasks. By 0.70 every task ends up in one "
+        "cluster.\n\n"
+        "eps=0.40 is the most usable point if you want the clusters to mean something: "
+        "26 clusters, max size 16, average category purity 0.84. The cost is leaving 71% "
+        "of tasks unclustered.\n"
     )
 
     # Detailed look at eps=0.40
