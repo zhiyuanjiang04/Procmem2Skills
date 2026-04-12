@@ -12,18 +12,23 @@ viable structure for the ProcMem2Skills pipeline.
 | `02_embed_tasks.py` | Run Qwen3-Embedding-0.6B on instructions, save embeddings.npy |
 | `03_cluster.py` | DBSCAN sweep over 9 eps values (0.20–0.70), per-cluster category purity |
 | `04_eval.py` | Generate eval_report.md (sweep table + cluster contents at chosen eps) |
-| `eval_report.md` | Sweep table and cluster contents at eps=0.40 |
+| `05_compare_methods.py` | Compare DBSCAN / HDBSCAN / Agglomerative on the same embeddings |
+| `06_text_variants.py` | Compare full / first-sentence / stripped / title-only as input text |
+| `eval_report.md` | DBSCAN sweep + 26 cluster contents at eps=0.40 |
+| `findings.md` | Full writeup: algorithm comparison, text variants, quality metrics |
 
 ## Reproduce
 
 ```bash
 git clone https://github.com/laude-institute/terminal-bench.git
-pip install pyyaml torch transformers scikit-learn numpy
+pip install pyyaml torch transformers scikit-learn hdbscan numpy
 
 python 01_extract_tasks.py
 python 02_embed_tasks.py     # downloads Qwen3-Embedding-0.6B (~1.2 GB) on first run
 python 03_cluster.py
 python 04_eval.py
+python 05_compare_methods.py
+python 06_text_variants.py
 ```
 
 `data/` is excluded from the repo (regenerable).
@@ -62,7 +67,11 @@ instruction text is genuinely diverse, or (b) the noise inside instructions
 Worth trying instruction summarization (LLM → 5 keywords → embed) before
 giving up on density-based clustering.
 
-DBSCAN single-linkage is fragile here. HDBSCAN or agglomerative with average-linkage
-would likely give a smoother curve without the 0.45→0.50 collapse.
+DBSCAN single-linkage is fragile here. Agglomerative with average linkage gives a
+much smoother curve without the 0.45→0.50 collapse — see `findings.md` for the
+algorithm comparison and a separate experiment showing that just embedding
+the task name (kebab-case) clusters substantially better than embedding the
+full instruction.
 
-See `eval_report.md` for the full 26 clusters at eps=0.40.
+See `findings.md` for the full writeup and `eval_report.md` for the 26 cluster
+contents at DBSCAN eps=0.40.
