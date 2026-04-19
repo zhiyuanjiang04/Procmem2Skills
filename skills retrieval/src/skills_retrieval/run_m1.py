@@ -28,6 +28,7 @@ async def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--corpus-meta", default="data/embeddings/skill_metadata.jsonl")
     parser.add_argument("--corpus-emb", default="data/embeddings/skill_embeddings.npy")
+    parser.add_argument("--corpus-desc", default="data/processed/skill_corpus.jsonl")
     parser.add_argument("--tasks", default="data/selection_collapse/skillsbench/tasks.jsonl")
     parser.add_argument("--task-embeds", default="skills retrieval/pools/tasks_gt_embeddings.npz")
     parser.add_argument("--model", default="claude-sonnet-4-6")
@@ -40,7 +41,7 @@ async def main():
                         help="cli = claude CLI subprocess (OAuth); sdk = Anthropic SDK (needs API key)")
     args = parser.parse_args()
 
-    corpus = Corpus.from_paths(Path(args.corpus_meta), Path(args.corpus_emb))
+    corpus = Corpus.from_paths(Path(args.corpus_meta), Path(args.corpus_emb), descriptions_path=Path(args.corpus_desc))
     tasks_all = {t.task_id: t for t in load_tasks(Path(args.tasks))}
     tasks = [tasks_all[tid] for tid in args.task_ids]
     embeds = np.load(args.task_embeds, allow_pickle=False)

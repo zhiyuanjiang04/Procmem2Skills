@@ -28,3 +28,14 @@ def test_load_tasks(tmp_path, tiny_task):
     assert len(tasks) == 1
     assert tasks[0].task_id == "sb_test"
     assert tasks[0].gt_skill_names == ["alpha"]
+
+
+def test_corpus_loads_descriptions(tmp_path, tiny_corpus):
+    """descriptions_path is merged by ID; missing IDs get empty string."""
+    desc_path = tmp_path / "descs.jsonl"
+    # skill_000003 has a description; skill_000000 does not appear → should be ""
+    with desc_path.open("w") as f:
+        f.write(json.dumps({"id": "skill_000003", "description": "fancy desc"}) + "\n")
+    c = Corpus.from_paths(tiny_corpus["metadata_path"], tiny_corpus["embeddings_path"], descriptions_path=desc_path)
+    assert c.descriptions[3] == "fancy desc"
+    assert c.descriptions[0] == ""
