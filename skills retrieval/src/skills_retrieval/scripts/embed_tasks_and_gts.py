@@ -28,17 +28,19 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--tasks", default="data/selection_collapse/skillsbench/tasks.jsonl")
     p.add_argument("--out", default="skills retrieval/pools/tasks_gt_embeddings.npz")
-    p.add_argument("--task_ids", nargs="+", default=["sb_000", "sb_003", "sb_004", "sb_006", "sb_007"])
+    p.add_argument("--task_ids", nargs="+", default=None,
+                   help="Task IDs to embed. If omitted, embeds all tasks in --tasks file.")
     args = p.parse_args()
 
-    tasks: list[dict] = []
+    tasks_all: list[dict] = []
     with Path(args.tasks).open() as f:
         for line in f:
-            row = json.loads(line)
-            if row["task_id"] in args.task_ids:
-                tasks.append(row)
-    # preserve requested order
-    tasks.sort(key=lambda t: args.task_ids.index(t["task_id"]))
+            tasks_all.append(json.loads(line))
+    if args.task_ids:
+        tasks = [t for t in tasks_all if t["task_id"] in args.task_ids]
+        tasks.sort(key=lambda t: args.task_ids.index(t["task_id"]))
+    else:
+        tasks = tasks_all
 
     task_ids = [t["task_id"] for t in tasks]
     task_instr = [t["instruction"] for t in tasks]
