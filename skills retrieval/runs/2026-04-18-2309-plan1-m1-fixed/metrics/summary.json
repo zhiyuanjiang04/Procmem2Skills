@@ -1,0 +1,8 @@
+{
+  "awareness_recall5": 0.9833333333333333,
+  "awareness_top1": 0.8416666666666667,
+  "awareness_mrr": 0.8986111111111109,
+  "selection_top1": 0.8333333333333334,
+  "parse_fail": 0.0,
+  "selection_given_aware": 0.847457627118644
+}
