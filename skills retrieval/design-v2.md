@@ -65,7 +65,7 @@ Phase B.1 blocks on harbor compute and Hanwen's coordination; Phase A is indepen
 
 | Variable | Levels | Notes |
 |---|---|---|
-| Pool size `N` | 5, 50, 200, 1000, 2000, 5000 | Capped by context window at `full` representation. |
+| Pool size `N` | 1, 5, 50, 200, 1000, 2000, 5000 | `N=1` (GT-only) is the recognition upper-bound anchor — if the model can't even identify the correct skill with zero distractors, the task has intrinsic ambiguity, not interference-driven collapse. Capped by context window at `full` representation. |
 | Distractor strategy | `random`, `easy_neg`, `hard_neg_semantic`, `hard_neg_functional`, `adversarial` | Four-tier distractor taxonomy — see §3.1. |
 | Representation | `card`, `full`, `compressed_full`, `name_only`, `desc_only` | `card` = name + one-line description; `full` = full `SKILL.md`; `compressed_full` = semantically compressed `full` (§3.4, replaces hard-truncation); `name_only` / `desc_only` are ablation cells — see §3.2. |
 | Format perturbation | `canonical`, `shuffled` | 80% canonical, 20% shuffled (field order + phrasing paraphrase) — see §3.3. |
@@ -98,7 +98,7 @@ Expected insight: quantifies how much of recognition is lexical name-matching vs
 To rule out "style leakage" (models picking up on consistent phrasing/naming patterns), 20% of runs per condition apply:
 
 - Random field-order shuffle within each card.
-- Light paraphrase of the description (single Claude pass, preserving semantics).
+- Light paraphrase of the description (single Claude pass, preserving semantics). **Safeguard:** after paraphrase, compute cosine similarity with original description; if < 0.95, discard and retry (up to 3 attempts, then keep the canonical version and log `paraphrase_failed`).
 - Bullet ↔ sentence reformatting.
 
 Report accuracy delta between canonical and shuffled; large deltas flag stylistic leakage.
@@ -113,8 +113,10 @@ Raw `card@N=2000` vs. `full@N=200` confounds interference (more distractors) wit
 
 ### 3.5 ε-dedup and clustering
 
-- **ε-dedup.** Drop distractors whose cosine similarity to any GT skill embedding exceeds ε. Start ε=0.85; tune on a sanity pass (20-sample human spot-check confirming filtered distractors are functionally distinct from GT).
-- **Clustering for `hard_neg_functional`.** Run HDBSCAN on the 44k skill embeddings (metric=cosine). Each GT is mapped to its cluster; functional hard-negs sample from the same cluster minus a small "functional subtree" around GT (nearest neighbours within ε2=0.75). Record cluster id + cluster density with each pool for per-task difficulty analysis (§5).
+- **ε-dedup (two-filter cascade).** Apply in order:
+  1. **Cosine filter** — drop distractors where cosine similarity to any GT skill embedding exceeds ε (start ε=0.85; tune on 20-sample human spot-check).
+  2. **Lexical overlap filter** — drop if skill name shares ≥1 rare token (IDF above the 90th percentile) with GT, OR if TF-IDF overlap on the name+description exceeds 0.6. Catches tool/API variants that cosine misses (e.g., "Download via AWS CLI" vs. "Download via Boto3").
+- **Clustering for `hard_neg_functional`.** Run HDBSCAN on the 44k skill embeddings (metric=cosine). Each GT is mapped to its cluster; functional hard-negs sample from the same cluster minus a small "functional subtree" around GT (nearest neighbours within ε2=0.75). **Additional guardrail:** even when sampling from the same cluster, drop any candidate with cosine-to-GT > 0.80 (keeps cluster-level semantic similarity but avoids near-duplicates that would poison the task with multiple valid answers). Record cluster id + cluster density with each pool for per-task difficulty analysis (§5).
 
 ---
 
@@ -132,8 +134,8 @@ Available skills (<N>):
 <pool_block>
 
 Respond with EXACTLY ONE of:
-  <skill>SKILL_ID</skill>              # selection probe
-  <skills>ID_1,ID_2,ID_3,ID_4,ID_5</skills>  # awareness probe, ranked
+  <skill>SKILL_ID</skill>              # selection probe — single best skill
+  <skills>ID_1,ID_2,ID_3,ID_4,ID_5</skills>  # awareness probe — EXACTLY 5 skills, ordered from MOST to LEAST relevant
 
 No other text.
 ```
@@ -150,7 +152,11 @@ No other text.
 - `name_only` — `SKILL_k: <name>`
 - `desc_only` — `SKILL_k: <one-line description>` (name stripped; parser still maps `SKILL_k` → canonical id server-side)
 - `full` — `SKILL_k:\n<full SKILL.md body>` separated by `---`
-- `compressed_full` — one-pass Claude summary of full body (preserving preconditions + constraints), target length matched to `card`; cached. Hard-truncation is **not** used (per §3.4).
+- `compressed_full` — one-pass Claude summary of full body (preserving preconditions + constraints), target length matched to `card`; cached. Hard-truncation is **not** used (per §3.4). Compression spec:
+  - Fixed prompt template stored at `skills retrieval/src/prompts/compress_skill.txt` (version-controlled).
+  - Target length: 80–120 tokens per compressed card.
+  - Required fields preserved verbatim where present in source: preconditions, required tools / platform, output type, constraints / warnings. Validator flags any compressed card missing ≥1 required field that existed in the source.
+  - Log per compressed card: compression token ratio, missing-field warnings, compression prompt version. Failures (fields missing but source had them) are re-run up to 2× before being logged and skipped.
 
 **Format perturbation** (§3.3): when a trial is flagged `shuffled`, for each skill card independently:
 
@@ -164,6 +170,10 @@ No other text.
 - Extract the **first** `<skill>...</skill>` (selection) or `<skills>...</skills>` (awareness) tag found anywhere in the response, ignoring any preceding or trailing "helpful" prose. Regex: `<skill[s]?>([^<]+)</skill[s]?>` (non-anchored, first match).
 - If **zero** valid tags → `parse_fail = true`, scored 0.
 - If **multiple** tags present → take the first, set `format_warning = true`.
+- For `<skills>` awareness tags:
+  - If fewer than 5 IDs → accept what's given, set `length_violation = true`, score using the truncated list.
+  - If duplicates → dedupe in the order given, set `dup_violation = true`.
+  - If more than 5 → take the first 5, set `length_violation = true`.
 - **Format-compliance is tracked as a separate metric, not a scoring gate.** Record per response:
   - `format_clean` — response is exactly `<skill[s]>...</skill[s]>` with no other text.
   - `format_warning` — tag extracted but surrounding prose exists.
@@ -180,7 +190,7 @@ All responses (raw + parse outcome) are logged to `runs/<run>/parsed/responses.j
 Per `(task, pool, seed, probe)`:
 
 - **Awareness Top-1** — GT at rank 1. (New, primary; catches cases Recall@5 misses.)
-- **Awareness MRR** — Mean Reciprocal Rank of GT in the returned ranked list. (New, primary.)
+- **Awareness MRR** — Mean Reciprocal Rank of GT in the returned ranked list. **If GT is not present in the returned list, reciprocal rank = 0.** (New, primary.)
 - **Awareness Recall@5** — GT appears in returned top-5. (Retained for comparability with v1; known saturated.)
 - **Rank distribution** — histogram of GT rank across trials; reveals whether GT is barely-in-top-5 vs. solidly ranked.
 - **Selection Top-1** — returned skill == GT (selection probe).
@@ -195,6 +205,8 @@ Aggregated:
 - **Per-task pass rate** (k/3 trials) → buckets `full-pass` (3/3), `partial-fail` (1–2/3), `full-fail` (0/3), as in v1 scale-up.
 - **Bootstrap SE** across tasks × trials.
 - **Collapse curve** — metric vs. `N`, faceted by distractor strategy and representation.
+- **Random baseline** — overlaid on all accuracy curves as a light-gray reference: Random Top-1 ≈ 1/N, Random Recall@5 ≈ 5/N. Makes "above chance" visually obvious at large N.
+- **Cognitive-overload proxies** (exploratory; logged always, plotted if signal): response length vs. N, latency vs. N, top-2 confusion-pair frequency (which non-GT skill is most often chosen instead of GT, per task).
 
 ### 5.1 Per-task difficulty features
 
@@ -215,7 +227,7 @@ Regress task-level failure rate on these features; report feature importances.
 4. **Representation × N confound control** — `card@N` vs. token-matched `full@N` and `compressed_full@N`. Isolates interference from information loss.
 5. **Per-task collapse heatmap** — tasks × N, cell = pass rate; tasks sorted by GT–2nd-best gap.
 6. **Difficulty regression** — feature importance bar chart from §5.1.
-7. **Phase A → Phase B correlation** — Terminal-Bench task success vs. Phase A Awareness Top-1, per (N, strategy).
+7. **Phase A → Phase B correlation** — Terminal-Bench task success vs. Phase A Awareness Top-1, per (N, strategy). **Statistical spec:** Spearman rank correlation (robust to non-linearity) at per-task aggregation; bootstrap 95% CI via task-level resampling; also report Pearson for completeness. Partial correlation controlling for `N` reported when pooling across pool sizes.
 
 ---
 
@@ -308,7 +320,7 @@ For each Terminal-Bench task `t`:
 - Labels favour skills that exploit benchmark weaknesses. Log `strong_gt` vs. `weak_gt` separately so Phase B analyses can condition on label strength.
 - Record full candidate evidence (not just the chosen GT) so the graded labels can be re-aggregated post-hoc.
 
-"Improvement" definition default: strict pass-rate with 3-seed aggregation; tiebreak by step count. Alternate definitions (pass-rate only; steps-only on passing tasks) recorded as ablation.
+"Improvement" definition default: strict pass-rate with 3-seed aggregation. **Step-count tiebreak is applied only when pass-rate difference between baseline and candidate is ≤1 seed** — step counts are noisy in harbor (tool retries, env variance, LLM verbosity), so they should not decide the label when the pass signal is clearer. Alternate definitions (pass-rate only; steps-only on passing tasks) recorded as ablation.
 
 ### 7.2 Spot-check eval
 
