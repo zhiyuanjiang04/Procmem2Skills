@@ -10,12 +10,12 @@ import datetime as dt
 import json
 from pathlib import Path
 
-import anthropic
 import numpy as np
 
 from .config import PoolSpec, RunConfig, TrialRecord
 from .data import Corpus, load_tasks
 from .driver import Driver
+from .cli_driver import CLIDriver
 from .metrics import score_trial, aggregate_metrics
 from .pool_builder import build_pool
 from .prompt import render_awareness_prompt, render_pool_block, render_selection_prompt
@@ -36,6 +36,8 @@ async def main():
     parser.add_argument("--strategies", nargs="+", default=["random", "hard_neg_semantic"])
     parser.add_argument("--seeds", nargs="+", type=int, default=[0, 1, 2])
     parser.add_argument("--label", default="plan1-m1")
+    parser.add_argument("--backend", choices=["cli", "sdk"], default="cli",
+                        help="cli = claude CLI subprocess (OAuth); sdk = Anthropic SDK (needs API key)")
     args = parser.parse_args()
 
     corpus = Corpus.from_paths(Path(args.corpus_meta), Path(args.corpus_emb))
@@ -62,8 +64,12 @@ async def main():
     )
     (out_dir / "config.json").write_text(run_cfg.model_dump_json(indent=2))
 
-    client = anthropic.AsyncAnthropic()
-    driver = Driver(client=client, model=args.model, max_concurrency=run_cfg.max_concurrency)
+    if args.backend == "sdk":
+        import anthropic
+        client = anthropic.AsyncAnthropic()
+        driver = Driver(client=client, model=args.model, max_concurrency=run_cfg.max_concurrency)
+    else:
+        driver = CLIDriver(model=args.model, max_concurrency=4)
 
     async def run_pool(task, spec: PoolSpec):
         t_idx_in_gt = args.task_ids.index(task.task_id)
@@ -90,7 +96,19 @@ async def main():
                 with (out_dir / "skipped.jsonl").open("a") as f:
                     f.write(json.dumps({"pool_id": spec.pool_id, "probe": probe, "reason": "context_overflow"}) + "\n")
                 continue
-            user_prompt = full_prompt.split("Available skills")[0] + "Respond per the protocol above."
+            # Split off the system-level header; keep task + format instruction for user turn.
+            # pool_block is passed separately and goes into the system prompt (or combined_system for CLIDriver).
+            parts = full_prompt.split("Available skills", 1)
+            before_pool = parts[0]  # "You are a retrieval subject...\n\nTask:\n...\n\n"
+            after_pool = parts[1] if len(parts) > 1 else ""
+            # after_pool starts with "(N):\n<pool_block>\n\nRespond with EXACTLY ONE of:..."
+            # Strip the pool listing, keep the response format instruction
+            fmt_match = after_pool.find("\n\nRespond with EXACTLY")
+            if fmt_match != -1:
+                format_instruction = after_pool[fmt_match:].lstrip("\n")
+            else:
+                format_instruction = "Respond per the protocol above."
+            user_prompt = before_pool + format_instruction
             rec = await driver.run_one(
                 pool_id=spec.pool_id, probe=probe,
                 system_prompt="You are a retrieval subject in a controlled study.",
