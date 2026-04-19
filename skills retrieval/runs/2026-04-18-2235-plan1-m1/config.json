@@ -1,0 +1,34 @@
+{
+  "label": "plan1-m1",
+  "model": "claude-sonnet-4-6",
+  "task_ids": [
+    "sb_000",
+    "sb_003",
+    "sb_004",
+    "sb_006",
+    "sb_007"
+  ],
+  "strategies": [
+    "random",
+    "hard_neg_semantic"
+  ],
+  "pool_sizes": [
+    1,
+    5,
+    50,
+    200
+  ],
+  "representation": "card",
+  "seeds": [
+    0,
+    1,
+    2
+  ],
+  "probes": [
+    "awareness",
+    "selection"
+  ],
+  "temperature": 0.0,
+  "max_concurrency": 8,
+  "context_safety_margin": 1000
+}
