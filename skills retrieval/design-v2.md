@@ -67,7 +67,7 @@ Phase B.1 blocks on harbor compute and Hanwen's coordination; Phase A is indepen
 |---|---|---|
 | Pool size `N` | 5, 50, 200, 1000, 2000, 5000 | Capped by context window at `full` representation. |
 | Distractor strategy | `random`, `easy_neg`, `hard_neg_semantic`, `hard_neg_functional`, `adversarial` | Four-tier distractor taxonomy — see §3.1. |
-| Representation | `card`, `full`, `name_only`, `desc_only` | `card` = name + one-line description; `full` = full `SKILL.md`; `name_only` / `desc_only` are ablation cells — see §3.2. |
+| Representation | `card`, `full`, `compressed_full`, `name_only`, `desc_only` | `card` = name + one-line description; `full` = full `SKILL.md`; `compressed_full` = semantically compressed `full` (§3.4, replaces hard-truncation); `name_only` / `desc_only` are ablation cells — see §3.2. |
 | Format perturbation | `canonical`, `shuffled` | 80% canonical, 20% shuffled (field order + phrasing paraphrase) — see §3.3. |
 | Content budget (at fixed N) | `card_budget`, `full_budget_truncated` | Confound control: match token budget when comparing `card@N` vs. `full@N`. See §3.4. |
 | Probe | `awareness`, `selection` | Separate prompts, separate calls. |
@@ -80,7 +80,7 @@ Phase B.1 blocks on harbor compute and Hanwen's coordination; Phase A is indepen
 - **`easy_neg`** — bottom-k by cosine of task-embedding to skill embedding (unrelated skills).
 - **`hard_neg_semantic`** — top-k by cosine similarity; linguistically/topically close to the task description. (v1's only hard-neg strategy.)
 - **`hard_neg_functional`** — sampled from the same skill cluster as GT (HDBSCAN or k-means on the 44k embedding space; see §3.5), but excluding skills in the GT's immediate functional subtree. These solve *similar task types* but differ in key constraints, tools, or outputs — closer to "confusable competitor" than "lexically similar noise". Expected to be stronger than semantic hard-neg.
-- **`adversarial`** — LLM-generated skill descriptions produced by prompting Claude Opus 4.7 with: *"Given this task, generate a skill description that looks applicable but is subtly incorrect (wrong tool / wrong output / wrong constraint)."* Applied only at N=50 as a mini stress-test; quality-filtered by a second model pass.
+- **`adversarial`** — LLM-generated skill descriptions produced via **cross-model** pipeline to avoid model-specific blind spots (per review): Claude Opus 4.7 generates candidate "subtly incorrect" descriptions, a different-family model (Gemini Pro or GPT-4o) filters/rewrites to strip same-family idiosyncrasies, then a human spot-check on 20 samples validates that distractors are genuinely task-confusable (not obviously wrong, not accidentally correct). Applied only at N=50 as a mini stress-test. Noted as limitation: adversarial distractors are still generator-biased; results should be read as "stress test under one kind of adversarial construction", not a general upper bound.
 
 ### 3.2 Representation ablation
 
@@ -105,11 +105,11 @@ Report accuracy delta between canonical and shuffled; large deltas flag stylisti
 
 ### 3.4 Representation × N confound control
 
-Raw `card@N=2000` vs. `full@N=200` confounds interference (more distractors) with information loss (less detail per distractor). To isolate:
+Raw `card@N=2000` vs. `full@N=200` confounds interference (more distractors) with information loss (less detail per distractor). Isolation strategy:
 
-- At N=200, run `full` at its natural token budget AND a truncated `full` matched to `card`'s per-skill token budget.
-- Alternately: run `card@N=2000` alongside a `compressed_full@N=2000` (full-body summarised to card-length).
-- Target: show whether accuracy drops are driven by interference or by information loss. Reviewer-proofing.
+- Run `card@N=2000` alongside `compressed_full@N=2000` — full-body summarised by a single Claude pass to card-length while preserving constraints (preconditions, platform restrictions, warnings). Semantic compression, not truncation.
+- **Do NOT hard-truncate `full` bodies** to match card token budget (per review P1). Hard truncation systematically drops tail-of-document content — preconditions and constraints typically live at the end of `SKILL.md`, so truncation removes the most discriminative information. Attributing a drop to "less detail" would be systematically biased.
+- Acknowledge openly in the write-up: representation and per-skill token budget are **partially confounded**; `compressed_full` vs. `card` is our best partial disentanglement but not a full causal isolation. Complete isolation of information vs. interference is left to future work.
 
 ### 3.5 ε-dedup and clustering
 
@@ -150,8 +150,7 @@ No other text.
 - `name_only` — `SKILL_k: <name>`
 - `desc_only` — `SKILL_k: <one-line description>` (name stripped; parser still maps `SKILL_k` → canonical id server-side)
 - `full` — `SKILL_k:\n<full SKILL.md body>` separated by `---`
-- `full_truncated` — `full` body truncated to token budget matching `card` (for §3.4 confound control)
-- `compressed_full` — one-pass Claude summary of full body, target length = card; cached
+- `compressed_full` — one-pass Claude summary of full body (preserving preconditions + constraints), target length matched to `card`; cached. Hard-truncation is **not** used (per §3.4).
 
 **Format perturbation** (§3.3): when a trial is flagged `shuffled`, for each skill card independently:
 
@@ -160,7 +159,19 @@ No other text.
 - Optionally reformat bullet points to prose or vice versa.
 - Record the perturbation seed in the pool map for reproducibility.
 
-**Parser.** Strict regex `^\s*<skill[s]?>([^<]+)</skill[s]?>\s*$`. Unparseable responses score 0 and are logged to `runs/<run>/parsed/unparseable.jsonl` for post-hoc inspection.
+**Parser — lenient extraction, not format-gating** (per review P0):
+
+- Extract the **first** `<skill>...</skill>` (selection) or `<skills>...</skills>` (awareness) tag found anywhere in the response, ignoring any preceding or trailing "helpful" prose. Regex: `<skill[s]?>([^<]+)</skill[s]?>` (non-anchored, first match).
+- If **zero** valid tags → `parse_fail = true`, scored 0.
+- If **multiple** tags present → take the first, set `format_warning = true`.
+- **Format-compliance is tracked as a separate metric, not a scoring gate.** Record per response:
+  - `format_clean` — response is exactly `<skill[s]>...</skill[s]>` with no other text.
+  - `format_warning` — tag extracted but surrounding prose exists.
+  - `parse_fail` — no extractable tag.
+
+This decouples "does the model recognise GT?" from "does the model obey output format under pressure?" If format-compliance drops as N grows, we report it as its own finding rather than conflating it with the collapse curve.
+
+All responses (raw + parse outcome) are logged to `runs/<run>/parsed/responses.jsonl`; unparseable subset dumped separately for post-hoc inspection.
 
 ---
 
@@ -174,8 +185,10 @@ Per `(task, pool, seed, probe)`:
 - **Rank distribution** — histogram of GT rank across trials; reveals whether GT is barely-in-top-5 vs. solidly ranked.
 - **Selection Top-1** — returned skill == GT (selection probe).
 - **Selection | Aware** — selection accuracy conditional on awareness pass. **Primary result**, not diagnostic: a divergence between unconditional Selection and Selection|Aware indicates a real pipeline breakdown (agent saw the right skill but didn't use it).
-- **Parse-fail rate** — denominator hygiene.
+- **Parse-fail rate** — denominator hygiene; reported separately, not mixed into accuracy.
+- **Format-compliance rate** — fraction of responses that are `format_clean` (no surrounding prose). Tracked vs. `N` as an independent behavioural signal; a drop with N is itself a finding.
 - **Format-robustness delta** — Δaccuracy between canonical and shuffled pools (§3.3).
+- **Functional Exact Match (FEM)** — (post-hoc, human-annotated subset) — for a sampled subset of "wrong" picks, a human (or cross-model LLM judge calibrated against human) labels whether the non-GT pick is *functionally equivalent* to GT (same tool family, same output, different surface form). Report strict-accuracy and FEM-corrected accuracy side-by-side on the subset to bound the "ε-dedup cannot catch functional equivalence" bias (see §9).
 
 Aggregated:
 
@@ -196,7 +209,7 @@ Regress task-level failure rate on these features; report feature importances.
 
 ### 5.2 Paper figures
 
-1. **Main collapse curve** — Awareness MRR + Top-1 vs. `N`, split by distractor strategy (including `hard_neg_functional` and `adversarial`), with 95% bootstrap CI. Recall@5 shown as faded reference line.
+1. **Main collapse curve** — Awareness MRR + Top-1 vs. `N`, split by distractor strategy (including `hard_neg_functional` and `adversarial`), with 95% bootstrap CI. Recall@5 moved to Appendix (it saturates at ~100% and adds visual clutter).
 2. **Selection vs. Selection | Aware divergence** — both curves on one axis, vs. `N`, at `hard_neg_semantic`. Divergence marks the awareness–usage breakdown.
 3. **Representation ablation** — accuracy at N=50 hard-neg for `name_only` / `desc_only` / `card` / `full`. Quantifies lexical-vs-semantic contribution.
 4. **Representation × N confound control** — `card@N` vs. token-matched `full@N` and `compressed_full@N`. Isolates interference from information loss.
@@ -216,6 +229,7 @@ New driver at `skills retrieval/src/driver.py` (Arch-2: keep work local, reuse u
 - Async with bounded semaphore (8–16 concurrent requests).
 - **Prompt caching** on the pool block — each pool is reused 6× (3 seeds × 2 probes); at N=5000 this saves ~200k cached tokens on 5 of 6 calls.
 - Deterministic: `temperature=0`, seeded pool shuffle.
+- **Context-window pre-flight** (per review): before dispatching a request, tokenise `prompt_template + pool_block + task_desc` with the model's tokenizer and compare against `model_context_limit - 1000` safety margin. If over, skip the cell, log `{task, N, strategy, representation, reason: "context_overflow", tokens}` to `runs/<run>/skipped.jsonl`, and emit a warning. No blind API 400s.
 
 ### 6.2 Data assets (reused as-is)
 
@@ -255,7 +269,17 @@ skills retrieval/
 
 ### 6.4 Budget
 
-After feasibility pruning (`full` representation infeasible at N>200; skip random × small-N cells that v1 already confirmed at ~100%): ~8k API calls. Cost dominated by N=2000 and N=5000 sweeps. Estimate ≤ \$400 on Sonnet 4.6 with caching; revisit after the M1 reproduction run.
+**Phase A (Claude API):** after feasibility pruning (`full` infeasible at N>200; skip v1-confirmed saturated cells): ~8k API calls. Cost dominated by N=2000 and N=5000 sweeps. Estimate ≤ \$400 on Sonnet 4.6 with caching; revisit after the M1 reproduction run.
+
+**Phase B (harbor compute + Claude API inside harbor):** GT labelling at the default 30–50 task subset × 20 candidates × 3 seeds + baseline 3 seeds ≈ 1,900–3,200 harbor runs. Assuming ~15k tokens/run (system prompt + tools + trajectory), **30–50M tokens** on the agent's model alone. On Sonnet 4.6 this is \$300–\$700 just for labelling, before spot-check eval (§7.2). Spot-check adds ~135 more harbor runs (~\$25). **Phase B total estimate: \$350–\$800**, dominated by GT labelling.
+
+**Combined Phase A + Phase B: \$750–\$1,200.** Re-estimate after M1 and M5 pilots.
+
+**Circuit breakers** (per review):
+
+- Per-task labelling cost cap: if a single Terminal-Bench task's labelling spend exceeds \$20, abort remaining candidates for that task; mark as `budget_truncated` in the benchmark metadata.
+- Global Phase B hard cap: \$1,000. On reach, halt new tasks; finish in-flight only.
+- Log running cost to `runs/<run>/cost.jsonl`; dashboard script alerts at 50%/75%/90%.
 
 ---
 
@@ -263,18 +287,20 @@ After feasibility pruning (`full` representation infeasible at N>200; skip rando
 
 ### 7.1 GT labelling pipeline
 
+**Multi-seed arbitration is mandatory** (per review P0). Harbor execution is highly non-deterministic (environment, network, LLM stochasticity); single-run pass/fail cannot anchor GT. If compute is insufficient for multi-seed over the full Terminal-Bench set, **reduce task count before reducing seeds**. Default task budget is a curated 30–50 "high-value" subset chosen for diversity and baseline difficulty.
+
 For each Terminal-Bench task `t`:
 
 1. Embed `t.description` with Qwen-embedding.
-2. `cands = top_k(corpus, t.description, k=20)`.
-3. `baseline_result = harbor.run(t, skills=[])` — run 3 seeds to stabilise.
-4. For `s in cands`: `result = harbor.run(t, skills=[s])`; record pass, steps, tool calls.
-5. Assign each candidate one of three **graded GT labels**:
-   - **`strong_gt`** — candidate passes consistently (≥2/3 seeds) when baseline fails (≤1/3).
-   - **`weak_gt`** — candidate improves on baseline marginally (e.g., passes on 2/3 seeds when baseline passes 1/3, or reduces steps ≥30% on a passing task).
-   - **`equivalent_gt`** — candidate passes at the same rate as baseline but uses a materially different strategy (different tools/commands). Identified by a cheap LLM judge comparing transcripts.
-6. If no candidate has `strong_gt` or `weak_gt`, drop `t`.
-7. Write `{task_id, candidates: [{skill_id, label, evidence}], dropped?}` to `skills retrieval/benchmark/terminal_bench_gt.jsonl`.
+2. `cands = top_k(corpus, t.description, k=20)` (top-k cap reducible to k=10 to fit budget).
+3. `baseline_result = harbor.run(t, skills=[], seeds=3)` — record pass_rate, median steps, tool-call count.
+4. For `s in cands`: `result = harbor.run(t, skills=[s], seeds=3)`; record the same aggregates.
+5. Assign each candidate one of three **graded GT labels**, using 2/3-pass as the pass threshold:
+   - **`strong_gt`** — candidate passes ≥2/3 seeds **and** baseline passes ≤1/3 seeds.
+   - **`weak_gt`** — candidate passes 2/3 seeds when baseline passes 1/3 (marginal improver), **or** both pass ≥2/3 but candidate's median steps ≥30% lower.
+   - **`equivalent_gt`** — both pass ≥2/3 seeds at ~equal step count, but candidate's transcripts use a materially different strategy (different tools/commands). Identified by an LLM judge (demoted to post-hoc signal; inter-seed agreement reported if feasible).
+6. If no candidate earns `strong_gt` or `weak_gt`, drop `t`.
+7. Write `{task_id, candidates: [{skill_id, label, seed_pass_counts, seed_step_medians, evidence}], dropped?}` to `skills retrieval/benchmark/terminal_bench_gt.jsonl`.
 
 **Bias acknowledgements and mitigations** (per review):
 
@@ -286,11 +312,25 @@ For each Terminal-Bench task `t`:
 
 ### 7.2 Spot-check eval
 
-K ≈ 15 labelled tasks × 3 cells of interest (`hard_neg@50`, `hard_neg@1000`, `random@1000`) × 3 seeds. Run full harbor with the controlled pool, record task pass + which skill the agent invoked. Correlate against Phase A's per-task awareness accuracy.
+K ≈ 15 labelled tasks × 3 cells of interest (`hard_neg_semantic@50`, `hard_neg_semantic@1000`, `random@1000`) × 3 seeds. Run full harbor with the controlled pool, record:
 
-### 7.3 Collaboration
+- Task pass / step count.
+- **Full skill-switching trajectory**: every `<skill>`-tag invocation the agent emits during the run, in order, with timestamps and the tool-call window around each. This is the key artefact for addressing the **ecological validity caveat** (per review): Phase A is static single-turn recognition; Phase B is dynamic, multi-turn, with retry and reflection. An agent that picks the wrong skill first but self-corrects tells a very different story than one that never surfaced GT at all.
 
-Coordinate with Hanwen on harbor configuration and compute allocation. Open point: alternative "improvement" definitions (aggregate pass-rate over multiple seeds vs. single-run). Default to single-run pass + step tiebreak; document if revised.
+### 7.3 Phase A → B correlation — interpretation protocol
+
+Four regions in the Phase-A-accuracy × Phase-B-success scatter, each with a different paper-level implication:
+
+- **A↑ B↑** — expected; Phase A validated as cheap proxy.
+- **A↓ B↓** — expected; recognition bottleneck is real.
+- **A↓ B↑** — Agent's ReAct loop recovers. Requires per-trajectory analysis: was it self-correction (invoked GT on a later turn) or "alternative-path success" (solved without ever using GT)? Both are interesting but break the simple proxy claim — report explicitly.
+- **A↑ B↓** — Agent recognises GT but fails to use it, or uses it incorrectly. Contradicts Phase A's clean recognition signal — may indicate task ambiguity or GT mislabel.
+
+Pre-commit to this four-quadrant framing in the analysis plan so the narrative is not cherry-picked post-hoc.
+
+### 7.4 Collaboration
+
+Coordinate with Hanwen on harbor configuration and compute allocation. Revised default (§7.1): 3-seed pass-rate arbitration replaces single-run; single-run is insufficient.
 
 ---
 
@@ -305,21 +345,24 @@ Coordinate with Hanwen on harbor configuration and compute allocation. Open poin
 | M3 | Scale sweep `N ∈ {2000, 5000}`; representation ablation (`name_only`/`desc_only`/`card`/`full`) at N=50 hard-neg; confound control (token-matched `full`) at N=200 | M2 | 2 d |
 | M3.5 | Adversarial-distractor mini-experiment at N=50 (LLM-generated distractors) | M1.5 | 1 d |
 | M4 | Phase A paper figures + metric tables + per-task difficulty regression | M3, M3.5 | 1.5 d |
-| M5 | Terminal-Bench GT labelling pipeline with graded labels (coord w/ Hanwen) | M1 | 5 d |
-| M6 | Phase B spot-check eval + Phase A→B correlation analysis | M4, M5 | 3 d |
+| M4.5 | FEM post-hoc analysis — human-label sampled "wrong" picks for functional equivalence; report FEM-corrected accuracy | M4 | 1 d |
+| M5 | Terminal-Bench GT labelling with 3-seed arbitration on 30–50 task subset (coord w/ Hanwen) | M1 | 7 d |
+| M6 | Phase B spot-check + skill-switching trajectory analysis + four-quadrant correlation | M4, M5 | 3 d |
 | M7 | Benchmark metadata (`skillsbench_gt.jsonl`, `terminal_bench_gt.jsonl` with graded labels) pushed to project GitHub | M5 | 0.5 d |
 
 ---
 
-## 9. Risks
+## 9. Risks & limitations
 
-- **Context-window clip at N=5000.** Measure token usage of `card` representation at N=5000 before committing; fall back to N=3000 if needed.
-- **ε-dedup tuning.** Too aggressive → removes legitimate distractors; too loose → distractors are near-duplicates of GT and "wrong" picks are defensible. Human spot-check on 20 samples is the gate.
+- **Context-window clip at N=5000.** Context pre-flight (§6.1) catches this; fall back to N=3000 if `card@5000` overflows on target model. `full@N>200` expected to overflow; cells will be auto-skipped.
+- **ε-dedup catches lexical, not functional equivalence.** Cosine similarity cannot tell that "Download via AWS CLI" and "Download via Boto3" are functionally equivalent. Mitigation: **Functional Exact Match (FEM) post-hoc analysis** — human-label a subset of "wrong" picks for functional equivalence; report strict vs. FEM-corrected accuracy side-by-side. Explicit Limitation section in paper.
 - **HDBSCAN clustering instability.** Functional hard-negs depend on cluster quality. Sanity-check: inspect 5 clusters manually; if clusters are incoherent, fall back to k-means or GMM and note.
-- **Adversarial distractor quality.** LLM-generated distractors may be obviously wrong (insufficiently adversarial) or accidentally correct. Second-pass LLM judge filters; keep a human-annotated subset to calibrate.
-- **Phase B compute.** GT labelling for Terminal-Bench requires up to 20 × 3 seeds × task_count harbor runs. If compute is the bottleneck, restrict to a curated subset (e.g., 50 tasks) and note as scope limitation.
-- **Graded-GT label noise.** `equivalent_gt` depends on an LLM judge of strategy difference — brittle. Report inter-judge agreement if feasible; otherwise demote to post-hoc analysis only.
-- **Multi-GT ambiguity surfacing during labelling.** Plan was single-GT v1; graded labels (§7.1) partially absorb this. Revisit if >15% of tasks have multiple `strong_gt` candidates.
+- **Adversarial distractor bias.** Cross-model generation (§3.1 `adversarial`) partially mitigates single-model bias, but results remain "adversarial under this construction", not a general upper bound. Stated as limitation.
+- **Phase B compute.** Multi-seed arbitration is mandatory (§7.1); reduce task count before seed count. Default 30–50 high-value subset. Budget circuit-breakers in §6.4.
+- **Phase A vs. Phase B ecological gap.** Phase A is static single-turn; Phase B is dynamic multi-turn. Skill-switching trajectory logging (§7.2) + four-quadrant interpretation protocol (§7.3) are the mitigations. Results will explicitly distinguish "Phase A as predictive proxy" from "Phase B as ground truth" — not conflate.
+- **Graded-GT label noise.** `equivalent_gt` depends on an LLM judge; demoted to post-hoc signal only. Report inter-judge agreement if feasible.
+- **Multi-GT ambiguity surfacing during labelling.** Graded labels (§7.1) partially absorb this. Revisit if >15% of tasks have multiple `strong_gt` candidates.
+- **Parse-fail confound.** Lenient parser (§4) separates format compliance from recognition accuracy; format-compliance tracked as its own metric. Protects the collapse curve from being a "format obedience curve".
 - **Model drift.** Sonnet 4.6 may be deprecated mid-experiment. Lock model version in `runs/INDEX.jsonl` and re-run affected conditions if replaced.
 
 ---
