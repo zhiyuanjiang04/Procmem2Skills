@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B1_C1.1",
+  "skill_concept": "Configure, patch, and compile C/C++ or system-level software from source using make/cmake/gcc, resolving toolchain errors, missing dependencies, and platform-specific build issues.",
+  "n_tasks": 7,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Most tasks share a core build-from-source procedure (fetch source, patch for platform compatibility, configure, compile, install) and would benefit from the candidate skill, but caffe-cifar-10 extends well beyond building into ML training orchestration, dataset preparation, and numerical validation, while build-tcc-qemu and build-linux-kernel-qemu add QEMU/kernel-specific steps that deviate substantially from a generic C/C++ build procedure.",
+  "weakest_link": "caffe-cifar-10",
+  "weakest_link_reason": "This task requires not just building Caffe from source but also downloading and preprocessing CIFAR-10 data, running training for a precise iteration count, capturing output, and validating accuracy thresholds — most of the work is ML workflow, not toolchain compilation.",
+  "_meta": {
+    "duration_ms": 6291,
+    "cost_usd": 0.05125585
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "batch_idx": 5,
+  "n_tasks": 1,
+  "parsed": {
+    "clusters": [],
+    "unclustered": [
+      "write-compressor"
+    ]
+  },
+  "meta": {
+    "duration_ms": 4773,
+    "total_cost_usd": 0.0069178,
+    "session_id": "0b4f9bf1-0c71-4919-8536-bf0eacf41246"
+  }
+}

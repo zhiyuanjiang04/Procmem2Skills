@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B4_C12",
+  "coarse_skill_concept": "Install and configure a domain-specific ML library (Whisper, SAM, fastText), prepare input data in the required format, execute inference or training, and collect structured outputs.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "speech-to-text",
+      "applicable": "YES",
+      "reason": "Follows install-Whisper → load-audio → run-inference → write-text exactly as described by the candidate skill."
+    },
+    {
+      "task_id": "sam-cell-seg",
+      "applicable": "PARTIAL",
+      "reason": "SAM installation and bbox-prompted inference fit the skill, but the dominant complexity is writing a reusable argparse script with OpenCV contour extraction and max-suppression post-processing — a distinct CV mask-manipulation procedure the skill does not cover."
+    },
+    {
+      "task_id": "train-fasttext",
+      "applicable": "YES",
+      "reason": "Follows git-clone-and-make → convert-parquet-to-label-format → fasttext supervised → save model.bin exactly as described by the candidate skill."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Install a domain-specific ML library (via pip/git+make), convert raw input data into the library's required format, invoke inference or supervised training from a script or CLI, and persist the result to a specified output path.",
+      "member_ids": [
+        "speech-to-text",
+        "train-fasttext"
+      ],
+      "reasoning": "Both tasks reduce to: (1) non-trivial library setup (openai-whisper with ffmpeg; fastText built from source), (2) a small data-prep step (load MP3 / convert parquet to __label__ format), (3) a single inference or training call, and (4) writing one output file. No complex post-processing or reusable-script requirements appear."
+    }
+  ],
+  "removed_to_unclustered": [
+    "sam-cell-seg"
+  ],
+  "_meta": {
+    "duration_ms": 32018,
+    "cost_usd": 0.05953685
+  }
+}

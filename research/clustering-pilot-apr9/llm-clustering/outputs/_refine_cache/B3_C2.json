@@ -1,0 +1,56 @@
+{
+  "source_coarse_id": "B3_C2",
+  "coarse_skill_concept": "Loading heterogeneous structured data sources and applying SQL-style transformations, joins, and aggregations using pandas, DuckDB, or PostgreSQL to produce a clean output dataset.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "pandas-etl",
+      "applicable": "PARTIAL",
+      "reason": "Follows an ETL shape but the core skill required is regex-based string extraction and date formatting, not SQL-style joins or aggregations."
+    },
+    {
+      "task_id": "pandas-sql-query",
+      "applicable": "YES",
+      "reason": "Directly requires composing SQL with a JOIN, GROUP BY aggregation, and ROW_NUMBER window function inside a DuckDB pipeline."
+    },
+    {
+      "task_id": "multi-source-data-merger",
+      "applicable": "PARTIAL",
+      "reason": "Loads heterogeneous file formats, but the decisive logic is priority-based conflict resolution and schema renaming, not SQL-style joins or aggregations."
+    },
+    {
+      "task_id": "organization-json-generator",
+      "applicable": "PARTIAL",
+      "reason": "Reads multiple CSVs and applies field-level transforms, but the target output is a nested JSON hierarchy following a schema, not a flat query result dataset."
+    },
+    {
+      "task_id": "postgres-csv-clean",
+      "applicable": "YES",
+      "reason": "Directly uses PostgreSQL to execute SQL deduplication, normalization, and filtered export against a structured table."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Composing and executing SQL queries (joins, window functions, aggregations, deduplication, type normalization) against structured data in DuckDB or PostgreSQL to produce a query-result dataset.",
+      "member_ids": [
+        "pandas-sql-query",
+        "postgres-csv-clean"
+      ],
+      "reasoning": "Both tasks require writing non-trivial SQL: one uses DuckDB with a JOIN and ROW_NUMBER window function, the other uses PostgreSQL with DELETE deduplication and UPDATE normalization. The reusable skill is SQL query composition and execution inside a relational engine, not Python data wrangling."
+    },
+    {
+      "skill_concept": "Reading heterogeneous file formats (CSV, JSON, Parquet) in Python, applying field-level transformations (regex extraction, type coercion, schema renaming, priority-based conflict resolution, nested structure building), and writing a structured output file.",
+      "member_ids": [
+        "pandas-etl",
+        "multi-source-data-merger",
+        "organization-json-generator"
+      ],
+      "reasoning": "All three tasks are solved by Python code that reads one or more structured files, applies field-level logic (regex, renaming, date formatting, priority merge, hierarchy nesting), and writes an output file. None of them hinge on SQL query composition; the shared debugging heuristics are about Python data wrangling, schema mapping, and output format conformance."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 51756,
+    "cost_usd": 0.0897556
+  }
+}

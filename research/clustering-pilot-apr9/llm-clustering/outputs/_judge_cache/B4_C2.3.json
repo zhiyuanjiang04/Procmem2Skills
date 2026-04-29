@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B4_C2.3",
+  "skill_concept": "Read vulnerable framework or application source code, apply a minimal targeted patch that eliminates the vulnerability class at the framework level, and rebuild the project so the fix takes effect at runtime.",
+  "n_tasks": 2,
+  "verdict": "ACCEPT",
+  "verdict_reason": "Both tasks follow the same procedure: locate vulnerable source in a vendored/local framework, apply a minimal targeted patch (escaping untrusted input as plain text for SSTI; stripping path components for directory traversal), and rebuild the project so the fix takes effect at runtime. The tools overlap (source editing, build systems) and the failure modes are analogous.",
+  "weakest_link": "vul-flink",
+  "weakest_link_reason": "Flink requires a full Maven multi-module rebuild after patching Java source, adding significant build complexity and environment dependency compared to the Python in-place file edit needed for Flask.",
+  "_meta": {
+    "duration_ms": 5224,
+    "cost_usd": 0.02904285
+  }
+}

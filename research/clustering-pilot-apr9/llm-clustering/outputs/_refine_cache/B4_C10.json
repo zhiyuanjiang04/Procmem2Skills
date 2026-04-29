@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C10",
+  "coarse_skill_concept": "Fit a parametric physical or statistical model to experimental measurements using domain-specific curve-fitting libraries (scipy.optimize.curve_fit or Stan/PyStan), then export the estimated parameters.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "raman-fitting",
+      "applicable": "YES",
+      "reason": "Task directly requires defining a Lorentzian model function, calling scipy.optimize.curve_fit on experimental spectral data, and serialising the four fitted parameters to JSON."
+    },
+    {
+      "task_id": "rstan-to-pystan",
+      "applicable": "NO",
+      "reason": "The dominant skill is R-to-Python code translation with RStan→PyStan API migration (parameter renaming, iteration-count semantics, ARM build-from-source install); fitting experimental data with a user-defined model function is not involved."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Fit a parametric physical model to experimental measurements using scipy.optimize.curve_fit: define the model function, supply initial guesses, call curve_fit, and serialise the estimated parameters to a file.",
+      "member_ids": [
+        "raman-fitting"
+      ],
+      "reasoning": "This task is entirely about applying scipy.optimize.curve_fit to spectral data with a known analytical form (Lorentzian) and exporting the result; the candidate skill maps exactly onto it."
+    },
+    {
+      "skill_concept": "Migrate a Stan Bayesian model from RStan (R) to PyStan 3.x: read the R script, map RStan sampling hyperparameters to PyStan equivalents (adapt_delta→delta, iter split into num_warmup+num_samples, etc.), build and install PyStan/httpstan from source when needed, run posterior sampling, and export posterior means to CSV.",
+      "member_ids": [
+        "rstan-to-pystan"
+      ],
+      "reasoning": "The task's core challenge is code translation and API-level migration between two Stan interfaces, not defining or fitting a new model to raw experimental measurements; it belongs in its own cluster."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 25488,
+    "cost_usd": 0.05635534999999999
+  }
+}

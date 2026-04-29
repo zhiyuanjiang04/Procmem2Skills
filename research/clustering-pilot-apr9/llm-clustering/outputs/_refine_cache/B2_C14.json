@@ -1,0 +1,33 @@
+{
+  "source_coarse_id": "B2_C14",
+  "coarse_skill_concept": "Load tabular time-series data with pandas, handle missing values or heterogeneous date formats, and compute aggregate statistics over date ranges.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "heterogeneous-dates",
+      "applicable": "YES",
+      "reason": "Directly applies the full candidate procedure: pd.read_csv, heterogeneous date format normalization via pd.to_datetime, inner merge on date, and mean aggregation."
+    },
+    {
+      "task_id": "flood-monitoring-basic",
+      "applicable": "NO",
+      "reason": "Uses the raw csv module (not pandas), performs custom linear interpolation with edge-case fill logic, and the core computation is consecutive-threshold event detection — not date-range aggregation."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Load two CSVs with heterogeneous date formats, normalize dates with pd.to_datetime format inference, merge on date key, and compute a scalar aggregate statistic.",
+      "member_ids": [
+        "heterogeneous-dates"
+      ],
+      "reasoning": "Only this task exercises the full candidate skill: pandas ingestion, mixed-format date normalization, join, and aggregate — matching the coarse-pass procedure end-to-end."
+    }
+  ],
+  "removed_to_unclustered": [
+    "flood-monitoring-basic"
+  ],
+  "_meta": {
+    "duration_ms": 19783,
+    "cost_usd": 0.04624285
+  }
+}

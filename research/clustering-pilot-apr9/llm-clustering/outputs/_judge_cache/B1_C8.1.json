@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B1_C8.1",
+  "skill_concept": "Implement missing PyTorch neural network components or reinforcement learning training loops, and diagnose common PyTorch training failures such as gradient issues, loss plateaus, or divergence.",
+  "n_tasks": 3,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "The skill covers attention-mil (implement missing PyTorch components) and cartpole-rl-training (implement a full RL training loop) well, but classifier-debug requires diagnosing a subtle training bug from symptoms alone — a fundamentally different investigative procedure rather than implementation. While debugging PyTorch failures is nominally part of the candidate skill, the debug task demands a root-cause analysis workflow that diverges substantially from the 'implement components/loops' procedure shape shared by the other two.",
+  "weakest_link": "classifier-debug",
+  "weakest_link_reason": "This task is purely diagnostic — the agent must identify a hidden bug (likely a loss/label mismatch or data pipeline issue) from loss and accuracy traces without writing any new model components, whereas the other tasks are construction tasks requiring forward-pass or training-loop implementation.",
+  "_meta": {
+    "duration_ms": 9235,
+    "cost_usd": 0.044869349999999995
+  }
+}

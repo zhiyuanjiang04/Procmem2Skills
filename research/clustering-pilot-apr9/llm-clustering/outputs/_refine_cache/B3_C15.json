@@ -1,0 +1,44 @@
+{
+  "source_coarse_id": "B3_C15",
+  "coarse_skill_concept": "Implementing a named classical algorithm (Runge-Kutta ODE integration, Wasserstein optimal transport, BFS/A* state-space search) in Python from a mathematical or algorithmic specification, then verifying correctness against reference outputs.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "ode-solver-rk4",
+      "applicable": "YES",
+      "reason": "Directly requires implementing a numerical iterative update rule (RK4) from a mathematical recurrence, with floating-point step-size management and accuracy verification."
+    },
+    {
+      "task_id": "optimal-transport",
+      "applicable": "YES",
+      "reason": "Directly requires implementing the Sinkhorn iterative scaling algorithm from its mathematical definition, with convergence tolerance and numerical stability management."
+    },
+    {
+      "task_id": "puzzle-solver",
+      "applicable": "PARTIAL",
+      "reason": "BFS is a much simpler loop than RK4/Sinkhorn; the dominant challenge here is discrete exact-search state tracking and multi-file output format compliance (SHA256 layer files, TSV/CSV), not numerical algorithm translation."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Implementing a numerical iterative algorithm (fixed-step ODE integrator, entropic regularized transport) from a mathematical recurrence or optimization formulation in Python, managing floating-point step size or convergence tolerances, and verifying output against a quantitative accuracy threshold.",
+      "member_ids": [
+        "ode-solver-rk4",
+        "optimal-transport"
+      ],
+      "reasoning": "Both tasks require translating a continuous mathematical update rule into a Python loop, handling numerical precision (step-size ceiling, regularization, convergence tol), and producing outputs checked against a floating-point reference. Experience with one transfers directly to the other."
+    },
+    {
+      "skill_concept": "Implementing BFS over a discrete state space to find an optimal path, reconstructing and recording per-depth frontiers, and writing multiple structured output artifacts (TSV path file, CSV layer counts, per-layer text files with SHA256 checksums).",
+      "member_ids": [
+        "puzzle-solver"
+      ],
+      "reasoning": "The core algorithm is a textbook BFS queue loop—far simpler than numerical iteration—but the task's real complexity is producing exact, hash-verified layer files and a strict multi-format output suite. This is a distinct procedure not shared with the numerical tasks."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 36353,
+    "cost_usd": 0.0724646
+  }
+}

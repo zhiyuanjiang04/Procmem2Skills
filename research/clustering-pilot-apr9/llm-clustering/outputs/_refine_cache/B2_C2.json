@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B2_C2",
+  "coarse_skill_concept": "Attack the FEAL block cipher with chosen-plaintext analysis—collect encrypt-oracle queries, then exploit differential or linear relationships among plaintexts and ciphertexts to recover round keys.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "feal-differential-cryptanalysis",
+      "applicable": "YES",
+      "reason": "Task explicitly requires a differential chosen-plaintext attack via an encrypt oracle, matching the candidate skill exactly."
+    },
+    {
+      "task_id": "feal-linear-cryptanalysis",
+      "applicable": "NO",
+      "reason": "Task uses a static known-plaintext file (no oracle interaction), requires linear approximation analysis rather than differential pairs, and targets all round keys via a different mathematical procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Differential cryptanalysis on FEAL: query a chosen-plaintext encrypt oracle with structured XOR-difference plaintext pairs, propagate the input difference through the round function, and use ciphertext-difference statistics to filter and recover a target round key.",
+      "member_ids": [
+        "feal-differential-cryptanalysis"
+      ],
+      "reasoning": "This task specifically requires oracle-driven chosen-plaintext collection and difference-propagation analysis; the solution confirms this approach."
+    },
+    {
+      "skill_concept": "Linear cryptanalysis on FEAL: exploit linear approximations of the round function over a fixed set of known plaintext-ciphertext pairs, accumulate bit-correlation biases across rounds, and use the reduced 20-bit seed space to brute-force and recover each round key, then decrypt a target file.",
+      "member_ids": [
+        "feal-linear-cryptanalysis"
+      ],
+      "reasoning": "This task operates on a pre-existing static pair file (no oracle), uses bias counting over linear approximations, and requires full key recovery followed by decryption—a fundamentally different procedure from differential cryptanalysis."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 20634,
+    "cost_usd": 0.050807349999999994
+  }
+}

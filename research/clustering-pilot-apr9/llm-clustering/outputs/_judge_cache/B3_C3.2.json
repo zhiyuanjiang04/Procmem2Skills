@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B3_C3.2",
+  "skill_concept": "Recalling or deriving a complete Zork command walkthrough from game domain knowledge and writing the terminal's final output verbatim to a result file, with variant speedrun vs. max-score path selection.",
+  "n_tasks": 2,
+  "verdict": "ACCEPT",
+  "verdict_reason": "Both tasks require the same core knowledge — a Zork command walkthrough and the game's final output text — differing only in which ending string to write (max-score 350-point ending vs. speedrun minimal ending). A single skill encoding both path variants and the file-write mechanic covers both tasks completely.",
+  "weakest_link": "play-zork",
+  "weakest_link_reason": "The max-score path requires knowing the full 350-point walkthrough rather than just the shortest route to an ending, making it marginally more demanding of complete game domain knowledge.",
+  "_meta": {
+    "duration_ms": 6617,
+    "cost_usd": 0.024637850000000003
+  }
+}

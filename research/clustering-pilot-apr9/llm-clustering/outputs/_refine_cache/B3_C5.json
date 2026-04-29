@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B3_C5",
+  "coarse_skill_concept": "Recovering a PyTorch model architecture from saved weights or fixing broken training code, then building a working inference pipeline.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "pytorch-model-recovery",
+      "applicable": "YES",
+      "reason": "Directly requires reading a state_dict to infer layer shapes, reconstructing a PyTorch Module subclass, and fine-tuning a specific layer — the exact procedure described by the candidate skill."
+    },
+    {
+      "task_id": "pytorch-model-cli",
+      "applicable": "NO",
+      "reason": "PyTorch is used only to peek at weight shapes; the core challenge is implementing a forward pass in C and compiling a binary with lodepng/cJSON — a fundamentally different skill from PyTorch architecture recovery."
+    },
+    {
+      "task_id": "mnist-learning-fix",
+      "applicable": "PARTIAL",
+      "reason": "Involves diagnosing a broken training loop, but the framework is pure NumPy (no PyTorch Module API or tensor semantics), and the fix targets parameter initialization rather than architecture recovery or inference wiring."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Reverse-engineer a neural network architecture from a PyTorch state_dict, reconstruct it as a nn.Module subclass with matching layer shapes, and selectively fine-tune specific parameter groups while freezing others.",
+      "member_ids": [
+        "pytorch-model-recovery"
+      ],
+      "reasoning": "Only this task requires the full candidate-skill procedure: inspecting state_dict keys and tensor shapes to infer architecture, implementing RecoveredModel, loading weights, and optimizing a subset of parameters."
+    }
+  ],
+  "removed_to_unclustered": [
+    "pytorch-model-cli",
+    "mnist-learning-fix"
+  ],
+  "_meta": {
+    "duration_ms": 43011,
+    "cost_usd": 0.07177760000000001
+  }
+}

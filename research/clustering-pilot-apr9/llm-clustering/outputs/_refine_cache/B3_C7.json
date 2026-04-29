@@ -1,0 +1,51 @@
+{
+  "source_coarse_id": "B3_C7",
+  "coarse_skill_concept": "Installing, configuring, and starting multi-component network service daemons by editing config files, initializing backend stores, starting processes, and verifying live endpoints.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "mailman",
+      "applicable": "YES",
+      "reason": "Canonical multi-component service standup: edit postfix + mailman3 configs, initialize SQLite backend, start both daemons, verify SMTP routing."
+    },
+    {
+      "task_id": "nginx-request-logging",
+      "applicable": "YES",
+      "reason": "Fits the install-configure-start-verify loop exactly: edit nginx.conf and a server block, restart nginx, probe localhost:8080 with curl."
+    },
+    {
+      "task_id": "qemu-alpine-ssh",
+      "applicable": "NO",
+      "reason": "Requires a fundamentally different skill: booting a VM with QEMU and driving its serial console interactively via expect scripts to install and configure SSH inside the guest OS."
+    },
+    {
+      "task_id": "pypi-server",
+      "applicable": "PARTIAL",
+      "reason": "The pypiserver startup fits the skill, but roughly half the task is Python package authoring and the build/upload toolchain (setuptools, twine), which is a distinct skill not covered by the candidate concept."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Configuring and starting network service daemons by editing config files, initializing any required backend state, starting processes, and verifying live endpoints via a protocol probe.",
+      "member_ids": [
+        "mailman",
+        "nginx-request-logging"
+      ],
+      "reasoning": "Both tasks follow the same procedure: read or create config files with specific parameters, optionally initialize backend state (postfix transport maps + mailman SQLite DB for mailman; document root files for nginx), start the daemon(s), and confirm the service is live (email routing / HTTP curl). The debugging loop — check config syntax, inspect logs, retry — is identical."
+    },
+    {
+      "skill_concept": "Authoring a Python package with a defined public API, building distribution artifacts with setuptools/build, and publishing them to a locally hosted PyPI-compatible server.",
+      "member_ids": [
+        "pypi-server"
+      ],
+      "reasoning": "The dominant challenge is package development (module structure, __init__.py API, pyproject.toml/setup.py metadata, versioning) and the build+upload pipeline (python -m build, twine upload). Standing up pypiserver is a secondary step and does not require multi-component daemon coordination."
+    }
+  ],
+  "removed_to_unclustered": [
+    "qemu-alpine-ssh"
+  ],
+  "_meta": {
+    "duration_ms": 38072,
+    "cost_usd": 0.07742860000000001
+  }
+}

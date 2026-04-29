@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B3_C9",
+  "coarse_skill_concept": "Converting legacy scientific code from a source language or framework (MATLAB, old Python APIs, NEURON) to a modern Python equivalent while validating that numerical outputs remain equivalent.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "matlab-python-conversion",
+      "applicable": "YES",
+      "reason": "Canonical instance of the skill: reads MATLAB source semantics, maps to equivalent numpy/imageio calls, runs both under Octave and Python, and explicitly diffs numerical outputs."
+    },
+    {
+      "task_id": "modernize-scientific-stack",
+      "applicable": "NO",
+      "reason": "This is a Python 2→3 syntax/API port (ConfigParser rename, pathlib, pandas encoding); the legacy script is broken and cannot run, so there is no 'run both and compare' step, and no cross-domain numerical-semantics mapping is required."
+    },
+    {
+      "task_id": "neuron-to-jaxley-conversion",
+      "applicable": "YES",
+      "reason": "Requires reading NEURON conductance parameters and reversal potentials, mapping them to Jaxley Channel/Pump API calls region-by-region, and producing a biophysically equivalent model—exactly the numerical-semantics-mapping procedure the skill describes."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Migrate domain-specific scientific numerical code across frameworks or languages (MATLAB→NumPy, NEURON→Jaxley) by mapping source numerical semantics and API calls to modern Python equivalents, then validating agreement between reference and ported outputs.",
+      "member_ids": [
+        "matlab-python-conversion",
+        "neuron-to-jaxley-conversion"
+      ],
+      "reasoning": "Both tasks demand understanding of domain numerical semantics (image-stack axis conventions; ion-channel conductances and reversal potentials), a deliberate API-level translation (imageio+numpy for MATLAB imread/cat; Jaxley Channel/Pump for NEURON insert/set), and validation that the ported code replicates the reference behaviour. Python 2→3 modernization does not share this procedure."
+    }
+  ],
+  "removed_to_unclustered": [
+    "modernize-scientific-stack"
+  ],
+  "_meta": {
+    "duration_ms": 38760,
+    "cost_usd": 0.06609185000000001
+  }
+}

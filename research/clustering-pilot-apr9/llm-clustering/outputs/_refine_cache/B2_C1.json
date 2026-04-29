@@ -1,0 +1,56 @@
+{
+  "source_coarse_id": "B2_C1",
+  "coarse_skill_concept": "Load, configure, and run HuggingFace transformer models (with LoRA adapters or speculative decoding) for inference or fine-tuning using the transformers + torch + PEFT stack.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "hf-lora-adapter",
+      "applicable": "YES",
+      "reason": "Core procedure is exactly loading a HF base model, attaching a pre-trained LoRA adapter via PeftModel, merging weights, and running inference — the candidate skill verbatim."
+    },
+    {
+      "task_id": "hf-model-inference",
+      "applicable": "NO",
+      "reason": "HF model loading is trivial here; the dominant deliverable is a Flask REST API service with proper routing, error handling, and background process management — a web-serving skill, not a model-configuration skill."
+    },
+    {
+      "task_id": "hf-train-lora-adapter",
+      "applicable": "PARTIAL",
+      "reason": "Shares PEFT/LoRA setup (LoraConfig, get_peft_model, target_modules) with hf-lora-adapter, but the primary procedure is a supervised fine-tuning loop with Trainer and dataset collation, not loading a pre-trained adapter for inference."
+    },
+    {
+      "task_id": "llm-spec-decoding",
+      "applicable": "NO",
+      "reason": "Loading two HF models is boilerplate; the dominant skill is implementing the speculative decoding acceptance-rate algorithm (draft generation, sequential token verification, context updates) — an entirely different algorithmic procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Configure and apply LoRA adapters to HuggingFace models using the PEFT library — covering both loading pre-trained adapters (PeftModel.from_pretrained + merge_and_unload) and training new adapters from scratch (LoraConfig + get_peft_model + Trainer fine-tuning loop).",
+      "member_ids": [
+        "hf-lora-adapter",
+        "hf-train-lora-adapter"
+      ],
+      "reasoning": "Both tasks require understanding LoRA hyperparameters (r, alpha, target_modules), wiring PEFT into HuggingFace AutoModel classes, and saving/loading PEFT artifacts. The knowledge transfers directly: setting up a LoraConfig and knowing which attention modules to target is the shared reusable core, even though one task applies a pre-trained adapter while the other trains one."
+    },
+    {
+      "skill_concept": "Serve a HuggingFace transformer model as a persistent Flask REST API with structured JSON request/response handling and background process management.",
+      "member_ids": [
+        "hf-model-inference"
+      ],
+      "reasoning": "The primary skill here is web service architecture (Flask routing, input validation, error responses, 0.0.0.0 binding, background execution), with HF model loading as minor boilerplate. This does not transfer to or from the LoRA or speculative-decoding tasks."
+    },
+    {
+      "skill_concept": "Implement the speculative decoding acceptance-rate algorithm: generate a full target sequence greedily, then simulate a draft-model loop that proposes K tokens per step, verifies against the target sequence token-by-token, and tracks accepted vs. rejected drafts.",
+      "member_ids": [
+        "llm-spec-decoding"
+      ],
+      "reasoning": "The task is almost entirely about correctly coding the speculative decoding loop (draft generation, sequential comparison, context update on rejection, counting). HF model loading is two lines of boilerplate shared with every other task and provides no meaningful clustering signal."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 65587,
+    "cost_usd": 0.11112185
+  }
+}

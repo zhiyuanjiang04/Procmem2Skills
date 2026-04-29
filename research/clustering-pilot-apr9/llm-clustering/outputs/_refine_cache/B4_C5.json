@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C5",
+  "coarse_skill_concept": "Implement distributed model parallelism strategies using torch.distributed primitives, splitting computation across devices via tensor sharding or pipeline stages.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "torch-pipeline-parallelism",
+      "applicable": "PARTIAL",
+      "reason": "The candidate skill covers the distributed primitives surface but the core procedure here is layer-level partitioning + P2P send/recv between adjacent pipeline stages with AFAB microbatch scheduling, not tensor sharding or collective communication."
+    },
+    {
+      "task_id": "torch-tensor-parallelism",
+      "applicable": "PARTIAL",
+      "reason": "The candidate skill covers the distributed primitives surface but the core procedure here is intra-layer weight matrix sharding (column/row) with all_gather and all_reduce collectives and custom autograd functions, not P2P stage communication or microbatch scheduling."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Implement pipeline-parallel training by partitioning model layers across ranks and exchanging hidden-state activations and gradients between adjacent stages using torch.distributed P2POp (isend/irecv) with all-forward-all-backward microbatch scheduling.",
+      "member_ids": [
+        "torch-pipeline-parallelism"
+      ],
+      "reasoning": "This task's reusable procedure is specifically: balanced layer partitioning, P2P point-to-point communication between neighboring ranks, and AFAB ordering (store all forward inputs/outputs, then replay backward). It does not involve collective communication or weight sharding."
+    },
+    {
+      "skill_concept": "Implement tensor-parallel linear layers by sharding weight matrices across ranks (column-parallel via all_gather, row-parallel via all_reduce) and wrapping the communication in custom torch.autograd.Function classes to propagate gradients correctly.",
+      "member_ids": [
+        "torch-tensor-parallelism"
+      ],
+      "reasoning": "This task's reusable procedure is specifically: slicing master_weight along the correct axis per rank, registering custom forward/backward autograd functions that call dist.all_gather or dist.all_reduce, and handling bias sharding. It does not involve P2P ops or microbatch pipelines."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 22998,
+    "cost_usd": 0.0517066
+  }
+}

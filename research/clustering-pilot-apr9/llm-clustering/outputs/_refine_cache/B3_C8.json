@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B3_C8",
+  "coarse_skill_concept": "Building C/C++/Fortran software from source using cmake or make, including updating compiler flags, adding cross-compilation toolchain targets, or fixing stale build rules.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "magsac-install",
+      "applicable": "PARTIAL",
+      "reason": "cmake is used for one sub-step (building OpenCV from source), but the dominant challenges are fixing a pybind11 API incompatibility in bindings.cpp and wiring up a Python package install from a local path—neither of which belongs to the cmake/make diagnosis loop."
+    },
+    {
+      "task_id": "modernize-fortran-build",
+      "applicable": "YES",
+      "reason": "Exactly matches the skill: read the Makefile, identify the wrong compiler (ifort) and stale flag (-fast), patch with sed, and rebuild with make."
+    },
+    {
+      "task_id": "make-doom-for-mips",
+      "applicable": "YES",
+      "reason": "Requires patching the Makefile to add a MIPS cross-compilation toolchain (CC, LLVM_TARGET, MIPS_AS/LD, flags), then invoking make—exactly the cross-compilation toolchain targeting sub-skill described."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Patching an existing Makefile to fix compiler identity or flags (including cross-compilation toolchain targets) and rebuilding with make",
+      "member_ids": [
+        "modernize-fortran-build",
+        "make-doom-for-mips"
+      ],
+      "reasoning": "Both tasks start with a broken or wrong Makefile, require targeted sed/text edits to compiler variables and flags (one swapping ifort→gfortran with flag correction, the other adding a full MIPS LLVM/binutils toolchain block), and validate success by running make to produce the expected binary artifact."
+    }
+  ],
+  "removed_to_unclustered": [
+    "magsac-install"
+  ],
+  "_meta": {
+    "duration_ms": 26857,
+    "cost_usd": 0.062336600000000006
+  }
+}

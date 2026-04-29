@@ -1,0 +1,33 @@
+{
+  "source_coarse_id": "B2_C12",
+  "coarse_skill_concept": "Issue HTTP requests with curl or requests, parse the responses (HTML, JSON, plain text), and extract a specific piece of target information from the web.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "find-official-code",
+      "applicable": "YES",
+      "reason": "Core procedure is exactly the candidate skill: query GitHub API via HTTP, parse JSON responses, extract repo URLs."
+    },
+    {
+      "task_id": "find-restaurant",
+      "applicable": "NO",
+      "reason": "The task is driven by interactive CLI tools (call_august, call_taylor, call_restaurant) with piped stdin/stdout; HTTP appears only as an internal health-check, not as the mechanism for gathering or parsing information."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Issue HTTP requests to web APIs (e.g., GitHub Search API), parse JSON responses, and extract a specific target value (repository URL).",
+      "member_ids": [
+        "find-official-code"
+      ],
+      "reasoning": "This task is end-to-end solvable by the candidate skill: construct a search query, GET a JSON response, extract the html_url field."
+    }
+  ],
+  "removed_to_unclustered": [
+    "find-restaurant"
+  ],
+  "_meta": {
+    "duration_ms": 16437,
+    "cost_usd": 0.0437281
+  }
+}

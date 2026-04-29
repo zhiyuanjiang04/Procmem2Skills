@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B3_C13",
+  "coarse_skill_concept": "Building a scikit-learn training pipeline, logging metrics and artifacts to an experiment tracker, and serializing the trained model for later inference.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "mlflow-register",
+      "applicable": "YES",
+      "reason": "The task is entirely about spinning up an MLflow server, using mlflow.sklearn.log_model, and registering the model in the MLflow model registry — the experiment-tracker portion of the candidate skill is the core requirement."
+    },
+    {
+      "task_id": "predict-customer-churn",
+      "applicable": "PARTIAL",
+      "reason": "The task uses sklearn and pickle serialization but has no experiment tracker step; instead it requires real CSV ingestion, SHA-256 checksum generation, specific feature selection, an accuracy threshold, and a coefficient-sign constraint — none of which are part of the candidate skill."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Starting a local MLflow tracking server and registering a scikit-learn model in the MLflow model registry via mlflow.sklearn.log_model with a registered_model_name",
+      "member_ids": [
+        "mlflow-register"
+      ],
+      "reasoning": "This task is uniquely about MLflow server lifecycle and the model-registry API; the procedure (server startup, set_tracking_uri, log_model with registration) does not transfer to plain-pickle pipelines."
+    },
+    {
+      "skill_concept": "Loading tabular CSV data, computing a file checksum, training a scikit-learn classifier with constrained feature selection, validating accuracy and coefficient signs, and serializing the model with pickle",
+      "member_ids": [
+        "predict-customer-churn"
+      ],
+      "reasoning": "This task's critical steps — data integrity verification, hitting a minimum accuracy bar, and asserting the sign of a specific coefficient — require a distinct procedure from MLflow-based experiment tracking; pickle serialization is just one small step in a data-validation-heavy pipeline."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 26212,
+    "cost_usd": 0.0481971
+  }
+}

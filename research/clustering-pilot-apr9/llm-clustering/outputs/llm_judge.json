@@ -1,0 +1,336 @@
+{
+  "model": "claude-sonnet-4-6",
+  "n_clusters_judged": 25,
+  "verdict_counts": {
+    "BORDERLINE": 17,
+    "ACCEPT": 8
+  },
+  "total_cost_usd": 0.8851,
+  "judgments": [
+    {
+      "cluster_id": "B1_C1.1",
+      "skill_concept": "Configure, patch, and compile C/C++ or system-level software from source using make/cmake/gcc, resolving toolchain errors, missing dependencies, and platform-specific build issues.",
+      "n_tasks": 7,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Most tasks share a core build-from-source procedure (fetch source, patch for platform compatibility, configure, compile, install) and would benefit from the candidate skill, but caffe-cifar-10 extends well beyond building into ML training orchestration, dataset preparation, and numerical validation, while build-tcc-qemu and build-linux-kernel-qemu add QEMU/kernel-specific steps that deviate substantially from a generic C/C++ build procedure.",
+      "weakest_link": "caffe-cifar-10",
+      "weakest_link_reason": "This task requires not just building Caffe from source but also downloading and preprocessing CIFAR-10 data, running training for a precise iteration count, capturing output, and validating accuracy thresholds — most of the work is ML workflow, not toolchain compilation.",
+      "_meta": {
+        "duration_ms": 6291,
+        "cost_usd": 0.05125585
+      }
+    },
+    {
+      "cluster_id": "B1_C2.1",
+      "skill_concept": "Diagnose and repair broken Python environments by resolving pip/setuptools failures and conda dependency conflicts.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks involve broken Python/package environments, but 'broken-python' targets a system-wide pip failure (likely broken pip/setuptools or permissions) while 'conda-env-conflict-resolution' targets conda dependency version conflicts — different toolchains, different diagnostic steps, and different remediation procedures. A skill written to cover both would need to be generic enough ('diagnose Python environment failures') that it loses actionable specificity.",
+      "weakest_link": "broken-python",
+      "weakest_link_reason": "The task provides no solution details, leaving the failure mode and fix entirely unknown — it could be a broken pip binary, wrong Python path, missing setuptools, or permission issue, none of which overlap with the conda solver conflicts in the other task.",
+      "_meta": {
+        "duration_ms": 6377,
+        "cost_usd": 0.026081600000000003
+      }
+    },
+    {
+      "cluster_id": "B1_C4.1",
+      "skill_concept": "Implement or modify statistical algorithms in R—sampling methods and Bayesian networks—using domain-specific packages (e.g., bnlearn, ARS) with direct Rscript execution, modular code structure, and output validation.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks use R and involve statistical computation, but they diverge substantially in procedure: adaptive-rejection-sampler requires implementing a numerical sampling algorithm from scratch with log-concavity checks and modular architecture, while bn-fit-modify is a workflow task involving structure learning, DAG manipulation, causal intervention, and data I/O using bnlearn. A skill written to cover both would need to be so generic ('write statistical R code') that it loses actionable bite.",
+      "weakest_link": "bn-fit-modify",
+      "weakest_link_reason": "bn-fit-modify is primarily a DAG structure-learning and causal-inference workflow task with no algorithmic implementation requirement, making it a poor fit for a skill centered on implementing sampling algorithms like ARS.",
+      "_meta": {
+        "duration_ms": 6201,
+        "cost_usd": 0.036016349999999996
+      }
+    },
+    {
+      "cluster_id": "B1_C6.1",
+      "skill_concept": "Enumerate combinatorial spaces (permutations, arithmetic expression trees) with backtracking or pruning, using itertools and fractions.Fraction for exact arithmetic, to find solutions satisfying hard constraints.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks involve combinatorial search with backtracking, but assign-seats is primarily a constraint-satisfaction problem over permutations requiring multi-step file decoding and domain-specific adjacency logic, while countdown-game is a pure arithmetic expression-tree search using fractions — the overlapping core (backtracking + itertools/fractions) is real but the procedural shape diverges enough that a single skill description would need to be written at a level of generality that dilutes its practical guidance.",
+      "weakest_link": "assign-seats",
+      "weakest_link_reason": "assign-seats requires substantial pre-processing (pickle/base64 decoding, natural-language constraint extraction) and circular-table adjacency semantics before any combinatorial search begins, making the candidate skill's enumeration focus cover only a fraction of what the task demands.",
+      "_meta": {
+        "duration_ms": 6133,
+        "cost_usd": 0.033340100000000004
+      }
+    },
+    {
+      "cluster_id": "B1_C7.1",
+      "skill_concept": "Implement DFS-based blind maze exploration: spawn maze_game.sh as a subprocess, maintain a relative-coordinate map in a defaultdict, drive a DFS frontier with backtracking to cover all reachable cells, and serialize the discovered grid to a text file.",
+      "n_tasks": 2,
+      "verdict": "ACCEPT",
+      "verdict_reason": "Both tasks use the identical procedure: spawn maze_game.sh as a subprocess, maintain a relative-coordinate map in a defaultdict, run DFS with backtracking to cover all reachable cells, and serialize the result to a text file. The only structural difference is that the algorithm task loops over 10 maze IDs and accepts a maze_id argument, which is a trivial parameterization of the same core procedure.",
+      "weakest_link": "blind-maze-explorer-algorithm",
+      "weakest_link_reason": "This task adds the requirement to loop over 10 distinct maze instances and manage per-maze output files, so the skill must be applied iteratively in a loop rather than as a single one-shot run.",
+      "_meta": {
+        "duration_ms": 5333,
+        "cost_usd": 0.038508600000000004
+      }
+    },
+    {
+      "cluster_id": "B1_C8.1",
+      "skill_concept": "Implement missing PyTorch neural network components or reinforcement learning training loops, and diagnose common PyTorch training failures such as gradient issues, loss plateaus, or divergence.",
+      "n_tasks": 3,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "The skill covers attention-mil (implement missing PyTorch components) and cartpole-rl-training (implement a full RL training loop) well, but classifier-debug requires diagnosing a subtle training bug from symptoms alone — a fundamentally different investigative procedure rather than implementation. While debugging PyTorch failures is nominally part of the candidate skill, the debug task demands a root-cause analysis workflow that diverges substantially from the 'implement components/loops' procedure shape shared by the other two.",
+      "weakest_link": "classifier-debug",
+      "weakest_link_reason": "This task is purely diagnostic — the agent must identify a hidden bug (likely a loss/label mismatch or data pipeline issue) from loss and accuracy traces without writing any new model components, whereas the other tasks are construction tasks requiring forward-pass or training-loop implementation.",
+      "_meta": {
+        "duration_ms": 9235,
+        "cost_usd": 0.044869349999999995
+      }
+    },
+    {
+      "cluster_id": "B2_C1.1",
+      "skill_concept": "Configure and apply LoRA adapters to HuggingFace models using the PEFT library — covering both loading pre-trained adapters (PeftModel.from_pretrained + merge_and_unload) and training new adapters from scratch (LoraConfig + get_peft_model + Trainer fine-tuning loop).",
+      "n_tasks": 2,
+      "verdict": "ACCEPT",
+      "verdict_reason": "Both tasks share the same PEFT-library procedure shape: configure a LoraConfig (or load one), attach it to a HuggingFace model, and either merge+save (hf-lora-adapter) or train+save (hf-train-lora-adapter). The candidate skill explicitly covers both branches, so a single skill document with two code paths would meaningfully guide an agent through either task.",
+      "weakest_link": "hf-train-lora-adapter",
+      "weakest_link_reason": "This task adds a full supervised fine-tuning loop (Trainer, DataCollator, dataset formatting, tokenizer padding setup) on top of the core LoRA wiring, requiring substantially more procedural knowledge beyond what 'configure and apply a LoRA adapter' alone captures.",
+      "_meta": {
+        "duration_ms": 6528,
+        "cost_usd": 0.03805385
+      }
+    },
+    {
+      "cluster_id": "B2_C4.1",
+      "skill_concept": "Launch a legacy Windows OS inside QEMU by creating/configuring a disk image, invoking qemu-system with appropriate CPU/memory/VGA flags, exposing a VNC display on port 5901, and proxying it via nginx on port 80.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks share the VNC/nginx stack and QEMU launch pattern, but install-windows-xp requires a full unattended OS installation from ISO (disk creation, boot sequencing, product key retrieval, installer automation) before reaching any stable desktop state, while install-windows-3.11 starts from a pre-built bootable image and only needs to launch it — the installation complexity and failure modes differ substantially enough that a single skill procedure would need to cover very different ground.",
+      "weakest_link": "install-windows-xp",
+      "weakest_link_reason": "It requires driving an interactive OS installer from scratch (unattended ISO, product key injection, multi-stage boot progression) which the candidate skill's snapshot-mode launch procedure does not cover.",
+      "_meta": {
+        "duration_ms": 8762,
+        "cost_usd": 0.03471035
+      }
+    },
+    {
+      "cluster_id": "B2_C5.1",
+      "skill_concept": "Parse structured log files using grep and bash to filter by severity keyword or filename-encoded date range, aggregate event counts per category, and write a CSV summary report.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks share grep-based severity counting and CSV output, but log-summary-date-ranges requires substantial additional logic: date arithmetic, filename-encoded date parsing, Unix timestamp comparisons, and multi-period bucketing. A skill written to cover both would need to be generic enough that it provides little concrete procedural guidance for the simpler task.",
+      "weakest_link": "log-summary-date-ranges",
+      "weakest_link_reason": "This task demands date-range filtering via filename parsing and timestamp arithmetic that is entirely absent from the candidate skill's description, requiring a meaningfully different procedure beyond simple grep-and-aggregate.",
+      "_meta": {
+        "duration_ms": 4805,
+        "cost_usd": 0.0302736
+      }
+    },
+    {
+      "cluster_id": "B2_C7.1",
+      "skill_concept": "Generate a self-signed SSL certificate with openssl and configure a server (nginx or Jupyter) to terminate HTTPS by referencing the cert and key in the server's config file, then restart the service.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks use openssl to generate a self-signed cert and wire it into a server config, so the core SSL generation procedure transfers directly. However, home-server-https adds substantial non-SSL work (ddclient dynamic DNS, acme.sh directory conventions, nginx site config) that makes the skill only partially applicable, and the two servers (nginx vs Jupyter) have meaningfully different config mechanisms.",
+      "weakest_link": "home-server-https",
+      "weakest_link_reason": "This task requires configuring dynamic DNS with ddclient and navigating acme.sh path conventions on top of the SSL/nginx steps, which go well beyond the candidate skill's defined scope.",
+      "_meta": {
+        "duration_ms": 5591,
+        "cost_usd": 0.0339451
+      }
+    },
+    {
+      "cluster_id": "B2_C10.1",
+      "skill_concept": "Identify a specific code-level vulnerability class (CWE / XSS attack vector) in existing code, write or patch defensive code to neutralize it, and verify the attack vector is closed.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks involve identifying and neutralizing a specific injection vulnerability class and verifying the fix, which aligns with the candidate skill. However, fix-code-vulnerability requires CWE identification, structured reporting (report.jsonl), and surgical code patching of an existing framework, while filter-js-from-html requires building a new standalone HTML sanitization tool from scratch — the procedure shapes diverge enough that a single reusable skill would need to be written at a high level of generality to cover both.",
+      "weakest_link": "filter-js-from-html",
+      "weakest_link_reason": "This task does not involve identifying a vulnerability in existing code or writing a CWE report — it is purely about constructing a new sanitization utility, skipping the analysis and patch phases central to the candidate skill.",
+      "_meta": {
+        "duration_ms": 5953,
+        "cost_usd": 0.0317246
+      }
+    },
+    {
+      "cluster_id": "B2_C11.1",
+      "skill_concept": "Model a discrete puzzle or maze state space and run an offline search algorithm (BFS/DFS) to find a complete solution sequence, then deliver moves via file output or HTTP endpoint.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks involve discrete state-space search, but huarong-dao-solver is fully offline (BFS over a known complete state space, output to file), while interactive-maze-game requires online/adaptive search against a live HTTP server with hidden state and a hard visit-count constraint that penalizes revisits — making pure offline BFS inapplicable without substantial deviation into online exploration algorithms.",
+      "weakest_link": "interactive-maze-game",
+      "weakest_link_reason": "The maze is not fully observable at planning time, the agent must interleave sensing and moving via HTTP calls, and the 2-visit-per-cell limit punishes the backtracking that BFS naturally produces, requiring an online exploration strategy rather than a precomputed solution sequence.",
+      "_meta": {
+        "duration_ms": 6441,
+        "cost_usd": 0.03771685
+      }
+    },
+    {
+      "cluster_id": "B3_C2.1",
+      "skill_concept": "Composing and executing SQL queries (joins, window functions, aggregations, deduplication, type normalization) against structured data in DuckDB or PostgreSQL to produce a query-result dataset.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks involve SQL execution against structured data, but postgres-csv-clean requires substantial non-SQL work: discovering and parsing docker-compose.yml for connection config, managing DB connectivity/retries, and orchestrating psql shell commands with \\COPY — a procedure shape that diverges significantly from composing a query file. The candidate skill covers the SQL logic well but undersells the infrastructure-navigation and shell-orchestration steps that dominate the Postgres task.",
+      "weakest_link": "postgres-csv-clean",
+      "weakest_link_reason": "This task is primarily about connecting to a containerized Postgres instance, importing CSV via client-side \\COPY, and verifying server-side execution evidence — concerns the candidate skill does not address.",
+      "_meta": {
+        "duration_ms": 10804,
+        "cost_usd": 0.03287335
+      }
+    },
+    {
+      "cluster_id": "B3_C2.2",
+      "skill_concept": "Reading heterogeneous file formats (CSV, JSON, Parquet) in Python, applying field-level transformations (regex extraction, type coercion, schema renaming, priority-based conflict resolution, nested structure building), and writing a structured output file.",
+      "n_tasks": 3,
+      "verdict": "ACCEPT",
+      "verdict_reason": "All three tasks share the same core procedure: read heterogeneous input formats (CSV, JSON, Parquet), apply field-level transformations (regex extraction, type coercion, schema renaming, priority-based conflict resolution, nested structure building), and write a structured output file. The tooling (pandas, Python stdlib) and transformation patterns overlap substantially across tasks.",
+      "weakest_link": "organization-json-generator",
+      "weakest_link_reason": "This task adds schema validation and nested hierarchical aggregation (departments containing employees and projects with statistics) that go beyond the flat record-level transformations in the other two tasks, requiring more structural reasoning than pure ETL field mapping.",
+      "_meta": {
+        "duration_ms": 5994,
+        "cost_usd": 0.036766599999999997
+      }
+    },
+    {
+      "cluster_id": "B3_C3.2",
+      "skill_concept": "Recalling or deriving a complete Zork command walkthrough from game domain knowledge and writing the terminal's final output verbatim to a result file, with variant speedrun vs. max-score path selection.",
+      "n_tasks": 2,
+      "verdict": "ACCEPT",
+      "verdict_reason": "Both tasks require the same core knowledge — a Zork command walkthrough and the game's final output text — differing only in which ending string to write (max-score 350-point ending vs. speedrun minimal ending). A single skill encoding both path variants and the file-write mechanic covers both tasks completely.",
+      "weakest_link": "play-zork",
+      "weakest_link_reason": "The max-score path requires knowing the full 350-point walkthrough rather than just the shortest route to an ending, making it marginally more demanding of complete game domain knowledge.",
+      "_meta": {
+        "duration_ms": 6617,
+        "cost_usd": 0.024637850000000003
+      }
+    },
+    {
+      "cluster_id": "B3_C4.1",
+      "skill_concept": "Construct a single source file valid in two programming languages by identifying overlapping comment delimiters and string-literal syntax, using one language's comment or string construct to hide the other language's code from its parser, then iteratively compiling/interpreting both until both succeed.",
+      "n_tasks": 2,
+      "verdict": "ACCEPT",
+      "verdict_reason": "Both tasks require the same core procedure: identifying comment and string delimiter overlaps between two languages, using one language's syntax to hide the other's code from its parser, and iterating until both compilers/interpreters succeed. The shared procedure shape—find delimiter overlap, wrap foreign code, verify both toolchains—applies directly to both tasks.",
+      "weakest_link": "polyglot-rust-c",
+      "weakest_link_reason": "The Rust/C++ polyglot is significantly more complex because Rust and C++ have near-identical comment syntax with no clean string-literal escape hatch, forcing an elaborate macro-redefinition and namespace-spoofing approach that goes well beyond simple delimiter hiding.",
+      "_meta": {
+        "duration_ms": 6700,
+        "cost_usd": 0.03174585
+      }
+    },
+    {
+      "cluster_id": "B3_C7.1",
+      "skill_concept": "Configuring and starting network service daemons by editing config files, initializing any required backend state, starting processes, and verifying live endpoints via a protocol probe.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "The nginx task fits the candidate skill almost perfectly (edit config, test syntax, restart, curl-probe endpoint), but the mailman task requires coordinating two interdependent daemons (postfix + mailman3) with complex interservice plumbing (LMTP transport maps, alias routing), and its 'endpoint verification' is not a protocol probe against a network socket but rather a mailman CLI invocation followed by email-flow testing — a fundamentally different verification shape that the skill as written does not capture.",
+      "weakest_link": "mailman",
+      "weakest_link_reason": "Mailman demands multi-service orchestration, MTA-specific domain knowledge (postfix transport_maps, LMTP, mydestination), and email-flow verification rather than the single-daemon config-edit + protocol-probe pattern the skill describes.",
+      "_meta": {
+        "duration_ms": 26791,
+        "cost_usd": 0.04979535
+      }
+    },
+    {
+      "cluster_id": "B3_C8.1",
+      "skill_concept": "Patching an existing Makefile to fix compiler identity or flags (including cross-compilation toolchain targets) and rebuilding with make",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks involve patching a Makefile and rebuilding, but make-doom-for-mips requires a fundamentally more complex procedure: a full LLVM-based cross-compilation pipeline with custom toolchain stages (clang -> llc -> mips-linux-gnu-as -> mips-linux-gnu-ld), custom stdlib shims, and architecture-specific flags — far beyond patching a compiler variable or a flag line. A skill written to cover both would have to be so abstract it loses actionable specificity.",
+      "weakest_link": "make-doom-for-mips",
+      "weakest_link_reason": "The MIPS task is not a simple Makefile patch; it requires designing a multi-stage cross-compilation toolchain from scratch, adding source files, and managing MIPS-specific ABI details, which goes well beyond the candidate skill's scope of fixing compiler identity or flags.",
+      "_meta": {
+        "duration_ms": 6293,
+        "cost_usd": 0.03436985
+      }
+    },
+    {
+      "cluster_id": "B3_C9.1",
+      "skill_concept": "Migrate domain-specific scientific numerical code across frameworks or languages (MATLAB→NumPy, NEURON→Jaxley) by mapping source numerical semantics and API calls to modern Python equivalents, then validating agreement between reference and ported outputs.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks involve porting numerical scientific code to Python, but the procedure shapes diverge significantly: matlab-python-conversion is a straightforward API-mapping exercise (file I/O, array stacking) with a clear numerical equivalence check, while neuron-to-jaxley-conversion requires deep domain knowledge of neuronal biophysics, channel kinetics, and compartmental modeling that goes well beyond framework API translation. A skill written to cover both would need to be so abstract it loses actionable guidance.",
+      "weakest_link": "neuron-to-jaxley-conversion",
+      "weakest_link_reason": "This task demands specialized computational neuroscience domain knowledge (HH channels, Ca dynamics, region-specific conductance parameters) that cannot be derived from generic numerical API mapping — it is closer to biophysics implementation than framework migration.",
+      "_meta": {
+        "duration_ms": 6514,
+        "cost_usd": 0.03422735
+      }
+    },
+    {
+      "cluster_id": "B3_C15.1",
+      "skill_concept": "Implementing a numerical iterative algorithm (fixed-step ODE integrator, entropic regularized transport) from a mathematical recurrence or optimization formulation in Python, managing floating-point step size or convergence tolerances, and verifying output against a quantitative accuracy threshold.",
+      "n_tasks": 2,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Both tasks implement iterative numerical algorithms in Python with convergence/step tolerances and quantitative accuracy checks, so the skill partially applies; however, ode-solver-rk4 is a fixed-step marching integrator while optimal-transport is an entropic regularization fixed-point iteration with matrix operations and a completely different mathematical structure, requiring distinct implementation procedures that share only the broadest shape.",
+      "weakest_link": "optimal-transport",
+      "weakest_link_reason": "The Sinkhorn task requires building a cost matrix, managing log-domain or direct scaling iterations over two marginals, a grid-based histogram approximation mode, and a CLI runner — none of which overlap procedurally with ODE time-marching, making it a poor fit for any skill narrow enough to be actionable.",
+      "_meta": {
+        "duration_ms": 6152,
+        "cost_usd": 0.0385156
+      }
+    },
+    {
+      "cluster_id": "B4_C1.1",
+      "skill_concept": "Reproduce a reported bug in an existing open-source Python library, locate the faulty code path with git/grep/find, apply a minimal targeted fix (one line to a few lines), and verify correctness against the project's existing test suite.",
+      "n_tasks": 4,
+      "verdict": "ACCEPT",
+      "verdict_reason": "All four tasks follow the same procedure: reproduce a reported bug in an existing open-source Python library, locate the faulty code path using git/grep/find, apply a minimal targeted fix (one to a few lines), and verify against the existing test suite. The tools, fix scope, and workflow shape are consistent across all tasks.",
+      "weakest_link": "swe-bench-fsspec",
+      "weakest_link_reason": "This task adds a missing method rather than correcting faulty logic in an existing one, making it closer to a feature addition than a bug fix, though the overall procedure (locate gap, apply minimal change, verify) remains the same.",
+      "_meta": {
+        "duration_ms": 6956,
+        "cost_usd": 0.042552599999999996
+      }
+    },
+    {
+      "cluster_id": "B4_C2.1",
+      "skill_concept": "Identify an HTTP-layer vulnerability (SQLi, SpEL/SSTI injection, unauthenticated endpoint exposure) from source or app resources, craft the exploit payload, and deliver it via curl or Python HTTP requests to achieve the stated objective.",
+      "n_tasks": 3,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "Two tasks (sql-injection-attack, spring-messaging-vul) genuinely share the skill's procedure — read source/app resources, identify the vulnerability class, craft a payload, deliver via HTTP — but security-vulhub-minio deviates substantially: there is no payload crafting or injection; the solution is a single unauthenticated GET/POST to a known bootstrap endpoint followed by hardcoding the credential, which is endpoint enumeration/information disclosure, not exploitation of an injection class.",
+      "weakest_link": "security-vulhub-minio",
+      "weakest_link_reason": "The MinIO task requires only hitting an unauthenticated administrative endpoint to confirm a known default credential — no source analysis, no injection payload construction, and the 'exploit' is essentially a CVE-specific one-liner with a hardcoded answer, making the candidate skill's core procedure largely irrelevant.",
+      "_meta": {
+        "duration_ms": 10978,
+        "cost_usd": 0.03354285
+      }
+    },
+    {
+      "cluster_id": "B4_C2.3",
+      "skill_concept": "Read vulnerable framework or application source code, apply a minimal targeted patch that eliminates the vulnerability class at the framework level, and rebuild the project so the fix takes effect at runtime.",
+      "n_tasks": 2,
+      "verdict": "ACCEPT",
+      "verdict_reason": "Both tasks follow the same procedure: locate vulnerable source in a vendored/local framework, apply a minimal targeted patch (escaping untrusted input as plain text for SSTI; stripping path components for directory traversal), and rebuild the project so the fix takes effect at runtime. The tools overlap (source editing, build systems) and the failure modes are analogous.",
+      "weakest_link": "vul-flink",
+      "weakest_link_reason": "Flink requires a full Maven multi-module rebuild after patching Java source, adding significant build complexity and environment dependency compared to the Python in-place file edit needed for Flask.",
+      "_meta": {
+        "duration_ms": 5224,
+        "cost_usd": 0.02904285
+      }
+    },
+    {
+      "cluster_id": "B4_C3.1",
+      "skill_concept": "Recover hidden information from obfuscated artifacts by statically identifying the encoding or transformation scheme (base64, gzip, bzip2, custom hash) and inverting it with standard decoding tools or mathematical inverse computation, without executing the target.",
+      "n_tasks": 3,
+      "verdict": "BORDERLINE",
+      "verdict_reason": "The skill covers shell-deobfuscation and recover-obfuscated-files well — both are straightforward static decode-and-invert pipelines using standard tools. However, reverse-engineering requires mathematical cryptanalysis (hash inversion via modular arithmetic and heuristic search), which is a fundamentally different procedure shape despite sharing the 'identify transformation and invert it' framing.",
+      "weakest_link": "reverse-engineering",
+      "weakest_link_reason": "This task demands implementing a custom modular-inverse hash reversal algorithm, not applying a standard decoding tool, making the skill's 'standard decoding tools or mathematical inverse computation' clause do heavy lifting that goes well beyond what the other two tasks require.",
+      "_meta": {
+        "duration_ms": 5512,
+        "cost_usd": 0.0327051
+      }
+    },
+    {
+      "cluster_id": "B4_C12.1",
+      "skill_concept": "Install a domain-specific ML library (via pip/git+make), convert raw input data into the library's required format, invoke inference or supervised training from a script or CLI, and persist the result to a specified output path.",
+      "n_tasks": 2,
+      "verdict": "ACCEPT",
+      "verdict_reason": "Both tasks follow the same procedure: install a domain-specific ML library from source (git clone + make or pip), convert raw input data into the library's required format, invoke inference or training, and persist output to a specified path. The toolchain overlap (git, pip, Python scripting, CLI invocation) and procedure shape are identical.",
+      "weakest_link": "speech-to-text",
+      "weakest_link_reason": "Speech-to-text is purely inference with no training step and requires audio-specific preprocessing (ffmpeg, mel spectrograms), making it a slightly looser fit for a skill framed around 'supervised training' as a primary use case.",
+      "_meta": {
+        "duration_ms": 5642,
+        "cost_usd": 0.027791600000000003
+      }
+    }
+  ]
+}

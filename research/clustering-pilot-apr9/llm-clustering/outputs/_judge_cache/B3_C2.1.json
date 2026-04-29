@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B3_C2.1",
+  "skill_concept": "Composing and executing SQL queries (joins, window functions, aggregations, deduplication, type normalization) against structured data in DuckDB or PostgreSQL to produce a query-result dataset.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks involve SQL execution against structured data, but postgres-csv-clean requires substantial non-SQL work: discovering and parsing docker-compose.yml for connection config, managing DB connectivity/retries, and orchestrating psql shell commands with \\COPY — a procedure shape that diverges significantly from composing a query file. The candidate skill covers the SQL logic well but undersells the infrastructure-navigation and shell-orchestration steps that dominate the Postgres task.",
+  "weakest_link": "postgres-csv-clean",
+  "weakest_link_reason": "This task is primarily about connecting to a containerized Postgres instance, importing CSV via client-side \\COPY, and verifying server-side execution evidence — concerns the candidate skill does not address.",
+  "_meta": {
+    "duration_ms": 10804,
+    "cost_usd": 0.03287335
+  }
+}

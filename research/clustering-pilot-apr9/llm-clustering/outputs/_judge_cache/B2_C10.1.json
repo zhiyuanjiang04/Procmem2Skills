@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B2_C10.1",
+  "skill_concept": "Identify a specific code-level vulnerability class (CWE / XSS attack vector) in existing code, write or patch defensive code to neutralize it, and verify the attack vector is closed.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks involve identifying and neutralizing a specific injection vulnerability class and verifying the fix, which aligns with the candidate skill. However, fix-code-vulnerability requires CWE identification, structured reporting (report.jsonl), and surgical code patching of an existing framework, while filter-js-from-html requires building a new standalone HTML sanitization tool from scratch — the procedure shapes diverge enough that a single reusable skill would need to be written at a high level of generality to cover both.",
+  "weakest_link": "filter-js-from-html",
+  "weakest_link_reason": "This task does not involve identifying a vulnerability in existing code or writing a CWE report — it is purely about constructing a new sanitization utility, skipping the analysis and patch phases central to the candidate skill.",
+  "_meta": {
+    "duration_ms": 5953,
+    "cost_usd": 0.0317246
+  }
+}

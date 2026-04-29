@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B3_C10",
+  "coarse_skill_concept": "Refactoring a serial computation to execute in parallel using Python multiprocessing (ProcessPoolExecutor) or a compiled parallelism layer, then benchmarking the resulting speedup.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "parallelize-compute-squares",
+      "applicable": "YES",
+      "reason": "The task is exactly the candidate skill: identify a per-file embarrassingly-parallel unit (PBKDF2), wrap it in a Python worker, distribute via ProcessPoolExecutor, collect results, and verify a wall-clock speedup gate."
+    },
+    {
+      "task_id": "parallel-particle-simulator",
+      "applicable": "NO",
+      "reason": "The task requires implementing O(n) spatial-binning physics in C++ and applying OpenMP pragmas plus MPI inter-process communication—a fundamentally different skill from Python process-pool task distribution over embarrassingly-parallel items."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Parallelising an embarrassingly-parallel per-item computation in Python by wrapping a worker function in ProcessPoolExecutor, collecting futures, and validating wall-clock speedup against a serial baseline.",
+      "member_ids": [
+        "parallelize-compute-squares"
+      ],
+      "reasoning": "The task fits this skill exactly: enumerate files, submit one process task per file via ProcessPoolExecutor, sort and serialise results, and satisfy a t_par <= 0.70*t_seq gate."
+    },
+    {
+      "skill_concept": "Implementing a 2D particle simulator with O(n) spatial binning in C++ and then parallelising it in two distinct compiled-parallelism paradigms: OpenMP shared-memory (pragma annotations) and MPI distributed-memory (process ranks with halo communication), then comparing all three via summary timing files.",
+      "member_ids": [
+        "parallel-particle-simulator"
+      ],
+      "reasoning": "The dominant challenge is the physics-correct spatial-binning kernel and the two different C++ parallelism models (OpenMP vs MPI); Python multiprocessing plays no role and the parallelism patterns (shared-memory loop-level vs distributed-memory domain decomposition) are completely distinct from ProcessPoolExecutor task farming."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 33244,
+    "cost_usd": 0.0585176
+  }
+}

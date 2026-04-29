@@ -1,0 +1,44 @@
+{
+  "source_coarse_id": "B3_C3",
+  "coarse_skill_concept": "Automating interactive terminal applications by scripting input sequences with pexpect or shell pipes to drive a text-based state machine through a sequence of prompts and responses.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "play-lord",
+      "applicable": "YES",
+      "reason": "Oracle solution directly uses pexpect to pattern-match on menu prompts and send inputs; pexpect automation is the core mechanism."
+    },
+    {
+      "task_id": "play-zork",
+      "applicable": "PARTIAL",
+      "reason": "Pexpect could drive the interaction, but the oracle bypasses gameplay entirely by writing hardcoded output; the critical differentiator is complete Zork domain knowledge (full 350-point walkthrough), not automation mechanics."
+    },
+    {
+      "task_id": "play-zork-easy",
+      "applicable": "PARTIAL",
+      "reason": "Same as play-zork — oracle writes hardcoded ending text; the skill needed is knowing the shortest Zork path to the ending, not interactive automation."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Setting up a backend service (PostgreSQL), exporting connection environment variables, then scripting a menu-driven terminal game via pexpect by pattern-matching output prompts and sending the correct inputs in sequence.",
+      "member_ids": [
+        "play-lord"
+      ],
+      "reasoning": "play-lord requires both environment setup (DB creation, env var) and pexpect-based menu navigation; the pexpect loop is the primary solving mechanism and the oracle confirms it."
+    },
+    {
+      "skill_concept": "Recalling or deriving a complete Zork command walkthrough from game domain knowledge and writing the terminal's final output verbatim to a result file, with variant speedrun vs. max-score path selection.",
+      "member_ids": [
+        "play-zork",
+        "play-zork-easy"
+      ],
+      "reasoning": "Both tasks grade on the contents of /app/answer.txt and their oracles write hardcoded ending text without running the game at all; the shared skill is Zork game knowledge (full walkthrough vs. shortest path), not interactive automation."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 35764,
+    "cost_usd": 0.0562776
+  }
+}

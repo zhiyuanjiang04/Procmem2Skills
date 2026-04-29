@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B2_C11.1",
+  "skill_concept": "Model a discrete puzzle or maze state space and run an offline search algorithm (BFS/DFS) to find a complete solution sequence, then deliver moves via file output or HTTP endpoint.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks involve discrete state-space search, but huarong-dao-solver is fully offline (BFS over a known complete state space, output to file), while interactive-maze-game requires online/adaptive search against a live HTTP server with hidden state and a hard visit-count constraint that penalizes revisits — making pure offline BFS inapplicable without substantial deviation into online exploration algorithms.",
+  "weakest_link": "interactive-maze-game",
+  "weakest_link_reason": "The maze is not fully observable at planning time, the agent must interleave sensing and moving via HTTP calls, and the 2-visit-per-cell limit punishes the backtracking that BFS naturally produces, requiring an online exploration strategy rather than a precomputed solution sequence.",
+  "_meta": {
+    "duration_ms": 6441,
+    "cost_usd": 0.03771685
+  }
+}

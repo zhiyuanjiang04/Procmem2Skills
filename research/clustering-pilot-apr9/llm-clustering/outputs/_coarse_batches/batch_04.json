@@ -1,0 +1,180 @@
+{
+  "batch_idx": 4,
+  "n_tasks": 60,
+  "parsed": {
+    "clusters": [
+      {
+        "id": "B4_C1",
+        "skill_concept": "Reproduce a reported bug in an existing open-source Python library, locate the faulty code path with git/grep, apply a minimal targeted fix, and verify correctness against the existing test suite.",
+        "member_ids": [
+          "swe-bench-astropy-1",
+          "swe-bench-astropy-2",
+          "swe-bench-fsspec",
+          "swe-bench-langcodes"
+        ],
+        "reasoning": "All four tasks follow the identical SWE-bench procedure: read the issue description, use find/git/grep to locate the relevant source, make a small code change, and confirm the fix via the project's existing tests. They share the same toolset (find, git, bash) and the same diagnosis-then-patch loop."
+      },
+      {
+        "id": "B4_C2",
+        "skill_concept": "Analyze vulnerable web application source code or configuration, craft an exploit payload (SQLi, SSTI, RCE, credential leakage), and execute it using curl or Python HTTP requests to achieve the stated objective.",
+        "member_ids": [
+          "security-celery-redis-rce",
+          "spring-messaging-vul",
+          "sql-injection-attack",
+          "vul-flask",
+          "vul-flink",
+          "security-vulhub-minio"
+        ],
+        "reasoning": "Every task in this group is an authorized exploit exercise against a running service. The common procedure is: identify the vulnerability class from source/config, craft an HTTP or broker payload, send it with curl/requests/python, and verify the outcome. Tools (curl, python3, bash, base64) overlap heavily across all six."
+      },
+      {
+        "id": "B4_C3",
+        "skill_concept": "Recover hidden information (passwords, keys, plaintext content) from obfuscated scripts, binaries, or file blobs by identifying and reversing the encoding or obfuscation layer using static analysis tools.",
+        "member_ids": [
+          "reverse-engineering",
+          "vulnerable-secret",
+          "shell-deobfuscation",
+          "recover-obfuscated-files"
+        ],
+        "reasoning": "All four tasks require the same investigative loop: examine the artifact statically (strings, grep, awk, python struct parsing), identify the obfuscation scheme, and invert it. None require dynamic execution of the target; the skill is pattern-recognition-plus-decoding. Tools (grep, find, sed, python, bash) are consistent throughout."
+      },
+      {
+        "id": "B4_C4",
+        "skill_concept": "Write SPARQL SELECT queries against a Turtle-serialized RDF knowledge graph to extract structured relationships between entities defined in the ontology.",
+        "member_ids": [
+          "sparql-professors-universities",
+          "sparql-university"
+        ],
+        "reasoning": "Both tasks use the same university_graph.ttl file, the same RDF/OWL ontology vocabulary, and require formulating SPARQL triple patterns with FILTER/JOIN clauses. The procedure (load Turtle, inspect prefixes, write SELECT … WHERE, test output) is identical."
+      },
+      {
+        "id": "B4_C5",
+        "skill_concept": "Implement distributed model parallelism strategies using torch.distributed primitives, splitting computation across devices via tensor sharding or pipeline stages.",
+        "member_ids": [
+          "torch-pipeline-parallelism",
+          "torch-tensor-parallelism"
+        ],
+        "reasoning": "Both tasks require implementing a specific torch.distributed pattern (pipeline stages vs. column/row-sharded linear layers), registering custom forward hooks, and handling inter-device communication (send/recv or all-gather). They share the same library surface (torch, torch.distributed, Optional, typing/math) and the same debugging approach."
+      },
+      {
+        "id": "B4_C6",
+        "skill_concept": "Implement an NLP model training algorithm from first principles in Python, including corpus tokenization, frequency-based vocabulary construction, and iterative weight or merge-rule updates.",
+        "member_ids": [
+          "train-bpe-tokenizer",
+          "word2vec-from-scratch"
+        ],
+        "reasoning": "Both tasks build a core NLP component without relying on high-level libraries: BPE incrementally merges byte-pair counts (Counter, collections), while Word2Vec iteratively updates embedding weights via skip-gram/CBOW (numpy, torch, Counter, re). The shared procedure is: build vocabulary from raw text, define the learning objective, implement the training loop, and validate via intrinsic evaluation."
+      },
+      {
+        "id": "B4_C7",
+        "skill_concept": "Modify a C project's Makefile or configure script to inject additional compiler flags that change the build artifact (coverage instrumentation or IR emission) without breaking the existing build.",
+        "member_ids": [
+          "sqlite-with-gcov",
+          "sudo-llvm-ir"
+        ],
+        "reasoning": "Both tasks require locating the relevant build target, appending compiler/linker flags (--coverage/-fprofile-arcs for gcov; -emit-llvm for LLVM IR) to CFLAGS/LDFLAGS, running make, and confirming the artifact type. The toolset (make, gcc/clang, bash, tar) and the flag-injection procedure are the same."
+      },
+      {
+        "id": "B4_C8",
+        "skill_concept": "Formulate a linear programming problem and solve it either via a declarative convex solver (cvxpy) or by explicitly enumerating basic feasible solutions through vertex/corner-point methods using itertools.",
+        "member_ids": [
+          "rare-mineral-allocation",
+          "vertex-solver"
+        ],
+        "reasoning": "Both tasks model a resource-constrained system as a linear program with inequality constraints and a linear objective. rare-mineral-allocation uses cvxpy to declare and solve the LP; vertex-solver enumerates extreme points via combinations of active constraints. The mathematical formulation (Ax ≤ b, minimize cᵀx) and numpy-based data handling are shared."
+      },
+      {
+        "id": "B4_C9",
+        "skill_concept": "Design regular expressions that match a precisely specified pattern in structured text and apply them for extraction or substitution, then validate correctness against concrete examples.",
+        "member_ids": [
+          "regex-chess",
+          "regex-log"
+        ],
+        "reasoning": "Both tasks require writing regex patterns that satisfy strict format rules (algebraic chess notation replacements vs. IPv4-plus-date log lines) and encoding them in a consumable form (JSON array of pairs, plain string). The workflow—analyze the pattern spec, construct the regex, test against samples—is identical, and both use Python's re module or bash regex facilities."
+      },
+      {
+        "id": "B4_C10",
+        "skill_concept": "Fit a parametric physical or statistical model to experimental measurements using domain-specific curve-fitting libraries (scipy.optimize.curve_fit or Stan/PyStan), then export the estimated parameters.",
+        "member_ids": [
+          "raman-fitting",
+          "rstan-to-pystan"
+        ],
+        "reasoning": "Both tasks take raw experimental data and a known generative model (Lorentzian/Gaussian peaks for Raman spectra; a Gaussian process for the Stan model), call a fitting/sampling procedure to estimate parameters, and write results to a file. The shared skill is: parse input data, define the model function, invoke the solver, and serialise outputs."
+      },
+      {
+        "id": "B4_C11",
+        "skill_concept": "Write Python pipeline scripts that read structured data files, apply custom parsing or hashing logic to transform records, and redistribute the output across new shards or formats.",
+        "member_ids": [
+          "reshard-c4-data",
+          "recover-accuracy-log"
+        ],
+        "reasoning": "Both tasks require authoring Python scripts that read line-oriented data (JSONL/gzip shards, accuracy logs), apply record-level logic (consistent hashing for sharding; Decimal arithmetic for log recovery), and write transformed output. They share the same toolset (python, json, os, sys, bash) and the same read-transform-write pipeline structure."
+      },
+      {
+        "id": "B4_C12",
+        "skill_concept": "Install and configure a domain-specific ML library (Whisper, SAM, fastText), prepare input data in the required format, execute inference or training, and collect structured outputs.",
+        "member_ids": [
+          "speech-to-text",
+          "sam-cell-seg",
+          "train-fasttext"
+        ],
+        "reasoning": "All three tasks involve: resolving a non-trivial library installation (often requiring git clone, make, pip, or ffmpeg), converting input data into the library's expected format, invoking the model's API for training or inference, and writing results to disk. The libraries differ but the setup-run-collect procedure is the same."
+      },
+      {
+        "id": "B4_C13",
+        "skill_concept": "Load image or video frames using Python CV/imaging libraries (PIL, OpenCV), apply processing operations to isolate regions of interest, and extract structured information from the visual content.",
+        "member_ids": [
+          "solve-sudoku",
+          "video-processing"
+        ],
+        "reasoning": "Both tasks ingest visual media via Python (PIL for the Sudoku image, cv2 for video frames), apply spatial or temporal processing to identify features (grid cells vs. jump events), and output structured results. The shared procedure is: open media, iterate over frames/regions, apply numeric analysis, write structured output."
+      },
+      {
+        "id": "B4_C14",
+        "skill_concept": "Bootstrap a multi-dependency software environment from scratch by orchestrating package managers (pip, uv, apt), build tools (cmake), shell scripts (curl | sh), and configuration patches (sed) in the correct dependency order.",
+        "member_ids": [
+          "spinning-up-rl",
+          "setup-custom-dev-env"
+        ],
+        "reasoning": "Both tasks require installing a stack of tools with non-trivial interdependencies and resolving version or path conflicts. The procedure is: identify required packages, install system-level dependencies, run build tools, patch configuration files with sed, and verify the environment. Tools (curl, sh, sed, git, wget, cmake/uv) overlap substantially."
+      },
+      {
+        "id": "B4_C15",
+        "skill_concept": "Write bash/awk scripts that invoke a system command producing tabular or hierarchical output, parse the relevant fields with awk/grep/sed, and summarise or filter the results.",
+        "member_ids": [
+          "slurm-simple-node-monitoring",
+          "tree-directory-parser"
+        ],
+        "reasoning": "Both tasks produce a bash script that calls a CLI tool (squeue for SLURM; tree for filesystem), pipes the output through awk/grep/sed to extract specific columns or path segments, and formats a summary. The write-parse-report loop and the shared toolset (awk, bash, grep, sed, find) make the skill directly transferable."
+      }
+    ],
+    "unclustered": [
+      "qemu-startup",
+      "query-optimize",
+      "run-pdp11-code",
+      "sanitize-git-repo",
+      "schedule-vacation",
+      "schemelike-metacircular-eval",
+      "sha-puzzle",
+      "simple-sheets-put",
+      "simple-web-scraper",
+      "solana-data",
+      "solve-maze-challenge",
+      "sqlite-db-truncate",
+      "stable-parallel-kmeans",
+      "tmux-advanced-workflow",
+      "triton-interpret",
+      "tune-mjcf",
+      "unprivileged-headless-pyrender",
+      "vimscript-vim-quine",
+      "wasm-pipeline",
+      "weighted-max-sat-solver",
+      "winning-avg-corewars"
+    ]
+  },
+  "meta": {
+    "duration_ms": 266061,
+    "total_cost_usd": 0.3008257,
+    "session_id": "b7ac7245-ff05-4240-bd95-1d92b9386713"
+  }
+}

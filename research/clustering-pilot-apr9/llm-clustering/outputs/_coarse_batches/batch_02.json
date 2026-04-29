@@ -1,0 +1,173 @@
+{
+  "batch_idx": 2,
+  "n_tasks": 60,
+  "parsed": {
+    "clusters": [
+      {
+        "id": "B2_C1",
+        "skill_concept": "Load, configure, and run HuggingFace transformer models (with LoRA adapters or speculative decoding) for inference or fine-tuning using the transformers + torch + PEFT stack.",
+        "member_ids": [
+          "hf-lora-adapter",
+          "hf-model-inference",
+          "hf-train-lora-adapter",
+          "llm-spec-decoding"
+        ],
+        "reasoning": "All four tasks share the same procedure: install HuggingFace transformers/torch, load a pretrained model via AutoModel*, optionally attach or train a PEFT/LoRA adapter, then run inference and evaluate output. The tools (transformers, torch, AutoModelForSequenceClassification, PeftModel, AutoTokenizer) overlap directly, and the skill learned on one task (how to wire up a HF pipeline with adapters) transfers immediately to the others."
+      },
+      {
+        "id": "B2_C2",
+        "skill_concept": "Attack the FEAL block cipher with chosen-plaintext analysis—collect encrypt-oracle queries, then exploit differential or linear relationships among plaintexts and ciphertexts to recover round keys.",
+        "member_ids": [
+          "feal-differential-cryptanalysis",
+          "feal-linear-cryptanalysis"
+        ],
+        "reasoning": "Both tasks target the same FEAL-like cipher and require the same preparatory steps: interact with an encrypt oracle to gather chosen plaintext/ciphertext pairs, then apply a classical attack (differential vs. linear) to extract the key. The mathematical setup differs but the overall procedure shape—oracle interaction, statistical analysis, key recovery—is shared."
+      },
+      {
+        "id": "B2_C3",
+        "skill_concept": "Recover content that appears absent from normal git history by traversing the git object store with reflog, log --all, fsck, and git show.",
+        "member_ids": [
+          "fix-git",
+          "git-leak-recovery"
+        ],
+        "reasoning": "fix-git recovers commits lost during a branch switch; git-leak-recovery recovers a secret scrubbed by history rewriting. Both require the same skill: understanding that git objects persist until GC, then using git reflog / git log --all / git cat-file to locate and extract the dangling commit or blob."
+      },
+      {
+        "id": "B2_C4",
+        "skill_concept": "Download a Windows OS image and install or run it inside a QEMU virtual machine, configuring disk images, boot flags, and hardware emulation parameters.",
+        "member_ids": [
+          "install-windows-3.11",
+          "install-windows-xp"
+        ],
+        "reasoning": "Both tasks follow the same procedure: obtain an installer ISO, create a raw disk image with qemu-img, invoke qemu-system-x86_64 with appropriate CPU/memory/VGA flags, and boot through the OS installer. The tool set (qemu, wget, docker, bash) and the configuration challenges (legacy hardware quirks, BIOS boot) are essentially identical."
+      },
+      {
+        "id": "B2_C5",
+        "skill_concept": "Parse structured log files using grep, awk, and bash to filter by time range or pattern, aggregate event counts, and report summaries or anomalies.",
+        "member_ids": [
+          "log-summary",
+          "log-summary-date-ranges",
+          "intrusion-detection"
+        ],
+        "reasoning": "All three tasks ingest .log files, apply grep/awk patterns to classify or count lines, and produce a structured report. The difference is only in the filter criterion (service grouping, date range, or threat signatures). The same pipeline—find logs, grep for patterns, awk for aggregation, output results—applies to each."
+      },
+      {
+        "id": "B2_C6",
+        "skill_concept": "Diagnose a Python package version conflict and resolve it by identifying compatible versions, using pip version constraints, or patching the build/install step.",
+        "member_ids": [
+          "fix-pandas-version",
+          "incompatible-python-fasttext"
+        ],
+        "reasoning": "Both tasks start with a broken Python environment where a package fails to import or function correctly due to version mismatches. The shared procedure is: reproduce the error, inspect pip show / pip install --dry-run output, locate a compatible release or apply a source patch, and verify the fix. The pip-centric debugging workflow is directly reusable."
+      },
+      {
+        "id": "B2_C7",
+        "skill_concept": "Generate an SSL certificate with openssl and configure a server (nginx or Jupyter) to terminate HTTPS, then verify TLS connectivity.",
+        "member_ids": [
+          "home-server-https",
+          "jupyter-notebook-server"
+        ],
+        "reasoning": "Both tasks require: openssl genrsa/req to create a self-signed cert, editing the server configuration to reference the cert and key, restarting the service, and confirming HTTPS access with curl or a browser. The tool overlap (openssl, nginx/jupyter_server, bash) and the step-by-step TLS setup procedure are the same."
+      },
+      {
+        "id": "B2_C8",
+        "skill_concept": "Build a Flask HTTP server that exposes specific REST endpoints and verify it with curl.",
+        "member_ids": [
+          "fibonacci-server",
+          "get-bitcoin-nodes"
+        ],
+        "reasoning": "Both tasks require creating a Flask app, defining GET endpoints with specific URL patterns and response formats, running the server on a specified port, and testing with curl. The procedure—import Flask, define routes, app.run(), curl validation—is identical; the business logic (Fibonacci vs. Bitcoin network queries) differs but does not change the skill."
+      },
+      {
+        "id": "B2_C9",
+        "skill_concept": "Translate a mathematical specification for eigenvalue/eigenvector computation (from a paper or function stub) into a working numerical implementation using numpy or eigenpy.",
+        "member_ids": [
+          "largest-eigenval",
+          "implement-eigenvectors-from-eigenvalues-research-paper"
+        ],
+        "reasoning": "Both tasks require reading a mathematical description of an eigenvalue algorithm and implementing it with numpy/eigenpy array operations. The procedure is: parse the algorithm's mathematical steps, map them to numpy primitives (dot, eig, norm), implement iteratively or via the paper's formula, and validate against known test cases. The linear algebra tooling and translation skill are directly shared."
+      },
+      {
+        "id": "B2_C10",
+        "skill_concept": "Identify a specific code-level vulnerability class (CWE, XSS, path traversal) and write or patch defensive code to neutralize it, then test that the attack vector is closed.",
+        "member_ids": [
+          "fix-code-vulnerability",
+          "filter-js-from-html",
+          "extract-safely"
+        ],
+        "reasoning": "All three tasks present a known vulnerability category and require the agent to understand the attack vector, modify or write code to prevent exploitation (sed patch, BeautifulSoup script, safe-extraction wrapper), and verify the fix. The procedure—identify class → apply mitigation → test—applies uniformly, and the tasks share a security-hardening mental model."
+      },
+      {
+        "id": "B2_C11",
+        "skill_concept": "Model a discrete game or puzzle state space and implement a search algorithm to find a solution sequence, then deliver moves either programmatically or via a network protocol (socket/HTTP).",
+        "member_ids": [
+          "enemy-grid-escape",
+          "interactive-maze-game",
+          "huarong-dao-solver"
+        ],
+        "reasoning": "All three require the agent to represent the game/puzzle state, implement a solver (BFS with deque, greedy path-finding, or move-sequence generation), and communicate the solution (via socket, curl, or JSON output). The core skill—state modeling + search + solution delivery—is shared, even though the communication channel differs between online-interactive and offline-batch."
+      },
+      {
+        "id": "B2_C12",
+        "skill_concept": "Issue HTTP requests with curl or requests, parse the responses (HTML, JSON, plain text), and extract a specific piece of target information from the web.",
+        "member_ids": [
+          "find-official-code",
+          "find-restaurant"
+        ],
+        "reasoning": "Both tasks require constructing HTTP queries against web sources, parsing the returned content (HTML pages, search results, API responses), and extracting a precise target (GitHub repo URL, restaurant name/address). The procedure—build query, fetch, parse, filter—and the tool set (curl, requests, grep/sed/re) overlap directly."
+      },
+      {
+        "id": "B2_C13",
+        "skill_concept": "Download a video from an online URL and then extract or analyze its frames or content using media-processing tools.",
+        "member_ids": [
+          "download-youtube",
+          "extract-moves-from-video"
+        ],
+        "reasoning": "Both tasks start by fetching a video from a URL (YouTube or direct link) using curl/yt-dlp/bash, then process the video content—download-youtube stops at the mp4, while extract-moves-from-video additionally analyzes frames with torch. The download-and-process pipeline is the shared skill, and solving the first task provides directly reusable steps for the second."
+      },
+      {
+        "id": "B2_C14",
+        "skill_concept": "Load tabular time-series data with pandas, handle missing values or heterogeneous date formats, and compute aggregate statistics over date ranges.",
+        "member_ids": [
+          "flood-monitoring-basic",
+          "heterogeneous-dates"
+        ],
+        "reasoning": "Both tasks ingest CSV data with temporal indices, apply pandas date parsing (including format normalization), fill or interpolate missing entries, and compute per-day aggregates. The shared procedure—pd.read_csv → parse_dates → fillna/interpolate → groupby/resample → output—and the pandas tooling make these directly skill-equivalent."
+      }
+    ],
+    "unclustered": [
+      "extract-elf",
+      "fmri-encoding-r",
+      "form-filling",
+      "gcc-compiler-optimization",
+      "gcode-to-text",
+      "git-multibranch",
+      "git-workflow-hack",
+      "gomoku-planner",
+      "gpt2-codegolf",
+      "grid-pattern-transform",
+      "hdfs-deployment",
+      "hello-world",
+      "html-finance-verify",
+      "hydra-debug-slurm-mode",
+      "ilp-solver",
+      "install-klee-minimal",
+      "jq-data-processing",
+      "jsonl-aggregator",
+      "kv-store-grpc",
+      "large-scale-text-editing",
+      "lean4-proof",
+      "leelachess0-pytorch-conversion",
+      "llm-inference-batching-scheduler",
+      "logistic-regression-divergence",
+      "financial-document-processor",
+      "fix-ocaml-gc",
+      "fix-permissions"
+    ]
+  },
+  "meta": {
+    "duration_ms": 323831,
+    "total_cost_usd": 0.3121652,
+    "session_id": "abc57943-99e1-47cc-ba23-110049372664"
+  }
+}

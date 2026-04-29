@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C9",
+  "coarse_skill_concept": "Profile Python code to locate performance bottlenecks, then apply targeted acceleration using JIT compilation (numba) or request-level caching.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "accelerate-maximal-square",
+      "applicable": "PARTIAL",
+      "reason": "Uses numba @njit JIT compilation (one branch of the skill), but requires no profiling—the hot path is the entire nested loop and is obvious from inspection, so the profile-then-optimize workflow is irrelevant."
+    },
+    {
+      "task_id": "cprofiling-python",
+      "applicable": "PARTIAL",
+      "reason": "Involves cProfile overhead awareness, but the optimization technique is parallel I/O via ThreadPoolExecutor and HTTP connection pooling—neither numba JIT nor CachedSession; the coarse-pass characterization of the solution was incorrect."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Apply numba @njit JIT compilation to accelerate CPU-bound numerical Python loops without GPU",
+      "member_ids": [
+        "accelerate-maximal-square"
+      ],
+      "reasoning": "The task is purely about rewriting a tight numerical loop using numba's ahead-of-time JIT; profiling plays no role and the optimization domain is CPU-bound arithmetic, not I/O."
+    },
+    {
+      "skill_concept": "Profile I/O-bound Python scripts with cProfile and optimize via parallel execution (ThreadPoolExecutor) and HTTP connection pooling (requests.Session)",
+      "member_ids": [
+        "cprofiling-python"
+      ],
+      "reasoning": "The task centers on cProfile-aware code structure and accelerating network-bound work through parallelism and session reuse—a fundamentally different optimization domain from numerical JIT compilation."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 32032,
+    "cost_usd": 0.058934099999999996
+  }
+}

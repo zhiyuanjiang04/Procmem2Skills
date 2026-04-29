@@ -1,0 +1,32 @@
+{
+  "source_coarse_id": "B2_C4",
+  "coarse_skill_concept": "Download a Windows OS image and install or run it inside a QEMU virtual machine, configuring disk images, boot flags, and hardware emulation parameters.",
+  "decision": "keep",
+  "task_judgments": [
+    {
+      "task_id": "install-windows-3.11",
+      "applicable": "YES",
+      "reason": "Requires compiling a specific QEMU version, launching qemu-system-i386 with a pre-existing disk image in snapshot mode, configuring VNC on :1/5901, and setting up nginx on port 80 — all core parts of the candidate skill."
+    },
+    {
+      "task_id": "install-windows-xp",
+      "applicable": "YES",
+      "reason": "Requires creating a raw disk image with qemu-img, booting an ISO through qemu-system-x86_64 to run an unattended installer, configuring VNC on :1/5901, and setting up nginx on port 80 — directly covered by the candidate skill."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Launch a legacy Windows OS inside QEMU by creating/configuring a disk image, invoking qemu-system with appropriate CPU/memory/VGA flags, exposing a VNC display on port 5901, and proxying it via nginx on port 80.",
+      "member_ids": [
+        "install-windows-3.11",
+        "install-windows-xp"
+      ],
+      "reasoning": "Both tasks share the same end-to-end procedure: obtain or use an existing OS image, run qemu-system with BIOS-compatible settings, bind VNC to display :1 (port 5901), and front it with an nginx web interface. The XP task adds an unattended installation phase, but that is a natural extension of the same skill rather than a different skill entirely."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 8747,
+    "cost_usd": 0.0416041
+  }
+}

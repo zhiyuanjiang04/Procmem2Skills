@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C15",
+  "coarse_skill_concept": "Load and process machine learning datasets from HuggingFace Hub or external repositories using datasets/transformers APIs to prepare benchmark evaluation sets or compute dataset statistics.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "add-benchmark-lm-eval-harness",
+      "applicable": "PARTIAL",
+      "reason": "Data loading from a git-lfs repo with pandas covers only one minor step; the dominant complexity is cloning a specific lm-evaluation-harness fork and authoring a correct YAML task definition with multi-choice logprob configuration, which is a fundamentally different skill."
+    },
+    {
+      "task_id": "count-dataset-tokens",
+      "applicable": "YES",
+      "reason": "Task directly exercises loading a HuggingFace Hub dataset with the datasets library, filtering by domain metadata, and applying a transformers tokenizer to compute a corpus statistic — exactly the candidate skill's procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Load a HuggingFace Hub dataset with the datasets library, apply metadata-based filtering, and compute corpus statistics using a transformers tokenizer.",
+      "member_ids": [
+        "count-dataset-tokens"
+      ],
+      "reasoning": "This task is end-to-end covered by the skill: load_dataset with a named config, filter on a domain field, encode with AutoTokenizer, and aggregate counts. No other significant sub-skill is required."
+    },
+    {
+      "skill_concept": "Create a custom lm-evaluation-harness benchmark task by installing the library from a specific fork/tag, authoring a YAML task definition (output_type, doc_to_text, doc_to_choice, metric_list), and supplying a pre-processed JSONL data file.",
+      "member_ids": [
+        "add-benchmark-lm-eval-harness"
+      ],
+      "reasoning": "The dominant difficulty is correctly configuring the lm-eval-harness YAML (multi-choice logprob output type, prompt template, choice ordering, metric definition) and installing from a versioned fork — the pandas data-prep step is a minor prerequisite, not the reusable skill."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 31227,
+    "cost_usd": 0.05603985
+  }
+}

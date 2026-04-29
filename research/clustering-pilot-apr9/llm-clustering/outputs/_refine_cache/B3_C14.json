@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B3_C14",
+  "coarse_skill_concept": "Parsing raw network traffic (PCAP files or live TCP streams) to decode application-layer protocol messages and produce structured output records.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "pcap-to-netflow",
+      "applicable": "YES",
+      "reason": "The task is purely about reading captured bytes from a PCAP file, extracting IP/TCP/UDP header fields, aggregating packets into flow records, and serializing those records into a structured binary output format — exactly what the candidate skill describes."
+    },
+    {
+      "task_id": "protocol-analysis-rs",
+      "applicable": "NO",
+      "reason": "The task requires reverse-engineering an undocumented game protocol and implementing an active client that constructs and sends correctly sequenced authentication packets; the deliverable is a successful login session, not structured parsed records from observed traffic."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Parsing PCAP capture files to extract IP/TCP/UDP header fields, aggregate packets into bidirectional network flows keyed by 5-tuple, and serialize flow records into binary NetFlow v5 export datagrams",
+      "member_ids": [
+        "pcap-to-netflow"
+      ],
+      "reasoning": "This task is end-to-end offline traffic analysis: read captured bytes via scapy, maintain stateful flow accumulators, then write packed binary records conforming to the NetFlow v5 wire format. The candidate skill maps directly onto every step."
+    },
+    {
+      "skill_concept": "Reverse-engineering an undocumented binary application protocol (by reading server/client source or observing handshake bytes), then implementing a compliant client that executes the multi-step sequence required to authenticate with a live server",
+      "member_ids": [
+        "protocol-analysis-rs"
+      ],
+      "reasoning": "The primary challenge here is understanding what bytes to send and in what order to satisfy the server's authentication state machine, not parsing captured traffic into records. Binary serialization helpers are incidental; protocol reverse engineering and active client construction are the core skill."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 37204,
+    "cost_usd": 0.061526349999999994
+  }
+}

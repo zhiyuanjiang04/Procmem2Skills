@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B1_C2.1",
+  "skill_concept": "Diagnose and repair broken Python environments by resolving pip/setuptools failures and conda dependency conflicts.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks involve broken Python/package environments, but 'broken-python' targets a system-wide pip failure (likely broken pip/setuptools or permissions) while 'conda-env-conflict-resolution' targets conda dependency version conflicts — different toolchains, different diagnostic steps, and different remediation procedures. A skill written to cover both would need to be generic enough ('diagnose Python environment failures') that it loses actionable specificity.",
+  "weakest_link": "broken-python",
+  "weakest_link_reason": "The task provides no solution details, leaving the failure mode and fix entirely unknown — it could be a broken pip binary, wrong Python path, missing setuptools, or permission issue, none of which overlap with the conda solver conflicts in the other task.",
+  "_meta": {
+    "duration_ms": 6377,
+    "cost_usd": 0.026081600000000003
+  }
+}

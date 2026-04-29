@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B3_C7.1",
+  "skill_concept": "Configuring and starting network service daemons by editing config files, initializing any required backend state, starting processes, and verifying live endpoints via a protocol probe.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "The nginx task fits the candidate skill almost perfectly (edit config, test syntax, restart, curl-probe endpoint), but the mailman task requires coordinating two interdependent daemons (postfix + mailman3) with complex interservice plumbing (LMTP transport maps, alias routing), and its 'endpoint verification' is not a protocol probe against a network socket but rather a mailman CLI invocation followed by email-flow testing — a fundamentally different verification shape that the skill as written does not capture.",
+  "weakest_link": "mailman",
+  "weakest_link_reason": "Mailman demands multi-service orchestration, MTA-specific domain knowledge (postfix transport_maps, LMTP, mydestination), and email-flow verification rather than the single-daemon config-edit + protocol-probe pattern the skill describes.",
+  "_meta": {
+    "duration_ms": 26791,
+    "cost_usd": 0.04979535
+  }
+}

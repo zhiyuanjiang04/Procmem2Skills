@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C15",
+  "coarse_skill_concept": "Write bash/awk scripts that invoke a system command producing tabular or hierarchical output, parse the relevant fields with awk/grep/sed, and summarise or filter the results.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "slurm-simple-node-monitoring",
+      "applicable": "YES",
+      "reason": "Directly matches the skill: calls sinfo (tabular CLI output), pipes through awk to extract state/count columns, formats a periodic summary into a log file."
+    },
+    {
+      "task_id": "tree-directory-parser",
+      "applicable": "NO",
+      "reason": "The task requires parsing Unicode box-drawing characters to infer depth levels and maintaining a path stack to reconstruct a filesystem — not summarising or filtering tabular output — which is a fundamentally different procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Write a bash script that polls a SLURM CLI command (sinfo/squeue) on a timed loop, extracts numeric fields with awk, and appends formatted summary rows to a log file.",
+      "member_ids": [
+        "slurm-simple-node-monitoring"
+      ],
+      "reasoning": "The task is purely about periodic sampling of tabular sinfo output, awk-based field extraction, and formatted log appending — a self-contained monitoring/reporting pattern."
+    },
+    {
+      "skill_concept": "Parse the hierarchical output of `tree -F` by decoding Unicode box-drawing characters to determine depth, maintain a directory path stack, and reconstruct the exact filesystem structure with mkdir/touch and specified permissions.",
+      "member_ids": [
+        "tree-directory-parser"
+      ],
+      "reasoning": "The core challenge is inferring nesting depth from tree's symbolic indentation (├, └, │) and incrementally building absolute paths via a stack — a filesystem-reconstruction pattern with no meaningful overlap with tabular-data summarisation."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 23758,
+    "cost_usd": 0.050815099999999995
+  }
+}

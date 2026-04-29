@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B4_C3.1",
+  "skill_concept": "Recover hidden information from obfuscated artifacts by statically identifying the encoding or transformation scheme (base64, gzip, bzip2, custom hash) and inverting it with standard decoding tools or mathematical inverse computation, without executing the target.",
+  "n_tasks": 3,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "The skill covers shell-deobfuscation and recover-obfuscated-files well — both are straightforward static decode-and-invert pipelines using standard tools. However, reverse-engineering requires mathematical cryptanalysis (hash inversion via modular arithmetic and heuristic search), which is a fundamentally different procedure shape despite sharing the 'identify transformation and invert it' framing.",
+  "weakest_link": "reverse-engineering",
+  "weakest_link_reason": "This task demands implementing a custom modular-inverse hash reversal algorithm, not applying a standard decoding tool, making the skill's 'standard decoding tools or mathematical inverse computation' clause do heavy lifting that goes well beyond what the other two tasks require.",
+  "_meta": {
+    "duration_ms": 5512,
+    "cost_usd": 0.0327051
+  }
+}

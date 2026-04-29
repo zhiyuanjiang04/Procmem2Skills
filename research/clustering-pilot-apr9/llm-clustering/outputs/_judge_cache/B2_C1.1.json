@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B2_C1.1",
+  "skill_concept": "Configure and apply LoRA adapters to HuggingFace models using the PEFT library — covering both loading pre-trained adapters (PeftModel.from_pretrained + merge_and_unload) and training new adapters from scratch (LoraConfig + get_peft_model + Trainer fine-tuning loop).",
+  "n_tasks": 2,
+  "verdict": "ACCEPT",
+  "verdict_reason": "Both tasks share the same PEFT-library procedure shape: configure a LoraConfig (or load one), attach it to a HuggingFace model, and either merge+save (hf-lora-adapter) or train+save (hf-train-lora-adapter). The candidate skill explicitly covers both branches, so a single skill document with two code paths would meaningfully guide an agent through either task.",
+  "weakest_link": "hf-train-lora-adapter",
+  "weakest_link_reason": "This task adds a full supervised fine-tuning loop (Trainer, DataCollator, dataset formatting, tokenizer padding setup) on top of the core LoRA wiring, requiring substantially more procedural knowledge beyond what 'configure and apply a LoRA adapter' alone captures.",
+  "_meta": {
+    "duration_ms": 6528,
+    "cost_usd": 0.03805385
+  }
+}

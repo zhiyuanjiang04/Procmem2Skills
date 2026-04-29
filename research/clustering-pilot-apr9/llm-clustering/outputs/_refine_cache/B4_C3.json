@@ -1,0 +1,45 @@
+{
+  "source_coarse_id": "B4_C3",
+  "coarse_skill_concept": "Recover hidden information (passwords, keys, plaintext content) from obfuscated scripts, binaries, or file blobs by identifying and reversing the encoding or obfuscation layer using static analysis tools.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "reverse-engineering",
+      "applicable": "YES",
+      "reason": "Requires statically disassembling the binary to extract the hash algorithm and target hash, then inverting the hash mathematically — exactly the identify-and-invert-obfuscation loop."
+    },
+    {
+      "task_id": "vulnerable-secret",
+      "applicable": "NO",
+      "reason": "The secret is revealed only by dynamically exploiting a buffer overflow to flip an in-memory auth flag, making the program print it — this is runtime binary exploitation, not static decoding of an encoding layer."
+    },
+    {
+      "task_id": "shell-deobfuscation",
+      "applicable": "YES",
+      "reason": "Pure static layered-encoding reversal: read the script, recognise the base64/gzip/bzip2 stack, pipe through the inverse transforms — a textbook instance of the candidate skill."
+    },
+    {
+      "task_id": "recover-obfuscated-files",
+      "applicable": "YES",
+      "reason": "Both the filename and content are base64-encoded; the task reduces to identifying that single encoding layer and decoding it, which is precisely the candidate skill's procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Recover hidden information from obfuscated artifacts by statically identifying the encoding or transformation scheme (base64, gzip, bzip2, custom hash) and inverting it with standard decoding tools or mathematical inverse computation, without executing the target.",
+      "member_ids": [
+        "reverse-engineering",
+        "shell-deobfuscation",
+        "recover-obfuscated-files"
+      ],
+      "reasoning": "All three tasks share the same investigative loop: inspect the artifact statically, recognise the obfuscation/encoding layer(s), and apply the mathematical or algorithmic inverse (base64 -d, gunzip, bunzip2, modular-inverse hash reversal) to recover the plaintext. No dynamic execution of the target is required."
+    }
+  ],
+  "removed_to_unclustered": [
+    "vulnerable-secret"
+  ],
+  "_meta": {
+    "duration_ms": 29657,
+    "cost_usd": 0.0585696
+  }
+}

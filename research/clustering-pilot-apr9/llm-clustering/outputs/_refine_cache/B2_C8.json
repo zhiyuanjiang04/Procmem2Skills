@@ -1,0 +1,33 @@
+{
+  "source_coarse_id": "B2_C8",
+  "coarse_skill_concept": "Build a Flask HTTP server that exposes specific REST endpoints and verify it with curl.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "fibonacci-server",
+      "applicable": "YES",
+      "reason": "The task is entirely covered by the Flask REST skill: define a route, validate query params, compute a value, return JSON, run the server."
+    },
+    {
+      "task_id": "get-bitcoin-nodes",
+      "applicable": "PARTIAL",
+      "reason": "Flask is used as a thin HTTP wrapper, but the dominant and novel challenge is Bitcoin P2P node discovery via DNS seeds, raw socket probing on port 8333, and Bitcoin protocol data retrieval—skills entirely outside the Flask REST procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Build a Flask HTTP server with parameterized GET endpoints, input validation, and JSON responses, then verify with curl.",
+      "member_ids": [
+        "fibonacci-server"
+      ],
+      "reasoning": "fibonacci-server is fully solved by the candidate skill: import Flask, define a /fib route, validate the query param, return jsonify({'result': ...}), call app.run(port=3000), and curl-test the endpoint."
+    }
+  ],
+  "removed_to_unclustered": [
+    "get-bitcoin-nodes"
+  ],
+  "_meta": {
+    "duration_ms": 19497,
+    "cost_usd": 0.04599935000000001
+  }
+}

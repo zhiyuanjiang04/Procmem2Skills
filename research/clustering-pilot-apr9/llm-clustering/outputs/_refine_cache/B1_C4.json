@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B1_C4",
+  "coarse_skill_concept": "Implement or modify statistical algorithms—sampling methods, Bayesian networks, and causal inference models—using R scripting and domain-specific packages.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "adaptive-rejection-sampler",
+      "applicable": "YES",
+      "reason": "Task is purely about implementing a statistical sampling algorithm in R with modular code, tests, and direct Rscript execution — exactly what the skill describes."
+    },
+    {
+      "task_id": "bn-fit-modify",
+      "applicable": "YES",
+      "reason": "Task requires fitting and intervening on a Bayesian network in R using bnlearn, with structure learning and sampling — a direct match to the Bayesian-network branch of the skill."
+    },
+    {
+      "task_id": "causal-inference-r",
+      "applicable": "PARTIAL",
+      "reason": "The dagitty/ATE analysis fits the skill, but a substantial portion of the task is Jupyter infrastructure setup (IRkernel installation, notebook creation, background server management) which is a fundamentally different procedure not covered by the candidate skill."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Implement or modify statistical algorithms in R—sampling methods and Bayesian networks—using domain-specific packages (e.g., bnlearn, ARS) with direct Rscript execution, modular code structure, and output validation.",
+      "member_ids": [
+        "adaptive-rejection-sampler",
+        "bn-fit-modify"
+      ],
+      "reasoning": "Both tasks require writing R code to implement a non-trivial statistical procedure, running it via Rscript, and validating outputs against known results or structural constraints. Neither requires any external environment setup beyond R itself."
+    }
+  ],
+  "removed_to_unclustered": [
+    "causal-inference-r"
+  ],
+  "_meta": {
+    "duration_ms": 22518,
+    "cost_usd": 0.06372359999999999
+  }
+}

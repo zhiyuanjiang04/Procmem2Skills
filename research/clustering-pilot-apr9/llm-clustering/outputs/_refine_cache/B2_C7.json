@@ -1,0 +1,32 @@
+{
+  "source_coarse_id": "B2_C7",
+  "coarse_skill_concept": "Generate an SSL certificate with openssl and configure a server (nginx or Jupyter) to terminate HTTPS, then verify TLS connectivity.",
+  "decision": "keep",
+  "task_judgments": [
+    {
+      "task_id": "home-server-https",
+      "applicable": "PARTIAL",
+      "reason": "The openssl self-signed cert generation and nginx SSL configuration steps are central, but the task also requires ddclient dynamic-DNS setup and DNS resolution verification which are outside the candidate skill's scope."
+    },
+    {
+      "task_id": "jupyter-notebook-server",
+      "applicable": "PARTIAL",
+      "reason": "The openssl self-signed cert generation and wiring it into a server config are present, but the bulk of the task is Jupyter installation, password hashing, notebook creation with matplotlib code, and process management — steps the candidate skill does not cover."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Generate a self-signed SSL certificate with openssl and configure a server (nginx or Jupyter) to terminate HTTPS by referencing the cert and key in the server's config file, then restart the service.",
+      "member_ids": [
+        "home-server-https",
+        "jupyter-notebook-server"
+      ],
+      "reasoning": "Both tasks share an identical sub-procedure: run openssl genrsa / openssl req -x509 to produce a key and certificate, then edit the server's configuration to point at those files and enable TLS. The servers differ (nginx config block vs. jupyter_notebook_config.py), but the pattern — generate cert, edit config, restart — is the same reusable skill. Each task has additional requirements (ddclient/DNS for home-server-https; package installation, password auth, and notebook authoring for jupyter-notebook-server), but those extras don't undermine the shared core; they simply mean the skill is a necessary but not sufficient component of each solution. Keeping them together is correct because a worked example of this SSL-setup procedure is directly transferable across both tasks."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 32753,
+    "cost_usd": 0.0579886
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B2_C9",
+  "coarse_skill_concept": "Translate a mathematical specification for eigenvalue/eigenvector computation (from a paper or function stub) into a working numerical implementation using numpy or eigenpy.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "largest-eigenval",
+      "applicable": "PARTIAL",
+      "reason": "Eigenpy is used, but the core task is performance engineering — replacing numpy with a faster C++ backend — not translating a mathematical algorithm specification into code."
+    },
+    {
+      "task_id": "implement-eigenvectors-from-eigenvalues-research-paper",
+      "applicable": "YES",
+      "reason": "Directly requires reading a research paper, extracting the product formula, and implementing it in numpy — exactly the candidate skill's procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Implement a specific mathematical formula for eigenvector computation by reading a research paper and mapping its product/ratio expressions to numpy array operations.",
+      "member_ids": [
+        "implement-eigenvectors-from-eigenvalues-research-paper"
+      ],
+      "reasoning": "Task requires parsing the Tao et al. eigenvalue-eigenvector identity, translating the product formula into vectorized numpy code, and validating correctness — a pure algorithm-from-spec implementation task."
+    },
+    {
+      "skill_concept": "Optimize eigenvalue computation speed by replacing the numpy.linalg.eig baseline with a faster numerical backend (eigenpy/LAPACK C++ bindings), benchmarking to confirm improvement.",
+      "member_ids": [
+        "largest-eigenval"
+      ],
+      "reasoning": "Task is about performance engineering: identify that numpy is too slow for the benchmark, install a C++-backed solver (eigenpy), wrap it in the required Python interface, and verify the timing constraint is met. The mathematical content is incidental."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 27433,
+    "cost_usd": 0.048456599999999996
+  }
+}

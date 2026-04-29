@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C6",
+  "coarse_skill_concept": "Implement an NLP model training algorithm from first principles in Python, including corpus tokenization, frequency-based vocabulary construction, and iterative weight or merge-rule updates.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "train-bpe-tokenizer",
+      "applicable": "YES",
+      "reason": "The task is entirely the BPE merge algorithm: character-level tokenization, bigram frequency counting with tie-breaking, and iterative greedy merging — no neural network or gradient updates involved."
+    },
+    {
+      "task_id": "word2vec-from-scratch",
+      "applicable": "PARTIAL",
+      "reason": "Vocabulary frequency filtering overlaps, but the dominant challenge is implementing a neural skip-gram model with backpropagation and PyTorch — a fundamentally different procedure from BPE's combinatorial string merging."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Implement BPE tokenization from scratch: split words into characters with an end-of-word marker, count bigram frequencies across a corpus, and iteratively apply greedy merge rules (highest frequency, alphabetical tie-break) until a target vocabulary size is reached.",
+      "member_ids": [
+        "train-bpe-tokenizer"
+      ],
+      "reasoning": "BPE is a purely combinatorial/statistical algorithm with no gradient computation; the reusable skill is the frequency-counted greedy merge loop and its deterministic output format (tokens.txt, merges.txt)."
+    },
+    {
+      "skill_concept": "Implement a neural word-embedding model (Word2Vec skip-gram) from scratch: build a frequency-filtered vocabulary, define an nn.Embedding layer, write a training loop with negative-sampling or softmax loss using PyTorch, and serialize the state dict and a Vocab dataclass.",
+      "member_ids": [
+        "word2vec-from-scratch"
+      ],
+      "reasoning": "The dominant challenge is neural network design and gradient-based training, which shares almost nothing procedurally with BPE beyond basic vocabulary construction."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 28002,
+    "cost_usd": 0.05643109999999999
+  }
+}

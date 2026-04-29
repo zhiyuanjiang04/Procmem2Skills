@@ -1,0 +1,68 @@
+{
+  "source_coarse_id": "B4_C2",
+  "coarse_skill_concept": "Analyze vulnerable web application source code or configuration, craft an exploit payload (SQLi, SSTI, RCE, credential leakage), and execute it using curl or Python HTTP requests to achieve the stated objective.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "security-celery-redis-rce",
+      "applicable": "PARTIAL",
+      "reason": "Crafts a Python exploit payload but targets the Redis message-broker protocol directly, not HTTP endpoints — a fundamentally different transport and exploitation pattern."
+    },
+    {
+      "task_id": "spring-messaging-vul",
+      "applicable": "YES",
+      "reason": "Discovers STOMP SpEL injection from publicly served resources, crafts the exploit payload, and delivers it via Python HTTP requests — matches the candidate skill exactly."
+    },
+    {
+      "task_id": "sql-injection-attack",
+      "applicable": "YES",
+      "reason": "Reads vulnerable source, crafts an SQLi payload, and executes it with curl against HTTP endpoints — the prototype example of the candidate skill."
+    },
+    {
+      "task_id": "vul-flask",
+      "applicable": "NO",
+      "reason": "Asks for a defensive source-code patch inside the Flask framework itself, not for crafting or sending an exploit payload."
+    },
+    {
+      "task_id": "vul-flink",
+      "applicable": "NO",
+      "reason": "Requires editing Java source, applying a path-sanitization fix, and rebuilding with Maven — a defensive patching workflow with no exploit payload or HTTP attack step."
+    },
+    {
+      "task_id": "security-vulhub-minio",
+      "applicable": "PARTIAL",
+      "reason": "Sends a single curl probe to an HTTP endpoint, but the 'exploit' is knowing a hardcoded CVE credential pair rather than analyzing source or crafting a structured payload."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Identify an HTTP-layer vulnerability (SQLi, SpEL/SSTI injection, unauthenticated endpoint exposure) from source or app resources, craft the exploit payload, and deliver it via curl or Python HTTP requests to achieve the stated objective.",
+      "member_ids": [
+        "sql-injection-attack",
+        "spring-messaging-vul",
+        "security-vulhub-minio"
+      ],
+      "reasoning": "All three tasks share the same end-to-end procedure: read source or discoverable app metadata to understand the vulnerability, construct an HTTP payload (SQLi string, STOMP SpEL frame, or CVE-specific request), send it with curl or Python requests, and verify the outcome via HTTP responses. The transport, tooling, and analysis loop are identical."
+    },
+    {
+      "skill_concept": "Exploit unauthenticated message-broker access by connecting directly to the broker (Redis), serializing a malicious object (pickle RCE), and injecting it as a task so the consumer deserializes and executes arbitrary code.",
+      "member_ids": [
+        "security-celery-redis-rce"
+      ],
+      "reasoning": "This task uses Python and crafted payloads like the HTTP-exploit group, but the delivery mechanism is the Redis wire protocol rather than HTTP, and the vulnerability class (pickle deserialization via task queue) requires a separate procedure: Redis client connection, pickle payload construction, LPUSH into the Celery queue, and waiting for worker execution."
+    },
+    {
+      "skill_concept": "Read vulnerable framework or application source code, apply a minimal targeted patch that eliminates the vulnerability class at the framework level, and rebuild the project so the fix takes effect at runtime.",
+      "member_ids": [
+        "vul-flask",
+        "vul-flink"
+      ],
+      "reasoning": "Both tasks are purely defensive: locate the vulnerable code path in vendored or installed source, apply an in-place code change (regex rewrite of render_template_string; sed/awk sanitization of filename resolution), and optionally rebuild (Maven for Flink). No exploit payload is crafted or sent; the skill is source-level vulnerability remediation, not attack."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 55380,
+    "cost_usd": 0.09111860000000001
+  }
+}

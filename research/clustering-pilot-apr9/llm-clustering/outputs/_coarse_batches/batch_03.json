@@ -1,0 +1,180 @@
+{
+  "batch_idx": 3,
+  "n_tasks": 60,
+  "parsed": {
+    "clusters": [
+      {
+        "id": "B3_C1",
+        "skill_concept": "Selecting a HuggingFace embedding model and running MTEB benchmark tasks to measure retrieval and similarity metrics.",
+        "member_ids": [
+          "mteb-eval",
+          "mteb-leaderboard",
+          "mteb-retrieve"
+        ],
+        "reasoning": "All three tasks require the same procedural loop: identify a candidate model on HuggingFace, instantiate it via the mteb API, configure the target task/dataset, execute the evaluation run, and read back a cosine-spearman or nDCG score. mteb-retrieve adds a retrieval-vs-document-list variant but the core steps—model selection, mteb task setup, score extraction—are identical across all three."
+      },
+      {
+        "id": "B3_C2",
+        "skill_concept": "Loading heterogeneous structured data sources and applying SQL-style transformations, joins, and aggregations using pandas, DuckDB, or PostgreSQL to produce a clean output dataset.",
+        "member_ids": [
+          "pandas-etl",
+          "pandas-sql-query",
+          "multi-source-data-merger",
+          "organization-json-generator",
+          "postgres-csv-clean"
+        ],
+        "reasoning": "Each task follows the same ETL procedure: read one or more structured inputs (CSV, JSON, parquet, SQL table), apply column selection, type coercion, joins, or window functions, then write the result to a target format. The specific engine (pandas vs DuckDB vs psql) varies, but the procedure shape—ingest → transform → validate → emit—is identical and the same debugging heuristics apply to all five."
+      },
+      {
+        "id": "B3_C3",
+        "skill_concept": "Automating interactive terminal applications by scripting input sequences with pexpect or shell pipes to drive a text-based state machine through a sequence of prompts and responses.",
+        "member_ids": [
+          "play-lord",
+          "play-zork",
+          "play-zork-easy"
+        ],
+        "reasoning": "All three require the agent to control a program that communicates through stdin/stdout in turn-based fashion. The skill is identical: spawn the process (pexpect or subprocess), pattern-match on output to detect current state, send the correct input, and handle timeouts/unexpected prompts. play-zork-easy is a constrained speedrun variant of play-zork; play-lord adds a postgres-backed state but uses the same pexpect loop."
+      },
+      {
+        "id": "B3_C4",
+        "skill_concept": "Writing a single source file that is syntactically valid in two different programming languages simultaneously by exploiting comment-delimiter and string-literal overlap between the languages.",
+        "member_ids": [
+          "polyglot-c-py",
+          "polyglot-rust-c"
+        ],
+        "reasoning": "Both tasks demand exactly the same technique: identify the comment and string syntax of both target languages, find overlapping constructs (e.g., a C block comment that Python sees as an expression, or a Rust raw-string that C ignores), and arrange code so each compiler/interpreter sees a valid program while ignoring the other language's code. The debugging loop—compile both, fix syntax errors alternately—is also identical."
+      },
+      {
+        "id": "B3_C5",
+        "skill_concept": "Recovering a PyTorch model architecture from saved weights or fixing broken training code, then building a working inference pipeline.",
+        "member_ids": [
+          "pytorch-model-recovery",
+          "pytorch-model-cli",
+          "mnist-learning-fix"
+        ],
+        "reasoning": "All three require deep familiarity with PyTorch's Module API and tensor semantics. pytorch-model-recovery reverses a state_dict to reconstruct layer shapes; pytorch-model-cli wraps a trained model in a CLI with preprocessing; mnist-learning-fix debugs a NumPy-based training loop by identifying incorrect gradient or activation code. The common skill is reading weight/gradient tensors to diagnose architecture or numerical issues and wiring the corrected model into an end-to-end pipeline."
+      },
+      {
+        "id": "B3_C6",
+        "skill_concept": "Translating a word problem into a formal mathematical optimization (LP, MIP, or convex) with explicit objective and constraints, then calling a solver library to extract the solution.",
+        "member_ids": [
+          "mixed-integer-programming",
+          "movie-helper",
+          "portfolio-optimization"
+        ],
+        "reasoning": "Each task requires the same three-step procedure: parse the problem specification into decision variables + objective + constraints; instantiate the model in a solver API (pulp for MIP, cvxpy for convex, numpy for QP); and post-process the solver's output into the required answer format. Common failure modes—infeasibility, wrong variable domain, units errors—apply identically across all three."
+      },
+      {
+        "id": "B3_C7",
+        "skill_concept": "Installing, configuring, and starting multi-component network service daemons by editing config files, initializing backend stores, starting processes, and verifying live endpoints.",
+        "member_ids": [
+          "mailman",
+          "nginx-request-logging",
+          "qemu-alpine-ssh",
+          "pypi-server"
+        ],
+        "reasoning": "All four tasks follow the same service-standup procedure: read existing or example config, edit parameters (listen address, domain, policy), initialize any required database or PKI material, start the daemon(s), and probe the service (HTTP request, SMTP handshake, SSH connection) to confirm it is live. The tools differ (postfix/mailman3, nginx, qemu, docker/setuptools) but the debugging loop—check config syntax, inspect logs, retry—is the same across all four."
+      },
+      {
+        "id": "B3_C8",
+        "skill_concept": "Building C/C++/Fortran software from source using cmake or make, including updating compiler flags, adding cross-compilation toolchain targets, or fixing stale build rules.",
+        "member_ids": [
+          "magsac-install",
+          "modernize-fortran-build",
+          "make-doom-for-mips"
+        ],
+        "reasoning": "All three tasks live inside the cmake/make build-system workflow: read existing CMakeLists.txt or Makefile, identify missing/broken rules or compiler settings, patch them with sed or direct edits, invoke the build, and validate the binary or library artifact. magsac-install builds a C++ library; modernize-fortran-build updates a legacy Makefile to gfortran; make-doom-for-mips cross-compiles with a MIPS GCC toolchain—all require the same cmake/make diagnosis loop."
+      },
+      {
+        "id": "B3_C9",
+        "skill_concept": "Converting legacy scientific code from a source language or framework (MATLAB, old Python APIs, NEURON) to a modern Python equivalent while validating that numerical outputs remain equivalent.",
+        "member_ids": [
+          "matlab-python-conversion",
+          "modernize-scientific-stack",
+          "neuron-to-jaxley-conversion"
+        ],
+        "reasoning": "Each task demands the same migration procedure: understand the source code's data flow and numerical semantics, map legacy API calls to modern equivalents (scipy.io.loadmat for MATLAB arrays, updated numpy/pandas/ConfigParser APIs, Jaxley Channel/Pump for NEURON HH conductances), run both versions on the same input, and assert numerical agreement within tolerance. Common pitfalls—axis conventions, dtype changes, API renames—apply to all three."
+      },
+      {
+        "id": "B3_C10",
+        "skill_concept": "Refactoring a serial computation to execute in parallel using Python multiprocessing (ProcessPoolExecutor) or a compiled parallelism layer, then benchmarking the resulting speedup.",
+        "member_ids": [
+          "parallelize-compute-squares",
+          "parallel-particle-simulator"
+        ],
+        "reasoning": "Both tasks require identifying the embarrassingly-parallel unit of work in a serial baseline, wrapping it in a worker function, distributing work across processes or threads (ProcessPoolExecutor in parallelize-compute-squares; OpenMP/pthreads or similar in parallel-particle-simulator), collecting results, and comparing wall-clock time to the serial version. The debugging loop—race conditions, overhead exceeding gain, result aggregation—is identical."
+      },
+      {
+        "id": "B3_C11",
+        "skill_concept": "Using Linux filesystem exploration tools (find, grep, awk) to locate stored credentials or exploitable SUID/sudo misconfigurations and leverage them for privilege escalation.",
+        "member_ids": [
+          "password-recovery",
+          "privilege-escalation"
+        ],
+        "reasoning": "Both tasks are classic Linux security reconnaissance exercises sharing the same enumeration procedure: search for world-readable credential files or SUID binaries (find -perm), grep for password patterns in config and log files, identify a privilege vector (sudo rule, weak password, exposed hash), and exploit it. The tool set (find, grep, awk) and mental checklist are identical."
+      },
+      {
+        "id": "B3_C12",
+        "skill_concept": "Generating cryptographic material or configuring file encryption using security CLI tools (openssl, rencrypt), then programmatically verifying correctness of the resulting certificates or ciphertext.",
+        "member_ids": [
+          "openssl-selfsigned-cert",
+          "new-encrypt-command"
+        ],
+        "reasoning": "Both tasks require installing or invoking a cryptographic CLI, supplying the correct flags for key generation and certificate/encryption parameters, writing output to the right paths, and then verifying the result (Python ssl.wrap_socket or decryption round-trip). The shared skill is reading CLI documentation, constructing the invocation, and writing a small validation script."
+      },
+      {
+        "id": "B3_C13",
+        "skill_concept": "Building a scikit-learn training pipeline, logging metrics and artifacts to an experiment tracker, and serializing the trained model for later inference.",
+        "member_ids": [
+          "mlflow-register",
+          "predict-customer-churn"
+        ],
+        "reasoning": "Both tasks follow the same ML lifecycle: preprocess tabular data, fit a scikit-learn estimator (LinearRegression or LogisticRegression), evaluate on a held-out set, log metrics and the model object to a tracking backend (mlflow server or pickle file), and verify the artifact can be loaded for inference. The procedure and failure modes (metric logging order, model signature mismatches, server URI config) are shared."
+      },
+      {
+        "id": "B3_C14",
+        "skill_concept": "Parsing raw network traffic (PCAP files or live TCP streams) to decode application-layer protocol messages and produce structured output records.",
+        "member_ids": [
+          "pcap-to-netflow",
+          "protocol-analysis-rs"
+        ],
+        "reasoning": "Both tasks require reading byte streams of network traffic, parsing packet or message boundaries, extracting fields (IP 5-tuple, timestamps, payload tokens), and emitting structured records. pcap-to-netflow uses scapy to read PCAP and aggregate flows; protocol-analysis-rs uses asyncio to connect to a live server and decode a custom binary protocol. The shared skill is writing a stateful packet/message parser that reconstructs higher-level semantics from raw bytes."
+      },
+      {
+        "id": "B3_C15",
+        "skill_concept": "Implementing a named classical algorithm (Runge-Kutta ODE integration, Wasserstein optimal transport, BFS/A* state-space search) in Python from a mathematical or algorithmic specification, then verifying correctness against reference outputs.",
+        "member_ids": [
+          "ode-solver-rk4",
+          "optimal-transport",
+          "puzzle-solver"
+        ],
+        "reasoning": "All three tasks supply a formal specification (mathematical recurrence, linear program formulation, or state-space description) and require the agent to translate it into a correct, self-contained Python implementation using numpy/scipy/collections. The procedure is identical: read the spec, implement the core loop, add a test harness comparing output to expected values, and iterate on numerical or logic bugs. No third-party solver is allowed to do the heavy lifting—the algorithm itself must be implemented."
+      }
+    ],
+    "unclustered": [
+      "mahjong-winninghand",
+      "make-mips-interpreter",
+      "mcmc-sampling-stan",
+      "merge-diff-arc-agi-task",
+      "model-extraction-relu-logits",
+      "multistep-definite-integral",
+      "npm-conflict-resolution",
+      "oom",
+      "overfull-hbox",
+      "parallelize-graph",
+      "path-tracing",
+      "path-tracing-reverse",
+      "port-compressor",
+      "predicate-pushdown-bench",
+      "processing-pipeline",
+      "protein-assembly",
+      "prove-plus-comm",
+      "png-generation"
+    ]
+  },
+  "meta": {
+    "duration_ms": 303346,
+    "total_cost_usd": 0.29467249999999995,
+    "session_id": "7bb33a24-c7c3-4fb0-a792-9d2af1e2c1b9"
+  }
+}

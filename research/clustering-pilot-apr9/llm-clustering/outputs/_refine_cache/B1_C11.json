@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C11",
+  "coarse_skill_concept": "Parse structured text log files (web access logs, profiler stack traces) using regex and awk/Python to extract and aggregate per-entity metrics.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "analyze-access-logs",
+      "applicable": "YES",
+      "reason": "Each log line is one record with positional fields; awk field extraction and per-field aggregation (count, sort, uniq) directly solves every sub-task."
+    },
+    {
+      "task_id": "count-call-stack",
+      "applicable": "PARTIAL",
+      "reason": "Aggregation by frequency is shared, but the core challenge is stateful multi-line block parsing to reconstruct traces and form composite 3-frame keys — a fundamentally different parsing model than single-line field extraction."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Parse line-oriented structured log files using awk/bash positional field extraction to compute per-field aggregate statistics (counts, top-N, unique).",
+      "member_ids": [
+        "analyze-access-logs"
+      ],
+      "reasoning": "The entire solution reduces to awk field splits on fixed-format single-line records plus sort/uniq/wc aggregation — a single reusable line-oriented parsing and counting procedure."
+    },
+    {
+      "skill_concept": "Parse multi-line block-structured trace logs with a state-machine reader, group blocks by composite top-N frame keys, and rank by frequency.",
+      "member_ids": [
+        "count-call-stack"
+      ],
+      "reasoning": "The dominant challenge is recognising trace boundaries, accumulating frames across lines into a tuple key, and then counting those tuples — none of which is addressed by the line-oriented awk pattern used in the other task."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 27694,
+    "cost_usd": 0.04906235
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B2_C11",
+  "coarse_skill_concept": "Model a discrete game or puzzle state space and implement a search algorithm to find a solution sequence, then deliver moves either programmatically or via a network protocol (socket/HTTP).",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "enemy-grid-escape",
+      "applicable": "PARTIAL",
+      "reason": "Socket communication matches, but the task requires an online reactive strategy against an adversary with unknown behavior—not pre-planned BFS/search for a goal sequence—making the core solving procedure fundamentally different."
+    },
+    {
+      "task_id": "interactive-maze-game",
+      "applicable": "YES",
+      "reason": "Requires exploring a static maze state space using path-finding (DFS with backtracking given the 2-visit constraint) and delivering moves via HTTP, directly matching the candidate skill."
+    },
+    {
+      "task_id": "huarong-dao-solver",
+      "applicable": "YES",
+      "reason": "Canonical instance of the skill: models a discrete puzzle state space, runs BFS to find a solution sequence, and delivers the result programmatically."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Model a discrete puzzle or maze state space and run an offline search algorithm (BFS/DFS) to find a complete solution sequence, then deliver moves via file output or HTTP endpoint.",
+      "member_ids": [
+        "huarong-dao-solver",
+        "interactive-maze-game"
+      ],
+      "reasoning": "Both tasks operate in static, non-adversarial environments where the full state space can be explored to find a goal-reaching path; one uses BFS on a sliding-block puzzle outputting JSON, the other uses online DFS in a maze communicating via HTTP—both fit the same search-then-deliver pattern."
+    }
+  ],
+  "removed_to_unclustered": [
+    "enemy-grid-escape"
+  ],
+  "_meta": {
+    "duration_ms": 43646,
+    "cost_usd": 0.07824534999999999
+  }
+}

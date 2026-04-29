@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B1_C6.1",
+  "skill_concept": "Enumerate combinatorial spaces (permutations, arithmetic expression trees) with backtracking or pruning, using itertools and fractions.Fraction for exact arithmetic, to find solutions satisfying hard constraints.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks involve combinatorial search with backtracking, but assign-seats is primarily a constraint-satisfaction problem over permutations requiring multi-step file decoding and domain-specific adjacency logic, while countdown-game is a pure arithmetic expression-tree search using fractions — the overlapping core (backtracking + itertools/fractions) is real but the procedural shape diverges enough that a single skill description would need to be written at a level of generality that dilutes its practical guidance.",
+  "weakest_link": "assign-seats",
+  "weakest_link_reason": "assign-seats requires substantial pre-processing (pickle/base64 decoding, natural-language constraint extraction) and circular-table adjacency semantics before any combinatorial search begins, making the candidate skill's enumeration focus cover only a fraction of what the task demands.",
+  "_meta": {
+    "duration_ms": 6133,
+    "cost_usd": 0.033340100000000004
+  }
+}

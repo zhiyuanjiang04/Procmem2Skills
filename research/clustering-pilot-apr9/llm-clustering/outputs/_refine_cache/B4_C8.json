@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C8",
+  "coarse_skill_concept": "Formulate a linear programming problem and solve it either via a declarative convex solver (cvxpy) or by explicitly enumerating basic feasible solutions through vertex/corner-point methods using itertools.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "rare-mineral-allocation",
+      "applicable": "NO",
+      "reason": "The objective is non-linear (quartic + quadratic terms), making this a convex NLP solved with cvxpy + gradient descent refinement, not a linear program; the candidate LP skill does not apply."
+    },
+    {
+      "task_id": "vertex-solver",
+      "applicable": "PARTIAL",
+      "reason": "The task enumerates basic feasible solutions of a linear system via combinatorial selection, which matches the enumeration half of the candidate skill, but there is no LP objective to minimize — it is purely a combinatorial vertex-enumeration problem."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Solve a non-linear convex optimization problem (quartic/quadratic objective) with box and equality constraints by declaring it in cvxpy and refining with projected gradient descent (Adam).",
+      "member_ids": [
+        "rare-mineral-allocation"
+      ],
+      "reasoning": "The objective contains x⁴ and (pᵢxᵢ)² terms — this is a convex NLP, not an LP. The solution uses cvxpy as a warm-start then runs Adam gradient descent. The relevant reusable skill is non-linear convex optimization with constraint projection, not LP formulation."
+    },
+    {
+      "skill_concept": "Enumerate all basic feasible solutions (corner points) of a polytope defined by Ax=b, x≥0 by iterating over all n-combinations of column indices with itertools.combinations, solving the square subsystem via numpy.linalg.solve, and filtering for non-negative solutions.",
+      "member_ids": [
+        "vertex-solver"
+      ],
+      "reasoning": "The task has no optimization objective; the entire procedure is combinatorial enumeration of vertices. The reusable skill is the BFS-enumeration loop (combinations → submatrix solve → non-negativity check → count), which is distinct from solving or formulating an LP."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 22771,
+    "cost_usd": 0.048914849999999996
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B2_C7.1",
+  "skill_concept": "Generate a self-signed SSL certificate with openssl and configure a server (nginx or Jupyter) to terminate HTTPS by referencing the cert and key in the server's config file, then restart the service.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks use openssl to generate a self-signed cert and wire it into a server config, so the core SSL generation procedure transfers directly. However, home-server-https adds substantial non-SSL work (ddclient dynamic DNS, acme.sh directory conventions, nginx site config) that makes the skill only partially applicable, and the two servers (nginx vs Jupyter) have meaningfully different config mechanisms.",
+  "weakest_link": "home-server-https",
+  "weakest_link_reason": "This task requires configuring dynamic DNS with ddclient and navigating acme.sh path conventions on top of the SSL/nginx steps, which go well beyond the candidate skill's defined scope.",
+  "_meta": {
+    "duration_ms": 5591,
+    "cost_usd": 0.0339451
+  }
+}

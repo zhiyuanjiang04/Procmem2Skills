@@ -1,0 +1,45 @@
+{
+  "source_coarse_id": "B3_C6",
+  "coarse_skill_concept": "Translating a word problem into a formal mathematical optimization (LP, MIP, or convex) with explicit objective and constraints, then calling a solver library to extract the solution.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "mixed-integer-programming",
+      "applicable": "PARTIAL",
+      "reason": "No word-problem-to-model translation is required; the problem is already fully formulated in an MPS file — the task is purely loading a standard file format and invoking a solver to read off the objective value."
+    },
+    {
+      "task_id": "movie-helper",
+      "applicable": "YES",
+      "reason": "Requires translating a sparse-data-recovery narrative into a nuclear-norm-minimization program with observed-entry equality constraints and solving it iteratively with cvxpy — exactly the formulate-then-solve pattern."
+    },
+    {
+      "task_id": "portfolio-optimization",
+      "applicable": "NO",
+      "reason": "The task is a C-extension / performance-engineering challenge (Python-C interop via the NumPy C API, BLAS-style matrix math); there is no optimization solver, no LP/MIP/convex model to formulate, and no solver library to call."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Load a pre-formulated optimization model from a standard file format (MPS/LP) and invoke a solver library to extract and post-process the objective value.",
+      "member_ids": [
+        "mixed-integer-programming"
+      ],
+      "reasoning": "The entire task is file-format parsing + solver API invocation; the modeling step is absent because the MPS file already encodes all variables, bounds, and constraints."
+    },
+    {
+      "skill_concept": "Translate a word problem into an explicit convex optimization program (decision variables, objective, constraints) and solve it with a convex solver library (cvxpy/SCS).",
+      "member_ids": [
+        "movie-helper"
+      ],
+      "reasoning": "The agent must recognize that sparse matrix recovery maps to nuclear-norm minimization, write the cvxpy model from scratch, enforce observed-value constraints, and call a solver — all three steps of the candidate skill, correctly scoped to convex programs."
+    }
+  ],
+  "removed_to_unclustered": [
+    "portfolio-optimization"
+  ],
+  "_meta": {
+    "duration_ms": 37905,
+    "cost_usd": 0.06226709999999999
+  }
+}

@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B2_C10",
+  "coarse_skill_concept": "Identify a specific code-level vulnerability class (CWE, XSS, path traversal) and write or patch defensive code to neutralize it, then test that the attack vector is closed.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "fix-code-vulnerability",
+      "applicable": "YES",
+      "reason": "Directly exercises the full procedure: analyze existing code for a named CWE class (CRLF injection), patch the vulnerable functions, then verify with the test suite."
+    },
+    {
+      "task_id": "filter-js-from-html",
+      "applicable": "YES",
+      "reason": "Requires identifying XSS attack vectors (script tags, event handlers, javascript: URIs) and writing defensive filtering code to neutralize them, matching the skill's identify→mitigate→verify pattern."
+    },
+    {
+      "task_id": "extract-safely",
+      "applicable": "NO",
+      "reason": "The instruction asks only to extract a tar archive and write its content to a file; no vulnerability class to identify, no existing code to audit or patch, and the solution is empty—this is a basic file-extraction task, not a security-hardening one."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Identify a specific code-level vulnerability class (CWE / XSS attack vector) in existing code, write or patch defensive code to neutralize it, and verify the attack vector is closed.",
+      "member_ids": [
+        "fix-code-vulnerability",
+        "filter-js-from-html"
+      ],
+      "reasoning": "Both tasks require the agent to reason about a named vulnerability category (CRLF injection, XSS), apply a targeted code-level mitigation (input validation patch, HTML sanitisation script), and confirm the fix—the same three-step procedure throughout."
+    }
+  ],
+  "removed_to_unclustered": [
+    "extract-safely"
+  ],
+  "_meta": {
+    "duration_ms": 18981,
+    "cost_usd": 0.0473386
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B2_C5.1",
+  "skill_concept": "Parse structured log files using grep and bash to filter by severity keyword or filename-encoded date range, aggregate event counts per category, and write a CSV summary report.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks share grep-based severity counting and CSV output, but log-summary-date-ranges requires substantial additional logic: date arithmetic, filename-encoded date parsing, Unix timestamp comparisons, and multi-period bucketing. A skill written to cover both would need to be generic enough that it provides little concrete procedural guidance for the simpler task.",
+  "weakest_link": "log-summary-date-ranges",
+  "weakest_link_reason": "This task demands date-range filtering via filename parsing and timestamp arithmetic that is entirely absent from the candidate skill's description, requiring a meaningfully different procedure beyond simple grep-and-aggregate.",
+  "_meta": {
+    "duration_ms": 4805,
+    "cost_usd": 0.0302736
+  }
+}

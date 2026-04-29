@@ -1,0 +1,32 @@
+{
+  "source_coarse_id": "B3_C4",
+  "coarse_skill_concept": "Writing a single source file that is syntactically valid in two different programming languages simultaneously by exploiting comment-delimiter and string-literal overlap between the languages.",
+  "decision": "keep",
+  "task_judgments": [
+    {
+      "task_id": "polyglot-c-py",
+      "applicable": "YES",
+      "reason": "Requires exploiting C block-comment/Python string overlap (#define and triple-quote) so each language ignores the other's code."
+    },
+    {
+      "task_id": "polyglot-rust-c",
+      "applicable": "YES",
+      "reason": "Requires exploiting Rust/C++ comment and #define/macro overlap so each compiler sees valid syntax while masking the other language's constructs."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Construct a single source file valid in two programming languages by identifying overlapping comment delimiters and string-literal syntax, using one language's comment or string construct to hide the other language's code from its parser, then iteratively compiling/interpreting both until both succeed.",
+      "member_ids": [
+        "polyglot-c-py",
+        "polyglot-rust-c"
+      ],
+      "reasoning": "Both tasks demand the same core procedure: map out comment and string syntax for each language pair, find constructs one language treats as a comment/string while the other treats as executable, layer the two programs so each sees only its own valid code, and debug by alternating between both compilers/interpreters."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 8644,
+    "cost_usd": 0.0356096
+  }
+}

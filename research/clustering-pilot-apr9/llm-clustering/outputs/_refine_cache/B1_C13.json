@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C13",
+  "coarse_skill_concept": "Debug C/C++ defects that are invisible at the language surface, including memory corruption that manifests only in release builds and template instantiation failures under older C++ standards.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "custom-memory-heap-crash",
+      "applicable": "YES",
+      "reason": "Directly requires debugging a release-mode crash by reproducing it, analyzing coredumps, and tracing through libstdc++ static-cleanup internals to find optimizer-exposed undefined behavior."
+    },
+    {
+      "task_id": "cpp-compatibility",
+      "applicable": "NO",
+      "reason": "Requires statically identifying which post-C++11 features are used and rewriting with recursive template metaprogramming — no runtime debugging, coredump analysis, or UB tracing involved."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Diagnose and fix C++ crashes that appear only in release builds by reproducing the crash, reading coredumps/backtraces, tracing optimizer-exposed undefined behavior through standard-library internals (e.g., allocator or locale static-cleanup paths), and correcting the underlying UB.",
+      "member_ids": [
+        "custom-memory-heap-crash"
+      ],
+      "reasoning": "The task is purely a runtime debugging exercise: reproduce the release-only crash, extract a backtrace, locate the UB in the custom heap or libstdc++ destructor chain, and patch it — all steps that form a coherent runtime-debugging procedure."
+    },
+    {
+      "skill_concept": "Port a modern C++ template to C++11 by identifying unavailable language features (fold expressions, if constexpr, C++14/17 standard-library additions) and replacing them with equivalent C++11 recursive template specialization or trait-based metaprogramming.",
+      "member_ids": [
+        "cpp-compatibility"
+      ],
+      "reasoning": "The task requires a static code-adaptation procedure: read the header, identify the post-C++11 construct, and rewrite it using C++11-legal recursive template structs — no runtime analysis or UB diagnosis is involved."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 22007,
+    "cost_usd": 0.049039849999999996
+  }
+}

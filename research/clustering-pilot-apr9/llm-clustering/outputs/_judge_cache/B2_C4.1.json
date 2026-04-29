@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B2_C4.1",
+  "skill_concept": "Launch a legacy Windows OS inside QEMU by creating/configuring a disk image, invoking qemu-system with appropriate CPU/memory/VGA flags, exposing a VNC display on port 5901, and proxying it via nginx on port 80.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks share the VNC/nginx stack and QEMU launch pattern, but install-windows-xp requires a full unattended OS installation from ISO (disk creation, boot sequencing, product key retrieval, installer automation) before reaching any stable desktop state, while install-windows-3.11 starts from a pre-built bootable image and only needs to launch it — the installation complexity and failure modes differ substantially enough that a single skill procedure would need to cover very different ground.",
+  "weakest_link": "install-windows-xp",
+  "weakest_link_reason": "It requires driving an interactive OS installer from scratch (unattended ISO, product key injection, multi-stage boot progression) which the candidate skill's snapshot-mode launch procedure does not cover.",
+  "_meta": {
+    "duration_ms": 8762,
+    "cost_usd": 0.03471035
+  }
+}

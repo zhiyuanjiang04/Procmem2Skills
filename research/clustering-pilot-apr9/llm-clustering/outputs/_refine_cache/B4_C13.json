@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C13",
+  "coarse_skill_concept": "Load image or video frames using Python CV/imaging libraries (PIL, OpenCV), apply processing operations to isolate regions of interest, and extract structured information from the visual content.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "solve-sudoku",
+      "applicable": "PARTIAL",
+      "reason": "Image loading and cell extraction are needed, but the dominant challenge is OCR digit recognition and constraint-solving a Sudoku puzzle — not iterating frames or detecting motion events."
+    },
+    {
+      "task_id": "video-processing",
+      "applicable": "PARTIAL",
+      "reason": "OpenCV frame iteration and region analysis are central, but the core skill is temporal background subtraction to detect motion events across frames, not spatial grid decomposition or OCR."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Segment a static image into a regular spatial grid, extract each cell as a sub-image, apply OCR or pixel analysis per cell, and aggregate results into a structured 2D array.",
+      "member_ids": [
+        "solve-sudoku"
+      ],
+      "reasoning": "The Sudoku task requires dividing a fixed image into a 9x9 grid, cropping cells, running Tesseract OCR on each, and feeding the resulting digit matrix into a constraint solver. The key reusable procedure is grid-based cell extraction plus per-cell OCR — not temporal analysis."
+    },
+    {
+      "skill_concept": "Read an MP4 video frame-by-frame with OpenCV, apply background subtraction or frame-differencing to detect foreground motion regions, and identify temporal event boundaries (e.g., takeoff/landing frames) from the motion signal.",
+      "member_ids": [
+        "video-processing"
+      ],
+      "reasoning": "The hurdle task is fundamentally about temporal motion detection: using MOG background subtraction across frames, tracking bounding-box position over time, and inferring discrete jump events from the motion trajectory. The reusable procedure is video-frame motion analysis leading to event timestamping."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 10994,
+    "cost_usd": 0.040366599999999996
+  }
+}

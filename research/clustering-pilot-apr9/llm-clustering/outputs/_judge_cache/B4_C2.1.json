@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B4_C2.1",
+  "skill_concept": "Identify an HTTP-layer vulnerability (SQLi, SpEL/SSTI injection, unauthenticated endpoint exposure) from source or app resources, craft the exploit payload, and deliver it via curl or Python HTTP requests to achieve the stated objective.",
+  "n_tasks": 3,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Two tasks (sql-injection-attack, spring-messaging-vul) genuinely share the skill's procedure — read source/app resources, identify the vulnerability class, craft a payload, deliver via HTTP — but security-vulhub-minio deviates substantially: there is no payload crafting or injection; the solution is a single unauthenticated GET/POST to a known bootstrap endpoint followed by hardcoding the credential, which is endpoint enumeration/information disclosure, not exploitation of an injection class.",
+  "weakest_link": "security-vulhub-minio",
+  "weakest_link_reason": "The MinIO task requires only hitting an unauthenticated administrative endpoint to confirm a known default credential — no source analysis, no injection payload construction, and the 'exploit' is essentially a CVE-specific one-liner with a hardcoded answer, making the candidate skill's core procedure largely irrelevant.",
+  "_meta": {
+    "duration_ms": 10978,
+    "cost_usd": 0.03354285
+  }
+}

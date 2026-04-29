@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C11",
+  "coarse_skill_concept": "Write Python pipeline scripts that read structured data files, apply custom parsing or hashing logic to transform records, and redistribute the output across new shards or formats.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "reshard-c4-data",
+      "applicable": "YES",
+      "reason": "The task is precisely a read-transform-write pipeline: read JSONL shards, apply size/count constraints with hashing logic, and redistribute records into new compressed shard files with reversible metadata."
+    },
+    {
+      "task_id": "recover-accuracy-log",
+      "applicable": "PARTIAL",
+      "reason": "While it reads structured files and writes new ones, the core logic is temporal grouping by question_id rank (1st/2nd/3rd occurrence), error-marker filtering, and Decimal-rounded accuracy computation — not hashing or sharding, making the candidate skill a poor fit."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Write Python scripts to reshard a large collection of structured files into size-and-count-constrained compressed shards, recording a reversible mapping so a paired decompress script can reconstruct the original layout exactly.",
+      "member_ids": [
+        "reshard-c4-data"
+      ],
+      "reasoning": "This task is wholly about partitioning records across new shard files under storage constraints and writing metadata for lossless reconstruction — the candidate skill matches it directly."
+    },
+    {
+      "skill_concept": "Write Python scripts to reconstruct ordered per-run logs from interleaved async event streams: group events by entity ID, assign each group's sorted occurrences to run slots by temporal rank, filter error-marked records, and compute filtered accuracy with half-up Decimal rounding.",
+      "member_ids": [
+        "recover-accuracy-log"
+      ],
+      "reasoning": "The dominant procedures here are rank-based run assignment within per-ID groups, substring error classification, and precise statistical aggregation — none of which are captured by resharding or hashing logic."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 24582,
+    "cost_usd": 0.05599685
+  }
+}

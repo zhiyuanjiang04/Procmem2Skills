@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B4_C12.1",
+  "skill_concept": "Install a domain-specific ML library (via pip/git+make), convert raw input data into the library's required format, invoke inference or supervised training from a script or CLI, and persist the result to a specified output path.",
+  "n_tasks": 2,
+  "verdict": "ACCEPT",
+  "verdict_reason": "Both tasks follow the same procedure: install a domain-specific ML library from source (git clone + make or pip), convert raw input data into the library's required format, invoke inference or training, and persist output to a specified path. The toolchain overlap (git, pip, Python scripting, CLI invocation) and procedure shape are identical.",
+  "weakest_link": "speech-to-text",
+  "weakest_link_reason": "Speech-to-text is purely inference with no training step and requires audio-specific preprocessing (ffmpeg, mel spectrograms), making it a slightly looser fit for a skill framed around 'supervised training' as a primary use case.",
+  "_meta": {
+    "duration_ms": 5642,
+    "cost_usd": 0.027791600000000003
+  }
+}

@@ -1,0 +1,180 @@
+{
+  "batch_idx": 1,
+  "n_tasks": 60,
+  "parsed": {
+    "clusters": [
+      {
+        "id": "B1_C1",
+        "skill_concept": "Configure, patch, and compile C/C++ or system-level software from source using make/cmake/gcc, resolving toolchain errors, missing dependencies, and platform-specific build issues.",
+        "member_ids": [
+          "3d-model-format-legacy",
+          "build-pmars",
+          "build-pov-ray",
+          "build-stp",
+          "compile-compcert",
+          "caffe-cifar-10",
+          "build-tcc-qemu",
+          "build-cython-ext",
+          "build-linux-kernel-qemu",
+          "build-initramfs-qemu"
+        ],
+        "reasoning": "All tasks share the same build procedure: locate or download source, configure the build system (./configure, cmake, or direct make), apply patches via sed/grep to fix compiler incompatibilities or missing definitions, iterate on linker and compiler errors until the binary is produced. Tool overlap is heavy (make, gcc, cmake, sed, wget/git), and the failure modes—missing headers, incompatible flags, undefined symbols, platform-specific conditionals—are the same class of problem across all tasks. build-cython-ext uses pip/setuptools but ultimately drives gcc through the same make-driven loop."
+      },
+      {
+        "id": "B1_C2",
+        "skill_concept": "Diagnose and repair broken Python environments by resolving pip/setuptools failures, conda dependency conflicts, and package installation errors.",
+        "member_ids": [
+          "broken-python",
+          "conda-env-conflict-resolution",
+          "amuse-install"
+        ],
+        "reasoning": "All three tasks present a Python environment that fails to install packages correctly. The reusable skill is: identify why pip or conda is broken (corrupted PATH, conflicting version constraints, missing build tools or native libs), apply targeted fixes, and verify installation succeeds. Tools (pip, conda/mamba, bash) and the diagnostic ladder (check interpreter, check pip, check dependency tree) are shared across all three."
+      },
+      {
+        "id": "B1_C3",
+        "skill_concept": "Diagnose and fix system-level networking failures that prevent HTTP/curl from functioning, by inspecting firewall rules, DNS, routing, and socket or process configurations.",
+        "member_ids": [
+          "broken-networking",
+          "cron-broken-network"
+        ],
+        "reasoning": "Both tasks present a machine where curl or general HTTP connectivity is broken and require methodically checking network stack layers—interfaces, iptables/nftables rules, name resolution, proxy environment variables, and file-descriptor permissions—to locate and remove the obstruction. The tooling (curl, find, bash) and the layer-by-layer elimination procedure are identical."
+      },
+      {
+        "id": "B1_C4",
+        "skill_concept": "Implement or modify statistical algorithms—sampling methods, Bayesian networks, and causal inference models—using R scripting and domain-specific packages.",
+        "member_ids": [
+          "adaptive-rejection-sampler",
+          "bn-fit-modify",
+          "causal-inference-r"
+        ],
+        "reasoning": "All three tasks require writing or modifying R code to implement a statistical procedure, executing it with Rscript, and validating outputs. The shared workflow is: read the algorithm specification, write R using appropriate packages (e.g., bnlearn, dagitty, ARS), run, inspect results, and fix. The language (R) and statistical-computing domain are consistent, and the debugging loop (Rscript → error → fix) is the same."
+      },
+      {
+        "id": "B1_C5",
+        "skill_concept": "Process and transform DNA/RNA sequences using sed and bash string operations to perform assembly joins or targeted structural insertions into circular plasmids.",
+        "member_ids": [
+          "dna-assembly",
+          "dna-insert"
+        ],
+        "reasoning": "Both tasks operate on FASTA-format sequence files using sed and bash—the same primitive text-manipulation toolchain—to produce a new sequence (assembled genome or modified plasmid). The procedure is: parse sequence records, apply string transformations or concatenations, validate the output sequence. Neither task requires a bioinformatics library; the shared skill is precise sed/bash manipulation of FASTA data."
+      },
+      {
+        "id": "B1_C6",
+        "skill_concept": "Solve combinatorial optimization or constraint satisfaction problems by implementing exhaustive search, pruning, or dynamic programming in Python using itertools and math utilities.",
+        "member_ids": [
+          "aimo-airline-departures",
+          "assign-seats",
+          "countdown-game",
+          "constraints-scheduling"
+        ],
+        "reasoning": "All four tasks require enumerating or searching over a combinatorial space—seat permutations, arithmetic expression trees over a number set, flight departure schedules, or meeting-time windows—and finding a solution satisfying hard constraints. The Python tools (itertools.permutations, functools.reduce, fractions.Fraction, datetime) and the search-then-prune pattern transfer directly across all four."
+      },
+      {
+        "id": "B1_C7",
+        "skill_concept": "Implement BFS or DFS-based blind maze exploration, tracking visited states with Python collections and integrating with a subprocess or filesystem oracle for feedback.",
+        "member_ids": [
+          "blind-maze-explorer-5x5",
+          "blind-maze-explorer-algorithm"
+        ],
+        "reasoning": "Both tasks are variants of the same blind maze challenge: the agent cannot see the full grid and must systematically probe it using subprocess calls or os-level oracle access. The solution procedure—maintain a frontier and visited set with collections.defaultdict/deque, issue move commands, update state—is identical, and the tooling (make, find, python3, collections, defaultdict) matches exactly."
+      },
+      {
+        "id": "B1_C8",
+        "skill_concept": "Implement missing neural network components or reinforcement learning training loops using PyTorch and gymnasium, and debug common training failures such as gradient issues or divergence.",
+        "member_ids": [
+          "attention-mil",
+          "cartpole-rl-training",
+          "cross-entropy-method",
+          "classifier-debug"
+        ],
+        "reasoning": "All four tasks require fluency with PyTorch training mechanics: implementing a forward pass with attention pooling (attention-mil), building a policy network and REINFORCE loop (cartpole-rl-training), implementing cross-entropy policy optimization (cross-entropy-method), and diagnosing why a training script fails or diverges (classifier-debug). The shared skill is reading PyTorch tensor operations, loss definitions, and gradient-flow logic to write or fix training code."
+      },
+      {
+        "id": "B1_C9",
+        "skill_concept": "Profile Python code to locate performance bottlenecks, then apply targeted acceleration using JIT compilation (numba) or request-level caching.",
+        "member_ids": [
+          "accelerate-maximal-square",
+          "cprofiling-python"
+        ],
+        "reasoning": "Both tasks start with a slow Python script and require a two-phase workflow: measure where time is spent (cProfile or runtime observation), then accelerate the hot path. accelerate-maximal-square applies numba @njit JIT compilation; cprofiling-python introduces a CachedSession to eliminate redundant HTTP requests. The profile-then-optimize procedure and Python performance tooling are the same transferable skill."
+      },
+      {
+        "id": "B1_C10",
+        "skill_concept": "Read, filter, and convert tabular data between formats (CSV, Parquet, JSON) using pandas and Python standard library file I/O.",
+        "member_ids": [
+          "csv-to-parquet",
+          "bank-trans-filter"
+        ],
+        "reasoning": "Both tasks take CSV as input and produce a transformed output file: csv-to-parquet converts format using pandas, bank-trans-filter reads CSV and writes a filtered subset. The procedure—load with pandas or csv module, apply column/row transformations, write output—and the tools (pandas, csv, json, bash) overlap directly."
+      },
+      {
+        "id": "B1_C11",
+        "skill_concept": "Parse structured text log files (web access logs, profiler stack traces) using regex and awk/Python to extract and aggregate per-entity metrics.",
+        "member_ids": [
+          "analyze-access-logs",
+          "count-call-stack"
+        ],
+        "reasoning": "Both tasks require writing parsing code that scans a structured text file line by line, extracts fields via regex or awk patterns, and aggregates counts or statistics per key (IP address vs. call site). Tools (re, awk, collections.defaultdict, bash) and the extract-then-aggregate pattern are shared, making the skill directly reusable between them."
+      },
+      {
+        "id": "B1_C12",
+        "skill_concept": "Compute molecular descriptors using RDKit and train scikit-learn models to predict chemical properties or binding affinities from SMILES representations.",
+        "member_ids": [
+          "chem-property-targeting",
+          "chem-rf"
+        ],
+        "reasoning": "Both tasks use RDKit (Chem, Descriptors) to featurize molecules from SMILES strings and then apply ML models (sklearn, pandas) to predict a target property—one targeting specific descriptor values, the other predicting binding affinity. The pipeline—load SMILES, compute RDKit descriptors, train/evaluate model—is identical, and the libraries (RDKit, sklearn, numpy, pandas) overlap exactly."
+      },
+      {
+        "id": "B1_C13",
+        "skill_concept": "Debug C/C++ defects that are invisible at the language surface, including memory corruption that manifests only in release builds and template instantiation failures under older C++ standards.",
+        "member_ids": [
+          "custom-memory-heap-crash",
+          "cpp-compatibility"
+        ],
+        "reasoning": "Both tasks require reading C/C++ source and compiler diagnostics to find a non-obvious defect: custom-memory-heap-crash involves a bug that appears only under release-mode optimizations (likely undefined behavior exposed by the optimizer), and cpp-compatibility requires adapting a template to compile under C++11 constraints. The shared skill is C/C++ language semantics and compiler behavior knowledge, not build-system work."
+      },
+      {
+        "id": "B1_C14",
+        "skill_concept": "Investigate and bypass security controls by probing running services or constructing inputs that evade a filter implementation, using shell text-processing tools and HTTP inspection.",
+        "member_ids": [
+          "break-filter-js-from-html",
+          "catch-me-if-you-can"
+        ],
+        "reasoning": "Both tasks require adversarial analysis of a security artifact: break-filter-js-from-html crafts HTML that bypasses a Python XSS filter, and catch-me-if-you-can inspects a mysterious local web server using grep/awk/sed to extract hidden information. The shared skill is reasoning about what a security control checks and what it misses, then exploiting or documenting that gap using standard shell tools."
+      },
+      {
+        "id": "B1_C15",
+        "skill_concept": "Load and process machine learning datasets from HuggingFace Hub or external repositories using datasets/transformers APIs to prepare benchmark evaluation sets or compute dataset statistics.",
+        "member_ids": [
+          "add-benchmark-lm-eval-harness",
+          "count-dataset-tokens"
+        ],
+        "reasoning": "Both tasks require: identifying an external ML data source (HuggingFace Hub or a GitHub data repo), loading it with Python data libraries (HuggingFace datasets/pandas), applying domain-specific filtering or transformation (science-domain filter + tokenizer; task-2 test-set extraction), and producing a derived artifact. Tools (datasets, transformers, AutoTokenizer, pandas, pip, git) and the access-load-transform-output pattern overlap directly."
+      }
+    ],
+    "unclustered": [
+      "acl-permissions-inheritance",
+      "ancient-puzzle",
+      "audio-synth-stft-peaks",
+      "cancel-async-tasks",
+      "chess-best-move",
+      "circuit-fibsqrt",
+      "cobol-modernization",
+      "code-from-image",
+      "configure-git-webserver",
+      "crack-7z-hash",
+      "create-bucket",
+      "db-wal-recovery",
+      "debug-long-program",
+      "decommissioning-service-with-sensitive-data",
+      "deterministic-tarball",
+      "distribution-search"
+    ]
+  },
+  "meta": {
+    "duration_ms": 377233,
+    "total_cost_usd": 0.3617283,
+    "session_id": "1764ae08-6fb3-4e7f-b0ad-627fe2099154"
+  }
+}

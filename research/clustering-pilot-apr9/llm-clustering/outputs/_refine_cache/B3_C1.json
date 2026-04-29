@@ -1,0 +1,50 @@
+{
+  "source_coarse_id": "B3_C1",
+  "coarse_skill_concept": "Selecting a HuggingFace embedding model and running MTEB benchmark tasks to measure retrieval and similarity metrics.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "mteb-eval",
+      "applicable": "YES",
+      "reason": "Directly follows the candidate skill: select a HuggingFace model, invoke the mteb CLI to run a benchmark task (STS12), and read back the cosine_spearman score from the result JSON."
+    },
+    {
+      "task_id": "mteb-leaderboard",
+      "applicable": "NO",
+      "reason": "Requires no benchmark run at all; the procedure is to clone a pre-existing results repository, parse aggregated score files, and rank models by mean — a leaderboard-query skill, not a benchmark-execution skill."
+    },
+    {
+      "task_id": "mteb-retrieve",
+      "applicable": "PARTIAL",
+      "reason": "Uses mteb.get_model for model loading, but the task is cosine-similarity document retrieval over a custom corpus — no benchmark task object, no evaluation run, no score file produced."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Running a named MTEB benchmark task via CLI or API against a HuggingFace model and reading evaluation metrics (e.g., cosine_spearman, nDCG) from the result JSON.",
+      "member_ids": [
+        "mteb-eval"
+      ],
+      "reasoning": "Only mteb-eval exercises the full benchmark-execution loop: model selection, mteb run invocation, output path validation, and score extraction from a structured result file."
+    },
+    {
+      "skill_concept": "Using the MTEB model API (mteb.get_model / model.encode / model.similarity) to perform semantic similarity search over a custom document set for a given query.",
+      "member_ids": [
+        "mteb-retrieve"
+      ],
+      "reasoning": "mteb-retrieve uses mteb solely as a model-loading and encoding library to rank documents by cosine similarity; it never instantiates a benchmark task or produces an evaluation file."
+    },
+    {
+      "skill_concept": "Querying pre-existing MTEB benchmark results (from the results repository or leaderboard) to identify the top-ranked model for a specific benchmark configuration.",
+      "member_ids": [
+        "mteb-leaderboard"
+      ],
+      "reasoning": "mteb-leaderboard clones the upstream results repo, loads pre-computed scores with mteb.load_results, and aggregates them — a data-retrieval/ranking procedure with no model inference or benchmark execution."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 28048,
+    "cost_usd": 0.054854850000000004
+  }
+}

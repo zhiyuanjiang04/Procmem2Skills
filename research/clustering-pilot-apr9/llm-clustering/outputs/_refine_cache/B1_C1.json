@@ -1,0 +1,81 @@
+{
+  "source_coarse_id": "B1_C1",
+  "coarse_skill_concept": "Configure, patch, and compile C/C++ or system-level software from source using make/cmake/gcc, resolving toolchain errors, missing dependencies, and platform-specific build issues.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "3d-model-format-legacy",
+      "applicable": "YES",
+      "reason": "Patches Windows-specific headers and struct definitions then uses cmake to build the library — textbook patch-and-compile workflow."
+    },
+    {
+      "task_id": "build-pmars",
+      "applicable": "YES",
+      "reason": "Fetches Debian sources, edits Makefile to strip X11 flags, and runs make — canonical configure/patch/build procedure."
+    },
+    {
+      "task_id": "build-pov-ray",
+      "applicable": "YES",
+      "reason": "Downloads old C archives, applies multiple sed patches for modern compiler compatibility, and builds with a legacy make file."
+    },
+    {
+      "task_id": "build-stp",
+      "applicable": "YES",
+      "reason": "cmake configure with a missing-header patch, then make install — straightforward C++ toolchain task."
+    },
+    {
+      "task_id": "compile-compcert",
+      "applicable": "PARTIAL",
+      "reason": "The terminal configure+make step is covered, but the dominant challenge is setting up opam/OCaml/Coq — a fundamentally different toolchain the candidate skill does not address."
+    },
+    {
+      "task_id": "caffe-cifar-10",
+      "applicable": "PARTIAL",
+      "reason": "Building Caffe with cmake and OpenCV API patches is fully covered, but training a neural network and validating accuracy is a separate ML-domain requirement."
+    },
+    {
+      "task_id": "build-tcc-qemu",
+      "applicable": "PARTIAL",
+      "reason": "Compiling TCC with static linking is squarely in the skill, but packaging into an ISO and integrating with QEMU requires a distinct procedure."
+    },
+    {
+      "task_id": "build-cython-ext",
+      "applicable": "PARTIAL",
+      "reason": "gcc is invoked indirectly via Cython/setuptools, but the real challenge is Python packaging and NumPy 2.x API compatibility — not C/C++ toolchain errors."
+    },
+    {
+      "task_id": "build-linux-kernel-qemu",
+      "applicable": "YES",
+      "reason": "Applies a source patch then drives make defconfig and make — standard compile-from-source procedure, just for a kernel target."
+    },
+    {
+      "task_id": "build-initramfs-qemu",
+      "applicable": "NO",
+      "reason": "No compilation from source occurs; the task is entirely about constructing a CPIO initramfs from pre-built busybox binaries."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Configure, patch, and compile C/C++ or system-level software from source using make/cmake/gcc, resolving toolchain errors, missing dependencies, and platform-specific build issues.",
+      "member_ids": [
+        "3d-model-format-legacy",
+        "build-pmars",
+        "build-pov-ray",
+        "build-stp",
+        "caffe-cifar-10",
+        "build-tcc-qemu",
+        "build-linux-kernel-qemu"
+      ],
+      "reasoning": "All seven tasks require the same iterative loop: obtain source, configure the build system (cmake/make/direct Makefile), apply sed/patch fixes for compiler or API incompatibilities, resolve linker/header errors, and produce a working binary. Even the PARTIAL tasks (caffe-cifar-10, build-tcc-qemu) have the C/C++ build step as a major, non-trivial component that the skill directly serves."
+    }
+  ],
+  "removed_to_unclustered": [
+    "compile-compcert",
+    "build-cython-ext",
+    "build-initramfs-qemu"
+  ],
+  "_meta": {
+    "duration_ms": 57522,
+    "cost_usd": 0.11377359999999999
+  }
+}

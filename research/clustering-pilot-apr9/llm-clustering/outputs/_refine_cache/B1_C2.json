@@ -1,0 +1,39 @@
+{
+  "source_coarse_id": "B1_C2",
+  "coarse_skill_concept": "Diagnose and repair broken Python environments by resolving pip/setuptools failures, conda dependency conflicts, and package installation errors.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "broken-python",
+      "applicable": "YES",
+      "reason": "Directly requires diagnosing why pip is broken on a system-wide installation and applying a targeted fix."
+    },
+    {
+      "task_id": "conda-env-conflict-resolution",
+      "applicable": "YES",
+      "reason": "Core task is identifying and resolving conda version conflicts in environment.yml, which is exactly what the candidate skill describes."
+    },
+    {
+      "task_id": "amuse-install",
+      "applicable": "NO",
+      "reason": "The environment is not broken; the challenge is installing a complex scientific framework that requires apt-get system libraries (MPI, HDF5, FFTW, GSL) and a custom build script — a fundamentally different procedure from diagnosing broken pip or conda conflicts."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Diagnose and repair broken Python environments by resolving pip/setuptools failures and conda dependency conflicts.",
+      "member_ids": [
+        "broken-python",
+        "conda-env-conflict-resolution"
+      ],
+      "reasoning": "Both tasks start from a malfunctioning environment (broken pip, conflicting conda pins) and require the same diagnostic ladder: identify the failure mode, inspect interpreter/pip/dependency tree, apply a targeted fix, and verify installation succeeds."
+    }
+  ],
+  "removed_to_unclustered": [
+    "amuse-install"
+  ],
+  "_meta": {
+    "duration_ms": 18589,
+    "cost_usd": 0.04515084999999999
+  }
+}

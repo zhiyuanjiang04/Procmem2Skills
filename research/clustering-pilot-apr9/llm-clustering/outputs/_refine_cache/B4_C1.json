@@ -1,0 +1,44 @@
+{
+  "source_coarse_id": "B4_C1",
+  "coarse_skill_concept": "Reproduce a reported bug in an existing open-source Python library, locate the faulty code path with git/grep, apply a minimal targeted fix, and verify correctness against the existing test suite.",
+  "decision": "keep",
+  "task_judgments": [
+    {
+      "task_id": "swe-bench-astropy-1",
+      "applicable": "YES",
+      "reason": "Requires reading an issue, grepping/finding the separability matrix code path, applying a one-line targeted fix, and verifying with existing tests."
+    },
+    {
+      "task_id": "swe-bench-astropy-2",
+      "applicable": "YES",
+      "reason": "Requires reading an issue, locating the QDP parser with grep/find, applying a minimal regex flag and string normalization fix, and verifying with existing tests."
+    },
+    {
+      "task_id": "swe-bench-fsspec",
+      "applicable": "YES",
+      "reason": "Requires reading an issue, locating the DirFileSystem implementation, adding a small missing method stub, and verifying with existing tests."
+    },
+    {
+      "task_id": "swe-bench-langcodes",
+      "applicable": "YES",
+      "reason": "Requires reading an issue, grepping for the __hash__ method, replacing one line with a correct hash implementation, and verifying with existing tests."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Reproduce a reported bug in an existing open-source Python library, locate the faulty code path with git/grep/find, apply a minimal targeted fix (one line to a few lines), and verify correctness against the project's existing test suite.",
+      "member_ids": [
+        "swe-bench-astropy-1",
+        "swe-bench-astropy-2",
+        "swe-bench-fsspec",
+        "swe-bench-langcodes"
+      ],
+      "reasoning": "All four tasks follow the identical SWE-bench loop: parse an issue description, use shell tools to locate the relevant source file and line, make a small surgical code change, and confirm correctness via the pre-existing test suite. The fixes span different libraries and bug types (logic error, regex flag, missing method, broken hash), but the procedural skill—diagnosis then patch then test—is identical across all four."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 10832,
+    "cost_usd": 0.04964885
+  }
+}

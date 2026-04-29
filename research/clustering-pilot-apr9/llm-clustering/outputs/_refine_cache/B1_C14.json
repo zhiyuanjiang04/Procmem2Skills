@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C14",
+  "coarse_skill_concept": "Investigate and bypass security controls by probing running services or constructing inputs that evade a filter implementation, using shell text-processing tools and HTTP inspection.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "break-filter-js-from-html",
+      "applicable": "YES",
+      "reason": "The task is entirely about reading a filter implementation, identifying what HTML patterns it misses, and constructing adversarial input that slips through — the core of the candidate skill."
+    },
+    {
+      "task_id": "catch-me-if-you-can",
+      "applicable": "NO",
+      "reason": "The task requires Linux procfs forensics (ss → PID → /proc/PID/fd recovery of a deleted file); no security control is bypassed and HTTP inspection is irrelevant — the web server is just context for finding a hidden string in recovered source code."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Analyze a security filter's parsing logic and craft adversarial HTML/input that exploits edge cases to bypass XSS or injection defenses.",
+      "member_ids": [
+        "break-filter-js-from-html"
+      ],
+      "reasoning": "This task is purely about filter evasion: read the Python filter, identify the malformed-comment blind spot, write a payload that survives the in-place sanitization and still executes JavaScript."
+    },
+    {
+      "skill_concept": "Recover deleted file contents from a running Linux process by locating its PID via ss/netstat and reading the open file descriptor through /proc/PID/fd.",
+      "member_ids": [
+        "catch-me-if-you-can"
+      ],
+      "reasoning": "The solution uses ss to find the PID, inspects /proc/PID/fd for a '(deleted)' entry pointing to the vanished script, then cats that fd path to retrieve the source and grep out the secret — a procfs forensics workflow with no relation to security filter bypass."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 23408,
+    "cost_usd": 0.0435981
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C5",
+  "coarse_skill_concept": "Process and transform DNA/RNA sequences using sed and bash string operations to perform assembly joins or targeted structural insertions into circular plasmids.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "dna-assembly",
+      "applicable": "PARTIAL",
+      "reason": "Bash/sed FASTA extraction and oligotm validation are shared, but the core challenge is Golden Gate-specific: designing four-base overhangs across four fragments that are mutually compatible after BsaI digestion, plus embedding the GGTCTC recognition sequence in every primer—a multi-fragment ligation-topology problem the candidate skill does not capture."
+    },
+    {
+      "task_id": "dna-insert",
+      "applicable": "YES",
+      "reason": "Q5 SDM primer design is a direct application of the bash/sed toolkit: align input to output with needle, extract annealing regions via sed/cut, prepend insert sequence to the forward primer, compute reverse complement, validate Tm with oligotm—exactly the candidate procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Design multi-fragment Golden Gate assembly primers with BsaI recognition sequences and mutually compatible four-base overhangs using bash/sed FASTA manipulation and oligotm Tm validation",
+      "member_ids": [
+        "dna-assembly"
+      ],
+      "reasoning": "This task's unique challenge is computing four-nt overhangs for each of four fragments such that adjacent overhangs ligate correctly after BsaI cleavage, then prepending the GGTCTC recognition site to every primer. That overhang-compatibility design is a distinct skill not shared with simple SDM primer design."
+    },
+    {
+      "skill_concept": "Design inverse-PCR site-directed mutagenesis primers for targeted plasmid insertions by extracting annealing regions with sed/cut, prepending insert sequence to the forward primer, computing reverse complements, and validating Tm with oligotm",
+      "member_ids": [
+        "dna-insert"
+      ],
+      "reasoning": "Q5 SDM requires one primer pair: needle identifies the insertion boundary, sed/cut extracts each annealing region, the insert sequence is prepended to the forward primer, and oligotm confirms Tm balance. This is a self-contained bash/sed procedure distinct from multi-fragment ligation design."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 52486,
+    "cost_usd": 0.07761135000000001
+  }
+}

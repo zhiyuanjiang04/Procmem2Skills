@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B3_C15.1",
+  "skill_concept": "Implementing a numerical iterative algorithm (fixed-step ODE integrator, entropic regularized transport) from a mathematical recurrence or optimization formulation in Python, managing floating-point step size or convergence tolerances, and verifying output against a quantitative accuracy threshold.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks implement iterative numerical algorithms in Python with convergence/step tolerances and quantitative accuracy checks, so the skill partially applies; however, ode-solver-rk4 is a fixed-step marching integrator while optimal-transport is an entropic regularization fixed-point iteration with matrix operations and a completely different mathematical structure, requiring distinct implementation procedures that share only the broadest shape.",
+  "weakest_link": "optimal-transport",
+  "weakest_link_reason": "The Sinkhorn task requires building a cost matrix, managing log-domain or direct scaling iterations over two marginals, a grid-based histogram approximation mode, and a CLI runner — none of which overlap procedurally with ODE time-marching, making it a poor fit for any skill narrow enough to be actionable.",
+  "_meta": {
+    "duration_ms": 6152,
+    "cost_usd": 0.0385156
+  }
+}

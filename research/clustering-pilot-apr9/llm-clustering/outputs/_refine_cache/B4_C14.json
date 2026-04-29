@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C14",
+  "coarse_skill_concept": "Bootstrap a multi-dependency software environment from scratch by orchestrating package managers (pip, uv, apt), build tools (cmake), shell scripts (curl | sh), and configuration patches (sed) in the correct dependency order.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "spinning-up-rl",
+      "applicable": "YES",
+      "reason": "Directly matches the candidate skill: apt for system build deps (cmake, openmpi), curl|sh for uv, uv pip for Python packages, sed to patch a deprecated TF API call, then a verification run."
+    },
+    {
+      "task_id": "setup-custom-dev-env",
+      "applicable": "PARTIAL",
+      "reason": "Uses the same low-level tools (apt, curl|sh, sed) but the core procedure is shell-framework configuration — oh-my-zsh plugin wiring, chsh, .zshrc management, and conda init across two shells — which the candidate skill's 'Python package stack + cmake' framing never addresses."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Install a pinned Python ML stack from source, resolving system build dependencies (apt, cmake, MPI) and patching deprecated framework API calls with sed before a verification training run.",
+      "member_ids": [
+        "spinning-up-rl"
+      ],
+      "reasoning": "Every step — system libs, uv, pip installs, git checkout at a specific commit, sed rewrite for TF compat, and the training invocation — is a direct instance of the Python-stack bootstrapping procedure described in the candidate skill."
+    },
+    {
+      "skill_concept": "Configure a persistent interactive shell environment by installing a shell framework (oh-my-zsh via curl|sh), wiring third-party plugins via git clone and sed patches to .zshrc, and initialising a language package manager (conda/miniconda) for use across multiple shells.",
+      "member_ids": [
+        "setup-custom-dev-env"
+      ],
+      "reasoning": "The dominant expertise here is zsh/oh-my-zsh configuration, chsh, plugin directory conventions, and conda init --all-shells, not Python package compilation or build-tool orchestration; it deserves its own skill concept."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 30576,
+    "cost_usd": 0.055367599999999996
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B2_C3",
+  "coarse_skill_concept": "Recover content that appears absent from normal git history by traversing the git object store with reflog, log --all, fsck, and git show.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "fix-git",
+      "applicable": "YES",
+      "reason": "Task is pure reflog-based recovery: find the lost commit in HEAD log, reconstruct a branch, and merge it back — exactly the candidate skill's procedure."
+    },
+    {
+      "task_id": "git-leak-recovery",
+      "applicable": "PARTIAL",
+      "reason": "fsck/dangling-commit discovery covers only the first half; the mandatory second half — permanently expunging objects with 'git reflog expire --expire=now' and 'git gc --prune=now --aggressive' — is a distinct procedure the candidate skill does not address."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Recover a lost commit by locating it in reflog or HEAD log, creating a branch at that SHA, and merging it into the target branch.",
+      "member_ids": [
+        "fix-git"
+      ],
+      "reasoning": "fix-git is a clean instance of reflog-only recovery with no cleanup requirement; the solution reads .git/logs/HEAD, checks out the lost SHA, and merges — the candidate skill covers this completely."
+    },
+    {
+      "skill_concept": "Locate a secret stored in dangling git objects via 'git fsck --lost-found', extract it, then permanently destroy all dangling objects using 'git reflog expire --expire=now --all' followed by 'git gc --prune=now --aggressive'.",
+      "member_ids": [
+        "git-leak-recovery"
+      ],
+      "reasoning": "git-leak-recovery requires two sequential sub-skills: discovery (fsck + git show) and irreversible purging (reflog expire + aggressive GC). The purging phase is non-trivial and mandatory, making this a compound skill distinct from simple reflog recovery."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 27084,
+    "cost_usd": 0.0484156
+  }
+}

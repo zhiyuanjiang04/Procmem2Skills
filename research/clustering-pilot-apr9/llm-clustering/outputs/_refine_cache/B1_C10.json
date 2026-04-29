@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C10",
+  "coarse_skill_concept": "Read, filter, and convert tabular data between formats (CSV, Parquet, JSON) using pandas and Python standard library file I/O.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "csv-to-parquet",
+      "applicable": "YES",
+      "reason": "The entire task is a direct pandas read_csv → to_parquet format conversion with no filtering logic required."
+    },
+    {
+      "task_id": "bank-trans-filter",
+      "applicable": "PARTIAL",
+      "reason": "CSV reading and JSON writing are trivial wrappers; the dominant challenge is multi-pass fuzzy entity resolution (Levenshtein distance, account normalization, typo handling), which is a fundamentally different procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Convert a CSV file to a binary columnar format (Parquet) using pandas and pyarrow with no row/column transformation.",
+      "member_ids": [
+        "csv-to-parquet"
+      ],
+      "reasoning": "Task requires only format conversion: read CSV into a DataFrame and serialize to Parquet. No filtering, fuzzy matching, or business logic involved."
+    },
+    {
+      "skill_concept": "Filter CSV rows via fuzzy/typo-tolerant entity matching (Levenshtein distance on company names and account numbers) and serialize matching rows to a sorted JSON array.",
+      "member_ids": [
+        "bank-trans-filter"
+      ],
+      "reasoning": "The core skill is identifying records belonging to the same real-world entity despite typos using approximate string matching, multi-pass account discovery, and character-substitution normalization—not tabular format conversion."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 21463,
+    "cost_usd": 0.04796484999999999
+  }
+}

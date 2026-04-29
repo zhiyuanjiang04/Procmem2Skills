@@ -1,0 +1,33 @@
+{
+  "source_coarse_id": "B4_C9",
+  "coarse_skill_concept": "Design regular expressions that match a precisely specified pattern in structured text and apply them for extraction or substitution, then validate correctness against concrete examples.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "regex-log",
+      "applicable": "YES",
+      "reason": "The task is precisely about designing a regex pattern that matches a structured format (IPv4 + date) in text, with boundary and range constraints, applied via re.findall — exactly the candidate skill."
+    },
+    {
+      "task_id": "regex-chess",
+      "applicable": "NO",
+      "reason": "The task requires implementing a complete chess move generator (castling, en passant, promotion, all piece movement rules); regex is merely the encoding vehicle for an algorithmic game-logic problem, not the core skill being exercised."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Design regular expressions that match a precisely specified pattern in structured text and apply them for extraction or substitution, then validate correctness against concrete examples.",
+      "member_ids": [
+        "regex-log"
+      ],
+      "reasoning": "regex-log directly requires constructing a regex satisfying strict format constraints (valid IPv4, valid date ranges, boundary anchoring) and applying it via Python re.findall — the full candidate skill workflow applies."
+    }
+  ],
+  "removed_to_unclustered": [
+    "regex-chess"
+  ],
+  "_meta": {
+    "duration_ms": 22811,
+    "cost_usd": 0.05591059999999999
+  }
+}

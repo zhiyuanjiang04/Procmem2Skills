@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C3",
+  "coarse_skill_concept": "Diagnose and fix system-level networking failures that prevent HTTP/curl from functioning, by inspecting firewall rules, DNS, routing, and socket or process configurations.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "broken-networking",
+      "applicable": "PARTIAL",
+      "reason": "The DNS/resolv.conf inspection part of the skill applies, but the primary fix is restoring corrupted config files (nsswitch.conf, hosts) and bootstrapping a missing curl binary via Python urllib + dpkg, which the candidate skill does not cover."
+    },
+    {
+      "task_id": "cron-broken-network",
+      "applicable": "NO",
+      "reason": "The root cause is active malicious processes (network-monitor, security_check, access-logger, cron jobs) continuously sabotaging curl; fixing it requires process forensics and malware removal, not layer-by-layer network stack inspection."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Restore corrupted system networking configuration files (resolv.conf, nsswitch.conf, /etc/hosts) and reinstall a broken or missing system utility by bootstrapping a package manager via an alternative download method.",
+      "member_ids": [
+        "broken-networking"
+      ],
+      "reasoning": "The solution pivots on repairing static config files that broke DNS resolution and on recovering a deleted binary when the normal package manager is also unavailable, requiring a two-phase approach: config restoration then tool reinstallation via an out-of-band download."
+    },
+    {
+      "skill_concept": "Detect and neutralize rogue background processes, cron jobs, and init.d persistence mechanisms that are actively and repeatedly disrupting a system utility, then reinstall the utility.",
+      "member_ids": [
+        "cron-broken-network"
+      ],
+      "reasoning": "The solution requires hunting hidden malicious daemons and scheduled jobs across multiple persistence paths (/etc/init.d, /tmp, /var/lib/apt/periodic, cron, atd) and killing them before the utility can be restored, a fundamentally different procedure from passive network stack inspection."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 34140,
+    "cost_usd": 0.05696185
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B1_C4.1",
+  "skill_concept": "Implement or modify statistical algorithms in R—sampling methods and Bayesian networks—using domain-specific packages (e.g., bnlearn, ARS) with direct Rscript execution, modular code structure, and output validation.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks use R and involve statistical computation, but they diverge substantially in procedure: adaptive-rejection-sampler requires implementing a numerical sampling algorithm from scratch with log-concavity checks and modular architecture, while bn-fit-modify is a workflow task involving structure learning, DAG manipulation, causal intervention, and data I/O using bnlearn. A skill written to cover both would need to be so generic ('write statistical R code') that it loses actionable bite.",
+  "weakest_link": "bn-fit-modify",
+  "weakest_link_reason": "bn-fit-modify is primarily a DAG structure-learning and causal-inference workflow task with no algorithmic implementation requirement, making it a poor fit for a skill centered on implementing sampling algorithms like ARS.",
+  "_meta": {
+    "duration_ms": 6201,
+    "cost_usd": 0.036016349999999996
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C4",
+  "coarse_skill_concept": "Write SPARQL SELECT queries against a Turtle-serialized RDF knowledge graph to extract structured relationships between entities defined in the ontology.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "sparql-professors-universities",
+      "applicable": "YES",
+      "reason": "Requires exactly the stated skill: a basic SELECT with triple-pattern JOINs (Person → Department → University) and a REGEX FILTER on a role string, nothing more."
+    },
+    {
+      "task_id": "sparql-university",
+      "applicable": "PARTIAL",
+      "reason": "Shares the Turtle/SPARQL foundation but additionally demands GROUP_CONCAT, COUNT DISTINCT, HAVING, OPTIONAL, VALUES for a 27-member country set, and typed xsd:date comparisons — capabilities well outside the 'FILTER/JOIN triple patterns' procedure described by the candidate skill."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Write a basic SPARQL SELECT query with multi-hop triple-pattern JOINs and string FILTER (REGEX/STRSTARTS) against a Turtle-serialized RDF ontology to retrieve named entity pairs.",
+      "member_ids": [
+        "sparql-professors-universities"
+      ],
+      "reasoning": "The task is fully solved by the core procedure: declare prefixes, chain two triple-pattern joins, apply a role-string filter, project two variables. No aggregation, temporal logic, or set-based filtering is needed."
+    },
+    {
+      "skill_concept": "Write an advanced SPARQL SELECT query using GROUP BY / HAVING with COUNT DISTINCT, OPTIONAL patterns, a VALUES whitelist, and xsd:date typed-literal temporal filtering against a Turtle-serialized RDF ontology.",
+      "member_ids": [
+        "sparql-university"
+      ],
+      "reasoning": "The task requires aggregation (GROUP_CONCAT, COUNT DISTINCT), set membership via VALUES (27 EU country codes), optional-pattern graduation-date semantics, and date-range arithmetic — a distinct, more complex SPARQL skill that warrants its own cluster."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 45163,
+    "cost_usd": 0.059197099999999996
+  }
+}

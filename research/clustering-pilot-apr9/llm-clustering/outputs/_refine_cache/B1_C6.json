@@ -1,0 +1,45 @@
+{
+  "source_coarse_id": "B1_C6",
+  "coarse_skill_concept": "Solve combinatorial optimization or constraint satisfaction problems by implementing exhaustive search, pruning, or dynamic programming in Python using itertools and math utilities.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "assign-seats",
+      "applicable": "YES",
+      "reason": "Directly uses itertools.permutations to enumerate circular seating arrangements and prunes via hard constraints, exactly matching the candidate skill."
+    },
+    {
+      "task_id": "countdown-game",
+      "applicable": "YES",
+      "reason": "Uses recursive backtracking over pairwise combinations of numbers and operations (a combinatorial expression-tree search), with fractions.Fraction for exact arithmetic — core tools match the candidate skill."
+    },
+    {
+      "task_id": "aimo-airline-departures",
+      "applicable": "PARTIAL",
+      "reason": "The problem requires number-theoretic reasoning about LCM and periodic gaps to find a worst-case bound 'regardless of offsets'; enumerating departure days is a minor step, but the primary skill is period analysis with math.gcd/lcm, not combinatorial search or itertools."
+    },
+    {
+      "task_id": "constraints-scheduling",
+      "applicable": "PARTIAL",
+      "reason": "The search is a linear minute-by-minute scan over a structured time range, not a combinatorial explosion; the dominant complexity is ICS parsing and time-overlap arithmetic with datetime, not itertools-style enumeration."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Enumerate combinatorial spaces (permutations, arithmetic expression trees) with backtracking or pruning, using itertools and fractions.Fraction for exact arithmetic, to find solutions satisfying hard constraints.",
+      "member_ids": [
+        "assign-seats",
+        "countdown-game"
+      ],
+      "reasoning": "Both tasks require searching an exponentially large space (6! seat arrangements; all expression trees over a number set), apply hard constraint checks to prune, and rely on itertools-style enumeration and exact-arithmetic utilities. The search-then-prune procedure transfers directly between them."
+    }
+  ],
+  "removed_to_unclustered": [
+    "aimo-airline-departures",
+    "constraints-scheduling"
+  ],
+  "_meta": {
+    "duration_ms": 51124,
+    "cost_usd": 0.08655784999999999
+  }
+}

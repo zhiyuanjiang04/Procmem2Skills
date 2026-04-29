@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B1_C12",
+  "coarse_skill_concept": "Compute molecular descriptors using RDKit and train scikit-learn models to predict chemical properties or binding affinities from SMILES representations.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "chem-property-targeting",
+      "applicable": "PARTIAL",
+      "reason": "Uses RDKit descriptors extensively but trains no sklearn model; the task is a property-lookup and filtering pipeline over a local JSON database, not a machine-learning training workflow."
+    },
+    {
+      "task_id": "chem-rf",
+      "applicable": "YES",
+      "reason": "Directly implements the full pipeline: featurize SMILES with RDKit fingerprints, train a scikit-learn RandomForestRegressor, and save the model for binding-affinity prediction."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Compute RDKit molecular descriptors (LogP, MW, HBD, HBA, TPSA, rotatable bonds) from SMILES strings and filter/rank molecules by property proximity to a target value.",
+      "member_ids": [
+        "chem-property-targeting"
+      ],
+      "reasoning": "This task requires only property computation and tolerance-based filtering; no model training is involved. The reusable skill is descriptor calculation plus ranked search, not ML."
+    },
+    {
+      "skill_concept": "Featurize SMILES strings with RDKit fingerprints and train a scikit-learn regressor to predict a continuous chemical target (e.g., binding affinity), then persist the model for evaluation.",
+      "member_ids": [
+        "chem-rf"
+      ],
+      "reasoning": "This task is entirely about building a predictive ML pipeline: download data, generate fingerprint features via RDKit, fit and tune an sklearn estimator, serialize with pickle, and meet a held-out performance threshold."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 21592,
+    "cost_usd": 0.054532599999999994
+  }
+}

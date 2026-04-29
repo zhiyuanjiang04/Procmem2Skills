@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B3_C9.1",
+  "skill_concept": "Migrate domain-specific scientific numerical code across frameworks or languages (MATLAB→NumPy, NEURON→Jaxley) by mapping source numerical semantics and API calls to modern Python equivalents, then validating agreement between reference and ported outputs.",
+  "n_tasks": 2,
+  "verdict": "BORDERLINE",
+  "verdict_reason": "Both tasks involve porting numerical scientific code to Python, but the procedure shapes diverge significantly: matlab-python-conversion is a straightforward API-mapping exercise (file I/O, array stacking) with a clear numerical equivalence check, while neuron-to-jaxley-conversion requires deep domain knowledge of neuronal biophysics, channel kinetics, and compartmental modeling that goes well beyond framework API translation. A skill written to cover both would need to be so abstract it loses actionable guidance.",
+  "weakest_link": "neuron-to-jaxley-conversion",
+  "weakest_link_reason": "This task demands specialized computational neuroscience domain knowledge (HH channels, Ca dynamics, region-specific conductance parameters) that cannot be derived from generic numerical API mapping — it is closer to biophysics implementation than framework migration.",
+  "_meta": {
+    "duration_ms": 6514,
+    "cost_usd": 0.03422735
+  }
+}

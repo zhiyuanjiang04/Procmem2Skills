@@ -1,0 +1,13 @@
+{
+  "cluster_id": "B3_C4.1",
+  "skill_concept": "Construct a single source file valid in two programming languages by identifying overlapping comment delimiters and string-literal syntax, using one language's comment or string construct to hide the other language's code from its parser, then iteratively compiling/interpreting both until both succeed.",
+  "n_tasks": 2,
+  "verdict": "ACCEPT",
+  "verdict_reason": "Both tasks require the same core procedure: identifying comment and string delimiter overlaps between two languages, using one language's syntax to hide the other's code from its parser, and iterating until both compilers/interpreters succeed. The shared procedure shape—find delimiter overlap, wrap foreign code, verify both toolchains—applies directly to both tasks.",
+  "weakest_link": "polyglot-rust-c",
+  "weakest_link_reason": "The Rust/C++ polyglot is significantly more complex because Rust and C++ have near-identical comment syntax with no clean string-literal escape hatch, forcing an elaborate macro-redefinition and namespace-spoofing approach that goes well beyond simple delimiter hiding.",
+  "_meta": {
+    "duration_ms": 6700,
+    "cost_usd": 0.03174585
+  }
+}

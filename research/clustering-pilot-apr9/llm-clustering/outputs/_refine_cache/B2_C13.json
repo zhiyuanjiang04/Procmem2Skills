@@ -1,0 +1,33 @@
+{
+  "source_coarse_id": "B2_C13",
+  "coarse_skill_concept": "Download a video from an online URL and then extract or analyze its frames or content using media-processing tools.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "download-youtube",
+      "applicable": "PARTIAL",
+      "reason": "Requires yt-dlp to fetch the video (download step matches), but the core work is ffmpeg trimming — not frame extraction or content analysis."
+    },
+    {
+      "task_id": "extract-moves-from-video",
+      "applicable": "NO",
+      "reason": "The oracle solution completely bypasses downloading and video/frame analysis by hardcoding the known Zork move sequence; no media-processing pipeline is actually used."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Download a specific YouTube video using yt-dlp and trim it to a target time range using ffmpeg.",
+      "member_ids": [
+        "download-youtube"
+      ],
+      "reasoning": "This task requires yt-dlp for download and ffmpeg for temporal trimming; the candidate skill's frame-extraction/analysis component is irrelevant, but a corrected skill around yt-dlp + ffmpeg trimming accurately describes what is needed."
+    }
+  ],
+  "removed_to_unclustered": [
+    "extract-moves-from-video"
+  ],
+  "_meta": {
+    "duration_ms": 23927,
+    "cost_usd": 0.04465884999999999
+  }
+}

@@ -1,0 +1,38 @@
+{
+  "source_coarse_id": "B4_C7",
+  "coarse_skill_concept": "Modify a C project's Makefile or configure script to inject additional compiler flags that change the build artifact (coverage instrumentation or IR emission) without breaking the existing build.",
+  "decision": "split",
+  "task_judgments": [
+    {
+      "task_id": "sqlite-with-gcov",
+      "applicable": "YES",
+      "reason": "Setting CFLAGS with -ftest-coverage -fprofile-arcs before ./configure is exactly the flag-injection procedure the candidate skill describes."
+    },
+    {
+      "task_id": "sudo-llvm-ir",
+      "applicable": "NO",
+      "reason": "The solution replaces the compiler with the wllvm wrapper (CC=wllvm) and then runs extract-bc + llvm-dis post-build; this is a whole-program bitcode extraction workflow, not flag injection into an existing compiler."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Set CFLAGS/LDFLAGS environment variables before invoking an autoconf configure script to inject coverage instrumentation flags (e.g. -fprofile-arcs -ftest-coverage) and produce a gcov-instrumented build via make.",
+      "member_ids": [
+        "sqlite-with-gcov"
+      ],
+      "reasoning": "sqlite-with-gcov is solved purely by prepending CFLAGS to ./configure and running make; no non-standard tooling is needed beyond standard gcc coverage flags."
+    },
+    {
+      "skill_concept": "Use the wllvm compiler-wrapper toolchain (CC=wllvm, extract-bc, llvm-dis) to build a complex autoconf C project and extract whole-program LLVM IR.",
+      "member_ids": [
+        "sudo-llvm-ir"
+      ],
+      "reasoning": "sudo-llvm-ir requires substituting the compiler with wllvm, running configure and make, then post-processing the linked binary with extract-bc and llvm-dis — a pipeline fundamentally different from mere flag injection."
+    }
+  ],
+  "removed_to_unclustered": [],
+  "_meta": {
+    "duration_ms": 29392,
+    "cost_usd": 0.05045335
+  }
+}

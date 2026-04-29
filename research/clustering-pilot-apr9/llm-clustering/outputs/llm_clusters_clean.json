@@ -1,0 +1,810 @@
+{
+  "model": "claude-sonnet-4-6",
+  "n_input_tasks": 241,
+  "n_final_clusters": 25,
+  "n_unclustered": 180,
+  "tasks_in_multi_clusters": 61,
+  "fraction_clustered": 0.253,
+  "total_cost_usd": 3.4541,
+  "post_processing_note": "Singleton final_groups (1-task clusters from split decisions) moved to unclustered. A skill requires at least 2 tasks to be useful.",
+  "clusters": [
+    {
+      "id": "B1_C1.1",
+      "skill_concept": "Configure, patch, and compile C/C++ or system-level software from source using make/cmake/gcc, resolving toolchain errors, missing dependencies, and platform-specific build issues.",
+      "member_ids": [
+        "3d-model-format-legacy",
+        "build-pmars",
+        "build-pov-ray",
+        "build-stp",
+        "caffe-cifar-10",
+        "build-tcc-qemu",
+        "build-linux-kernel-qemu"
+      ],
+      "reasoning": "All seven tasks require the same iterative loop: obtain source, configure the build system (cmake/make/direct Makefile), apply sed/patch fixes for compiler or API incompatibilities, resolve linker/header errors, and produce a working binary. Even the PARTIAL tasks (caffe-cifar-10, build-tcc-qemu) have the C/C++ build step as a major, non-trivial component that the skill directly serves.",
+      "task_judgments": [
+        {
+          "task_id": "3d-model-format-legacy",
+          "applicable": "YES",
+          "reason": "Patches Windows-specific headers and struct definitions then uses cmake to build the library — textbook patch-and-compile workflow."
+        },
+        {
+          "task_id": "build-pmars",
+          "applicable": "YES",
+          "reason": "Fetches Debian sources, edits Makefile to strip X11 flags, and runs make — canonical configure/patch/build procedure."
+        },
+        {
+          "task_id": "build-pov-ray",
+          "applicable": "YES",
+          "reason": "Downloads old C archives, applies multiple sed patches for modern compiler compatibility, and builds with a legacy make file."
+        },
+        {
+          "task_id": "build-stp",
+          "applicable": "YES",
+          "reason": "cmake configure with a missing-header patch, then make install — straightforward C++ toolchain task."
+        },
+        {
+          "task_id": "caffe-cifar-10",
+          "applicable": "PARTIAL",
+          "reason": "Building Caffe with cmake and OpenCV API patches is fully covered, but training a neural network and validating accuracy is a separate ML-domain requirement."
+        },
+        {
+          "task_id": "build-tcc-qemu",
+          "applicable": "PARTIAL",
+          "reason": "Compiling TCC with static linking is squarely in the skill, but packaging into an ISO and integrating with QEMU requires a distinct procedure."
+        },
+        {
+          "task_id": "build-linux-kernel-qemu",
+          "applicable": "YES",
+          "reason": "Applies a source patch then drives make defconfig and make — standard compile-from-source procedure, just for a kernel target."
+        }
+      ],
+      "source_coarse_id": "B1_C1"
+    },
+    {
+      "id": "B1_C2.1",
+      "skill_concept": "Diagnose and repair broken Python environments by resolving pip/setuptools failures and conda dependency conflicts.",
+      "member_ids": [
+        "broken-python",
+        "conda-env-conflict-resolution"
+      ],
+      "reasoning": "Both tasks start from a malfunctioning environment (broken pip, conflicting conda pins) and require the same diagnostic ladder: identify the failure mode, inspect interpreter/pip/dependency tree, apply a targeted fix, and verify installation succeeds.",
+      "task_judgments": [
+        {
+          "task_id": "broken-python",
+          "applicable": "YES",
+          "reason": "Directly requires diagnosing why pip is broken on a system-wide installation and applying a targeted fix."
+        },
+        {
+          "task_id": "conda-env-conflict-resolution",
+          "applicable": "YES",
+          "reason": "Core task is identifying and resolving conda version conflicts in environment.yml, which is exactly what the candidate skill describes."
+        }
+      ],
+      "source_coarse_id": "B1_C2"
+    },
+    {
+      "id": "B1_C4.1",
+      "skill_concept": "Implement or modify statistical algorithms in R—sampling methods and Bayesian networks—using domain-specific packages (e.g., bnlearn, ARS) with direct Rscript execution, modular code structure, and output validation.",
+      "member_ids": [
+        "adaptive-rejection-sampler",
+        "bn-fit-modify"
+      ],
+      "reasoning": "Both tasks require writing R code to implement a non-trivial statistical procedure, running it via Rscript, and validating outputs against known results or structural constraints. Neither requires any external environment setup beyond R itself.",
+      "task_judgments": [
+        {
+          "task_id": "adaptive-rejection-sampler",
+          "applicable": "YES",
+          "reason": "Task is purely about implementing a statistical sampling algorithm in R with modular code, tests, and direct Rscript execution — exactly what the skill describes."
+        },
+        {
+          "task_id": "bn-fit-modify",
+          "applicable": "YES",
+          "reason": "Task requires fitting and intervening on a Bayesian network in R using bnlearn, with structure learning and sampling — a direct match to the Bayesian-network branch of the skill."
+        }
+      ],
+      "source_coarse_id": "B1_C4"
+    },
+    {
+      "id": "B1_C6.1",
+      "skill_concept": "Enumerate combinatorial spaces (permutations, arithmetic expression trees) with backtracking or pruning, using itertools and fractions.Fraction for exact arithmetic, to find solutions satisfying hard constraints.",
+      "member_ids": [
+        "assign-seats",
+        "countdown-game"
+      ],
+      "reasoning": "Both tasks require searching an exponentially large space (6! seat arrangements; all expression trees over a number set), apply hard constraint checks to prune, and rely on itertools-style enumeration and exact-arithmetic utilities. The search-then-prune procedure transfers directly between them.",
+      "task_judgments": [
+        {
+          "task_id": "assign-seats",
+          "applicable": "YES",
+          "reason": "Directly uses itertools.permutations to enumerate circular seating arrangements and prunes via hard constraints, exactly matching the candidate skill."
+        },
+        {
+          "task_id": "countdown-game",
+          "applicable": "YES",
+          "reason": "Uses recursive backtracking over pairwise combinations of numbers and operations (a combinatorial expression-tree search), with fractions.Fraction for exact arithmetic — core tools match the candidate skill."
+        }
+      ],
+      "source_coarse_id": "B1_C6"
+    },
+    {
+      "id": "B1_C7.1",
+      "skill_concept": "Implement DFS-based blind maze exploration: spawn maze_game.sh as a subprocess, maintain a relative-coordinate map in a defaultdict, drive a DFS frontier with backtracking to cover all reachable cells, and serialize the discovered grid to a text file.",
+      "member_ids": [
+        "blind-maze-explorer-5x5",
+        "blind-maze-explorer-algorithm"
+      ],
+      "reasoning": "Both solution scripts instantiate a nearly identical MazeExplorer class — same defaultdict grid, same visited set, same direction vectors, same subprocess I/O loop. Task 2 adds a maze_id parameter and an outer loop over 10 mazes, but those are shallow wrappers; the reusable skill is the exploration algorithm itself, which is identical in both cases.",
+      "task_judgments": [
+        {
+          "task_id": "blind-maze-explorer-5x5",
+          "applicable": "YES",
+          "reason": "The task is solved entirely by a DFS/BFS loop that issues move commands via subprocess, tracks visited cells in a defaultdict with relative coordinates, and writes the reconstructed grid to a file."
+        },
+        {
+          "task_id": "blind-maze-explorer-algorithm",
+          "applicable": "YES",
+          "reason": "The core skill is identical — the same DFS/BFS subprocess exploration class is reused verbatim across 10 maze IDs; the outer loop and parameterized output path are trivial wrappers around the same procedure."
+        }
+      ],
+      "source_coarse_id": "B1_C7"
+    },
+    {
+      "id": "B1_C8.1",
+      "skill_concept": "Implement missing PyTorch neural network components or reinforcement learning training loops, and diagnose common PyTorch training failures such as gradient issues, loss plateaus, or divergence.",
+      "member_ids": [
+        "attention-mil",
+        "cartpole-rl-training",
+        "classifier-debug"
+      ],
+      "reasoning": "All three tasks require fluency with PyTorch tensor operations and training mechanics: attention-mil needs a correct nn.Module forward pass, cartpole-rl-training needs a policy network plus a REINFORCE loop, and classifier-debug needs the ability to read PyTorch training code and identify why a model is failing to learn — a shared diagnostic+implementation skill set.",
+      "task_judgments": [
+        {
+          "task_id": "attention-mil",
+          "applicable": "YES",
+          "reason": "Directly requires implementing PyTorch nn.Module __init__ and forward pass with attention pooling — the core of the candidate skill."
+        },
+        {
+          "task_id": "cartpole-rl-training",
+          "applicable": "YES",
+          "reason": "Requires building a PyTorch policy network and a full REINFORCE training loop with gymnasium, matching the skill exactly."
+        },
+        {
+          "task_id": "classifier-debug",
+          "applicable": "YES",
+          "reason": "Requires diagnosing a PyTorch training failure (loss plateau, near-random accuracy) — directly covered by the 'debug common training failures' part of the candidate skill."
+        }
+      ],
+      "source_coarse_id": "B1_C8"
+    },
+    {
+      "id": "B2_C1.1",
+      "skill_concept": "Configure and apply LoRA adapters to HuggingFace models using the PEFT library — covering both loading pre-trained adapters (PeftModel.from_pretrained + merge_and_unload) and training new adapters from scratch (LoraConfig + get_peft_model + Trainer fine-tuning loop).",
+      "member_ids": [
+        "hf-lora-adapter",
+        "hf-train-lora-adapter"
+      ],
+      "reasoning": "Both tasks require understanding LoRA hyperparameters (r, alpha, target_modules), wiring PEFT into HuggingFace AutoModel classes, and saving/loading PEFT artifacts. The knowledge transfers directly: setting up a LoraConfig and knowing which attention modules to target is the shared reusable core, even though one task applies a pre-trained adapter while the other trains one.",
+      "task_judgments": [
+        {
+          "task_id": "hf-lora-adapter",
+          "applicable": "YES",
+          "reason": "Core procedure is exactly loading a HF base model, attaching a pre-trained LoRA adapter via PeftModel, merging weights, and running inference — the candidate skill verbatim."
+        },
+        {
+          "task_id": "hf-train-lora-adapter",
+          "applicable": "PARTIAL",
+          "reason": "Shares PEFT/LoRA setup (LoraConfig, get_peft_model, target_modules) with hf-lora-adapter, but the primary procedure is a supervised fine-tuning loop with Trainer and dataset collation, not loading a pre-trained adapter for inference."
+        }
+      ],
+      "source_coarse_id": "B2_C1"
+    },
+    {
+      "id": "B2_C4.1",
+      "skill_concept": "Launch a legacy Windows OS inside QEMU by creating/configuring a disk image, invoking qemu-system with appropriate CPU/memory/VGA flags, exposing a VNC display on port 5901, and proxying it via nginx on port 80.",
+      "member_ids": [
+        "install-windows-3.11",
+        "install-windows-xp"
+      ],
+      "reasoning": "Both tasks share the same end-to-end procedure: obtain or use an existing OS image, run qemu-system with BIOS-compatible settings, bind VNC to display :1 (port 5901), and front it with an nginx web interface. The XP task adds an unattended installation phase, but that is a natural extension of the same skill rather than a different skill entirely.",
+      "task_judgments": [
+        {
+          "task_id": "install-windows-3.11",
+          "applicable": "YES",
+          "reason": "Requires compiling a specific QEMU version, launching qemu-system-i386 with a pre-existing disk image in snapshot mode, configuring VNC on :1/5901, and setting up nginx on port 80 — all core parts of the candidate skill."
+        },
+        {
+          "task_id": "install-windows-xp",
+          "applicable": "YES",
+          "reason": "Requires creating a raw disk image with qemu-img, booting an ISO through qemu-system-x86_64 to run an unattended installer, configuring VNC on :1/5901, and setting up nginx on port 80 — directly covered by the candidate skill."
+        }
+      ],
+      "source_coarse_id": "B2_C4"
+    },
+    {
+      "id": "B2_C5.1",
+      "skill_concept": "Parse structured log files using grep and bash to filter by severity keyword or filename-encoded date range, aggregate event counts per category, and write a CSV summary report.",
+      "member_ids": [
+        "log-summary",
+        "log-summary-date-ranges"
+      ],
+      "reasoning": "Both tasks share an identical pipeline: glob all relevant .log files, grep for fixed severity tokens (ERROR/WARNING/INFO), optionally restrict files by date derived from the filename, count matches, and emit a well-structured CSV. A single reusable procedure covers both.",
+      "task_judgments": [
+        {
+          "task_id": "log-summary",
+          "applicable": "YES",
+          "reason": "Directly solved by grep pattern matching across log files plus count aggregation into a CSV summary."
+        },
+        {
+          "task_id": "log-summary-date-ranges",
+          "applicable": "YES",
+          "reason": "Same grep-and-aggregate pipeline extended with filename-based date range filtering, which the candidate skill explicitly covers."
+        }
+      ],
+      "source_coarse_id": "B2_C5"
+    },
+    {
+      "id": "B2_C7.1",
+      "skill_concept": "Generate a self-signed SSL certificate with openssl and configure a server (nginx or Jupyter) to terminate HTTPS by referencing the cert and key in the server's config file, then restart the service.",
+      "member_ids": [
+        "home-server-https",
+        "jupyter-notebook-server"
+      ],
+      "reasoning": "Both tasks share an identical sub-procedure: run openssl genrsa / openssl req -x509 to produce a key and certificate, then edit the server's configuration to point at those files and enable TLS. The servers differ (nginx config block vs. jupyter_notebook_config.py), but the pattern — generate cert, edit config, restart — is the same reusable skill. Each task has additional requirements (ddclient/DNS for home-server-https; package installation, password auth, and notebook authoring for jupyter-notebook-server), but those extras don't undermine the shared core; they simply mean the skill is a necessary but not sufficient component of each solution. Keeping them together is correct because a worked example of this SSL-setup procedure is directly transferable across both tasks.",
+      "task_judgments": [
+        {
+          "task_id": "home-server-https",
+          "applicable": "PARTIAL",
+          "reason": "The openssl self-signed cert generation and nginx SSL configuration steps are central, but the task also requires ddclient dynamic-DNS setup and DNS resolution verification which are outside the candidate skill's scope."
+        },
+        {
+          "task_id": "jupyter-notebook-server",
+          "applicable": "PARTIAL",
+          "reason": "The openssl self-signed cert generation and wiring it into a server config are present, but the bulk of the task is Jupyter installation, password hashing, notebook creation with matplotlib code, and process management — steps the candidate skill does not cover."
+        }
+      ],
+      "source_coarse_id": "B2_C7"
+    },
+    {
+      "id": "B2_C10.1",
+      "skill_concept": "Identify a specific code-level vulnerability class (CWE / XSS attack vector) in existing code, write or patch defensive code to neutralize it, and verify the attack vector is closed.",
+      "member_ids": [
+        "fix-code-vulnerability",
+        "filter-js-from-html"
+      ],
+      "reasoning": "Both tasks require the agent to reason about a named vulnerability category (CRLF injection, XSS), apply a targeted code-level mitigation (input validation patch, HTML sanitisation script), and confirm the fix—the same three-step procedure throughout.",
+      "task_judgments": [
+        {
+          "task_id": "fix-code-vulnerability",
+          "applicable": "YES",
+          "reason": "Directly exercises the full procedure: analyze existing code for a named CWE class (CRLF injection), patch the vulnerable functions, then verify with the test suite."
+        },
+        {
+          "task_id": "filter-js-from-html",
+          "applicable": "YES",
+          "reason": "Requires identifying XSS attack vectors (script tags, event handlers, javascript: URIs) and writing defensive filtering code to neutralize them, matching the skill's identify→mitigate→verify pattern."
+        }
+      ],
+      "source_coarse_id": "B2_C10"
+    },
+    {
+      "id": "B2_C11.1",
+      "skill_concept": "Model a discrete puzzle or maze state space and run an offline search algorithm (BFS/DFS) to find a complete solution sequence, then deliver moves via file output or HTTP endpoint.",
+      "member_ids": [
+        "huarong-dao-solver",
+        "interactive-maze-game"
+      ],
+      "reasoning": "Both tasks operate in static, non-adversarial environments where the full state space can be explored to find a goal-reaching path; one uses BFS on a sliding-block puzzle outputting JSON, the other uses online DFS in a maze communicating via HTTP—both fit the same search-then-deliver pattern.",
+      "task_judgments": [
+        {
+          "task_id": "interactive-maze-game",
+          "applicable": "YES",
+          "reason": "Requires exploring a static maze state space using path-finding (DFS with backtracking given the 2-visit constraint) and delivering moves via HTTP, directly matching the candidate skill."
+        },
+        {
+          "task_id": "huarong-dao-solver",
+          "applicable": "YES",
+          "reason": "Canonical instance of the skill: models a discrete puzzle state space, runs BFS to find a solution sequence, and delivers the result programmatically."
+        }
+      ],
+      "source_coarse_id": "B2_C11"
+    },
+    {
+      "id": "B3_C2.1",
+      "skill_concept": "Composing and executing SQL queries (joins, window functions, aggregations, deduplication, type normalization) against structured data in DuckDB or PostgreSQL to produce a query-result dataset.",
+      "member_ids": [
+        "pandas-sql-query",
+        "postgres-csv-clean"
+      ],
+      "reasoning": "Both tasks require writing non-trivial SQL: one uses DuckDB with a JOIN and ROW_NUMBER window function, the other uses PostgreSQL with DELETE deduplication and UPDATE normalization. The reusable skill is SQL query composition and execution inside a relational engine, not Python data wrangling.",
+      "task_judgments": [
+        {
+          "task_id": "pandas-sql-query",
+          "applicable": "YES",
+          "reason": "Directly requires composing SQL with a JOIN, GROUP BY aggregation, and ROW_NUMBER window function inside a DuckDB pipeline."
+        },
+        {
+          "task_id": "postgres-csv-clean",
+          "applicable": "YES",
+          "reason": "Directly uses PostgreSQL to execute SQL deduplication, normalization, and filtered export against a structured table."
+        }
+      ],
+      "source_coarse_id": "B3_C2"
+    },
+    {
+      "id": "B3_C2.2",
+      "skill_concept": "Reading heterogeneous file formats (CSV, JSON, Parquet) in Python, applying field-level transformations (regex extraction, type coercion, schema renaming, priority-based conflict resolution, nested structure building), and writing a structured output file.",
+      "member_ids": [
+        "pandas-etl",
+        "multi-source-data-merger",
+        "organization-json-generator"
+      ],
+      "reasoning": "All three tasks are solved by Python code that reads one or more structured files, applies field-level logic (regex, renaming, date formatting, priority merge, hierarchy nesting), and writes an output file. None of them hinge on SQL query composition; the shared debugging heuristics are about Python data wrangling, schema mapping, and output format conformance.",
+      "task_judgments": [
+        {
+          "task_id": "pandas-etl",
+          "applicable": "PARTIAL",
+          "reason": "Follows an ETL shape but the core skill required is regex-based string extraction and date formatting, not SQL-style joins or aggregations."
+        },
+        {
+          "task_id": "multi-source-data-merger",
+          "applicable": "PARTIAL",
+          "reason": "Loads heterogeneous file formats, but the decisive logic is priority-based conflict resolution and schema renaming, not SQL-style joins or aggregations."
+        },
+        {
+          "task_id": "organization-json-generator",
+          "applicable": "PARTIAL",
+          "reason": "Reads multiple CSVs and applies field-level transforms, but the target output is a nested JSON hierarchy following a schema, not a flat query result dataset."
+        }
+      ],
+      "source_coarse_id": "B3_C2"
+    },
+    {
+      "id": "B3_C3.2",
+      "skill_concept": "Recalling or deriving a complete Zork command walkthrough from game domain knowledge and writing the terminal's final output verbatim to a result file, with variant speedrun vs. max-score path selection.",
+      "member_ids": [
+        "play-zork",
+        "play-zork-easy"
+      ],
+      "reasoning": "Both tasks grade on the contents of /app/answer.txt and their oracles write hardcoded ending text without running the game at all; the shared skill is Zork game knowledge (full walkthrough vs. shortest path), not interactive automation.",
+      "task_judgments": [
+        {
+          "task_id": "play-zork",
+          "applicable": "PARTIAL",
+          "reason": "Pexpect could drive the interaction, but the oracle bypasses gameplay entirely by writing hardcoded output; the critical differentiator is complete Zork domain knowledge (full 350-point walkthrough), not automation mechanics."
+        },
+        {
+          "task_id": "play-zork-easy",
+          "applicable": "PARTIAL",
+          "reason": "Same as play-zork — oracle writes hardcoded ending text; the skill needed is knowing the shortest Zork path to the ending, not interactive automation."
+        }
+      ],
+      "source_coarse_id": "B3_C3"
+    },
+    {
+      "id": "B3_C4.1",
+      "skill_concept": "Construct a single source file valid in two programming languages by identifying overlapping comment delimiters and string-literal syntax, using one language's comment or string construct to hide the other language's code from its parser, then iteratively compiling/interpreting both until both succeed.",
+      "member_ids": [
+        "polyglot-c-py",
+        "polyglot-rust-c"
+      ],
+      "reasoning": "Both tasks demand the same core procedure: map out comment and string syntax for each language pair, find constructs one language treats as a comment/string while the other treats as executable, layer the two programs so each sees only its own valid code, and debug by alternating between both compilers/interpreters.",
+      "task_judgments": [
+        {
+          "task_id": "polyglot-c-py",
+          "applicable": "YES",
+          "reason": "Requires exploiting C block-comment/Python string overlap (#define and triple-quote) so each language ignores the other's code."
+        },
+        {
+          "task_id": "polyglot-rust-c",
+          "applicable": "YES",
+          "reason": "Requires exploiting Rust/C++ comment and #define/macro overlap so each compiler sees valid syntax while masking the other language's constructs."
+        }
+      ],
+      "source_coarse_id": "B3_C4"
+    },
+    {
+      "id": "B3_C7.1",
+      "skill_concept": "Configuring and starting network service daemons by editing config files, initializing any required backend state, starting processes, and verifying live endpoints via a protocol probe.",
+      "member_ids": [
+        "mailman",
+        "nginx-request-logging"
+      ],
+      "reasoning": "Both tasks follow the same procedure: read or create config files with specific parameters, optionally initialize backend state (postfix transport maps + mailman SQLite DB for mailman; document root files for nginx), start the daemon(s), and confirm the service is live (email routing / HTTP curl). The debugging loop — check config syntax, inspect logs, retry — is identical.",
+      "task_judgments": [
+        {
+          "task_id": "mailman",
+          "applicable": "YES",
+          "reason": "Canonical multi-component service standup: edit postfix + mailman3 configs, initialize SQLite backend, start both daemons, verify SMTP routing."
+        },
+        {
+          "task_id": "nginx-request-logging",
+          "applicable": "YES",
+          "reason": "Fits the install-configure-start-verify loop exactly: edit nginx.conf and a server block, restart nginx, probe localhost:8080 with curl."
+        }
+      ],
+      "source_coarse_id": "B3_C7"
+    },
+    {
+      "id": "B3_C8.1",
+      "skill_concept": "Patching an existing Makefile to fix compiler identity or flags (including cross-compilation toolchain targets) and rebuilding with make",
+      "member_ids": [
+        "modernize-fortran-build",
+        "make-doom-for-mips"
+      ],
+      "reasoning": "Both tasks start with a broken or wrong Makefile, require targeted sed/text edits to compiler variables and flags (one swapping ifort→gfortran with flag correction, the other adding a full MIPS LLVM/binutils toolchain block), and validate success by running make to produce the expected binary artifact.",
+      "task_judgments": [
+        {
+          "task_id": "modernize-fortran-build",
+          "applicable": "YES",
+          "reason": "Exactly matches the skill: read the Makefile, identify the wrong compiler (ifort) and stale flag (-fast), patch with sed, and rebuild with make."
+        },
+        {
+          "task_id": "make-doom-for-mips",
+          "applicable": "YES",
+          "reason": "Requires patching the Makefile to add a MIPS cross-compilation toolchain (CC, LLVM_TARGET, MIPS_AS/LD, flags), then invoking make—exactly the cross-compilation toolchain targeting sub-skill described."
+        }
+      ],
+      "source_coarse_id": "B3_C8"
+    },
+    {
+      "id": "B3_C9.1",
+      "skill_concept": "Migrate domain-specific scientific numerical code across frameworks or languages (MATLAB→NumPy, NEURON→Jaxley) by mapping source numerical semantics and API calls to modern Python equivalents, then validating agreement between reference and ported outputs.",
+      "member_ids": [
+        "matlab-python-conversion",
+        "neuron-to-jaxley-conversion"
+      ],
+      "reasoning": "Both tasks demand understanding of domain numerical semantics (image-stack axis conventions; ion-channel conductances and reversal potentials), a deliberate API-level translation (imageio+numpy for MATLAB imread/cat; Jaxley Channel/Pump for NEURON insert/set), and validation that the ported code replicates the reference behaviour. Python 2→3 modernization does not share this procedure.",
+      "task_judgments": [
+        {
+          "task_id": "matlab-python-conversion",
+          "applicable": "YES",
+          "reason": "Canonical instance of the skill: reads MATLAB source semantics, maps to equivalent numpy/imageio calls, runs both under Octave and Python, and explicitly diffs numerical outputs."
+        },
+        {
+          "task_id": "neuron-to-jaxley-conversion",
+          "applicable": "YES",
+          "reason": "Requires reading NEURON conductance parameters and reversal potentials, mapping them to Jaxley Channel/Pump API calls region-by-region, and producing a biophysically equivalent model—exactly the numerical-semantics-mapping procedure the skill describes."
+        }
+      ],
+      "source_coarse_id": "B3_C9"
+    },
+    {
+      "id": "B3_C15.1",
+      "skill_concept": "Implementing a numerical iterative algorithm (fixed-step ODE integrator, entropic regularized transport) from a mathematical recurrence or optimization formulation in Python, managing floating-point step size or convergence tolerances, and verifying output against a quantitative accuracy threshold.",
+      "member_ids": [
+        "ode-solver-rk4",
+        "optimal-transport"
+      ],
+      "reasoning": "Both tasks require translating a continuous mathematical update rule into a Python loop, handling numerical precision (step-size ceiling, regularization, convergence tol), and producing outputs checked against a floating-point reference. Experience with one transfers directly to the other.",
+      "task_judgments": [
+        {
+          "task_id": "ode-solver-rk4",
+          "applicable": "YES",
+          "reason": "Directly requires implementing a numerical iterative update rule (RK4) from a mathematical recurrence, with floating-point step-size management and accuracy verification."
+        },
+        {
+          "task_id": "optimal-transport",
+          "applicable": "YES",
+          "reason": "Directly requires implementing the Sinkhorn iterative scaling algorithm from its mathematical definition, with convergence tolerance and numerical stability management."
+        }
+      ],
+      "source_coarse_id": "B3_C15"
+    },
+    {
+      "id": "B4_C1.1",
+      "skill_concept": "Reproduce a reported bug in an existing open-source Python library, locate the faulty code path with git/grep/find, apply a minimal targeted fix (one line to a few lines), and verify correctness against the project's existing test suite.",
+      "member_ids": [
+        "swe-bench-astropy-1",
+        "swe-bench-astropy-2",
+        "swe-bench-fsspec",
+        "swe-bench-langcodes"
+      ],
+      "reasoning": "All four tasks follow the identical SWE-bench loop: parse an issue description, use shell tools to locate the relevant source file and line, make a small surgical code change, and confirm correctness via the pre-existing test suite. The fixes span different libraries and bug types (logic error, regex flag, missing method, broken hash), but the procedural skill—diagnosis then patch then test—is identical across all four.",
+      "task_judgments": [
+        {
+          "task_id": "swe-bench-astropy-1",
+          "applicable": "YES",
+          "reason": "Requires reading an issue, grepping/finding the separability matrix code path, applying a one-line targeted fix, and verifying with existing tests."
+        },
+        {
+          "task_id": "swe-bench-astropy-2",
+          "applicable": "YES",
+          "reason": "Requires reading an issue, locating the QDP parser with grep/find, applying a minimal regex flag and string normalization fix, and verifying with existing tests."
+        },
+        {
+          "task_id": "swe-bench-fsspec",
+          "applicable": "YES",
+          "reason": "Requires reading an issue, locating the DirFileSystem implementation, adding a small missing method stub, and verifying with existing tests."
+        },
+        {
+          "task_id": "swe-bench-langcodes",
+          "applicable": "YES",
+          "reason": "Requires reading an issue, grepping for the __hash__ method, replacing one line with a correct hash implementation, and verifying with existing tests."
+        }
+      ],
+      "source_coarse_id": "B4_C1"
+    },
+    {
+      "id": "B4_C2.1",
+      "skill_concept": "Identify an HTTP-layer vulnerability (SQLi, SpEL/SSTI injection, unauthenticated endpoint exposure) from source or app resources, craft the exploit payload, and deliver it via curl or Python HTTP requests to achieve the stated objective.",
+      "member_ids": [
+        "sql-injection-attack",
+        "spring-messaging-vul",
+        "security-vulhub-minio"
+      ],
+      "reasoning": "All three tasks share the same end-to-end procedure: read source or discoverable app metadata to understand the vulnerability, construct an HTTP payload (SQLi string, STOMP SpEL frame, or CVE-specific request), send it with curl or Python requests, and verify the outcome via HTTP responses. The transport, tooling, and analysis loop are identical.",
+      "task_judgments": [
+        {
+          "task_id": "spring-messaging-vul",
+          "applicable": "YES",
+          "reason": "Discovers STOMP SpEL injection from publicly served resources, crafts the exploit payload, and delivers it via Python HTTP requests — matches the candidate skill exactly."
+        },
+        {
+          "task_id": "sql-injection-attack",
+          "applicable": "YES",
+          "reason": "Reads vulnerable source, crafts an SQLi payload, and executes it with curl against HTTP endpoints — the prototype example of the candidate skill."
+        },
+        {
+          "task_id": "security-vulhub-minio",
+          "applicable": "PARTIAL",
+          "reason": "Sends a single curl probe to an HTTP endpoint, but the 'exploit' is knowing a hardcoded CVE credential pair rather than analyzing source or crafting a structured payload."
+        }
+      ],
+      "source_coarse_id": "B4_C2"
+    },
+    {
+      "id": "B4_C2.3",
+      "skill_concept": "Read vulnerable framework or application source code, apply a minimal targeted patch that eliminates the vulnerability class at the framework level, and rebuild the project so the fix takes effect at runtime.",
+      "member_ids": [
+        "vul-flask",
+        "vul-flink"
+      ],
+      "reasoning": "Both tasks are purely defensive: locate the vulnerable code path in vendored or installed source, apply an in-place code change (regex rewrite of render_template_string; sed/awk sanitization of filename resolution), and optionally rebuild (Maven for Flink). No exploit payload is crafted or sent; the skill is source-level vulnerability remediation, not attack.",
+      "task_judgments": [
+        {
+          "task_id": "vul-flask",
+          "applicable": "NO",
+          "reason": "Asks for a defensive source-code patch inside the Flask framework itself, not for crafting or sending an exploit payload."
+        },
+        {
+          "task_id": "vul-flink",
+          "applicable": "NO",
+          "reason": "Requires editing Java source, applying a path-sanitization fix, and rebuilding with Maven — a defensive patching workflow with no exploit payload or HTTP attack step."
+        }
+      ],
+      "source_coarse_id": "B4_C2"
+    },
+    {
+      "id": "B4_C3.1",
+      "skill_concept": "Recover hidden information from obfuscated artifacts by statically identifying the encoding or transformation scheme (base64, gzip, bzip2, custom hash) and inverting it with standard decoding tools or mathematical inverse computation, without executing the target.",
+      "member_ids": [
+        "reverse-engineering",
+        "shell-deobfuscation",
+        "recover-obfuscated-files"
+      ],
+      "reasoning": "All three tasks share the same investigative loop: inspect the artifact statically, recognise the obfuscation/encoding layer(s), and apply the mathematical or algorithmic inverse (base64 -d, gunzip, bunzip2, modular-inverse hash reversal) to recover the plaintext. No dynamic execution of the target is required.",
+      "task_judgments": [
+        {
+          "task_id": "reverse-engineering",
+          "applicable": "YES",
+          "reason": "Requires statically disassembling the binary to extract the hash algorithm and target hash, then inverting the hash mathematically — exactly the identify-and-invert-obfuscation loop."
+        },
+        {
+          "task_id": "shell-deobfuscation",
+          "applicable": "YES",
+          "reason": "Pure static layered-encoding reversal: read the script, recognise the base64/gzip/bzip2 stack, pipe through the inverse transforms — a textbook instance of the candidate skill."
+        },
+        {
+          "task_id": "recover-obfuscated-files",
+          "applicable": "YES",
+          "reason": "Both the filename and content are base64-encoded; the task reduces to identifying that single encoding layer and decoding it, which is precisely the candidate skill's procedure."
+        }
+      ],
+      "source_coarse_id": "B4_C3"
+    },
+    {
+      "id": "B4_C12.1",
+      "skill_concept": "Install a domain-specific ML library (via pip/git+make), convert raw input data into the library's required format, invoke inference or supervised training from a script or CLI, and persist the result to a specified output path.",
+      "member_ids": [
+        "speech-to-text",
+        "train-fasttext"
+      ],
+      "reasoning": "Both tasks reduce to: (1) non-trivial library setup (openai-whisper with ffmpeg; fastText built from source), (2) a small data-prep step (load MP3 / convert parquet to __label__ format), (3) a single inference or training call, and (4) writing one output file. No complex post-processing or reusable-script requirements appear.",
+      "task_judgments": [
+        {
+          "task_id": "speech-to-text",
+          "applicable": "YES",
+          "reason": "Follows install-Whisper → load-audio → run-inference → write-text exactly as described by the candidate skill."
+        },
+        {
+          "task_id": "train-fasttext",
+          "applicable": "YES",
+          "reason": "Follows git-clone-and-make → convert-parquet-to-label-format → fasttext supervised → save model.bin exactly as described by the candidate skill."
+        }
+      ],
+      "source_coarse_id": "B4_C12"
+    }
+  ],
+  "unclustered": [
+    "accelerate-maximal-square",
+    "acl-permissions-inheritance",
+    "add-benchmark-lm-eval-harness",
+    "aimo-airline-departures",
+    "amuse-install",
+    "analyze-access-logs",
+    "ancient-puzzle",
+    "audio-synth-stft-peaks",
+    "bank-trans-filter",
+    "break-filter-js-from-html",
+    "broken-networking",
+    "build-cython-ext",
+    "build-initramfs-qemu",
+    "cancel-async-tasks",
+    "catch-me-if-you-can",
+    "causal-inference-r",
+    "chem-property-targeting",
+    "chem-rf",
+    "chess-best-move",
+    "circuit-fibsqrt",
+    "cobol-modernization",
+    "code-from-image",
+    "compile-compcert",
+    "configure-git-webserver",
+    "constraints-scheduling",
+    "count-call-stack",
+    "count-dataset-tokens",
+    "cpp-compatibility",
+    "cprofiling-python",
+    "crack-7z-hash",
+    "create-bucket",
+    "cron-broken-network",
+    "cross-entropy-method",
+    "csv-to-parquet",
+    "custom-memory-heap-crash",
+    "db-wal-recovery",
+    "debug-long-program",
+    "decommissioning-service-with-sensitive-data",
+    "deterministic-tarball",
+    "distribution-search",
+    "dna-assembly",
+    "dna-insert",
+    "download-youtube",
+    "enemy-grid-escape",
+    "extract-elf",
+    "extract-moves-from-video",
+    "extract-safely",
+    "feal-differential-cryptanalysis",
+    "feal-linear-cryptanalysis",
+    "fibonacci-server",
+    "financial-document-processor",
+    "find-official-code",
+    "find-restaurant",
+    "fix-git",
+    "fix-ocaml-gc",
+    "fix-pandas-version",
+    "fix-permissions",
+    "flood-monitoring-basic",
+    "fmri-encoding-r",
+    "form-filling",
+    "gcc-compiler-optimization",
+    "gcode-to-text",
+    "get-bitcoin-nodes",
+    "git-leak-recovery",
+    "git-multibranch",
+    "git-workflow-hack",
+    "gomoku-planner",
+    "gpt2-codegolf",
+    "grid-pattern-transform",
+    "hdfs-deployment",
+    "hello-world",
+    "heterogeneous-dates",
+    "hf-model-inference",
+    "html-finance-verify",
+    "hydra-debug-slurm-mode",
+    "ilp-solver",
+    "implement-eigenvectors-from-eigenvalues-research-paper",
+    "incompatible-python-fasttext",
+    "install-klee-minimal",
+    "intrusion-detection",
+    "jq-data-processing",
+    "jsonl-aggregator",
+    "kv-store-grpc",
+    "large-scale-text-editing",
+    "largest-eigenval",
+    "lean4-proof",
+    "leelachess0-pytorch-conversion",
+    "llm-inference-batching-scheduler",
+    "llm-spec-decoding",
+    "logistic-regression-divergence",
+    "magsac-install",
+    "mahjong-winninghand",
+    "make-mips-interpreter",
+    "mcmc-sampling-stan",
+    "merge-diff-arc-agi-task",
+    "mixed-integer-programming",
+    "mlflow-register",
+    "mnist-learning-fix",
+    "model-extraction-relu-logits",
+    "modernize-scientific-stack",
+    "movie-helper",
+    "mteb-eval",
+    "mteb-leaderboard",
+    "mteb-retrieve",
+    "multistep-definite-integral",
+    "new-encrypt-command",
+    "npm-conflict-resolution",
+    "oom",
+    "openssl-selfsigned-cert",
+    "overfull-hbox",
+    "parallel-particle-simulator",
+    "parallelize-compute-squares",
+    "parallelize-graph",
+    "password-recovery",
+    "path-tracing",
+    "path-tracing-reverse",
+    "pcap-to-netflow",
+    "play-lord",
+    "png-generation",
+    "port-compressor",
+    "portfolio-optimization",
+    "predicate-pushdown-bench",
+    "predict-customer-churn",
+    "privilege-escalation",
+    "processing-pipeline",
+    "protein-assembly",
+    "protocol-analysis-rs",
+    "prove-plus-comm",
+    "puzzle-solver",
+    "pypi-server",
+    "pytorch-model-cli",
+    "pytorch-model-recovery",
+    "qemu-alpine-ssh",
+    "qemu-startup",
+    "query-optimize",
+    "raman-fitting",
+    "rare-mineral-allocation",
+    "recover-accuracy-log",
+    "regex-chess",
+    "regex-log",
+    "reshard-c4-data",
+    "rstan-to-pystan",
+    "run-pdp11-code",
+    "sam-cell-seg",
+    "sanitize-git-repo",
+    "schedule-vacation",
+    "schemelike-metacircular-eval",
+    "security-celery-redis-rce",
+    "setup-custom-dev-env",
+    "sha-puzzle",
+    "simple-sheets-put",
+    "simple-web-scraper",
+    "slurm-simple-node-monitoring",
+    "solana-data",
+    "solve-maze-challenge",
+    "solve-sudoku",
+    "sparql-professors-universities",
+    "sparql-university",
+    "spinning-up-rl",
+    "sqlite-db-truncate",
+    "sqlite-with-gcov",
+    "stable-parallel-kmeans",
+    "sudo-llvm-ir",
+    "tmux-advanced-workflow",
+    "torch-pipeline-parallelism",
+    "torch-tensor-parallelism",
+    "train-bpe-tokenizer",
+    "tree-directory-parser",
+    "triton-interpret",
+    "tune-mjcf",
+    "unprivileged-headless-pyrender",
+    "vertex-solver",
+    "video-processing",
+    "vimscript-vim-quine",
+    "vulnerable-secret",
+    "wasm-pipeline",
+    "weighted-max-sat-solver",
+    "winning-avg-corewars",
+    "word2vec-from-scratch",
+    "write-compressor"
+  ]
+}

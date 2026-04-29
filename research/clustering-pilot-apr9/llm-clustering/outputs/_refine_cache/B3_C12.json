@@ -1,0 +1,33 @@
+{
+  "source_coarse_id": "B3_C12",
+  "coarse_skill_concept": "Generating cryptographic material or configuring file encryption using security CLI tools (openssl, rencrypt), then programmatically verifying correctness of the resulting certificates or ciphertext.",
+  "decision": "remove_some",
+  "task_judgments": [
+    {
+      "task_id": "openssl-selfsigned-cert",
+      "applicable": "YES",
+      "reason": "Directly requires invoking OpenSSL CLI to generate a private key and X.509 certificate, place outputs at specific paths, set permissions, and write a Python validation script — exactly the candidate skill's procedure."
+    },
+    {
+      "task_id": "new-encrypt-command",
+      "applicable": "NO",
+      "reason": "Requires batch symmetric file encryption with an unrelated CLI (rencrypt), no certificate/PKI concepts apply, and the task demands no programmatic verification step — a fundamentally different procedure."
+    }
+  ],
+  "final_groups": [
+    {
+      "skill_concept": "Using OpenSSL CLI to generate RSA keys and self-signed X.509 certificates, write them to specified paths with correct permissions, and programmatically validate the certificate via Python ssl or subprocess.",
+      "member_ids": [
+        "openssl-selfsigned-cert"
+      ],
+      "reasoning": "This task is wholly covered by knowledge of openssl genrsa / req -x509 flags, PEM file construction, chmod, and a short Python ssl-context validation script. The rencrypt task shares none of that procedure."
+    }
+  ],
+  "removed_to_unclustered": [
+    "new-encrypt-command"
+  ],
+  "_meta": {
+    "duration_ms": 23526,
+    "cost_usd": 0.04843035
+  }
+}
