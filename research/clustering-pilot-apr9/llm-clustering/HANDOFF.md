@@ -1,6 +1,6 @@
 # LLM Clustering — Handoff
 
-完整的两层 hierarchical LLM 聚类 pipeline 跑完了，结果 + 代码 + 中间产物都在当前目录。完全跳过 embedding，从任务描述到最终 cluster 都是 Claude Sonnet 4.6 通过 `claude -p` headless CLI 走 Max OAuth 跑的，没消耗 API credit。
+完整的两层 hierarchical LLM 聚类 pipeline 跑完了，结果 + 代码 + 中间产物都在当前目录。完全跳过 embedding，从任务描述到最终 cluster 都是用 Claude Sonnet 4.6 API 跑的。
 
 ## 方法
 
@@ -12,7 +12,6 @@
 - Refine 阶段 33/59 是 split——粗聚类太松，细化时把不该一起的拆开了
 - Judge: 8 ACCEPT / 17 BORDERLINE / 0 REJECT
 - 跟 DBSCAN eps=0.40 的 Rand Index 0.9256，但有个细节：DBSCAN 觉得是同 cluster 的 76 对里 75 对被 LLM 拆了（LLM 严格得多），同时 LLM 在 DBSCAN 标 noise 的任务里多发现了 15 个 cluster
-- 总成本 $5.62（coarse $1.28 + refine $3.45 + judge $0.89），全部走 Claude Code Max 订阅
 
 ## 主产出
 
