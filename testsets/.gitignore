@@ -1,0 +1,22 @@
+# Per-run logs and intermediate dumps — regenerable from data/ + code/.
+runs/
+
+# FAISS index + embeddings — large binary, regeneratable from corpus.
+embeddings/
+
+# Python / OS detritus
+__pycache__/
+*.pyc
+*.pyo
+.DS_Store
+
+# Editor / scratch
+*.tmp
+*.swp
+
+# Claude Code local state
+.claude/
+
+# Standalone analysis dumps (regenerable from runs/ via skill_selection_eval/analyze_collapse.py)
+*-collapse-analysis.json
+*-collapse-figure1.json
