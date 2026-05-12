@@ -1,0 +1,3257 @@
+{
+  "model": "claude-sonnet-4-6",
+  "n_labels": 239,
+  "n_batches": 4,
+  "validation": {
+    "ok": true,
+    "message": "ok"
+  },
+  "modes": [
+    {
+      "name": "skill_guided_success",
+      "definition": "Agent successfully completed the task by reading and faithfully applying SKILL.md guidance. Skill content provided domain knowledge, procedural steps, API choices, or known-failure warnings that the agent leveraged to produce a correct, oracle-passing result.",
+      "merged_from_batch_modes": [
+        "skill_guided_clean_execution",
+        "skill_guided_success"
+      ],
+      "n_assigned": 54
+    },
+    {
+      "name": "workflow_guided_success",
+      "definition": "Agent successfully completed the task by following workflow trace hints or prior-attempt artifacts that directed tool selection, command sequencing, or parameter strategy. The workflow artifact was substantively actionable and led directly to a passing oracle result.",
+      "merged_from_batch_modes": [
+        "workflow_guided_clean_execution",
+        "workflow_guided_success"
+      ],
+      "n_assigned": 47
+    },
+    {
+      "name": "autonomous_clean_success",
+      "definition": "Agent produced a correct, oracle-passing result without skill or workflow augmentation, relying on its own domain knowledge, systematic exploration, self-directed verification, or pre-existing environment state discovered and reused opportunistically.",
+      "merged_from_batch_modes": [
+        "clean_autonomous_success",
+        "clean_implementation_success",
+        "environment_state_leveraged_success",
+        "raw_clean_success"
+      ],
+      "n_assigned": 16
+    },
+    {
+      "name": "timeout_budget_exhaustion",
+      "definition": "Agent exhausted the wall-clock time or context budget before producing valid output, typically by spending it in open-ended search loops, exhaustive analysis, hyperparameter sweeps, or non-converging optimization without a fallback commit strategy.",
+      "merged_from_batch_modes": [
+        "environment_resource_timeout",
+        "exploration_loop_timeout",
+        "timeout_budget_exhaustion_failure",
+        "timeout_budget_exhausted"
+      ],
+      "n_assigned": 16
+    },
+    {
+      "name": "environment_infrastructure_failure",
+      "definition": "Task failed due to a missing dependency, incompatible package, absent input file, out-of-memory kill, or environment state corrupted by the agent's own prior actions. The required execution context could not be established or was destroyed during the attempt.",
+      "merged_from_batch_modes": [
+        "offline_environment_dependency_failure",
+        "build_environment_oom_kill",
+        "environment_setup_failure",
+        "environment_corrupted_by_agent_actions"
+      ],
+      "n_assigned": 10
+    },
+    {
+      "name": "static_verification_without_runtime",
+      "definition": "Agent validated correctness through static inspection, syntax checks, or self-scoped audits that could not detect behavioral failures. Oracle evaluation caught errors invisible to the agent's verification, including different test partitions, stricter thresholds, or coverage gaps bounded by the agent's own prior output.",
+      "merged_from_batch_modes": [
+        "self_referential_verification_gap",
+        "static_check_misses_runtime_failure",
+        "static_only_verification_failure",
+        "oracle_partition_mismatch",
+        "verification_mismatch_self_vs_oracle"
+      ],
+      "n_assigned": 21
+    },
+    {
+      "name": "output_format_schema_mismatch",
+      "definition": "Implementation logic is functionally plausible but oracle rejects the submission due to wrong field names, incorrect precision or units, hardcoded status labels, schema structure divergence, or evaluation criteria the agent did not anticipate from internal testing alone.",
+      "merged_from_batch_modes": [
+        "oracle_evaluation_mismatch",
+        "output_format_schema_mismatch",
+        "oracle_format_mismatch_failure",
+        "output_format_or_value_mismatch"
+      ],
+      "n_assigned": 17
+    },
+    {
+      "name": "algorithmic_logic_error",
+      "definition": "Agent selected a fundamentally incorrect algorithm, formula, API primitive, or extraction strategy. Covers mathematical model errors, wrong optimization direction, misclassification heuristics, incorrect spreadsheet formula placement, wrong regex semantics, and parser implementations that fail on structurally different inputs.",
+      "merged_from_batch_modes": [
+        "incorrect_mathematical_model",
+        "domain_classification_error",
+        "spreadsheet_formula_placement_error",
+        "algorithmic_formulation_error",
+        "wrong_api_or_algorithm_usage",
+        "parser_fragility_unseen_input_failure"
+      ],
+      "n_assigned": 29
+    },
+    {
+      "name": "shell_code_corruption",
+      "definition": "Malformed shell constructs — double-escaped regex patterns in bash heredocs or inline Python embedded via heredoc quoting — produce silently incorrect field extractions or blocked execution that the agent does not detect before submission.",
+      "merged_from_batch_modes": [
+        "regex_escaping_corruption",
+        "heredoc_shell_corruption"
+      ],
+      "n_assigned": 6
+    },
+    {
+      "name": "background_service_lifecycle_failure",
+      "definition": "Agent launched a required long-running process but failed to properly daemonize or detach it, causing the service to be dead or unreachable at oracle evaluation time due to a blocking foreground run, silent crash from a port conflict, or missing setsid.",
+      "merged_from_batch_modes": [
+        "server_persistence_failure",
+        "background_service_lifecycle_failure"
+      ],
+      "n_assigned": 7
+    },
+    {
+      "name": "skill_guidance_misapplied_or_ignored",
+      "definition": "Agent had access to SKILL.md guidance but skipped required steps, applied an incorrect mitigation for a correctly identified issue, took a disallowed path, or followed guidance so partially that it backfired. Failure stems from procedural non-compliance or misinterpretation rather than a capability ceiling.",
+      "merged_from_batch_modes": [
+        "skill_guidance_misapplied",
+        "skill_misguidance",
+        "skill_guidance_ignored_or_misapplied",
+        "skill_guidance_ignored_or_diverged"
+      ],
+      "n_assigned": 10
+    },
+    {
+      "name": "capability_or_safety_limit",
+      "definition": "Task failed because it required capabilities at or beyond the agent's current limits — exact PRNG reproduction, robust OCR under constrained fallback, precise credential identification under truncated visibility — or the agent declined on safety grounds.",
+      "merged_from_batch_modes": [
+        "capability_or_safety_limit",
+        "credential_identification_error_failure"
+      ],
+      "n_assigned": 6
+    }
+  ],
+  "assignments": [
+    {
+      "id": "45f828f4-0bb8-428c-a0a7-ec711ccf724c",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guidance_misapplied",
+      "reason": "Agent correctly identified the vulnerability but applied the wrong mitigation (injection-value control instead of empty-key rejection) despite having relevant jackson-security knowledge."
+    },
+    {
+      "id": "3d072aad-4da7-4a3c-8bdf-23fdfaf1be51",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guidance_misapplied",
+      "reason": "Agent replaced mathjs with custom helpers but validated correctness using a timing script rather than functional correctness checks, misapplying known knowledge about what validation requires."
+    },
+    {
+      "id": "978012d9-4642-4d71-96f2-a6e269f8326b",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 1,
+      "source_batch_mode": "environment_resource_timeout",
+      "reason": "Whisper transcription stalled due to insufficient CPU resources; agent delayed pivoting to a faster fallback until the time budget was exhausted."
+    },
+    {
+      "id": "0bb92396-3554-431f-85df-b1ad90bf0e9f",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace guided environment exploration and SKILL.md files were consulted; a minor CSV rounding fix was self-corrected before all performance targets were confirmed satisfied."
+    },
+    {
+      "id": "dfc7900b-26ae-4363-b00a-54e8517afa6e",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace directed python3 invocation and recalc.py usage; LibreOffice PERCENTILE.INC incompatibility was caught and fixed through the validation loop."
+    },
+    {
+      "id": "77d239f0-9e07-4049-a1d6-2f8a8497ebd3",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "xlsx SKILL.md workflow guidance was followed and recalc.py caught and resolved LibreOffice STDEV.S and #NAME? errors before completion."
+    },
+    {
+      "id": "36329318-31f8-4c95-b97d-6e372e4d327c",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 1,
+      "source_batch_mode": "oracle_evaluation_mismatch",
+      "reason": "Pyperplan reported SOLVED_SATISFICING but the benchmark oracle rejected the plan for the complex IPC airport domain; internal PlanValidator agreed with the tool while the external oracle did not."
+    },
+    {
+      "id": "13bd8417-0085-44b0-9ee7-6b07f90e05ba",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 1,
+      "source_batch_mode": "offline_environment_dependency_failure",
+      "reason": "The file:// protocol triggered CORS restrictions; the agent created an embedded-data.js fallback but never verified it was the active data path, leaving the visualization broken at runtime."
+    },
+    {
+      "id": "556b87d4-b992-450d-b658-43ae9bd4a8db",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "incorrect_mathematical_model",
+      "reason": "Agent substituted a linear cost approximation for the polynomial gencost objective in the CVXPY formulation despite SKILL.md guidance on polynomial coefficient handling, producing wrong dispatch values."
+    },
+    {
+      "id": "3d6f2211-6bba-4572-833f-918ae25d0afa",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill guidance supplied correct GaMMA config keys, oversample_factor setting, and NET.STA.LOC station ID format, enabling a clean single-pass pipeline run without runtime errors."
+    },
+    {
+      "id": "7e27550e-71f7-4eb9-85f5-e7c67c232e5b",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill guidance directed malformed-row recovery via shifted-column detection; integrity check confirmed exactly one missing turn was recovered before the dual-interpretation sanity check validated the final answer."
+    },
+    {
+      "id": "0cf9dab9-fb41-408e-96a0-ea4c5b7bc12e",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill-guided pipeline recovered malformed rows and applied correct category-exclusivity constraints; integrity checks confirmed a clean dataset before final scoring."
+    },
+    {
+      "id": "dbbf2857-bbbc-489a-9d2b-5db03fe16713",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill guidance enabled helper-module reuse with structured threat-flag thresholds; post-write validation loop and CRLF normalization confirmed CSV integrity before completion."
+    },
+    {
+      "id": "7f72c341-d93e-4c55-8cd2-99d58c90abc8",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill-guided word-boundary regex patterns prevented false positives and a fallback rule routed zero-scoring files correctly; inline verification confirmed total-count preservation."
+    },
+    {
+      "id": "a89790ec-1e72-45c1-a10a-93de0dd39f56",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill supplied correct MATPOWER column indexing and scipy/numpy venv setup; post-solve validation checks confirmed output correctness before writing."
+    },
+    {
+      "id": "09096059-0e3e-4445-8758-84e8d831693f",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 1,
+      "source_batch_mode": "self_referential_verification_gap",
+      "reason": "The agent's name_checks verification list was populated from its own extraction, so any names it missed were also absent from the verification, masking coverage gaps from the oracle."
+    },
+    {
+      "id": "a2277560-a5eb-452f-8811-a953547c4b33",
+      "mode": "shell_code_corruption",
+      "source_batch": 1,
+      "source_batch_mode": "regex_escaping_corruption",
+      "reason": "Broken backslash escaping in bash heredoc raw-string regexes (\\\\\\\\b rendered as literal multi-backslash sequences instead of word boundaries) produced a false-clean verification result for structured identifiers."
+    },
+    {
+      "id": "327a5764-b8fa-45ee-9d0b-4cf45b8f6864",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "domain_classification_error",
+      "reason": "Keyword scoring misfired on cross-domain papers and a manual override was likely wrong; reward 0.0 indicates all-or-nothing grading caught systematic classification errors the agent did not detect."
+    },
+    {
+      "id": "2f40b654-acce-424d-b95d-7e7d5854678f",
+      "mode": "shell_code_corruption",
+      "source_batch": 1,
+      "source_batch_mode": "regex_escaping_corruption",
+      "reason": "Malformed field-extraction regexes caused mass false-positive flagging; no spot-check of extracted values against raw PDF text was performed before writing output."
+    },
+    {
+      "id": "30b7bcd6-f9f5-4f4c-a003-6c732f86870b",
+      "mode": "shell_code_corruption",
+      "source_batch": 1,
+      "source_batch_mode": "regex_escaping_corruption",
+      "reason": "Regex character classes were visibly mangled in the heredoc (e.g., [\"'^'\"] for IBAN capture groups), producing corrupted patterns that caused excessive false positives and zero Vendor Mismatch detections."
+    },
+    {
+      "id": "2a010177-6de8-47ff-bdda-e7de293b2b3d",
+      "mode": "shell_code_corruption",
+      "source_batch": 1,
+      "source_batch_mode": "regex_escaping_corruption",
+      "reason": "Unvalidated PDF extraction regexes caused systematic field misextraction; a text-normalization bug (targeting literal '\\n' string instead of newline) compounded the issue, and the 50/53 flag rate was never sanity-checked."
+    },
+    {
+      "id": "98e356ef-f422-44dc-86bd-f6e4d04035ba",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace provided correct execution order; automated gain sweep eliminated manual trial-and-error, and self-validation checks confirmed row count and column order before completion."
+    },
+    {
+      "id": "8884d85b-638f-43dd-a5aa-e5231367a0a3",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow hint directed SKILL.md reading; agent correctly applied Promise.all parallelization, memoization, and lightweight math replacements, then validated with build and Playwright tests."
+    },
+    {
+      "id": "fccb2dd5-a017-4d2c-a00b-abc363523d86",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace guided SKILL.md and recalc.py usage; LibreOffice PERCENTILE.INC incompatibility was detected and corrected through the recalc validation loop."
+    },
+    {
+      "id": "beaa22df-a2c8-4768-83e8-409ec7b36769",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace guided pyperplan invocation and .soln file discovery; hff+gbf heuristic produced valid plans for both airport instances, confirmed by cp-based delivery."
+    },
+    {
+      "id": "6dded00e-8e40-4b92-add5-ae627de7180c",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace and SKILL.md together directed formula-based xlsx editing; recalc.py confirmed zero formula errors after pre-flight cell range inspection."
+    },
+    {
+      "id": "ca7ec46f-fcf3-4a02-8c78-499fee392807",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow hint guided skill file inspection and recalc.py usage; PERCENTILE.INC compatibility was fixed mid-run and thorough pre-flight cell inspection prevented placement errors."
+    },
+    {
+      "id": "7d971e57-6543-48c1-ac04-0f1affe10c50",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 1,
+      "source_batch_mode": "self_referential_verification_gap",
+      "reason": "Hardcoded per-paper author lists only contained names the agent had already found; the verification could not catch names it had missed, and references-page detection may have stopped redaction prematurely."
+    },
+    {
+      "id": "5f887e0e-24d4-41a1-b4ed-ef44390f89f6",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "domain_classification_error",
+      "reason": "Keyword heuristics used music_history as a zero-score fallback bucket, absorbing ambiguous papers; reading was limited to the first two pages, missing topic signals deeper in documents."
+    },
+    {
+      "id": "229201d5-e6a3-4c30-a399-6f07deacd332",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "incorrect_mathematical_model",
+      "reason": "A linear LP objective was used for potentially quadratic gencost curves, producing suboptimal dispatch; all three most-loaded lines reporting exactly 100% loading suggests a flow-calculation artifact from the wrong formulation."
+    },
+    {
+      "id": "c40c093a-4070-4d84-83df-a77923d5e4e1",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill guidance identified the correct .soln file location and PDDL output format; a sed-based case-normalization fix handled mixed-case airplane constants."
+    },
+    {
+      "id": "3d9a439a-5fec-41b7-af53-03c18fd65a72",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill guided correct .soln file discovery, PDDL format preservation, and sed case-fix for mixed-case airplane constants; final file-existence and line-count verification confirmed valid output."
+    },
+    {
+      "id": "dd830993-9c6b-454a-91ec-1d8cb80710a5",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill-guided PhaseNet+GaMMA pipeline ran end-to-end with fallback config relaxation for edge cases and near-simultaneous event de-duplication; post-run sanity-check confirmed sorted timestamps."
+    },
+    {
+      "id": "16cba633-0a64-4b24-a68f-a7f6d6c1d1f8",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "spreadsheet_formula_placement_error",
+      "reason": "Fold-change column assignments were reversed (Log2 FC placed in column D, FC in C) because control/treated sample grouping was assumed without confirming row 9 labels."
+    },
+    {
+      "id": "ad155e0f-7eec-4820-a9c2-d3916d081e12",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guidance_misapplied",
+      "reason": "The skill explicitly warned that po_number must be nulled for Invalid PO entries, but the agent did not apply this rule; the validation script also produced empty output, masking the error."
+    },
+    {
+      "id": "5225bb69-944c-461a-89cb-5a4b1ab2e1a2",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 1,
+      "source_batch_mode": "static_check_misses_runtime_failure",
+      "reason": "node --check and file-existence tests passed, but oracle evaluation requires functional browser rendering which was never tested; the offline fallback was structurally present but functionally unverified."
+    },
+    {
+      "id": "dc0dd681-379b-49d8-9cf8-c3aab6c5306d",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace file-discovery patterns were followed immediately; all output schema dimensions were verified (K, A, B, refs_len) before declaring success, with a proactive fix ensuring log spans strictly beyond 5 s."
+    },
+    {
+      "id": "b7dba0ef-5235-46d8-8ff7-e38f257876a4",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Proactive SKILL.md consultation before coding, correct dual-variable LMP extraction, proper 20% capacity relaxation, and programmatic output validation produced a correct DC-OPF implementation."
+    },
+    {
+      "id": "d84304b2-3286-41e8-94db-db502a0ff8e4",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace guided SKILL.md consultation for filler-word duration tables and merge logic; internet connectivity and ffmpeg availability enabled successful clip extraction and concatenation."
+    },
+    {
+      "id": "0a95fbf4-a7f9-4383-be63-db8c7dc1c5db",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 1,
+      "source_batch_mode": "offline_environment_dependency_failure",
+      "reason": "The required d3.v6.min.js was missing or incompatible in the offline sandbox, and the SKILL.md referenced d3@7.9.0 while the task required v6; node --check validated syntax but not API availability."
+    },
+    {
+      "id": "58f87ff4-1bea-4c93-9a81-00b13e89ecb7",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "incorrect_mathematical_model",
+      "reason": "Reserve co-optimization yielded zero reserve MCP, likely due to wrong dual-variable sign convention from scipy linprog eqlin.marginals; all optimization libraries required a venv install adding complexity."
+    },
+    {
+      "id": "6744865d-8359-471a-8b2d-7c7b3ff2a472",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 1,
+      "source_batch_mode": "static_check_misses_runtime_failure",
+      "reason": "The output file was structurally complete but functional defects (d3 v6/v7 API mismatch, non-deterministic force simulation positions) would only manifest at runtime; no runtime check was performed."
+    },
+    {
+      "id": "ba789559-6dee-4621-a86d-2ce17b0d80e4",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 1,
+      "source_batch_mode": "static_check_misses_runtime_failure",
+      "reason": "The SKILL.md explicitly warned about custom introspection wiring requiring regression tests, but no focused test run was done before full packaging, leaving the fix unverified against the actual runtime path."
+    },
+    {
+      "id": "a3099a6a-bcce-4924-b320-a95465af6762",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "spreadsheet_formula_placement_error",
+      "reason": "Formulas were placed in unverified template rows; 58-event stream drops suppressed output needed to confirm target rows, SKILL step 7 (recalc) was skipped, and the year-header row reference conflicted with task instructions."
+    },
+    {
+      "id": "e9ac5616-d5bb-48cc-8493-f313e02c3e7f",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "spreadsheet_formula_placement_error",
+      "reason": "Unverified transposition between stats rows and fold-change column indices was never independently validated; recalc.py was absent from the environment, blocking the SKILL-mandated error scan."
+    },
+    {
+      "id": "f60fb01d-b9d9-42ee-84f4-a8d884d83ed2",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "SKILL.md-guided multi-pass PyMuPDF redaction used robust references-boundary detection, a second verification pass caught residual false positives, and metadata scrubbing was confirmed empty."
+    },
+    {
+      "id": "ebc06946-64b3-4de1-a0c9-a25c8d1c5c74",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill-guided data integrity check confirmed a clean dataset; a sensitivity sweep validated the stable primary interpretation and openpyxl sliding-window scan recovered all records correctly."
+    },
+    {
+      "id": "b41875b8-b7f7-4c08-a9ae-03898a1b9da4",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill-guided ACC pipeline with anti-windup PID and bounded random search tuning met all gain constraints; final validation confirmed 1501 rows and metric compliance."
+    },
+    {
+      "id": "83c016c6-0b82-4eca-8d98-6712966138a0",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill anticipated erlc toolchain absence and provided the correct patch location (ssh_connection_handler.erl); source-level verification served as fallback when compilation was unavailable."
+    },
+    {
+      "id": "47bb188b-fc77-45cd-9229-98b667613c96",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill guidance directed correct python3 invocation, optional validator import with fallback handling, and output file verification before declaring success on batch PDDL planning."
+    },
+    {
+      "id": "aa1da6c0-af30-4cd5-8404-9ddc8d4d28e3",
+      "mode": "skill_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "skill_guided_clean_execution",
+      "reason": "Skill guidance provided station ID normalization format, complete GaMMA config keys, and ncpu=1 stability setting, enabling a clean end-to-end PhaseNet+GaMMA pipeline run."
+    },
+    {
+      "id": "01663364-1e79-44c8-b336-dc0485d98f49",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "incorrect_mathematical_model",
+      "reason": "Floating-point noise in aggregate totals was not rounded before writing the report, and the linear LP objective was used without verifying quadratic gencost terms were zero, producing numerically imprecise output."
+    },
+    {
+      "id": "66b81683-de14-42c2-a120-2e99c6a5607c",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "domain_classification_error",
+      "reason": "Classification correctness was never validated against ground truth; verification checked only count integrity, and keyword classifier quality was assessed from only 5 samples per class."
+    },
+    {
+      "id": "7436f84a-791a-49f1-b1c9-905eb4a17c4a",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 1,
+      "source_batch_mode": "spreadsheet_formula_placement_error",
+      "reason": "Control/treated column split was hardcoded without reading row 9 group labels; SKILL.md step 8 (recalc.py) was skipped, and verification only confirmed formula string presence rather than computed values."
+    },
+    {
+      "id": "e9ff64c9-b825-4de7-8a20-3b98abd31850",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 1,
+      "source_batch_mode": "environment_resource_timeout",
+      "reason": "The agent ran a second parameter sweep script that was still in progress at the timeout boundary instead of committing to an already-viable result from the first sweep."
+    },
+    {
+      "id": "3bffc66a-73c2-4391-a97b-f8936f67701b",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 1,
+      "source_batch_mode": "oracle_evaluation_mismatch",
+      "reason": "The agent's trajectory described a complete, apparently successful grid-search PID implementation, but the status is failure, indicating the oracle rejected output that all internal indicators considered valid."
+    },
+    {
+      "id": "fadba2ce-5cfb-453b-a324-c5192f682ac5",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow-guided IMC-PI pipeline used a multi-candidate lambda sweep for robust gain selection and applied a minor metrics schema fix mid-run before satisfying all constraints."
+    },
+    {
+      "id": "161bdb30-62ab-42b8-bf2a-769ebd9bf5a5",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow hint directed use of pcap_utils helper functions from SKILL.md; a single script covered all metric categories with proper CSV comment-line preservation."
+    },
+    {
+      "id": "7ef551ff-ed86-4a1e-9ac4-67966fcd5f80",
+      "mode": "workflow_guided_success",
+      "source_batch": 1,
+      "source_batch_mode": "workflow_guided_clean_execution",
+      "reason": "Workflow trace directed xlsx SKILL.md and recalc.py usage; LibreOffice PERCENTILE.INC incompatibility was detected and recovered through the iterative recalc validation loop."
+    },
+    {
+      "id": "0424d980-466a-4417-81e8-a4c4f00d009d",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 1,
+      "source_batch_mode": "environment_resource_timeout",
+      "reason": "Context-compaction endpoint returned 404 on OpenRouter, causing session termination; the long session had already accumulated ~822 KB of history exceeding the model context window."
+    },
+    {
+      "id": "8f357ed8-a611-4f40-bace-0042ac2e1cd9",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 2,
+      "source_batch_mode": "output_format_schema_mismatch",
+      "reason": "solution.json status field hardcoded as FEASIBLE despite solver returning OPTIMAL, causing an oracle schema check failure on an otherwise valid result."
+    },
+    {
+      "id": "22c963d0-0756-4d82-98c8-b2301fdd337c",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Finite-horizon LQR backward pass iterates forward instead of backward, computing K0 as the last gain rather than the first—a fundamental algorithmic direction error."
+    },
+    {
+      "id": "ac569887-0964-4148-b278-a283fdc1af49",
+      "mode": "autonomous_clean_success",
+      "source_batch": 2,
+      "source_batch_mode": "clean_autonomous_success",
+      "reason": "Skill helper module applied directly in a single raw-arm script execution, populating all 34 metrics correctly with no augmentation needed."
+    },
+    {
+      "id": "11ee7b19-f1f5-472b-b099-164e1f6f8bda",
+      "mode": "autonomous_clean_success",
+      "source_batch": 2,
+      "source_batch_mode": "clean_autonomous_success",
+      "reason": "Clean first-attempt GeoPandas analysis with self-discovered SKILL.md, correct spatial-filter-then-project ordering, and schema exploration before coding."
+    },
+    {
+      "id": "829b249a-367a-4cb7-b6e4-3c110df0f15d",
+      "mode": "autonomous_clean_success",
+      "source_batch": 2,
+      "source_batch_mode": "clean_autonomous_success",
+      "reason": "Correct DC-OPF with dual-variable LMP and reserve-MCP extraction, venv workaround, and thorough output validation—all without skill or workflow augmentation."
+    },
+    {
+      "id": "f78e0040-eba8-42d5-ae29-5f3677319d04",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 2,
+      "source_batch_mode": "build_environment_oom_kill",
+      "reason": "Conflicting dual -pl flags allowed web-console into the Maven build, triggering an OOM/kill despite the explicit skip instruction."
+    },
+    {
+      "id": "d7f82bdf-1908-495e-be29-70cb43020b9a",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "Verification used only node --check (static syntax), leaving browser runtime behavior and D3 force-clustering correctness completely untested before submission."
+    },
+    {
+      "id": "ee5254a4-1b08-4f1d-ad69-9d87e622c1bf",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "Agent confirmed formula-string presence but skipped the SKILL.md recalc.py step on the original workbook, so cached computed values were never validated."
+    },
+    {
+      "id": "4a0913cb-eb34-4962-a296-70a9d34cb879",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md common-failure-mode knowledge guided correct SeisBench+GaMMA config sweep, station-ID normalization, and near-duplicate deduplication."
+    },
+    {
+      "id": "a1c4784a-14f5-4e70-8f43-94b651de34a1",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill provided faster-whisper installation settings, tiny.en int8 CPU configuration, and phrase-first multi-word matching enabling complete pipeline execution."
+    },
+    {
+      "id": "2f297e95-8d4e-459d-af66-2d7825a05eba",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md guided IMC lambda sweep with anti-windup and measurement filtering, producing gains that passed all performance constraints."
+    },
+    {
+      "id": "256ecbdc-faf2-4e09-ae19-3eebb339b8b7",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Reserve co-optimization formulation produced zero reserve MCP due to a structural gap in the problem model, with anomalous counterfactual line counts indicating redispatch errors."
+    },
+    {
+      "id": "52060237-5f06-4c6c-b8c2-f1b2c056e3bf",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Splitting AdvancedAnalysis with next/dynamic introduced an async SSR loading state that silently broke the required advanced-content testid the oracle checks."
+    },
+    {
+      "id": "56b2107b-0f82-4bce-ad32-1c3922d5be3d",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Title-heuristic topic classification diverged from oracle ground truth; no feedback on which files were wrong and no deep content analysis performed."
+    },
+    {
+      "id": "f93e030f-cb7c-48fb-8819-87cfdcff9109",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow hint about finite-horizon LQR guided correct MPC derivation and simulation, producing all required outputs within performance targets."
+    },
+    {
+      "id": "ec5893dd-b5a4-495a-bd75-cb3aebcdc283",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace warned about python vs python3 and SKILL.md recalc loop enabled detection and fix of #NAME? errors before submission."
+    },
+    {
+      "id": "1cefa60b-a4cd-4280-bb0f-87878ab1b42a",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow hint about python3 and SKILL.md MATPOWER field names enabled correct LP formulation reaching optimal dispatch with zero numerical violations."
+    },
+    {
+      "id": "0de020aa-932e-4b53-b392-774d283f9948",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "Verification limited to py_compile and code inspection only; no integration test run left MongoDB pipeline sort-order and schema behavior unvalidated."
+    },
+    {
+      "id": "83c78118-2a7f-43cc-9603-fdbec78aaaa1",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 2,
+      "source_batch_mode": "skill_misguidance",
+      "reason": "SKILL.md explicitly instructed conditional turn-switch suppression, steering the agent toward a behavior change that broke the oracle contract."
+    },
+    {
+      "id": "5bff779d-cba0-4971-8d2c-31fa8c2c0389",
+      "mode": "shell_code_corruption",
+      "source_batch": 2,
+      "source_batch_mode": "heredoc_shell_corruption",
+      "reason": "generate_report.sh shebang was corrupted to 'echo bad' during heredoc-based test development and not cleanly restored before the oracle evaluated it."
+    },
+    {
+      "id": "9eed82bf-0894-4a5d-af7d-315e9d8e720a",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guidance prompted hyperparameter grid search across solvers to enforce positive coefficient, with post-save reload confirming binary predictions."
+    },
+    {
+      "id": "dc389528-f723-467d-b607-7b3926a130d4",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided greedy-prefix regex with self-correction after a single test failure and correct alphanumeric boundary lookaround on the second attempt."
+    },
+    {
+      "id": "86e9476d-4924-4837-9319-f0ae68061ed3",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided all required migration steps including peer-auth TCP fallback, idempotency gate, and backup decrypt-decompress integrity verification."
+    },
+    {
+      "id": "858e5e99-a343-45c9-b26b-98a9b8d786bb",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace provided a proven CSP implementation blueprint; agent ran a self-directed regression suite across edge cases before declaring done."
+    },
+    {
+      "id": "d6ba7857-a025-416f-bf2c-fad235562eeb",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Clean single-pass CMake build with batched configure steps, inline awk precision arithmetic, and correct alphabetical output ordering."
+    },
+    {
+      "id": "0c7419fb-c904-4005-9fdc-d376ab09d066",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow hint guided discovery of dist_nn_functional.all_gather, enabling correct column-parallel matmul with padding for uneven shards and mp.spawn validation."
+    },
+    {
+      "id": "d94a5d55-6148-4aa9-abfd-119b26e22efb",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 2,
+      "source_batch_mode": "exploration_loop_timeout",
+      "reason": "Agent escalated to 3000+ random subset evaluations while zombie Python processes accumulated, exhausting the time budget without producing a committed final solution."
+    },
+    {
+      "id": "2b1c465b-505b-4f72-aec8-cac6f186f1aa",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Name field missed _clean_text normalization leaving zero-width characters, and percentage discount parsed as -10.00 instead of -0.10."
+    },
+    {
+      "id": "02783af2-4bf2-4908-b166-8e5f0e6983d0",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Agent removed only 2 of 20 decorative collision elements, producing a 1.01-1.07x speedup that sits at the noise floor of the benchmark threshold."
+    },
+    {
+      "id": "30619680-4a47-4e5d-9b5f-4161ed630c82",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided biased MF with augmented dot-product embeddings, SimpleNamespace pickle for grader compatibility, and full-dataset vocab build preventing cold-start."
+    },
+    {
+      "id": "77aebcda-b3c0-4462-9ce4-ef7b0760a52a",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided solver sweep handling convergence warnings with explicit post-write verification confirming model type and checksum format."
+    },
+    {
+      "id": "56936ee7-e67c-466b-818f-daeffb914881",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided thorough input profiling, safe aggregate patterns (add // 0, max_by with length guard), and byte-identical reproducibility confirmed via cmp."
+    },
+    {
+      "id": "e679d162-f29a-471c-b755-7462bea84991",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "No live test execution before grader evaluation; stream disconnection dropped events and potential MongoDB version incompatibility left pipeline behavior unconfirmed."
+    },
+    {
+      "id": "05e65517-5569-462b-8e53-09409d6d3b0c",
+      "mode": "shell_code_corruption",
+      "source_batch": 2,
+      "source_batch_mode": "heredoc_shell_corruption",
+      "reason": "All 108 hyperparameter sweep runs were blocked by malformed heredoc Python scripts; the agent ignored the skill warning and never fell back to standalone .py files."
+    },
+    {
+      "id": "12c3e619-e6ad-4225-84cd-a9076a628655",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 2,
+      "source_batch_mode": "exploration_loop_timeout",
+      "reason": "Multiple concurrent sweep processes with the wrong epoch budget exhausted wall-clock time; finalized nn.py defaults were never written back from sweep findings."
+    },
+    {
+      "id": "60ab245f-859a-4efe-bc83-74512be28000",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow context hinted to inspect cipher source first, revealing the hardcoded master key and enabling correct PRESENT reimplementation verified against all known pairs."
+    },
+    {
+      "id": "ac14aa61-dad1-495b-8570-a6ef5cd0d48d",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow-guided single-pass CSP with MRV heuristic branching and thorough self-testing across solvable, unsolvable, malformed, and missing-file cases."
+    },
+    {
+      "id": "53a9e79e-9bf1-4c3c-8e29-5ee0a75a3762",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace provided the exact collision-removal command sequence, enabling a targeted minimal edit that preserved dynamics while reducing overhead."
+    },
+    {
+      "id": "294041a7-2573-4f5a-ab9b-808e90b11cd5",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "strings/rg checks cannot decode zlib-compressed git pack objects, so base64-encoded credentials surviving in backup and feature branches went undetected."
+    },
+    {
+      "id": "bbc74078-2c48-4fbd-9186-ccdabc386769",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "oracle_partition_mismatch",
+      "reason": "Agent validated only on test_data.csv; oracle likely evaluates against the separate split-indices partition that was never exercised locally."
+    },
+    {
+      "id": "fd0e77df-e9b8-4b8e-b046-7ad0a05f64e6",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "oracle_partition_mismatch",
+      "reason": "Engine scored exactly 5.0 points locally with no safety margin; random seed variance between local harness and oracle re-evaluation caused the borderline result to flip."
+    },
+    {
+      "id": "bffb92b3-4ab4-4e70-96f5-f42237d2a41a",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow traces nudged source-code inspection first, recovering the 80-bit key from C main() via zero-padding the 64-bit constant, with z3 as a parallel fallback."
+    },
+    {
+      "id": "365d8cbc-8edd-402a-a242-5a37725d39f2",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow traces provided a ready-made test harness enabling a quick, targeted patch of the stub check_win with correct 5-in-a-row direction scan."
+    },
+    {
+      "id": "98be4d98-90bc-4adf-98f9-1834cbd0aa50",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow guided dual-path strategy; agent pivoted to go tool objdump and readelf binary fallback after detecting the missing source file early."
+    },
+    {
+      "id": "299d12d1-a58c-482f-8d3f-6f14e42762e2",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "No actual MongoDB test run before submission; date field name was guessed and zero-quantity order handling was assumed without live verification."
+    },
+    {
+      "id": "c97eac95-9754-409a-9a52-7b3fe2384d30",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "Verification command returned empty stdout with exit_code 0; agent declared success without confirming any metric values were actually printed or correct."
+    },
+    {
+      "id": "ea91afa9-078e-4fa5-86f9-11a497d6fab4",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 2,
+      "source_batch_mode": "output_format_schema_mismatch",
+      "reason": "Agent did not enforce the 3 decimal-place format shown in the example, causing oracle precision mismatch on otherwise correct numerical output."
+    },
+    {
+      "id": "af1a84cb-87d5-4fea-b046-5e1e36c8f80c",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md warned against unavailable OS tools, steering the agent to /proc and Python socket checks for correct MLflow setup and port validation."
+    },
+    {
+      "id": "b4270556-934a-4edb-bd3a-c77cea662af1",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guidance on dateutil dayfirst heuristic and date normalization produced correct PDF extraction and clean CSV output despite stream reconnection errors."
+    },
+    {
+      "id": "b39e9bbb-6d7b-4b47-a863-fe5f6617a2f2",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided custom autograd Function for correct distributed backward, padding-based all_gather for uneven shards, and non-distributed fallback for oracle testing."
+    },
+    {
+      "id": "443175a3-22c5-4001-92c0-58b68a3ee516",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "oracle_partition_mismatch",
+      "reason": "Five narrow local scenarios passed but oracle exercises broader edge cases including an incorrect flood-time threshold in the survival fallback that local tests did not cover."
+    },
+    {
+      "id": "53b8c558-b6cf-4a71-931f-685572eeb76c",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 2,
+      "source_batch_mode": "exploration_loop_timeout",
+      "reason": "Unreliable 5-sample Spearman drove open-ended feature combo search for ~47 min; trajectory truncated with no evidence of write-back or end-to-end verification."
+    },
+    {
+      "id": "63aafe02-c7fd-49b1-8d72-54e397fe8c89",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "oracle_partition_mismatch",
+      "reason": "Agent-written tests passed locally but may not match oracle expectations; possible incorrect DependencyConflictError behavior for >1.0.0 constraints not caught in self-tests."
+    },
+    {
+      "id": "e4cf3ad5-30d0-4cff-869f-9c4fde87354c",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 2,
+      "source_batch_mode": "static_only_verification_failure",
+      "reason": "Self-certifying tests mirrored the implementation rather than verifying the oracle spec, with a hardcoded output path causing inter-test state pollution."
+    },
+    {
+      "id": "fa4e4a35-81ae-4430-8365-b9d2025e1db5",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Binary extraction relied on IP-relative LEAQ displacement patterns sensitive to recompilation; no source available and 50x80 candidate cross-product risks timeout on re-run."
+    },
+    {
+      "id": "6e60bc05-da1c-474f-873d-4427d4a63f5f",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 2,
+      "source_batch_mode": "algorithmic_formulation_error",
+      "reason": "Over-constrained regex with tautology backreference preconditions may miss oracle edge cases; self-tests used hand-crafted inputs that did not exercise actual input.txt patterns."
+    },
+    {
+      "id": "f8c35238-f021-47d3-a333-c46051bde561",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided CRLF byte-level state-machine check, tab-strip fix, and sequential converter-then-verifier execution avoiding race conditions."
+    },
+    {
+      "id": "fa297313-33e7-406a-a3ac-6353f1c5a17c",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided Python socket polling and subprocess.Popen with start_new_session=True for robust MLflow background detachment and restart-and-recheck persistence validation."
+    },
+    {
+      "id": "6acff2fa-8436-450a-bf48-e8ba7ff1d4dd",
+      "mode": "skill_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided BFS with sorted box key for correct state deduplication and end-to-end test runner verification before completion."
+    },
+    {
+      "id": "36e7c37c-c17e-4321-b58d-ffa0fd4684a5",
+      "mode": "workflow_guided_success",
+      "source_batch": 2,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace informed liblinear solver selection to avoid convergence warnings, enabling a single-shot correct output with minimal validation steps."
+    },
+    {
+      "id": "108a040c-ff41-4d6d-96f6-09a238c16bc8",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Single-shot alpha-beta engine passed all harness tests on first run without external guidance."
+    },
+    {
+      "id": "d9c29033-ea92-4703-9267-75674c89b23b",
+      "mode": "workflow_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace shaped jq filter construction and pre-flight schema inspection, leading directly to a passing result."
+    },
+    {
+      "id": "f5b7c39e-c530-4248-860f-aac7628c81ec",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 3,
+      "source_batch_mode": "parser_fragility_unseen_input_failure",
+      "reason": "Non-generic parser failed on oracle's evaluation input, with additional precision mismatch on numeric output."
+    },
+    {
+      "id": "442b3b86-f52d-487b-8042-b751562bdb96",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "Agent's self-referential test suite passed but provided no independent ground truth, so oracle evaluation failed."
+    },
+    {
+      "id": "f8794312-42fa-465c-90f5-a82dd8b1cd12",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "All-draw borderline result passed local harness threshold but oracle conditions required actual wins, which the engine never achieved."
+    },
+    {
+      "id": "68834f33-a9f8-4a6b-ab6e-0658cd00b59c",
+      "mode": "workflow_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace pre-identified decorative link targets and guided the multi-run stability check before committing."
+    },
+    {
+      "id": "c1688834-5986-46ca-9cae-650219123d69",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Clean single-pass parser implementation with scripted multi-case bash harness confirming all requirement branches."
+    },
+    {
+      "id": "8839a7a3-fef7-432e-9dfc-d86832e26d86",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Clean implementation with a single self-caught fixture bug fixed via iterative test-fix loop."
+    },
+    {
+      "id": "5409fe3f-0b03-4cf0-a582-202e172a41c4",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "Beta computation against asset returns and annualization assumptions diverged from oracle's expected formula, producing mismatched values."
+    },
+    {
+      "id": "c04ddca8-7ecb-42a3-b080-c9b3e9464923",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 3,
+      "source_batch_mode": "parser_fragility_unseen_input_failure",
+      "reason": "Script validated only on sample input; oracle's alternate reaction schema exposed parser fragility and possible heredoc content corruption."
+    },
+    {
+      "id": "f920747c-99a4-4e3e-a6dc-7434b4da338f",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "Ambiguous CSV field interpretation (state abbreviations silently dropped, inflated totals) caused oracle value mismatches."
+    },
+    {
+      "id": "d888d48c-1c56-4c4f-8d27-aff2a07b9c19",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guided replacement of a stubbed win-detection stub with correct bidirectional scanning, directly enabling success."
+    },
+    {
+      "id": "1895eaa9-118b-49a2-95bc-440dbb590721",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md guided implementation; agent correctly detected and patched idempotency logic after observing race-condition artifacts."
+    },
+    {
+      "id": "b252bc76-6dfc-4795-a0a6-a686306af404",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided jq pipeline succeeded with minor tooling error recovery (quoting error, transient file-not-found)."
+    },
+    {
+      "id": "5b3f8bae-43dc-4779-aa02-d79d080ef6c6",
+      "mode": "capability_or_safety_limit",
+      "source_batch": 3,
+      "source_batch_mode": "credential_identification_error_failure",
+      "reason": "Credential written after history sanitization with possibly misidentified value; SKILL.md step ordering violated and no verification of written content."
+    },
+    {
+      "id": "905e96b9-a2f9-4c89-87b7-45e208caf134",
+      "mode": "capability_or_safety_limit",
+      "source_batch": 3,
+      "source_batch_mode": "credential_identification_error_failure",
+      "reason": "Decoy credential selected over true original; truncated trajectory obscured discovery logic, leaving identification unverifiable."
+    },
+    {
+      "id": "fc477ddb-06ca-44ba-a316-cf956b9d4f80",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 3,
+      "source_batch_mode": "parser_fragility_unseen_input_failure",
+      "reason": "Parser bug produced wrong equation system, yielding incorrect equilibrium concentrations; fallback test's identical output was ignored."
+    },
+    {
+      "id": "9ea95097-e238-4f41-90de-9d5d340308bd",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "jq_args.yaml args ordering or output field schema diverged from oracle expectations without instruction.md to verify the exact required schema."
+    },
+    {
+      "id": "5ee7c183-ad8d-41f4-b3ae-02846573017d",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 3,
+      "source_batch_mode": "environment_setup_failure",
+      "reason": "QEMU VM network was unreachable due to incorrect NIC model configuration; trial timed out before a corrective attempt."
+    },
+    {
+      "id": "e6ed74f1-fb18-4b16-8b21-1b8f1c07f6be",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 3,
+      "source_batch_mode": "environment_setup_failure",
+      "reason": "Oracle evaluated in an ephemeral environment without the cache files the script produced, and the script always attempted online download first."
+    },
+    {
+      "id": "12ad271d-35f6-4b52-a450-56a00726581f",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Correct reverse-engineered LZ77 implementation passed all round-trip tests via decoder-first inspection strategy."
+    },
+    {
+      "id": "0a814d20-afb1-4409-b2d0-4c5c4a5e1f1b",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Correct tree-diff parser with ordered filesystem apply and idempotence verification succeeded cleanly."
+    },
+    {
+      "id": "bad027d3-ec24-425a-af3c-db1949a76d58",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Agent pivoted from non-converging Q-learning to a deterministic heuristic policy that passed oracle requirements."
+    },
+    {
+      "id": "eb842169-c2ea-4128-8434-78e077179291",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "jq_args.yaml args ordering or structure mismatched oracle reproducibility requirements; agent mistook a scripting workaround for an actual fix."
+    },
+    {
+      "id": "c81d3d25-ca76-4f2c-9b3b-78947435dfd9",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guidance_ignored_or_misapplied",
+      "reason": "Agent ignored SKILL.md's explicit POSIX quoting warning on the first filter-branch attempt, leaving residual git objects the oracle detects."
+    },
+    {
+      "id": "d783a0d7-3ef6-45a2-a824-bc4834a9f24a",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 3,
+      "source_batch_mode": "timeout_budget_exhaustion_failure",
+      "reason": "Z3 solver stalled due to incorrect 64-bit modeling of an 80-bit key, and no fallback to brute-force was attempted before trial budget expired."
+    },
+    {
+      "id": "afeedf38-4cc8-4ac8-b7ce-befbc810f9eb",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided deterministic DFS+MRV solver with complete test battery coverage passed oracle on first run."
+    },
+    {
+      "id": "a27bd26c-7e9d-42ea-bf9b-7885327d6064",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guidance on isolated temp dirs, stale output removal, and portable tool usage directly prevented common failure modes."
+    },
+    {
+      "id": "e27bbd56-2742-490e-bd3b-41f2885c78cc",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided migration script with isolated GNUPGHOME fix for GPG conflict and idempotency confirmation per skill checklist."
+    },
+    {
+      "id": "8e8bf36d-2f75-4dd5-8b56-eb7ba531215c",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 3,
+      "source_batch_mode": "environment_setup_failure",
+      "reason": "sympy not pre-installed; runtime pip install produced numerically non-matching output diverging from oracle expected values."
+    },
+    {
+      "id": "8e17f72c-34e2-452b-bef2-4fae947ca939",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "Agent self-tested only the world_size=1 fast path; oracle exercised multi-rank world_size>1 scenarios that triggered a RuntimeError."
+    },
+    {
+      "id": "42492f46-3d7e-44d0-978f-002bc2603196",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 3,
+      "source_batch_mode": "environment_setup_failure",
+      "reason": "No input.txt was synthesized or persisted in /app before the session ended, so the oracle found no output.txt to evaluate."
+    },
+    {
+      "id": "9c36db14-badd-41a6-9b95-77e218c081fa",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Clean DFS+constraint-propagation solver with systematic edge-case verification and proactive stale-output cleanup."
+    },
+    {
+      "id": "a6af8d64-104b-4bec-9909-4cbce592a402",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "clean_implementation_success",
+      "reason": "Correct end-to-end bash script with all required security steps, self-recovered preflight failure, and idempotency verified."
+    },
+    {
+      "id": "c0f3c3b9-9656-4f99-8b0a-208e75be78d6",
+      "mode": "workflow_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow hint identified Tesseract/PIL availability and diff-based validation loop; high-contrast rendering maximized OCR accuracy."
+    },
+    {
+      "id": "a990bfa5-ddc5-471f-9205-b80455259f1b",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill steps provided exact install sequence (build-essential, --break-system-packages) and hyperparameter values needed for a faithful RStan-to-PyStan port."
+    },
+    {
+      "id": "9491629a-7c27-46fa-9327-e69b477c5c30",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided setsid detachment, urllib health checks, and re-verification step produced a persistent, accessible PyPI server."
+    },
+    {
+      "id": "fd567bf8-ee92-47ff-b2a0-2f598435e384",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md two-stage sweep methodology guided discovery of a prebuilt winning warrior from the baseline library."
+    },
+    {
+      "id": "50cc8186-c460-4d95-8bc2-0f72b5812a9b",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guidance_ignored_or_misapplied",
+      "reason": "Skill warned against unconfirmed dependencies, but agent repeatedly attempted numpy imports and never ran or disassembled the reference binary."
+    },
+    {
+      "id": "bd3e7cc3-b992-455f-bca3-480f35090847",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guidance_ignored_or_misapplied",
+      "reason": "Agent skipped the --break-system-packages fallback step from skill guidance, leaving Stockfish with broken NNUE evaluation and a wrong best move."
+    },
+    {
+      "id": "094a91f3-dff7-49b2-ada2-51807f34b29d",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 3,
+      "source_batch_mode": "timeout_budget_exhaustion_failure",
+      "reason": "Agent remained stuck in SIMD/SSE disassembly analysis throughout the trial without reaching the implementation phase, exhausting the time budget."
+    },
+    {
+      "id": "869f5f40-4738-4821-bc7f-a6b293a07ddd",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 3,
+      "source_batch_mode": "timeout_budget_exhaustion_failure",
+      "reason": "Excessive parameter-name probing consumed most of the 776-second budget, and workflow hints contained unresolved placeholders that provided no usable guidance."
+    },
+    {
+      "id": "91a742b0-20ed-49ec-a4b5-1b97ff865bc9",
+      "mode": "background_service_lifecycle_failure",
+      "source_batch": 3,
+      "source_batch_mode": "server_persistence_failure",
+      "reason": "HTTP server launched during the agent turn was not accessible during oracle evaluation due to nohup lifecycle uncertainty across the evaluation boundary."
+    },
+    {
+      "id": "67dc41f9-eb98-4a17-9311-758d78a553d5",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 3,
+      "source_batch_mode": "timeout_budget_exhaustion_failure",
+      "reason": "Agent searched only solver/iteration space without increasing timestep, and fully templated workflow hints provided no concrete guidance; no valid configuration found in time."
+    },
+    {
+      "id": "a7c920e8-a459-4bf3-938e-f64b41ed3f2a",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "environment_state_leveraged_success",
+      "reason": "A pre-existing QEMU process from a timed-out first attempt was still running and was discovered via /proc inspection on retry."
+    },
+    {
+      "id": "68db1673-b1ce-4a53-b252-193be59fca60",
+      "mode": "workflow_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow Trace 1 guided readelf exploration sequence; agent self-validated against example addresses and confirmed layout with objdump."
+    },
+    {
+      "id": "257761d4-10c6-4001-84df-16928d90ab07",
+      "mode": "workflow_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace guided readelf-first inspection strategy; Python cross-check confirmed parity before finalizing the ELF PT_LOAD parser."
+    },
+    {
+      "id": "f1beb55e-f632-40e0-b8a9-8c7854946138",
+      "mode": "autonomous_clean_success",
+      "source_batch": 3,
+      "source_batch_mode": "environment_state_leveraged_success",
+      "reason": "Pre-cracked john.pot and pre-extracted archive contents were already present; agent correctly checked pot file before attempting a full crack."
+    },
+    {
+      "id": "05907b2b-7a2b-47cf-96ca-99c15cf9a181",
+      "mode": "workflow_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow context provided structural hints about iterative pmars testing, enabling a systematic parameter sweep that found an all-threshold configuration."
+    },
+    {
+      "id": "c626fbdc-8d6c-4e63-a86b-8325bd6928eb",
+      "mode": "workflow_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow traces supplied the apt-get dependency list and exact MCMC settings needed for the rstan installation and hierarchical model."
+    },
+    {
+      "id": "a0857443-e835-4a90-9fc6-59270601f830",
+      "mode": "background_service_lifecycle_failure",
+      "source_batch": 3,
+      "source_batch_mode": "server_persistence_failure",
+      "reason": "Agent chose a foreground blocking command despite explicitly noting background process unreliability, leaving no persistent server for oracle evaluation."
+    },
+    {
+      "id": "2fa880a0-8e37-4673-978d-db66b1a61101",
+      "mode": "background_service_lifecycle_failure",
+      "source_batch": 3,
+      "source_batch_mode": "server_persistence_failure",
+      "reason": "An untracked foreground server process caused a port conflict that blocked the background relaunch; trial timed out before kill-and-relaunch completed."
+    },
+    {
+      "id": "dbeccd62-4129-41a9-bc2f-7a62e9dc84e8",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 3,
+      "source_batch_mode": "timeout_budget_exhaustion_failure",
+      "reason": "Per-command timeout interrupted TorchScript export mid-run; retry restarted exhaustive configuration search from scratch instead of resuming from the successful MSE step."
+    },
+    {
+      "id": "9ebc1db7-fab8-4e2a-b700-a59b13e2950c",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "A spurious 0x400000 base offset was added to PT_LOAD p_vaddr addresses, causing all computed keys to diverge from oracle expectations."
+    },
+    {
+      "id": "0ee2e3bc-e267-4407-8e59-d4346bb86b40",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "Failed text extraction from image-based PDFs produced wrong invoice classifications; the SKILL.md validation pass was never executed to catch the extraction errors."
+    },
+    {
+      "id": "1f77108a-1f4e-4826-b99a-99978f55898a",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 3,
+      "source_batch_mode": "oracle_format_mismatch_failure",
+      "reason": "Exponential distribution statistics at the tolerance boundary (mean=0.501629 vs target) diverged under oracle test scenarios, causing failure after a borderline local fix."
+    },
+    {
+      "id": "aeda7551-1daa-4004-8150-d21f0a6663af",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md step-by-step guidance with correct NumPy C API usage produced a clean C extension passing correctness and speedup requirements on first attempt."
+    },
+    {
+      "id": "e505b51a-aba6-414d-bb33-c77b00cf0f26",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided exact-literal replacement strategy with parallel verification scans correctly sanitized all secrets without over-sanitization."
+    },
+    {
+      "id": "9f92dd1c-48f0-4412-bde1-82106777eef6",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided pipeline with explicit VAT/Tax ID disambiguation and locale-aware normalization produced a verified match=True result."
+    },
+    {
+      "id": "9076be0c-d266-4010-b6a6-c7cbcf80b9cd",
+      "mode": "skill_guided_success",
+      "source_batch": 3,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided setsid detachment, HTML index validation, and post-install reachability re-check produced a correct, persistent PEP 503 index server."
+    },
+    {
+      "id": "6dbd5f95-b9fd-4a54-b6f0-d6c99a1408bf",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md-guided C extension built and benchmarked successfully; transient import race self-recovered."
+    },
+    {
+      "id": "b4bf0737-beb8-45d4-b2c5-a513bc206f53",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL guidance drove /proc detection and telnet readiness confirmation of pre-existing QEMU instance despite nc false-negative."
+    },
+    {
+      "id": "98cc4d45-03a0-4317-903d-8a091b1f1639",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 4,
+      "source_batch_mode": "timeout_budget_exhausted",
+      "reason": "Exhaustive architecture grid-search consumed the full retry budget; environment degraded after first timeout, making subsequent Python commands hang."
+    },
+    {
+      "id": "02a0ff7b-903e-46cc-b5bb-ec96ff99e604",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 4,
+      "source_batch_mode": "environment_corrupted_by_agent_actions",
+      "reason": "Agent's repeated telnet readiness-check loop sent \\r\\n sequences that consumed getty serial state, leaving the oracle connection silent."
+    },
+    {
+      "id": "58a4531e-8a5c-4975-bbb6-5ca653049923",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 4,
+      "source_batch_mode": "verification_mismatch_self_vs_oracle",
+      "reason": "Agent validated recovered vectors with cosine similarity only; oracle applied a stricter magnitude (L2/Frobenius) check that the unit-norm recovery failed."
+    },
+    {
+      "id": "917c42a3-0909-447f-8363-fc3513de0df4",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 4,
+      "source_batch_mode": "timeout_budget_exhausted",
+      "reason": "Binary analysis loop consumed the full time budget; unresolved workflow placeholder hints reduced guidance utility, and no output file was ever written."
+    },
+    {
+      "id": "b2eed66c-54d1-42c8-8677-be6e85013b70",
+      "mode": "capability_or_safety_limit",
+      "source_batch": 4,
+      "source_batch_mode": "capability_or_safety_limit",
+      "reason": "Bit-identical reproduction of stochastic path-tracer output requires exact PRNG-sequence knowledge unavailable from observation, placing the task beyond current agent capability."
+    },
+    {
+      "id": "97dcc6c3-21d2-496c-87cc-2e44a87ea323",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 4,
+      "source_batch_mode": "output_format_or_value_mismatch",
+      "reason": "Correct vulnerability identification and passing tests, but the CWE ID was written in wrong case (lowercase) despite explicit prompt formatting instructions."
+    },
+    {
+      "id": "2a271fe5-25f3-49cb-b187-d4bbb017dbb2",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace guided an explore-then-implement pattern; correct NumPy C API implementation passed build and benchmark on first attempt."
+    },
+    {
+      "id": "1ef9c72a-22d9-4c4c-893f-d71bbf86a309",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow traces provided the directory layout; setsid-based detachment self-corrected a dead server process for a persistent PyPI simple-index."
+    },
+    {
+      "id": "f5615059-e861-483e-8208-acd5c82b544e",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Correct CRLF injection fix with precise CWE mapping; tool fallback from rg to grep handled cleanly."
+    },
+    {
+      "id": "405fdfa6-6389-4ae7-8e32-4c8757c42db7",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md sample-first validation pattern followed precisely; clean single-pass full-file transform with correct regex escaping."
+    },
+    {
+      "id": "2589c745-b53a-49a7-86bc-7eba996cdf69",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided PEP 503 index setup with setsid detachment and persistence re-check confirming live server at task end."
+    },
+    {
+      "id": "875ed650-83e2-4b01-ae02-ebaad36a18a8",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md step-by-step guidance followed closely; NumPy C API implementation satisfied both correctness and speedup targets."
+    },
+    {
+      "id": "5cdfeb06-7fe7-4b9b-b040-9a23584534a1",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 4,
+      "source_batch_mode": "environment_corrupted_by_agent_actions",
+      "reason": "First attempt ran Vim directly on the real input file and a 240-second timeout left it in a partially transformed state; subsequent script operated on already-corrupted data."
+    },
+    {
+      "id": "eed1b962-5a99-4db0-9679-3a95d3dc7e31",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guidance_ignored_or_diverged",
+      "reason": "Agent bypassed SKILL.md guidance and used a disallowed live Gradio API path, consuming the full budget without retrieving the required pinned historical data."
+    },
+    {
+      "id": "ecef9bbb-e47c-4a3d-bcd3-99ad047425ff",
+      "mode": "environment_infrastructure_failure",
+      "source_batch": 4,
+      "source_batch_mode": "environment_corrupted_by_agent_actions",
+      "reason": "A background process from the timed-out first attempt continued moving files during the second attempt, leaving the documents directory empty."
+    },
+    {
+      "id": "06bb9686-b73a-4359-bdbc-e831457496c9",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 4,
+      "source_batch_mode": "timeout_budget_exhausted",
+      "reason": "Agent spent the budget on deep constant-extraction disassembly instead of running the binary for I/O sampling; no implementation was produced."
+    },
+    {
+      "id": "c45f69aa-62f7-4c3d-873a-42d51310bc16",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 4,
+      "source_batch_mode": "verification_mismatch_self_vs_oracle",
+      "reason": "Agent used a 2-second WebDriverWait while oracle uses 5 seconds, and Chromium blocked data:text/html from file:// origin in the agent harness, causing false-negative rejections of potentially valid payloads."
+    },
+    {
+      "id": "86686b11-c212-4275-bc4c-21b2060a0acc",
+      "mode": "background_service_lifecycle_failure",
+      "source_batch": 4,
+      "source_batch_mode": "background_service_lifecycle_failure",
+      "reason": "nohup crashed silently due to port already in use; agent misidentified the foreground PID as the background process and left no persistent service running."
+    },
+    {
+      "id": "287c010f-797b-40ee-b0c5-6409533e6d38",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow template guided awk+date arithmetic; agent self-corrected gawk capture-group syntax incompatibility by switching to POSIX regex."
+    },
+    {
+      "id": "6ababd25-60e1-4271-8daf-02bfeb24d1d4",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow traces guided multi-URL probing strategy; parallel apt-get and URL enumeration delivered successful legacy source compilation."
+    },
+    {
+      "id": "d762dc73-9095-4903-9a3b-a3c3209c5306",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace guided a read-then-implement-then-build-then-test sequence; correct first-pass C implementation passed all correctness and speedup checks."
+    },
+    {
+      "id": "68dcb8fe-eacd-42b8-a934-965233100a06",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 4,
+      "source_batch_mode": "wrong_api_or_algorithm_usage",
+      "reason": "Agent used incorrect all_gather/all_reduce placement; ColumnParallelLinear pads and gathers output rather than slicing a pre-gathered input, a fundamental API misunderstanding."
+    },
+    {
+      "id": "0f0d97e5-b637-461a-bb56-a01fbb149a4c",
+      "mode": "background_service_lifecycle_failure",
+      "source_batch": 4,
+      "source_batch_mode": "background_service_lifecycle_failure",
+      "reason": "Agent recognised the background cleanup problem but chose a blocking foreground server; successful self-test masked the fact no persistent process survived session exit."
+    },
+    {
+      "id": "a83aeb1a-a54d-4d92-9ebb-9cba1d8b29e2",
+      "mode": "background_service_lifecycle_failure",
+      "source_batch": 4,
+      "source_batch_mode": "background_service_lifecycle_failure",
+      "reason": "nohup process lifecycle is uncertain in the containerised benchmark; oracle pip install runs independently after the agent turn ends, by which time the server was dead."
+    },
+    {
+      "id": "1dd1fbde-78ed-4932-a0f3-14721f4b87ce",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow hints on oligotm availability guided correct insertion detection and systematic primer enumeration satisfying Tm delta constraints."
+    },
+    {
+      "id": "3b73fae9-49a2-46a5-af87-ca3cfd22db67",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow traces supplied URL-probing strategy enabling archive discovery and single-pass legacy C compilation."
+    },
+    {
+      "id": "e05e0af5-b747-4971-a305-bb6acab4e61f",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow-guided package build and PEP 503 index; setsid detachment recovered dying background server process, with venv verifying correct pip resolution."
+    },
+    {
+      "id": "2bdf7349-8244-4527-9715-9d3b2de64e28",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md guidance on rg fallback and build directory followed; C extension with NumPy API and GIL release achieved required speedup on first attempt."
+    },
+    {
+      "id": "a1d38b51-ab00-4d4b-b637-247638bb98a7",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill-guided closed-form least-squares output layer tuning with strict checkpoint-key architecture reconstruction and TorchScript export verified via state dict keys."
+    },
+    {
+      "id": "26adb76f-1e3e-47bd-a22d-63099e3d4d51",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "SKILL.md sample-then-apply workflow followed; parallel head/mid/tail sampling, dry-run validation, and allowed-commands audit produced correct full-file transform."
+    },
+    {
+      "id": "ae626809-5ea2-4d0f-9830-72acc2d1fb42",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 4,
+      "source_batch_mode": "output_format_or_value_mismatch",
+      "reason": "Lowercase cwe-id format used instead of required uppercase CWE-ID, and agent selected overly generic CWE-20 instead of specific CWE-93."
+    },
+    {
+      "id": "f6a2c0f0-4387-493b-ba3f-008bc817dc4f",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guidance_ignored_or_diverged",
+      "reason": "Agent skipped the explicit SKILL.md Step 7 synonym-compliance pass; the file_change contents were never diffed against synonym families, producing an unverified constraint violation."
+    },
+    {
+      "id": "56cfea5d-f1cc-43ee-8219-221e5c923067",
+      "mode": "capability_or_safety_limit",
+      "source_batch": 4,
+      "source_batch_mode": "capability_or_safety_limit",
+      "reason": "Remaining performance headroom was physically constrained after jacobian=dense was already applied; timestep changes broke correctness, leaving no viable configuration reachable."
+    },
+    {
+      "id": "7c9f92ce-5b2f-4400-94a1-c0c40781bf23",
+      "mode": "autonomous_clean_success",
+      "source_batch": 4,
+      "source_batch_mode": "raw_clean_success",
+      "reason": "Correct calendar constraint satisfaction with valid ICS output; WebSocket fallback handled gracefully and output verified by read-back."
+    },
+    {
+      "id": "860f1e0e-a6a2-4e5c-bdca-024a01449a90",
+      "mode": "autonomous_clean_success",
+      "source_batch": 4,
+      "source_batch_mode": "raw_clean_success",
+      "reason": "Correct manual calendar intersection yielding earliest valid slot; single-pass file reads with no backtracking."
+    },
+    {
+      "id": "21cc2da8-b31d-4b1c-943e-fc8c54d8980c",
+      "mode": "autonomous_clean_success",
+      "source_batch": 4,
+      "source_batch_mode": "raw_clean_success",
+      "reason": "Iterative C reimplementation reached byte-for-byte output match, recovering floating-point constants from binary under restricted tooling."
+    },
+    {
+      "id": "af890952-f875-40a4-bab4-7930c9973af5",
+      "mode": "capability_or_safety_limit",
+      "source_batch": 4,
+      "source_batch_mode": "capability_or_safety_limit",
+      "reason": "Python unavailable forced Node.js/Tesseract fallback that could not reliably extract VAT amounts, producing all-zero values across all invoice types."
+    },
+    {
+      "id": "532f30ef-4aa5-4b1f-83bf-4ce6f910e007",
+      "mode": "capability_or_safety_limit",
+      "source_batch": 4,
+      "source_batch_mode": "capability_or_safety_limit",
+      "reason": "Agent issued a safety refusal on the XSS bypass task, terminating execution without producing any output."
+    },
+    {
+      "id": "69acd11a-4279-4efa-a145-4c5c19ace219",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 4,
+      "source_batch_mode": "verification_mismatch_self_vs_oracle",
+      "reason": "Agent validated only cosine similarity of recovered directions; oracle checks actual matrix values, which failed because unit-norm vectors lost the true row magnitudes."
+    },
+    {
+      "id": "3ee6da74-3a08-41f4-bfcd-b339f9720815",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guidance drove environment setup and a correct hierarchical Beta-Binomial Stan model with all required rstan::sampling parameters."
+    },
+    {
+      "id": "cfc868af-3f55-40a8-846b-75256d2ee19d",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill guidance directed archive URL discovery and correct machine files and compiler flags for a successful legacy C build."
+    },
+    {
+      "id": "e1cca8b6-4e85-46ef-858c-b61c31e9dd26",
+      "mode": "skill_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guided_success",
+      "reason": "Skill read before execution; correct -display none flag and PID-file cleanup enabled single-script QEMU launch with a blocking readiness poll."
+    },
+    {
+      "id": "090ed9cc-74ed-4adc-9438-40a80574fb6d",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 4,
+      "source_batch_mode": "timeout_budget_exhausted",
+      "reason": "Agent ran a full correlated-subquery benchmark on the slow baseline before slice-based validation, hitting the 1200-second timeout; skill ordering guidance to slice-check first was not followed."
+    },
+    {
+      "id": "25abb148-8672-4843-8b0e-e8efdfefa966",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 4,
+      "source_batch_mode": "wrong_api_or_algorithm_usage",
+      "reason": "Double-cancellation in async cleanup: task.gather propagates cancellation to children before the except block fires, making a second task.cancel() redundant and potentially harmful — a misunderstanding of asyncio cancellation semantics."
+    },
+    {
+      "id": "1fc57525-b892-4e37-86ce-375c0458330e",
+      "mode": "static_verification_without_runtime",
+      "source_batch": 4,
+      "source_batch_mode": "verification_mismatch_self_vs_oracle",
+      "reason": "Agent computed Tm on the template strand for the reverse primer rather than the written sequence; oracle expected a specific primer pair, and the submitted pair did not match despite passing agent-side Tm checks."
+    },
+    {
+      "id": "1eadd113-f8ab-45de-988c-cc4c38d77b3c",
+      "mode": "timeout_budget_exhaustion",
+      "source_batch": 4,
+      "source_batch_mode": "timeout_budget_exhausted",
+      "reason": "Agent prematurely killed the active John cracking job then spent the remaining budget on ineffective file exploration instead of restarting the cracker."
+    },
+    {
+      "id": "ed1319c5-1dee-4d07-9999-88d2f54f76d5",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 4,
+      "source_batch_mode": "wrong_api_or_algorithm_usage",
+      "reason": "Agent swept parameters on an already-optimal solver rather than switching to the correct lever (implicit integrator with increased timestep) for the cable-stiffness model, wasting the entire exploration budget."
+    },
+    {
+      "id": "610ba28f-002b-48af-a9ae-4b4c3c1943f0",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 4,
+      "source_batch_mode": "wrong_api_or_algorithm_usage",
+      "reason": "Flawed Bash fallback regex using gawk-specific match() with capture arrays produced incorrect severity counts; word-boundary escaping also likely mis-escaped in the single-quoted shell string."
+    },
+    {
+      "id": "03952add-97f5-4274-838c-fc03a0aba908",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow trace hints accelerated readelf/objdump reconnaissance; agent correctly identified a pre-existing valid ELF PT_LOAD extractor instead of overwriting it."
+    },
+    {
+      "id": "8156cc05-6d97-4e38-809e-0b5bc9109d3c",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Iterative synonym substitution with targeted log parsing and multi-round recompilation eliminated all overfull hbox warnings."
+    },
+    {
+      "id": "bb1f7519-178b-4b23-a9ea-4e969a359fd0",
+      "mode": "workflow_guided_success",
+      "source_batch": 4,
+      "source_batch_mode": "workflow_guided_success",
+      "reason": "Workflow-supplied perl substitution pattern combined with targeted recompile-then-grep loop verified synonym substitution to completion."
+    },
+    {
+      "id": "01900188-42b9-4a67-801d-7ea078487602",
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "source_batch": 4,
+      "source_batch_mode": "skill_guidance_ignored_or_diverged",
+      "reason": "SKILL.md explicitly advised hardening the custom introspector/request-path if annotation-only mitigation failed; agent stopped at annotation hardening without applying the prescribed fallback, leaving the exploit path open."
+    },
+    {
+      "id": "aa5648bf-5140-4203-8218-997e64580efe",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 4,
+      "source_batch_mode": "wrong_api_or_algorithm_usage",
+      "reason": "DNA keyword check fired before quantum-computing check in the classification logic, misfiling quant-ph papers; fallback defaulted to music_history for any unmatched paper regardless of arXiv primary category."
+    },
+    {
+      "id": "36426c1e-ca92-4df2-80fc-8581ea991b6b",
+      "mode": "background_service_lifecycle_failure",
+      "source_batch": 4,
+      "source_batch_mode": "background_service_lifecycle_failure",
+      "reason": "SKILL.md warned about persistent server strategy but agent launched without proper daemonization; server died when the agent turn ended, failing oracle evaluation."
+    },
+    {
+      "id": "8cac9db3-10b5-40d8-bec3-e151126a5b0e",
+      "mode": "output_format_schema_mismatch",
+      "source_batch": 4,
+      "source_batch_mode": "output_format_or_value_mismatch",
+      "reason": "Agent implemented the functionality but produced no pytest test file; the oracle found no passing tests because the required test suite artifact was absent."
+    },
+    {
+      "id": "faeadd23-b563-457e-8e39-cdd650ef3248",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 4,
+      "source_batch_mode": "wrong_api_or_algorithm_usage",
+      "reason": "Agent re-ran the same wordlist that john.log showed had already been fully exhausted, rather than switching to incremental cracking mode; the password was never cracked."
+    },
+    {
+      "id": "3c4bf8b8-9cae-4429-bf1a-20ba208d15be",
+      "mode": "algorithmic_logic_error",
+      "source_batch": 4,
+      "source_batch_mode": "wrong_api_or_algorithm_usage",
+      "reason": "Agent misinterpreted 'last occurrence' as global rather than per-line scope, implementing an over-restrictive lookahead that suppressed all non-final matches across the entire string."
+    }
+  ],
+  "_batch_results": [
+    {
+      "modes": [
+        {
+          "name": "environment_resource_timeout",
+          "definition": "The agent exhausted wall-clock time, CPU capacity, or model-context budget before producing valid output. Covers slow-hardware transcription timeouts, agents that keep sweeping parameters without committing a viable result, and infrastructure failures (missing context-compaction endpoint) that terminate the session.",
+          "n_assigned": 3
+        },
+        {
+          "name": "offline_environment_dependency_failure",
+          "definition": "A required library, asset, or network endpoint is absent or incompatible in the sandboxed offline environment. The agent either cannot install the dependency or wires a fallback (embedded data file, CDN-hosted script) without confirming it is actually the live code path at runtime.",
+          "n_assigned": 2
+        },
+        {
+          "name": "regex_escaping_corruption",
+          "definition": "Malformed regex patterns, typically caused by double-escaping in bash heredocs, produce systematically wrong field extractions or overwhelmingly false-positive results. The agent does not spot-check extracted values against raw source text before writing output, so the corruption goes undetected until oracle evaluation.",
+          "n_assigned": 4
+        },
+        {
+          "name": "self_referential_verification_gap",
+          "definition": "The agent's verification logic checks only items it already extracted or produced, so coverage gaps (missing names, unprocessed pages, omitted records) are invisible to the check. The oracle catches what the agent's own audit cannot see because the audit's scope is bounded by the agent's prior work product.",
+          "n_assigned": 2
+        },
+        {
+          "name": "static_check_misses_runtime_failure",
+          "definition": "Syntax checks, file-existence tests, or node --check passes give a false-clean signal. The oracle evaluates functional runtime behavior (browser rendering, test suite execution, integration wiring) that the static check does not exercise, so the agent incorrectly concludes the task is complete.",
+          "n_assigned": 3
+        },
+        {
+          "name": "incorrect_mathematical_model",
+          "definition": "The agent applies a mathematically incorrect formulation: substituting a linear objective for a quadratic cost function, using the wrong dual-variable sign convention, or failing to sanitize floating-point noise in output aggregates. The internal solver reports a feasible solution while the numerical values in the output are wrong by the oracle's criteria.",
+          "n_assigned": 4
+        },
+        {
+          "name": "domain_classification_error",
+          "definition": "The agent's classification or assignment logic produces incorrect mappings despite following a procedurally correct workflow. Keyword-scoring heuristics misfire on borderline or cross-domain items, and post-run validation checks count integrity rather than classification correctness, leaving semantic errors undetected.",
+          "n_assigned": 3
+        },
+        {
+          "name": "spreadsheet_formula_placement_error",
+          "definition": "Formula cells are placed in wrong rows or columns, column assignments are reversed (e.g., fold-change direction inverted), or control/treated group labels are assumed rather than read from the sheet. The SKILL-mandated recalc.py validation step is skipped or unavailable, leaving formula-evaluation errors undetected.",
+          "n_assigned": 4
+        },
+        {
+          "name": "oracle_evaluation_mismatch",
+          "definition": "The agent's internal validator or the solver itself reports success, but the external oracle rejects the output. Covers cases where a planner reports SOLVED_SATISFICING but the benchmark oracle deems the plan invalid, and cases where the implemented solution appears complete by all internal measures but fails oracle-specific evaluation criteria.",
+          "n_assigned": 2
+        },
+        {
+          "name": "skill_guidance_misapplied",
+          "definition": "The agent has access to correct skill knowledge but translates it into the wrong action: applying an incorrect mitigation for a correctly identified vulnerability, ignoring an explicit SKILL.md warning, or using an inappropriate self-validation method. The failure is not missing knowledge but incorrect execution of known guidance.",
+          "n_assigned": 3
+        },
+        {
+          "name": "skill_guided_clean_execution",
+          "definition": "Successful task completion primarily attributable to skill guidance being read and correctly applied. The agent follows SKILL.md steps, avoids documented failure modes (KeyErrors, ID format mismatches, missing config keys), and includes a post-run verification step confirming output correctness.",
+          "n_assigned": 15
+        },
+        {
+          "name": "workflow_guided_clean_execution",
+          "definition": "Successful task completion primarily attributable to workflow trace hints directing environment exploration, tool invocation order, and SKILL.md consultation. The agent self-corrects minor compatibility issues (e.g., LibreOffice PERCENTILE.INC, STDEV.S) through iterative recalc validation loops before declaring success.",
+          "n_assigned": 15
+        }
+      ],
+      "assignments": [
+        {
+          "id": "45f828f4-0bb8-428c-a0a7-ec711ccf724c",
+          "mode": "skill_guidance_misapplied",
+          "reason": "Agent correctly identified the vulnerability but applied the wrong mitigation (injection-value control instead of empty-key rejection) despite having relevant jackson-security knowledge."
+        },
+        {
+          "id": "3d072aad-4da7-4a3c-8bdf-23fdfaf1be51",
+          "mode": "skill_guidance_misapplied",
+          "reason": "Agent replaced mathjs with custom helpers but validated correctness using a timing script rather than functional correctness checks, misapplying known knowledge about what validation requires."
+        },
+        {
+          "id": "978012d9-4642-4d71-96f2-a6e269f8326b",
+          "mode": "environment_resource_timeout",
+          "reason": "Whisper transcription stalled due to insufficient CPU resources; agent delayed pivoting to a faster fallback until the time budget was exhausted."
+        },
+        {
+          "id": "0bb92396-3554-431f-85df-b1ad90bf0e9f",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace guided environment exploration and SKILL.md files were consulted; a minor CSV rounding fix was self-corrected before all performance targets were confirmed satisfied."
+        },
+        {
+          "id": "dfc7900b-26ae-4363-b00a-54e8517afa6e",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace directed python3 invocation and recalc.py usage; LibreOffice PERCENTILE.INC incompatibility was caught and fixed through the validation loop."
+        },
+        {
+          "id": "77d239f0-9e07-4049-a1d6-2f8a8497ebd3",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "xlsx SKILL.md workflow guidance was followed and recalc.py caught and resolved LibreOffice STDEV.S and #NAME? errors before completion."
+        },
+        {
+          "id": "36329318-31f8-4c95-b97d-6e372e4d327c",
+          "mode": "oracle_evaluation_mismatch",
+          "reason": "Pyperplan reported SOLVED_SATISFICING but the benchmark oracle rejected the plan for the complex IPC airport domain; internal PlanValidator agreed with the tool while the external oracle did not."
+        },
+        {
+          "id": "13bd8417-0085-44b0-9ee7-6b07f90e05ba",
+          "mode": "offline_environment_dependency_failure",
+          "reason": "The file:// protocol triggered CORS restrictions; the agent created an embedded-data.js fallback but never verified it was the active data path, leaving the visualization broken at runtime."
+        },
+        {
+          "id": "556b87d4-b992-450d-b658-43ae9bd4a8db",
+          "mode": "incorrect_mathematical_model",
+          "reason": "Agent substituted a linear cost approximation for the polynomial gencost objective in the CVXPY formulation despite SKILL.md guidance on polynomial coefficient handling, producing wrong dispatch values."
+        },
+        {
+          "id": "3d6f2211-6bba-4572-833f-918ae25d0afa",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill guidance supplied correct GaMMA config keys, oversample_factor setting, and NET.STA.LOC station ID format, enabling a clean single-pass pipeline run without runtime errors."
+        },
+        {
+          "id": "7e27550e-71f7-4eb9-85f5-e7c67c232e5b",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill guidance directed malformed-row recovery via shifted-column detection; integrity check confirmed exactly one missing turn was recovered before the dual-interpretation sanity check validated the final answer."
+        },
+        {
+          "id": "0cf9dab9-fb41-408e-96a0-ea4c5b7bc12e",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill-guided pipeline recovered malformed rows and applied correct category-exclusivity constraints; integrity checks confirmed a clean dataset before final scoring."
+        },
+        {
+          "id": "dbbf2857-bbbc-489a-9d2b-5db03fe16713",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill guidance enabled helper-module reuse with structured threat-flag thresholds; post-write validation loop and CRLF normalization confirmed CSV integrity before completion."
+        },
+        {
+          "id": "7f72c341-d93e-4c55-8cd2-99d58c90abc8",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill-guided word-boundary regex patterns prevented false positives and a fallback rule routed zero-scoring files correctly; inline verification confirmed total-count preservation."
+        },
+        {
+          "id": "a89790ec-1e72-45c1-a10a-93de0dd39f56",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill supplied correct MATPOWER column indexing and scipy/numpy venv setup; post-solve validation checks confirmed output correctness before writing."
+        },
+        {
+          "id": "09096059-0e3e-4445-8758-84e8d831693f",
+          "mode": "self_referential_verification_gap",
+          "reason": "The agent's name_checks verification list was populated from its own extraction, so any names it missed were also absent from the verification, masking coverage gaps from the oracle."
+        },
+        {
+          "id": "a2277560-a5eb-452f-8811-a953547c4b33",
+          "mode": "regex_escaping_corruption",
+          "reason": "Broken backslash escaping in bash heredoc raw-string regexes (\\\\\\\\b rendered as literal multi-backslash sequences instead of word boundaries) produced a false-clean verification result for structured identifiers."
+        },
+        {
+          "id": "327a5764-b8fa-45ee-9d0b-4cf45b8f6864",
+          "mode": "domain_classification_error",
+          "reason": "Keyword scoring misfired on cross-domain papers and a manual override was likely wrong; reward 0.0 indicates all-or-nothing grading caught systematic classification errors the agent did not detect."
+        },
+        {
+          "id": "2f40b654-acce-424d-b95d-7e7d5854678f",
+          "mode": "regex_escaping_corruption",
+          "reason": "Malformed field-extraction regexes caused mass false-positive flagging; no spot-check of extracted values against raw PDF text was performed before writing output."
+        },
+        {
+          "id": "30b7bcd6-f9f5-4f4c-a003-6c732f86870b",
+          "mode": "regex_escaping_corruption",
+          "reason": "Regex character classes were visibly mangled in the heredoc (e.g., [\"'^'\"] for IBAN capture groups), producing corrupted patterns that caused excessive false positives and zero Vendor Mismatch detections."
+        },
+        {
+          "id": "2a010177-6de8-47ff-bdda-e7de293b2b3d",
+          "mode": "regex_escaping_corruption",
+          "reason": "Unvalidated PDF extraction regexes caused systematic field misextraction; a text-normalization bug (targeting literal '\\n' string instead of newline) compounded the issue, and the 50/53 flag rate was never sanity-checked."
+        },
+        {
+          "id": "98e356ef-f422-44dc-86bd-f6e4d04035ba",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace provided correct execution order; automated gain sweep eliminated manual trial-and-error, and self-validation checks confirmed row count and column order before completion."
+        },
+        {
+          "id": "8884d85b-638f-43dd-a5aa-e5231367a0a3",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow hint directed SKILL.md reading; agent correctly applied Promise.all parallelization, memoization, and lightweight math replacements, then validated with build and Playwright tests."
+        },
+        {
+          "id": "fccb2dd5-a017-4d2c-a00b-abc363523d86",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace guided SKILL.md and recalc.py usage; LibreOffice PERCENTILE.INC incompatibility was detected and corrected through the recalc validation loop."
+        },
+        {
+          "id": "beaa22df-a2c8-4768-83e8-409ec7b36769",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace guided pyperplan invocation and .soln file discovery; hff+gbf heuristic produced valid plans for both airport instances, confirmed by cp-based delivery."
+        },
+        {
+          "id": "6dded00e-8e40-4b92-add5-ae627de7180c",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace and SKILL.md together directed formula-based xlsx editing; recalc.py confirmed zero formula errors after pre-flight cell range inspection."
+        },
+        {
+          "id": "ca7ec46f-fcf3-4a02-8c78-499fee392807",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow hint guided skill file inspection and recalc.py usage; PERCENTILE.INC compatibility was fixed mid-run and thorough pre-flight cell inspection prevented placement errors."
+        },
+        {
+          "id": "7d971e57-6543-48c1-ac04-0f1affe10c50",
+          "mode": "self_referential_verification_gap",
+          "reason": "Hardcoded per-paper author lists only contained names the agent had already found; the verification could not catch names it had missed, and references-page detection may have stopped redaction prematurely."
+        },
+        {
+          "id": "5f887e0e-24d4-41a1-b4ed-ef44390f89f6",
+          "mode": "domain_classification_error",
+          "reason": "Keyword heuristics used music_history as a zero-score fallback bucket, absorbing ambiguous papers; reading was limited to the first two pages, missing topic signals deeper in documents."
+        },
+        {
+          "id": "229201d5-e6a3-4c30-a399-6f07deacd332",
+          "mode": "incorrect_mathematical_model",
+          "reason": "A linear LP objective was used for potentially quadratic gencost curves, producing suboptimal dispatch; all three most-loaded lines reporting exactly 100% loading suggests a flow-calculation artifact from the wrong formulation."
+        },
+        {
+          "id": "c40c093a-4070-4d84-83df-a77923d5e4e1",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill guidance identified the correct .soln file location and PDDL output format; a sed-based case-normalization fix handled mixed-case airplane constants."
+        },
+        {
+          "id": "3d9a439a-5fec-41b7-af53-03c18fd65a72",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill guided correct .soln file discovery, PDDL format preservation, and sed case-fix for mixed-case airplane constants; final file-existence and line-count verification confirmed valid output."
+        },
+        {
+          "id": "dd830993-9c6b-454a-91ec-1d8cb80710a5",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill-guided PhaseNet+GaMMA pipeline ran end-to-end with fallback config relaxation for edge cases and near-simultaneous event de-duplication; post-run sanity-check confirmed sorted timestamps."
+        },
+        {
+          "id": "16cba633-0a64-4b24-a68f-a7f6d6c1d1f8",
+          "mode": "spreadsheet_formula_placement_error",
+          "reason": "Fold-change column assignments were reversed (Log2 FC placed in column D, FC in C) because control/treated sample grouping was assumed without confirming row 9 labels."
+        },
+        {
+          "id": "ad155e0f-7eec-4820-a9c2-d3916d081e12",
+          "mode": "skill_guidance_misapplied",
+          "reason": "The skill explicitly warned that po_number must be nulled for Invalid PO entries, but the agent did not apply this rule; the validation script also produced empty output, masking the error."
+        },
+        {
+          "id": "5225bb69-944c-461a-89cb-5a4b1ab2e1a2",
+          "mode": "static_check_misses_runtime_failure",
+          "reason": "node --check and file-existence tests passed, but oracle evaluation requires functional browser rendering which was never tested; the offline fallback was structurally present but functionally unverified."
+        },
+        {
+          "id": "dc0dd681-379b-49d8-9cf8-c3aab6c5306d",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace file-discovery patterns were followed immediately; all output schema dimensions were verified (K, A, B, refs_len) before declaring success, with a proactive fix ensuring log spans strictly beyond 5 s."
+        },
+        {
+          "id": "b7dba0ef-5235-46d8-8ff7-e38f257876a4",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Proactive SKILL.md consultation before coding, correct dual-variable LMP extraction, proper 20% capacity relaxation, and programmatic output validation produced a correct DC-OPF implementation."
+        },
+        {
+          "id": "d84304b2-3286-41e8-94db-db502a0ff8e4",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace guided SKILL.md consultation for filler-word duration tables and merge logic; internet connectivity and ffmpeg availability enabled successful clip extraction and concatenation."
+        },
+        {
+          "id": "0a95fbf4-a7f9-4383-be63-db8c7dc1c5db",
+          "mode": "offline_environment_dependency_failure",
+          "reason": "The required d3.v6.min.js was missing or incompatible in the offline sandbox, and the SKILL.md referenced d3@7.9.0 while the task required v6; node --check validated syntax but not API availability."
+        },
+        {
+          "id": "58f87ff4-1bea-4c93-9a81-00b13e89ecb7",
+          "mode": "incorrect_mathematical_model",
+          "reason": "Reserve co-optimization yielded zero reserve MCP, likely due to wrong dual-variable sign convention from scipy linprog eqlin.marginals; all optimization libraries required a venv install adding complexity."
+        },
+        {
+          "id": "6744865d-8359-471a-8b2d-7c7b3ff2a472",
+          "mode": "static_check_misses_runtime_failure",
+          "reason": "The output file was structurally complete but functional defects (d3 v6/v7 API mismatch, non-deterministic force simulation positions) would only manifest at runtime; no runtime check was performed."
+        },
+        {
+          "id": "ba789559-6dee-4621-a86d-2ce17b0d80e4",
+          "mode": "static_check_misses_runtime_failure",
+          "reason": "The SKILL.md explicitly warned about custom introspection wiring requiring regression tests, but no focused test run was done before full packaging, leaving the fix unverified against the actual runtime path."
+        },
+        {
+          "id": "a3099a6a-bcce-4924-b320-a95465af6762",
+          "mode": "spreadsheet_formula_placement_error",
+          "reason": "Formulas were placed in unverified template rows; 58-event stream drops suppressed output needed to confirm target rows, SKILL step 7 (recalc) was skipped, and the year-header row reference conflicted with task instructions."
+        },
+        {
+          "id": "e9ac5616-d5bb-48cc-8493-f313e02c3e7f",
+          "mode": "spreadsheet_formula_placement_error",
+          "reason": "Unverified transposition between stats rows and fold-change column indices was never independently validated; recalc.py was absent from the environment, blocking the SKILL-mandated error scan."
+        },
+        {
+          "id": "f60fb01d-b9d9-42ee-84f4-a8d884d83ed2",
+          "mode": "skill_guided_clean_execution",
+          "reason": "SKILL.md-guided multi-pass PyMuPDF redaction used robust references-boundary detection, a second verification pass caught residual false positives, and metadata scrubbing was confirmed empty."
+        },
+        {
+          "id": "ebc06946-64b3-4de1-a0c9-a25c8d1c5c74",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill-guided data integrity check confirmed a clean dataset; a sensitivity sweep validated the stable primary interpretation and openpyxl sliding-window scan recovered all records correctly."
+        },
+        {
+          "id": "b41875b8-b7f7-4c08-a9ae-03898a1b9da4",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill-guided ACC pipeline with anti-windup PID and bounded random search tuning met all gain constraints; final validation confirmed 1501 rows and metric compliance."
+        },
+        {
+          "id": "83c016c6-0b82-4eca-8d98-6712966138a0",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill anticipated erlc toolchain absence and provided the correct patch location (ssh_connection_handler.erl); source-level verification served as fallback when compilation was unavailable."
+        },
+        {
+          "id": "47bb188b-fc77-45cd-9229-98b667613c96",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill guidance directed correct python3 invocation, optional validator import with fallback handling, and output file verification before declaring success on batch PDDL planning."
+        },
+        {
+          "id": "aa1da6c0-af30-4cd5-8404-9ddc8d4d28e3",
+          "mode": "skill_guided_clean_execution",
+          "reason": "Skill guidance provided station ID normalization format, complete GaMMA config keys, and ncpu=1 stability setting, enabling a clean end-to-end PhaseNet+GaMMA pipeline run."
+        },
+        {
+          "id": "01663364-1e79-44c8-b336-dc0485d98f49",
+          "mode": "incorrect_mathematical_model",
+          "reason": "Floating-point noise in aggregate totals was not rounded before writing the report, and the linear LP objective was used without verifying quadratic gencost terms were zero, producing numerically imprecise output."
+        },
+        {
+          "id": "66b81683-de14-42c2-a120-2e99c6a5607c",
+          "mode": "domain_classification_error",
+          "reason": "Classification correctness was never validated against ground truth; verification checked only count integrity, and keyword classifier quality was assessed from only 5 samples per class."
+        },
+        {
+          "id": "7436f84a-791a-49f1-b1c9-905eb4a17c4a",
+          "mode": "spreadsheet_formula_placement_error",
+          "reason": "Control/treated column split was hardcoded without reading row 9 group labels; SKILL.md step 8 (recalc.py) was skipped, and verification only confirmed formula string presence rather than computed values."
+        },
+        {
+          "id": "e9ff64c9-b825-4de7-8a20-3b98abd31850",
+          "mode": "environment_resource_timeout",
+          "reason": "The agent ran a second parameter sweep script that was still in progress at the timeout boundary instead of committing to an already-viable result from the first sweep."
+        },
+        {
+          "id": "3bffc66a-73c2-4391-a97b-f8936f67701b",
+          "mode": "oracle_evaluation_mismatch",
+          "reason": "The agent's trajectory described a complete, apparently successful grid-search PID implementation, but the status is failure, indicating the oracle rejected output that all internal indicators considered valid."
+        },
+        {
+          "id": "fadba2ce-5cfb-453b-a324-c5192f682ac5",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow-guided IMC-PI pipeline used a multi-candidate lambda sweep for robust gain selection and applied a minor metrics schema fix mid-run before satisfying all constraints."
+        },
+        {
+          "id": "161bdb30-62ab-42b8-bf2a-769ebd9bf5a5",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow hint directed use of pcap_utils helper functions from SKILL.md; a single script covered all metric categories with proper CSV comment-line preservation."
+        },
+        {
+          "id": "7ef551ff-ed86-4a1e-9ac4-67966fcd5f80",
+          "mode": "workflow_guided_clean_execution",
+          "reason": "Workflow trace directed xlsx SKILL.md and recalc.py usage; LibreOffice PERCENTILE.INC incompatibility was detected and recovered through the iterative recalc validation loop."
+        },
+        {
+          "id": "0424d980-466a-4417-81e8-a4c4f00d009d",
+          "mode": "environment_resource_timeout",
+          "reason": "Context-compaction endpoint returned 404 on OpenRouter, causing session termination; the long session had already accumulated ~822 KB of history exceeding the model context window."
+        }
+      ]
+    },
+    {
+      "modes": [
+        {
+          "name": "output_format_schema_mismatch",
+          "definition": "The agent produces numerically or logically plausible results but submits output with wrong field names, hardcoded status labels, or incorrect precision/format. Oracle evaluation fails not because of computational error but because the output envelope does not match the expected schema.",
+          "n_assigned": 2
+        },
+        {
+          "name": "skill_misguidance",
+          "definition": "SKILL.md content directly steered the agent toward an implementation choice that conflicts with the oracle contract. Following the skill caused the failure rather than overcoming it, representing a case where augmentation is net-negative.",
+          "n_assigned": 1
+        },
+        {
+          "name": "static_only_verification_failure",
+          "definition": "The agent verified correctness exclusively through static inspection: syntax checks, formula-string presence, code review, or empty-output commands that returned exit code 0. Behavioral bugs survive to oracle evaluation because no live runtime, real-data, or integration execution was performed.",
+          "n_assigned": 8
+        },
+        {
+          "name": "exploration_loop_timeout",
+          "definition": "The agent spent its time budget in open-ended exploration—hyperparameter sweeps, combinatorial search, or prototyping loops—and never committed a final, verified solution before the wall-clock limit was reached. No output artifact or write-back is present at trajectory end.",
+          "n_assigned": 3
+        },
+        {
+          "name": "oracle_partition_mismatch",
+          "definition": "The agent's implementation passes self-written or locally executed tests but fails oracle evaluation because the oracle uses a different test partition, random seed, threshold, or edge-case set that was not exercised in local validation. The gap is in coverage scope, not implementation logic.",
+          "n_assigned": 4
+        },
+        {
+          "name": "heredoc_shell_corruption",
+          "definition": "Inline Python or shell code embedded via heredoc quoting is silently corrupted—producing broken shebangs, garbled operators, or quoting conflicts—causing silent errors or blocked execution that the agent does not detect before submission.",
+          "n_assigned": 2
+        },
+        {
+          "name": "build_environment_oom_kill",
+          "definition": "A misconfigured build or environment setup—wrong flags, conflicting module includes, or unintended subproject inclusion—causes an out-of-memory error or process kill, preventing the required artifact from being produced.",
+          "n_assigned": 1
+        },
+        {
+          "name": "algorithmic_formulation_error",
+          "definition": "The agent selects a fundamentally wrong algorithm, iteration direction, data transformation, or extraction strategy. The error is in the core computational logic: wrong loop direction, zero-output formulation, fragile pattern matching, or incorrect normalization rule—not in output formatting or verification coverage.",
+          "n_assigned": 8
+        },
+        {
+          "name": "skill_guided_success",
+          "definition": "SKILL.md content directly enabled the correct solution by providing domain-specific knowledge, warning about known failure modes, or specifying correct API or configuration choices. The agent applied skill guidance faithfully and the result passed oracle evaluation.",
+          "n_assigned": 15
+        },
+        {
+          "name": "workflow_guided_success",
+          "definition": "Prior-attempt workflow traces or injected context hints directly guided the agent to a correct solution—providing a working blueprint, correct tool flags, a pivoting strategy, or a clue (such as inspect source first) that the agent successfully applied.",
+          "n_assigned": 13
+        },
+        {
+          "name": "clean_autonomous_success",
+          "definition": "The agent produced a correct, oracle-passing solution without skill or workflow augmentation (raw arm), relying on its own domain knowledge, systematic schema exploration, and self-directed verification to reach the right answer on the first attempt.",
+          "n_assigned": 3
+        }
+      ],
+      "assignments": [
+        {
+          "id": "8f357ed8-a611-4f40-bace-0042ac2e1cd9",
+          "mode": "output_format_schema_mismatch",
+          "reason": "solution.json status field hardcoded as FEASIBLE despite solver returning OPTIMAL, causing an oracle schema check failure on an otherwise valid result."
+        },
+        {
+          "id": "22c963d0-0756-4d82-98c8-b2301fdd337c",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Finite-horizon LQR backward pass iterates forward instead of backward, computing K0 as the last gain rather than the first—a fundamental algorithmic direction error."
+        },
+        {
+          "id": "ac569887-0964-4148-b278-a283fdc1af49",
+          "mode": "clean_autonomous_success",
+          "reason": "Skill helper module applied directly in a single raw-arm script execution, populating all 34 metrics correctly with no augmentation needed."
+        },
+        {
+          "id": "11ee7b19-f1f5-472b-b099-164e1f6f8bda",
+          "mode": "clean_autonomous_success",
+          "reason": "Clean first-attempt GeoPandas analysis with self-discovered SKILL.md, correct spatial-filter-then-project ordering, and schema exploration before coding."
+        },
+        {
+          "id": "829b249a-367a-4cb7-b6e4-3c110df0f15d",
+          "mode": "clean_autonomous_success",
+          "reason": "Correct DC-OPF with dual-variable LMP and reserve-MCP extraction, venv workaround, and thorough output validation—all without skill or workflow augmentation."
+        },
+        {
+          "id": "f78e0040-eba8-42d5-ae29-5f3677319d04",
+          "mode": "build_environment_oom_kill",
+          "reason": "Conflicting dual -pl flags allowed web-console into the Maven build, triggering an OOM/kill despite the explicit skip instruction."
+        },
+        {
+          "id": "d7f82bdf-1908-495e-be29-70cb43020b9a",
+          "mode": "static_only_verification_failure",
+          "reason": "Verification used only node --check (static syntax), leaving browser runtime behavior and D3 force-clustering correctness completely untested before submission."
+        },
+        {
+          "id": "ee5254a4-1b08-4f1d-ad69-9d87e622c1bf",
+          "mode": "static_only_verification_failure",
+          "reason": "Agent confirmed formula-string presence but skipped the SKILL.md recalc.py step on the original workbook, so cached computed values were never validated."
+        },
+        {
+          "id": "4a0913cb-eb34-4962-a296-70a9d34cb879",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md common-failure-mode knowledge guided correct SeisBench+GaMMA config sweep, station-ID normalization, and near-duplicate deduplication."
+        },
+        {
+          "id": "a1c4784a-14f5-4e70-8f43-94b651de34a1",
+          "mode": "skill_guided_success",
+          "reason": "Skill provided faster-whisper installation settings, tiny.en int8 CPU configuration, and phrase-first multi-word matching enabling complete pipeline execution."
+        },
+        {
+          "id": "2f297e95-8d4e-459d-af66-2d7825a05eba",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md guided IMC lambda sweep with anti-windup and measurement filtering, producing gains that passed all performance constraints."
+        },
+        {
+          "id": "256ecbdc-faf2-4e09-ae19-3eebb339b8b7",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Reserve co-optimization formulation produced zero reserve MCP due to a structural gap in the problem model, with anomalous counterfactual line counts indicating redispatch errors."
+        },
+        {
+          "id": "52060237-5f06-4c6c-b8c2-f1b2c056e3bf",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Splitting AdvancedAnalysis with next/dynamic introduced an async SSR loading state that silently broke the required advanced-content testid the oracle checks."
+        },
+        {
+          "id": "56b2107b-0f82-4bce-ad32-1c3922d5be3d",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Title-heuristic topic classification diverged from oracle ground truth; no feedback on which files were wrong and no deep content analysis performed."
+        },
+        {
+          "id": "f93e030f-cb7c-48fb-8819-87cfdcff9109",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow hint about finite-horizon LQR guided correct MPC derivation and simulation, producing all required outputs within performance targets."
+        },
+        {
+          "id": "ec5893dd-b5a4-495a-bd75-cb3aebcdc283",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace warned about python vs python3 and SKILL.md recalc loop enabled detection and fix of #NAME? errors before submission."
+        },
+        {
+          "id": "1cefa60b-a4cd-4280-bb0f-87878ab1b42a",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow hint about python3 and SKILL.md MATPOWER field names enabled correct LP formulation reaching optimal dispatch with zero numerical violations."
+        },
+        {
+          "id": "0de020aa-932e-4b53-b392-774d283f9948",
+          "mode": "static_only_verification_failure",
+          "reason": "Verification limited to py_compile and code inspection only; no integration test run left MongoDB pipeline sort-order and schema behavior unvalidated."
+        },
+        {
+          "id": "83c78118-2a7f-43cc-9603-fdbec78aaaa1",
+          "mode": "skill_misguidance",
+          "reason": "SKILL.md explicitly instructed conditional turn-switch suppression, steering the agent toward a behavior change that broke the oracle contract."
+        },
+        {
+          "id": "5bff779d-cba0-4971-8d2c-31fa8c2c0389",
+          "mode": "heredoc_shell_corruption",
+          "reason": "generate_report.sh shebang was corrupted to 'echo bad' during heredoc-based test development and not cleanly restored before the oracle evaluated it."
+        },
+        {
+          "id": "9eed82bf-0894-4a5d-af7d-315e9d8e720a",
+          "mode": "skill_guided_success",
+          "reason": "Skill guidance prompted hyperparameter grid search across solvers to enforce positive coefficient, with post-save reload confirming binary predictions."
+        },
+        {
+          "id": "dc389528-f723-467d-b607-7b3926a130d4",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided greedy-prefix regex with self-correction after a single test failure and correct alphanumeric boundary lookaround on the second attempt."
+        },
+        {
+          "id": "86e9476d-4924-4837-9319-f0ae68061ed3",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided all required migration steps including peer-auth TCP fallback, idempotency gate, and backup decrypt-decompress integrity verification."
+        },
+        {
+          "id": "858e5e99-a343-45c9-b26b-98a9b8d786bb",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace provided a proven CSP implementation blueprint; agent ran a self-directed regression suite across edge cases before declaring done."
+        },
+        {
+          "id": "d6ba7857-a025-416f-bf2c-fad235562eeb",
+          "mode": "workflow_guided_success",
+          "reason": "Clean single-pass CMake build with batched configure steps, inline awk precision arithmetic, and correct alphabetical output ordering."
+        },
+        {
+          "id": "0c7419fb-c904-4005-9fdc-d376ab09d066",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow hint guided discovery of dist_nn_functional.all_gather, enabling correct column-parallel matmul with padding for uneven shards and mp.spawn validation."
+        },
+        {
+          "id": "d94a5d55-6148-4aa9-abfd-119b26e22efb",
+          "mode": "exploration_loop_timeout",
+          "reason": "Agent escalated to 3000+ random subset evaluations while zombie Python processes accumulated, exhausting the time budget without producing a committed final solution."
+        },
+        {
+          "id": "2b1c465b-505b-4f72-aec8-cac6f186f1aa",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Name field missed _clean_text normalization leaving zero-width characters, and percentage discount parsed as -10.00 instead of -0.10."
+        },
+        {
+          "id": "02783af2-4bf2-4908-b166-8e5f0e6983d0",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Agent removed only 2 of 20 decorative collision elements, producing a 1.01-1.07x speedup that sits at the noise floor of the benchmark threshold."
+        },
+        {
+          "id": "30619680-4a47-4e5d-9b5f-4161ed630c82",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided biased MF with augmented dot-product embeddings, SimpleNamespace pickle for grader compatibility, and full-dataset vocab build preventing cold-start."
+        },
+        {
+          "id": "77aebcda-b3c0-4462-9ce4-ef7b0760a52a",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided solver sweep handling convergence warnings with explicit post-write verification confirming model type and checksum format."
+        },
+        {
+          "id": "56936ee7-e67c-466b-818f-daeffb914881",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided thorough input profiling, safe aggregate patterns (add // 0, max_by with length guard), and byte-identical reproducibility confirmed via cmp."
+        },
+        {
+          "id": "e679d162-f29a-471c-b755-7462bea84991",
+          "mode": "static_only_verification_failure",
+          "reason": "No live test execution before grader evaluation; stream disconnection dropped events and potential MongoDB version incompatibility left pipeline behavior unconfirmed."
+        },
+        {
+          "id": "05e65517-5569-462b-8e53-09409d6d3b0c",
+          "mode": "heredoc_shell_corruption",
+          "reason": "All 108 hyperparameter sweep runs were blocked by malformed heredoc Python scripts; the agent ignored the skill warning and never fell back to standalone .py files."
+        },
+        {
+          "id": "12c3e619-e6ad-4225-84cd-a9076a628655",
+          "mode": "exploration_loop_timeout",
+          "reason": "Multiple concurrent sweep processes with the wrong epoch budget exhausted wall-clock time; finalized nn.py defaults were never written back from sweep findings."
+        },
+        {
+          "id": "60ab245f-859a-4efe-bc83-74512be28000",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow context hinted to inspect cipher source first, revealing the hardcoded master key and enabling correct PRESENT reimplementation verified against all known pairs."
+        },
+        {
+          "id": "ac14aa61-dad1-495b-8570-a6ef5cd0d48d",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow-guided single-pass CSP with MRV heuristic branching and thorough self-testing across solvable, unsolvable, malformed, and missing-file cases."
+        },
+        {
+          "id": "53a9e79e-9bf1-4c3c-8e29-5ee0a75a3762",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace provided the exact collision-removal command sequence, enabling a targeted minimal edit that preserved dynamics while reducing overhead."
+        },
+        {
+          "id": "294041a7-2573-4f5a-ab9b-808e90b11cd5",
+          "mode": "static_only_verification_failure",
+          "reason": "strings/rg checks cannot decode zlib-compressed git pack objects, so base64-encoded credentials surviving in backup and feature branches went undetected."
+        },
+        {
+          "id": "bbc74078-2c48-4fbd-9186-ccdabc386769",
+          "mode": "oracle_partition_mismatch",
+          "reason": "Agent validated only on test_data.csv; oracle likely evaluates against the separate split-indices partition that was never exercised locally."
+        },
+        {
+          "id": "fd0e77df-e9b8-4b8e-b046-7ad0a05f64e6",
+          "mode": "oracle_partition_mismatch",
+          "reason": "Engine scored exactly 5.0 points locally with no safety margin; random seed variance between local harness and oracle re-evaluation caused the borderline result to flip."
+        },
+        {
+          "id": "bffb92b3-4ab4-4e70-96f5-f42237d2a41a",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow traces nudged source-code inspection first, recovering the 80-bit key from C main() via zero-padding the 64-bit constant, with z3 as a parallel fallback."
+        },
+        {
+          "id": "365d8cbc-8edd-402a-a242-5a37725d39f2",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow traces provided a ready-made test harness enabling a quick, targeted patch of the stub check_win with correct 5-in-a-row direction scan."
+        },
+        {
+          "id": "98be4d98-90bc-4adf-98f9-1834cbd0aa50",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow guided dual-path strategy; agent pivoted to go tool objdump and readelf binary fallback after detecting the missing source file early."
+        },
+        {
+          "id": "299d12d1-a58c-482f-8d3f-6f14e42762e2",
+          "mode": "static_only_verification_failure",
+          "reason": "No actual MongoDB test run before submission; date field name was guessed and zero-quantity order handling was assumed without live verification."
+        },
+        {
+          "id": "c97eac95-9754-409a-9a52-7b3fe2384d30",
+          "mode": "static_only_verification_failure",
+          "reason": "Verification command returned empty stdout with exit_code 0; agent declared success without confirming any metric values were actually printed or correct."
+        },
+        {
+          "id": "ea91afa9-078e-4fa5-86f9-11a497d6fab4",
+          "mode": "output_format_schema_mismatch",
+          "reason": "Agent did not enforce the 3 decimal-place format shown in the example, causing oracle precision mismatch on otherwise correct numerical output."
+        },
+        {
+          "id": "af1a84cb-87d5-4fea-b046-5e1e36c8f80c",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md warned against unavailable OS tools, steering the agent to /proc and Python socket checks for correct MLflow setup and port validation."
+        },
+        {
+          "id": "b4270556-934a-4edb-bd3a-c77cea662af1",
+          "mode": "skill_guided_success",
+          "reason": "Skill guidance on dateutil dayfirst heuristic and date normalization produced correct PDF extraction and clean CSV output despite stream reconnection errors."
+        },
+        {
+          "id": "b39e9bbb-6d7b-4b47-a863-fe5f6617a2f2",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided custom autograd Function for correct distributed backward, padding-based all_gather for uneven shards, and non-distributed fallback for oracle testing."
+        },
+        {
+          "id": "443175a3-22c5-4001-92c0-58b68a3ee516",
+          "mode": "oracle_partition_mismatch",
+          "reason": "Five narrow local scenarios passed but oracle exercises broader edge cases including an incorrect flood-time threshold in the survival fallback that local tests did not cover."
+        },
+        {
+          "id": "53b8c558-b6cf-4a71-931f-685572eeb76c",
+          "mode": "exploration_loop_timeout",
+          "reason": "Unreliable 5-sample Spearman drove open-ended feature combo search for ~47 min; trajectory truncated with no evidence of write-back or end-to-end verification."
+        },
+        {
+          "id": "63aafe02-c7fd-49b1-8d72-54e397fe8c89",
+          "mode": "oracle_partition_mismatch",
+          "reason": "Agent-written tests passed locally but may not match oracle expectations; possible incorrect DependencyConflictError behavior for >1.0.0 constraints not caught in self-tests."
+        },
+        {
+          "id": "e4cf3ad5-30d0-4cff-869f-9c4fde87354c",
+          "mode": "static_only_verification_failure",
+          "reason": "Self-certifying tests mirrored the implementation rather than verifying the oracle spec, with a hardcoded output path causing inter-test state pollution."
+        },
+        {
+          "id": "fa4e4a35-81ae-4430-8365-b9d2025e1db5",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Binary extraction relied on IP-relative LEAQ displacement patterns sensitive to recompilation; no source available and 50x80 candidate cross-product risks timeout on re-run."
+        },
+        {
+          "id": "6e60bc05-da1c-474f-873d-4427d4a63f5f",
+          "mode": "algorithmic_formulation_error",
+          "reason": "Over-constrained regex with tautology backreference preconditions may miss oracle edge cases; self-tests used hand-crafted inputs that did not exercise actual input.txt patterns."
+        },
+        {
+          "id": "f8c35238-f021-47d3-a333-c46051bde561",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided CRLF byte-level state-machine check, tab-strip fix, and sequential converter-then-verifier execution avoiding race conditions."
+        },
+        {
+          "id": "fa297313-33e7-406a-a3ac-6353f1c5a17c",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided Python socket polling and subprocess.Popen with start_new_session=True for robust MLflow background detachment and restart-and-recheck persistence validation."
+        },
+        {
+          "id": "6acff2fa-8436-450a-bf48-e8ba7ff1d4dd",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided BFS with sorted box key for correct state deduplication and end-to-end test runner verification before completion."
+        },
+        {
+          "id": "36e7c37c-c17e-4321-b58d-ffa0fd4684a5",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace informed liblinear solver selection to avoid convergence warnings, enabling a single-shot correct output with minimal validation steps."
+        }
+      ]
+    },
+    {
+      "modes": [
+        {
+          "name": "clean_implementation_success",
+          "definition": "Agent produces a correct, working implementation with minimal iteration and no external guidance artifacts. Solution passes oracle on the first or near-first run, typically through decoder-first inspection, end-to-end self-verification, or a single self-caught bug fix.",
+          "n_assigned": 8
+        },
+        {
+          "name": "skill_guided_success",
+          "definition": "SKILL.md guidance directly enabled a correct solution by supplying critical procedural steps (install flags, algorithm design, output hygiene, verification checklists) that the agent followed faithfully. Skill effect is 'helps'.",
+          "n_assigned": 13
+        },
+        {
+          "name": "workflow_guided_success",
+          "definition": "Workflow trace or prior-run hints directly shaped the agent's reconnaissance order, tool choices, or parameter sweep strategy, leading to a passing result. The workflow artifact was substantively actionable rather than templated.",
+          "n_assigned": 7
+        },
+        {
+          "name": "environment_state_leveraged_success",
+          "definition": "Pre-existing environment state (pre-cracked password files, already-running background processes, pre-extracted archives) was discovered and reused, eliminating the need to re-execute expensive or complex setup steps.",
+          "n_assigned": 2
+        },
+        {
+          "name": "oracle_format_mismatch_failure",
+          "definition": "Implementation is functionally complete from the agent's perspective but fails oracle evaluation due to output schema, numeric precision, annualization convention, borderline threshold, or assumption divergence. Agent self-tests pass while oracle tests fail.",
+          "n_assigned": 10
+        },
+        {
+          "name": "parser_fragility_unseen_input_failure",
+          "definition": "A parser or equation-solver is validated only against the provided sample input. When the oracle evaluates with a structurally different or more complex input, the implementation produces wrong or no output due to non-generic construction.",
+          "n_assigned": 3
+        },
+        {
+          "name": "environment_setup_failure",
+          "definition": "Infrastructure or dependency configuration in the execution environment prevents task completion: missing required packages, absent input files, incorrect VM NIC model, or ephemeral cache not persisted to oracle evaluation time.",
+          "n_assigned": 4
+        },
+        {
+          "name": "server_persistence_failure",
+          "definition": "A long-running process (HTTP server, daemon) launched during the agent turn fails to survive to oracle evaluation, either because it was started in the foreground, died silently, or was blocked by a port conflict from an earlier abandoned process.",
+          "n_assigned": 3
+        },
+        {
+          "name": "timeout_budget_exhaustion_failure",
+          "definition": "The trial runs out of wall-clock time or per-command timeout before the task is complete, typically because the agent spent budget on exhaustive search, disassembly analysis, or a non-converging solver with no fallback strategy.",
+          "n_assigned": 5
+        },
+        {
+          "name": "skill_guidance_ignored_or_misapplied",
+          "definition": "SKILL.md provided actionable steps that were skipped, reordered, or only partially applied, causing the failure. Skill effect is 'neutral' or 'hurts'. The error is procedural non-compliance rather than a capability ceiling.",
+          "n_assigned": 3
+        },
+        {
+          "name": "credential_identification_error_failure",
+          "definition": "Agent fails to correctly identify or write the target secret or credential value, either selecting a decoy over the true original or writing the output without verifiable confirmation, often compounded by truncated trajectory visibility.",
+          "n_assigned": 2
+        }
+      ],
+      "assignments": [
+        {
+          "id": "108a040c-ff41-4d6d-96f6-09a238c16bc8",
+          "mode": "clean_implementation_success",
+          "reason": "Single-shot alpha-beta engine passed all harness tests on first run without external guidance."
+        },
+        {
+          "id": "d9c29033-ea92-4703-9267-75674c89b23b",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace shaped jq filter construction and pre-flight schema inspection, leading directly to a passing result."
+        },
+        {
+          "id": "f5b7c39e-c530-4248-860f-aac7628c81ec",
+          "mode": "parser_fragility_unseen_input_failure",
+          "reason": "Non-generic parser failed on oracle's evaluation input, with additional precision mismatch on numeric output."
+        },
+        {
+          "id": "442b3b86-f52d-487b-8042-b751562bdb96",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "Agent's self-referential test suite passed but provided no independent ground truth, so oracle evaluation failed."
+        },
+        {
+          "id": "f8794312-42fa-465c-90f5-a82dd8b1cd12",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "All-draw borderline result passed local harness threshold but oracle conditions required actual wins, which the engine never achieved."
+        },
+        {
+          "id": "68834f33-a9f8-4a6b-ab6e-0658cd00b59c",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace pre-identified decorative link targets and guided the multi-run stability check before committing."
+        },
+        {
+          "id": "c1688834-5986-46ca-9cae-650219123d69",
+          "mode": "clean_implementation_success",
+          "reason": "Clean single-pass parser implementation with scripted multi-case bash harness confirming all requirement branches."
+        },
+        {
+          "id": "8839a7a3-fef7-432e-9dfc-d86832e26d86",
+          "mode": "clean_implementation_success",
+          "reason": "Clean implementation with a single self-caught fixture bug fixed via iterative test-fix loop."
+        },
+        {
+          "id": "5409fe3f-0b03-4cf0-a582-202e172a41c4",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "Beta computation against asset returns and annualization assumptions diverged from oracle's expected formula, producing mismatched values."
+        },
+        {
+          "id": "c04ddca8-7ecb-42a3-b080-c9b3e9464923",
+          "mode": "parser_fragility_unseen_input_failure",
+          "reason": "Script validated only on sample input; oracle's alternate reaction schema exposed parser fragility and possible heredoc content corruption."
+        },
+        {
+          "id": "f920747c-99a4-4e3e-a6dc-7434b4da338f",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "Ambiguous CSV field interpretation (state abbreviations silently dropped, inflated totals) caused oracle value mismatches."
+        },
+        {
+          "id": "d888d48c-1c56-4c4f-8d27-aff2a07b9c19",
+          "mode": "skill_guided_success",
+          "reason": "Skill guided replacement of a stubbed win-detection stub with correct bidirectional scanning, directly enabling success."
+        },
+        {
+          "id": "1895eaa9-118b-49a2-95bc-440dbb590721",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md guided implementation; agent correctly detected and patched idempotency logic after observing race-condition artifacts."
+        },
+        {
+          "id": "b252bc76-6dfc-4795-a0a6-a686306af404",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided jq pipeline succeeded with minor tooling error recovery (quoting error, transient file-not-found)."
+        },
+        {
+          "id": "5b3f8bae-43dc-4779-aa02-d79d080ef6c6",
+          "mode": "credential_identification_error_failure",
+          "reason": "Credential written after history sanitization with possibly misidentified value; SKILL.md step ordering violated and no verification of written content."
+        },
+        {
+          "id": "905e96b9-a2f9-4c89-87b7-45e208caf134",
+          "mode": "credential_identification_error_failure",
+          "reason": "Decoy credential selected over true original; truncated trajectory obscured discovery logic, leaving identification unverifiable."
+        },
+        {
+          "id": "fc477ddb-06ca-44ba-a316-cf956b9d4f80",
+          "mode": "parser_fragility_unseen_input_failure",
+          "reason": "Parser bug produced wrong equation system, yielding incorrect equilibrium concentrations; fallback test's identical output was ignored."
+        },
+        {
+          "id": "9ea95097-e238-4f41-90de-9d5d340308bd",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "jq_args.yaml args ordering or output field schema diverged from oracle expectations without instruction.md to verify the exact required schema."
+        },
+        {
+          "id": "5ee7c183-ad8d-41f4-b3ae-02846573017d",
+          "mode": "environment_setup_failure",
+          "reason": "QEMU VM network was unreachable due to incorrect NIC model configuration; trial timed out before a corrective attempt."
+        },
+        {
+          "id": "e6ed74f1-fb18-4b16-8b21-1b8f1c07f6be",
+          "mode": "environment_setup_failure",
+          "reason": "Oracle evaluated in an ephemeral environment without the cache files the script produced, and the script always attempted online download first."
+        },
+        {
+          "id": "12ad271d-35f6-4b52-a450-56a00726581f",
+          "mode": "clean_implementation_success",
+          "reason": "Correct reverse-engineered LZ77 implementation passed all round-trip tests via decoder-first inspection strategy."
+        },
+        {
+          "id": "0a814d20-afb1-4409-b2d0-4c5c4a5e1f1b",
+          "mode": "clean_implementation_success",
+          "reason": "Correct tree-diff parser with ordered filesystem apply and idempotence verification succeeded cleanly."
+        },
+        {
+          "id": "bad027d3-ec24-425a-af3c-db1949a76d58",
+          "mode": "clean_implementation_success",
+          "reason": "Agent pivoted from non-converging Q-learning to a deterministic heuristic policy that passed oracle requirements."
+        },
+        {
+          "id": "eb842169-c2ea-4128-8434-78e077179291",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "jq_args.yaml args ordering or structure mismatched oracle reproducibility requirements; agent mistook a scripting workaround for an actual fix."
+        },
+        {
+          "id": "c81d3d25-ca76-4f2c-9b3b-78947435dfd9",
+          "mode": "skill_guidance_ignored_or_misapplied",
+          "reason": "Agent ignored SKILL.md's explicit POSIX quoting warning on the first filter-branch attempt, leaving residual git objects the oracle detects."
+        },
+        {
+          "id": "d783a0d7-3ef6-45a2-a824-bc4834a9f24a",
+          "mode": "timeout_budget_exhaustion_failure",
+          "reason": "Z3 solver stalled due to incorrect 64-bit modeling of an 80-bit key, and no fallback to brute-force was attempted before trial budget expired."
+        },
+        {
+          "id": "afeedf38-4cc8-4ac8-b7ce-befbc810f9eb",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided deterministic DFS+MRV solver with complete test battery coverage passed oracle on first run."
+        },
+        {
+          "id": "a27bd26c-7e9d-42ea-bf9b-7885327d6064",
+          "mode": "skill_guided_success",
+          "reason": "Skill guidance on isolated temp dirs, stale output removal, and portable tool usage directly prevented common failure modes."
+        },
+        {
+          "id": "e27bbd56-2742-490e-bd3b-41f2885c78cc",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided migration script with isolated GNUPGHOME fix for GPG conflict and idempotency confirmation per skill checklist."
+        },
+        {
+          "id": "8e8bf36d-2f75-4dd5-8b56-eb7ba531215c",
+          "mode": "environment_setup_failure",
+          "reason": "sympy not pre-installed; runtime pip install produced numerically non-matching output diverging from oracle expected values."
+        },
+        {
+          "id": "8e17f72c-34e2-452b-bef2-4fae947ca939",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "Agent self-tested only the world_size=1 fast path; oracle exercised multi-rank world_size>1 scenarios that triggered a RuntimeError."
+        },
+        {
+          "id": "42492f46-3d7e-44d0-978f-002bc2603196",
+          "mode": "environment_setup_failure",
+          "reason": "No input.txt was synthesized or persisted in /app before the session ended, so the oracle found no output.txt to evaluate."
+        },
+        {
+          "id": "9c36db14-badd-41a6-9b95-77e218c081fa",
+          "mode": "clean_implementation_success",
+          "reason": "Clean DFS+constraint-propagation solver with systematic edge-case verification and proactive stale-output cleanup."
+        },
+        {
+          "id": "a6af8d64-104b-4bec-9909-4cbce592a402",
+          "mode": "clean_implementation_success",
+          "reason": "Correct end-to-end bash script with all required security steps, self-recovered preflight failure, and idempotency verified."
+        },
+        {
+          "id": "c0f3c3b9-9656-4f99-8b0a-208e75be78d6",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow hint identified Tesseract/PIL availability and diff-based validation loop; high-contrast rendering maximized OCR accuracy."
+        },
+        {
+          "id": "a990bfa5-ddc5-471f-9205-b80455259f1b",
+          "mode": "skill_guided_success",
+          "reason": "Skill steps provided exact install sequence (build-essential, --break-system-packages) and hyperparameter values needed for a faithful RStan-to-PyStan port."
+        },
+        {
+          "id": "9491629a-7c27-46fa-9327-e69b477c5c30",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided setsid detachment, urllib health checks, and re-verification step produced a persistent, accessible PyPI server."
+        },
+        {
+          "id": "fd567bf8-ee92-47ff-b2a0-2f598435e384",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md two-stage sweep methodology guided discovery of a prebuilt winning warrior from the baseline library."
+        },
+        {
+          "id": "50cc8186-c460-4d95-8bc2-0f72b5812a9b",
+          "mode": "skill_guidance_ignored_or_misapplied",
+          "reason": "Skill warned against unconfirmed dependencies, but agent repeatedly attempted numpy imports and never ran or disassembled the reference binary."
+        },
+        {
+          "id": "bd3e7cc3-b992-455f-bca3-480f35090847",
+          "mode": "skill_guidance_ignored_or_misapplied",
+          "reason": "Agent skipped the --break-system-packages fallback step from skill guidance, leaving Stockfish with broken NNUE evaluation and a wrong best move."
+        },
+        {
+          "id": "094a91f3-dff7-49b2-ada2-51807f34b29d",
+          "mode": "timeout_budget_exhaustion_failure",
+          "reason": "Agent remained stuck in SIMD/SSE disassembly analysis throughout the trial without reaching the implementation phase, exhausting the time budget."
+        },
+        {
+          "id": "869f5f40-4738-4821-bc7f-a6b293a07ddd",
+          "mode": "timeout_budget_exhaustion_failure",
+          "reason": "Excessive parameter-name probing consumed most of the 776-second budget, and workflow hints contained unresolved placeholders that provided no usable guidance."
+        },
+        {
+          "id": "91a742b0-20ed-49ec-a4b5-1b97ff865bc9",
+          "mode": "server_persistence_failure",
+          "reason": "HTTP server launched during the agent turn was not accessible during oracle evaluation due to nohup lifecycle uncertainty across the evaluation boundary."
+        },
+        {
+          "id": "67dc41f9-eb98-4a17-9311-758d78a553d5",
+          "mode": "timeout_budget_exhaustion_failure",
+          "reason": "Agent searched only solver/iteration space without increasing timestep, and fully templated workflow hints provided no concrete guidance; no valid configuration found in time."
+        },
+        {
+          "id": "a7c920e8-a459-4bf3-938e-f64b41ed3f2a",
+          "mode": "environment_state_leveraged_success",
+          "reason": "A pre-existing QEMU process from a timed-out first attempt was still running and was discovered via /proc inspection on retry."
+        },
+        {
+          "id": "68db1673-b1ce-4a53-b252-193be59fca60",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow Trace 1 guided readelf exploration sequence; agent self-validated against example addresses and confirmed layout with objdump."
+        },
+        {
+          "id": "257761d4-10c6-4001-84df-16928d90ab07",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace guided readelf-first inspection strategy; Python cross-check confirmed parity before finalizing the ELF PT_LOAD parser."
+        },
+        {
+          "id": "f1beb55e-f632-40e0-b8a9-8c7854946138",
+          "mode": "environment_state_leveraged_success",
+          "reason": "Pre-cracked john.pot and pre-extracted archive contents were already present; agent correctly checked pot file before attempting a full crack."
+        },
+        {
+          "id": "05907b2b-7a2b-47cf-96ca-99c15cf9a181",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow context provided structural hints about iterative pmars testing, enabling a systematic parameter sweep that found an all-threshold configuration."
+        },
+        {
+          "id": "c626fbdc-8d6c-4e63-a86b-8325bd6928eb",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow traces supplied the apt-get dependency list and exact MCMC settings needed for the rstan installation and hierarchical model."
+        },
+        {
+          "id": "a0857443-e835-4a90-9fc6-59270601f830",
+          "mode": "server_persistence_failure",
+          "reason": "Agent chose a foreground blocking command despite explicitly noting background process unreliability, leaving no persistent server for oracle evaluation."
+        },
+        {
+          "id": "2fa880a0-8e37-4673-978d-db66b1a61101",
+          "mode": "server_persistence_failure",
+          "reason": "An untracked foreground server process caused a port conflict that blocked the background relaunch; trial timed out before kill-and-relaunch completed."
+        },
+        {
+          "id": "dbeccd62-4129-41a9-bc2f-7a62e9dc84e8",
+          "mode": "timeout_budget_exhaustion_failure",
+          "reason": "Per-command timeout interrupted TorchScript export mid-run; retry restarted exhaustive configuration search from scratch instead of resuming from the successful MSE step."
+        },
+        {
+          "id": "9ebc1db7-fab8-4e2a-b700-a59b13e2950c",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "A spurious 0x400000 base offset was added to PT_LOAD p_vaddr addresses, causing all computed keys to diverge from oracle expectations."
+        },
+        {
+          "id": "0ee2e3bc-e267-4407-8e59-d4346bb86b40",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "Failed text extraction from image-based PDFs produced wrong invoice classifications; the SKILL.md validation pass was never executed to catch the extraction errors."
+        },
+        {
+          "id": "1f77108a-1f4e-4826-b99a-99978f55898a",
+          "mode": "oracle_format_mismatch_failure",
+          "reason": "Exponential distribution statistics at the tolerance boundary (mean=0.501629 vs target) diverged under oracle test scenarios, causing failure after a borderline local fix."
+        },
+        {
+          "id": "aeda7551-1daa-4004-8150-d21f0a6663af",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md step-by-step guidance with correct NumPy C API usage produced a clean C extension passing correctness and speedup requirements on first attempt."
+        },
+        {
+          "id": "e505b51a-aba6-414d-bb33-c77b00cf0f26",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided exact-literal replacement strategy with parallel verification scans correctly sanitized all secrets without over-sanitization."
+        },
+        {
+          "id": "9f92dd1c-48f0-4412-bde1-82106777eef6",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided pipeline with explicit VAT/Tax ID disambiguation and locale-aware normalization produced a verified match=True result."
+        },
+        {
+          "id": "9076be0c-d266-4010-b6a6-c7cbcf80b9cd",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided setsid detachment, HTML index validation, and post-install reachability re-check produced a correct, persistent PEP 503 index server."
+        }
+      ]
+    },
+    {
+      "modes": [
+        {
+          "name": "skill_guided_success",
+          "definition": "Agent read and followed SKILL.md guidance through to correct output. Any tool-fallback or transient errors (import races, nc false-negatives, missing rg) were self-corrected without blocking completion. skill_effect_judgment is 'helps' throughout.",
+          "n_assigned": 11
+        },
+        {
+          "name": "workflow_guided_success",
+          "definition": "Agent followed workflow trace hints through to correct output, including self-correction on tool unavailability or process-lifecycle issues such as setsid detachment or awk syntax fallback. Arm is 'workflow' in all cases.",
+          "n_assigned": 12
+        },
+        {
+          "name": "raw_clean_success",
+          "definition": "Agent completed the task without any guidance artifact (raw arm), producing correct output in one or a small number of passes, including handling minor environmental quirks such as WebSocket transport fallback.",
+          "n_assigned": 3
+        },
+        {
+          "name": "timeout_budget_exhausted",
+          "definition": "Agent spent the full time budget in analysis, search, or exploration loops — grid-search, binary disassembly, parameter sweeps, ineffective file exploration — without producing the required output artifact. Includes cases where a prior timeout degraded the environment and made retries hang.",
+          "n_assigned": 5
+        },
+        {
+          "name": "background_service_lifecycle_failure",
+          "definition": "Agent launched a background service but failed to properly daemonize or detach it (e.g., used blocking foreground, silent nohup crash due to port conflict, missing setsid), causing the process to be dead when the oracle evaluated the endpoint.",
+          "n_assigned": 4
+        },
+        {
+          "name": "output_format_or_value_mismatch",
+          "definition": "Task was substantively attempted and the implementation logic was reasonable, but oracle rejected the submission due to a wrong field name, wrong ID case, missing expected test/output file, or deliverable structure that did not match the spec.",
+          "n_assigned": 3
+        },
+        {
+          "name": "environment_corrupted_by_agent_actions",
+          "definition": "The agent's own earlier actions — timed-out interactive Vim sessions destroying input files, excessive telnet probing consuming serial state, background processes from prior attempts moving files during retries — left the environment in a state that invalidated subsequent attempts.",
+          "n_assigned": 3
+        },
+        {
+          "name": "skill_guidance_ignored_or_diverged",
+          "definition": "Agent had explicit SKILL.md guidance but ignored a specific required step, took a disallowed path (e.g., live API instead of local files), or failed to apply a prescribed mitigation, directly causing task failure. Covers both outright ignoring and applying guidance so partially that it backfired.",
+          "n_assigned": 3
+        },
+        {
+          "name": "wrong_api_or_algorithm_usage",
+          "definition": "Agent chose a fundamentally incorrect algorithm, API call, regex semantics, or optimization lever for the task — wrong collective communication primitive, double-cancel in async cleanup, wrong word-boundary escape, over-restrictive lookahead scope — producing incorrect output or inability to make progress regardless of time budget.",
+          "n_assigned": 7
+        },
+        {
+          "name": "verification_mismatch_self_vs_oracle",
+          "definition": "Agent's own self-validation passed (cosine similarity, short Selenium timeout, Tm-valid primers) but the oracle applies stricter or different criteria (Frobenius/L2 magnitude, longer WebDriver timeout, specific expected answer), creating a hidden failure the agent could not detect from its own checks.",
+          "n_assigned": 4
+        },
+        {
+          "name": "capability_or_safety_limit",
+          "definition": "Task failed because it required capabilities at or beyond the agent's current limits — exact PRNG-sequence reproduction for stochastic renderers, robust OCR under Python-unavailable fallback, physics-constrained speedup with no remaining lever — or the agent refused the task on safety grounds.",
+          "n_assigned": 4
+        }
+      ],
+      "assignments": [
+        {
+          "id": "6dbd5f95-b9fd-4a54-b6f0-d6c99a1408bf",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md-guided C extension built and benchmarked successfully; transient import race self-recovered."
+        },
+        {
+          "id": "b4bf0737-beb8-45d4-b2c5-a513bc206f53",
+          "mode": "skill_guided_success",
+          "reason": "SKILL guidance drove /proc detection and telnet readiness confirmation of pre-existing QEMU instance despite nc false-negative."
+        },
+        {
+          "id": "98cc4d45-03a0-4317-903d-8a091b1f1639",
+          "mode": "timeout_budget_exhausted",
+          "reason": "Exhaustive architecture grid-search consumed the full retry budget; environment degraded after first timeout, making subsequent Python commands hang."
+        },
+        {
+          "id": "02a0ff7b-903e-46cc-b5bb-ec96ff99e604",
+          "mode": "environment_corrupted_by_agent_actions",
+          "reason": "Agent's repeated telnet readiness-check loop sent \\r\\n sequences that consumed getty serial state, leaving the oracle connection silent."
+        },
+        {
+          "id": "58a4531e-8a5c-4975-bbb6-5ca653049923",
+          "mode": "verification_mismatch_self_vs_oracle",
+          "reason": "Agent validated recovered vectors with cosine similarity only; oracle applied a stricter magnitude (L2/Frobenius) check that the unit-norm recovery failed."
+        },
+        {
+          "id": "917c42a3-0909-447f-8363-fc3513de0df4",
+          "mode": "timeout_budget_exhausted",
+          "reason": "Binary analysis loop consumed the full time budget; unresolved workflow placeholder hints reduced guidance utility, and no output file was ever written."
+        },
+        {
+          "id": "b2eed66c-54d1-42c8-8677-be6e85013b70",
+          "mode": "capability_or_safety_limit",
+          "reason": "Bit-identical reproduction of stochastic path-tracer output requires exact PRNG-sequence knowledge unavailable from observation, placing the task beyond current agent capability."
+        },
+        {
+          "id": "97dcc6c3-21d2-496c-87cc-2e44a87ea323",
+          "mode": "output_format_or_value_mismatch",
+          "reason": "Correct vulnerability identification and passing tests, but the CWE ID was written in wrong case (lowercase) despite explicit prompt formatting instructions."
+        },
+        {
+          "id": "2a271fe5-25f3-49cb-b187-d4bbb017dbb2",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace guided an explore-then-implement pattern; correct NumPy C API implementation passed build and benchmark on first attempt."
+        },
+        {
+          "id": "1ef9c72a-22d9-4c4c-893f-d71bbf86a309",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow traces provided the directory layout; setsid-based detachment self-corrected a dead server process for a persistent PyPI simple-index."
+        },
+        {
+          "id": "f5615059-e861-483e-8208-acd5c82b544e",
+          "mode": "workflow_guided_success",
+          "reason": "Correct CRLF injection fix with precise CWE mapping; tool fallback from rg to grep handled cleanly."
+        },
+        {
+          "id": "405fdfa6-6389-4ae7-8e32-4c8757c42db7",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md sample-first validation pattern followed precisely; clean single-pass full-file transform with correct regex escaping."
+        },
+        {
+          "id": "2589c745-b53a-49a7-86bc-7eba996cdf69",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided PEP 503 index setup with setsid detachment and persistence re-check confirming live server at task end."
+        },
+        {
+          "id": "875ed650-83e2-4b01-ae02-ebaad36a18a8",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md step-by-step guidance followed closely; NumPy C API implementation satisfied both correctness and speedup targets."
+        },
+        {
+          "id": "5cdfeb06-7fe7-4b9b-b040-9a23584534a1",
+          "mode": "environment_corrupted_by_agent_actions",
+          "reason": "First attempt ran Vim directly on the real input file and a 240-second timeout left it in a partially transformed state; subsequent script operated on already-corrupted data."
+        },
+        {
+          "id": "eed1b962-5a99-4db0-9679-3a95d3dc7e31",
+          "mode": "skill_guidance_ignored_or_diverged",
+          "reason": "Agent bypassed SKILL.md guidance and used a disallowed live Gradio API path, consuming the full budget without retrieving the required pinned historical data."
+        },
+        {
+          "id": "ecef9bbb-e47c-4a3d-bcd3-99ad047425ff",
+          "mode": "environment_corrupted_by_agent_actions",
+          "reason": "A background process from the timed-out first attempt continued moving files during the second attempt, leaving the documents directory empty."
+        },
+        {
+          "id": "06bb9686-b73a-4359-bdbc-e831457496c9",
+          "mode": "timeout_budget_exhausted",
+          "reason": "Agent spent the budget on deep constant-extraction disassembly instead of running the binary for I/O sampling; no implementation was produced."
+        },
+        {
+          "id": "c45f69aa-62f7-4c3d-873a-42d51310bc16",
+          "mode": "verification_mismatch_self_vs_oracle",
+          "reason": "Agent used a 2-second WebDriverWait while oracle uses 5 seconds, and Chromium blocked data:text/html from file:// origin in the agent harness, causing false-negative rejections of potentially valid payloads."
+        },
+        {
+          "id": "86686b11-c212-4275-bc4c-21b2060a0acc",
+          "mode": "background_service_lifecycle_failure",
+          "reason": "nohup crashed silently due to port already in use; agent misidentified the foreground PID as the background process and left no persistent service running."
+        },
+        {
+          "id": "287c010f-797b-40ee-b0c5-6409533e6d38",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow template guided awk+date arithmetic; agent self-corrected gawk capture-group syntax incompatibility by switching to POSIX regex."
+        },
+        {
+          "id": "6ababd25-60e1-4271-8daf-02bfeb24d1d4",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow traces guided multi-URL probing strategy; parallel apt-get and URL enumeration delivered successful legacy source compilation."
+        },
+        {
+          "id": "d762dc73-9095-4903-9a3b-a3c3209c5306",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace guided a read-then-implement-then-build-then-test sequence; correct first-pass C implementation passed all correctness and speedup checks."
+        },
+        {
+          "id": "68dcb8fe-eacd-42b8-a934-965233100a06",
+          "mode": "wrong_api_or_algorithm_usage",
+          "reason": "Agent used incorrect all_gather/all_reduce placement; ColumnParallelLinear pads and gathers output rather than slicing a pre-gathered input, a fundamental API misunderstanding."
+        },
+        {
+          "id": "0f0d97e5-b637-461a-bb56-a01fbb149a4c",
+          "mode": "background_service_lifecycle_failure",
+          "reason": "Agent recognised the background cleanup problem but chose a blocking foreground server; successful self-test masked the fact no persistent process survived session exit."
+        },
+        {
+          "id": "a83aeb1a-a54d-4d92-9ebb-9cba1d8b29e2",
+          "mode": "background_service_lifecycle_failure",
+          "reason": "nohup process lifecycle is uncertain in the containerised benchmark; oracle pip install runs independently after the agent turn ends, by which time the server was dead."
+        },
+        {
+          "id": "1dd1fbde-78ed-4932-a0f3-14721f4b87ce",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow hints on oligotm availability guided correct insertion detection and systematic primer enumeration satisfying Tm delta constraints."
+        },
+        {
+          "id": "3b73fae9-49a2-46a5-af87-ca3cfd22db67",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow traces supplied URL-probing strategy enabling archive discovery and single-pass legacy C compilation."
+        },
+        {
+          "id": "e05e0af5-b747-4971-a305-bb6acab4e61f",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow-guided package build and PEP 503 index; setsid detachment recovered dying background server process, with venv verifying correct pip resolution."
+        },
+        {
+          "id": "2bdf7349-8244-4527-9715-9d3b2de64e28",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md guidance on rg fallback and build directory followed; C extension with NumPy API and GIL release achieved required speedup on first attempt."
+        },
+        {
+          "id": "a1d38b51-ab00-4d4b-b637-247638bb98a7",
+          "mode": "skill_guided_success",
+          "reason": "Skill-guided closed-form least-squares output layer tuning with strict checkpoint-key architecture reconstruction and TorchScript export verified via state dict keys."
+        },
+        {
+          "id": "26adb76f-1e3e-47bd-a22d-63099e3d4d51",
+          "mode": "skill_guided_success",
+          "reason": "SKILL.md sample-then-apply workflow followed; parallel head/mid/tail sampling, dry-run validation, and allowed-commands audit produced correct full-file transform."
+        },
+        {
+          "id": "ae626809-5ea2-4d0f-9830-72acc2d1fb42",
+          "mode": "output_format_or_value_mismatch",
+          "reason": "Lowercase cwe-id format used instead of required uppercase CWE-ID, and agent selected overly generic CWE-20 instead of specific CWE-93."
+        },
+        {
+          "id": "f6a2c0f0-4387-493b-ba3f-008bc817dc4f",
+          "mode": "skill_guidance_ignored_or_diverged",
+          "reason": "Agent skipped the explicit SKILL.md Step 7 synonym-compliance pass; the file_change contents were never diffed against synonym families, producing an unverified constraint violation."
+        },
+        {
+          "id": "56cfea5d-f1cc-43ee-8219-221e5c923067",
+          "mode": "capability_or_safety_limit",
+          "reason": "Remaining performance headroom was physically constrained after jacobian=dense was already applied; timestep changes broke correctness, leaving no viable configuration reachable."
+        },
+        {
+          "id": "7c9f92ce-5b2f-4400-94a1-c0c40781bf23",
+          "mode": "raw_clean_success",
+          "reason": "Correct calendar constraint satisfaction with valid ICS output; WebSocket fallback handled gracefully and output verified by read-back."
+        },
+        {
+          "id": "860f1e0e-a6a2-4e5c-bdca-024a01449a90",
+          "mode": "raw_clean_success",
+          "reason": "Correct manual calendar intersection yielding earliest valid slot; single-pass file reads with no backtracking."
+        },
+        {
+          "id": "21cc2da8-b31d-4b1c-943e-fc8c54d8980c",
+          "mode": "raw_clean_success",
+          "reason": "Iterative C reimplementation reached byte-for-byte output match, recovering floating-point constants from binary under restricted tooling."
+        },
+        {
+          "id": "af890952-f875-40a4-bab4-7930c9973af5",
+          "mode": "capability_or_safety_limit",
+          "reason": "Python unavailable forced Node.js/Tesseract fallback that could not reliably extract VAT amounts, producing all-zero values across all invoice types."
+        },
+        {
+          "id": "532f30ef-4aa5-4b1f-83bf-4ce6f910e007",
+          "mode": "capability_or_safety_limit",
+          "reason": "Agent issued a safety refusal on the XSS bypass task, terminating execution without producing any output."
+        },
+        {
+          "id": "69acd11a-4279-4efa-a145-4c5c19ace219",
+          "mode": "verification_mismatch_self_vs_oracle",
+          "reason": "Agent validated only cosine similarity of recovered directions; oracle checks actual matrix values, which failed because unit-norm vectors lost the true row magnitudes."
+        },
+        {
+          "id": "3ee6da74-3a08-41f4-bfcd-b339f9720815",
+          "mode": "skill_guided_success",
+          "reason": "Skill guidance drove environment setup and a correct hierarchical Beta-Binomial Stan model with all required rstan::sampling parameters."
+        },
+        {
+          "id": "cfc868af-3f55-40a8-846b-75256d2ee19d",
+          "mode": "skill_guided_success",
+          "reason": "Skill guidance directed archive URL discovery and correct machine files and compiler flags for a successful legacy C build."
+        },
+        {
+          "id": "e1cca8b6-4e85-46ef-858c-b61c31e9dd26",
+          "mode": "skill_guided_success",
+          "reason": "Skill read before execution; correct -display none flag and PID-file cleanup enabled single-script QEMU launch with a blocking readiness poll."
+        },
+        {
+          "id": "090ed9cc-74ed-4adc-9438-40a80574fb6d",
+          "mode": "timeout_budget_exhausted",
+          "reason": "Agent ran a full correlated-subquery benchmark on the slow baseline before slice-based validation, hitting the 1200-second timeout; skill ordering guidance to slice-check first was not followed."
+        },
+        {
+          "id": "25abb148-8672-4843-8b0e-e8efdfefa966",
+          "mode": "wrong_api_or_algorithm_usage",
+          "reason": "Double-cancellation in async cleanup: task.gather propagates cancellation to children before the except block fires, making a second task.cancel() redundant and potentially harmful — a misunderstanding of asyncio cancellation semantics."
+        },
+        {
+          "id": "1fc57525-b892-4e37-86ce-375c0458330e",
+          "mode": "verification_mismatch_self_vs_oracle",
+          "reason": "Agent computed Tm on the template strand for the reverse primer rather than the written sequence; oracle expected a specific primer pair, and the submitted pair did not match despite passing agent-side Tm checks."
+        },
+        {
+          "id": "1eadd113-f8ab-45de-988c-cc4c38d77b3c",
+          "mode": "timeout_budget_exhausted",
+          "reason": "Agent prematurely killed the active John cracking job then spent the remaining budget on ineffective file exploration instead of restarting the cracker."
+        },
+        {
+          "id": "ed1319c5-1dee-4d07-9999-88d2f54f76d5",
+          "mode": "wrong_api_or_algorithm_usage",
+          "reason": "Agent swept parameters on an already-optimal solver rather than switching to the correct lever (implicit integrator with increased timestep) for the cable-stiffness model, wasting the entire exploration budget."
+        },
+        {
+          "id": "610ba28f-002b-48af-a9ae-4b4c3c1943f0",
+          "mode": "wrong_api_or_algorithm_usage",
+          "reason": "Flawed Bash fallback regex using gawk-specific match() with capture arrays produced incorrect severity counts; word-boundary escaping also likely mis-escaped in the single-quoted shell string."
+        },
+        {
+          "id": "03952add-97f5-4274-838c-fc03a0aba908",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow trace hints accelerated readelf/objdump reconnaissance; agent correctly identified a pre-existing valid ELF PT_LOAD extractor instead of overwriting it."
+        },
+        {
+          "id": "8156cc05-6d97-4e38-809e-0b5bc9109d3c",
+          "mode": "workflow_guided_success",
+          "reason": "Iterative synonym substitution with targeted log parsing and multi-round recompilation eliminated all overfull hbox warnings."
+        },
+        {
+          "id": "bb1f7519-178b-4b23-a9ea-4e969a359fd0",
+          "mode": "workflow_guided_success",
+          "reason": "Workflow-supplied perl substitution pattern combined with targeted recompile-then-grep loop verified synonym substitution to completion."
+        },
+        {
+          "id": "01900188-42b9-4a67-801d-7ea078487602",
+          "mode": "skill_guidance_ignored_or_diverged",
+          "reason": "SKILL.md explicitly advised hardening the custom introspector/request-path if annotation-only mitigation failed; agent stopped at annotation hardening without applying the prescribed fallback, leaving the exploit path open."
+        },
+        {
+          "id": "aa5648bf-5140-4203-8218-997e64580efe",
+          "mode": "wrong_api_or_algorithm_usage",
+          "reason": "DNA keyword check fired before quantum-computing check in the classification logic, misfiling quant-ph papers; fallback defaulted to music_history for any unmatched paper regardless of arXiv primary category."
+        },
+        {
+          "id": "36426c1e-ca92-4df2-80fc-8581ea991b6b",
+          "mode": "background_service_lifecycle_failure",
+          "reason": "SKILL.md warned about persistent server strategy but agent launched without proper daemonization; server died when the agent turn ended, failing oracle evaluation."
+        },
+        {
+          "id": "8cac9db3-10b5-40d8-bec3-e151126a5b0e",
+          "mode": "output_format_or_value_mismatch",
+          "reason": "Agent implemented the functionality but produced no pytest test file; the oracle found no passing tests because the required test suite artifact was absent."
+        },
+        {
+          "id": "faeadd23-b563-457e-8e39-cdd650ef3248",
+          "mode": "wrong_api_or_algorithm_usage",
+          "reason": "Agent re-ran the same wordlist that john.log showed had already been fully exhausted, rather than switching to incremental cracking mode; the password was never cracked."
+        },
+        {
+          "id": "3c4bf8b8-9cae-4429-bf1a-20ba208d15be",
+          "mode": "wrong_api_or_algorithm_usage",
+          "reason": "Agent misinterpreted 'last occurrence' as global rather than per-line scope, implementing an over-restrictive lookahead that suppressed all non-final matches across the entire string."
+        }
+      ]
+    }
+  ]
+}
