@@ -1,0 +1,24 @@
+# Large data tarballs (download separately per MANIFEST.md)
+*.tar.gz
+
+# Large data directories (extracted from tarballs)
+data/
+skillsbench_repo/
+original-tasks/
+
+# Results (generated, not source)
+results/
+
+# Python
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Claude session state
+.claude/
+
+# Design doc PDF (generated)
+design_document.pdf
+
+# Temporary
+/tmp/

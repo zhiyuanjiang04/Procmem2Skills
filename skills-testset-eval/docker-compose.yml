@@ -1,0 +1,41 @@
+services:
+  eval-pipeline:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: skills-eval-pipeline
+    environment:
+      - CONCURRENCY=${CONCURRENCY:-2}
+      - SKILL_CORPUS_PATH=/workspace/procmem2skills/data/processed/skill_corpus.jsonl
+      - SKILL_INDEX_PATH=/workspace/procmem2skills/data/embeddings/index/index.faiss
+      - SKILL_META_PATH=/workspace/procmem2skills/data/embeddings/skill_metadata.jsonl
+      - SKILL_EMBEDDINGS_PATH=/workspace/procmem2skills/data/embeddings/skill_embeddings.npy
+    volumes:
+      - ${HOME}/.claude:/home/evaluser/.claude
+      - ${HOME}/.claude.json:/home/evaluser/.claude.json
+      - ./results:/workspace/results
+    working_dir: /workspace/procmem2skills
+    stdin_open: true
+    tty: true
+    command:
+      - "-c"
+      - |
+        claude --version && \
+        python -m exec_eval_prefill.run_trial \
+          --dataset sb \
+          --tasks /workspace/procmem2skills/testsets/data/skillsbench_tasks.jsonl \
+          --out /workspace/results/sb_exec.jsonl \
+          --work-root /tmp/exec_prefill \
+          --model claude-sonnet-4-6 \
+          --pool-sizes 5 10 20 50 \
+          --noise-modes random hard easy \
+          --seeds 0 \
+          --concurrency ${CONCURRENCY:-2} \
+          --python python \
+          --limit 5 \
+          --resume && \
+        python -m exec_eval_prefill.aggregate \
+          --results /workspace/results/sb_exec.jsonl \
+          --json /workspace/results/exec_table.json \
+          --md /workspace/results/exec_table.md && \
+        echo '=== Results ===' && cat /workspace/results/exec_table.md

@@ -1,0 +1,110 @@
+[
+  {
+    "dataset": "sb",
+    "n_noise": 0,
+    "pool_size_avg": 2.4,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 1,
+    "pool_size_avg": 3.4,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 5,
+    "pool_size_avg": 7.4,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 10,
+    "pool_size_avg": 12.4,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 20,
+    "pool_size_avg": 22.4,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 0.95,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 50,
+    "pool_size_avg": 52.4,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 0.95,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 0,
+    "pool_size_avg": 1,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 1,
+    "pool_size_avg": 2,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 5,
+    "pool_size_avg": 6,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 10,
+    "pool_size_avg": 11,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 20,
+    "pool_size_avg": 21,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 50,
+    "pool_size_avg": 51,
+    "n_trials": 5,
+    "pass_rate_selection": 1.0,
+    "recall": 1.0,
+    "refusal": 0.0
+  }
+]
