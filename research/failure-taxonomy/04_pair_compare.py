@@ -268,7 +268,9 @@ def main():
         benchmarks = set(benchmarks_env.split(",")) if benchmarks_env else {"skillsbench", "terminalbench2", "terminalbenchpro"}
         out_path = OUT_MAIN
 
-    print(f"mode: {'PILOT' if pilot else 'MAIN'}  parallel={parallel}  pick={pick}  seed={seed}")
+    batch_limit = int(os.environ.get("BATCH_LIMIT", "0"))   # 0 = no limit
+
+    print(f"mode: {'PILOT' if pilot else 'MAIN'}  parallel={parallel}  pick={pick}  seed={seed}  batch_limit={batch_limit or 'none'}")
     print(f"settings={sorted(settings)}  benchmarks={sorted(benchmarks)}")
 
     records = [json.loads(l) for l in open(MANIFEST)]
@@ -276,6 +278,17 @@ def main():
     print(f"built {len(triples)} triples (workflow + skill arms both present)")
     n_with_raw = sum(1 for t in triples if t["raw"])
     print(f"  of which {n_with_raw} also have matching raw trial")
+
+    # If batch_limit set, keep cached triples + add at most batch_limit new ones.
+    # This lets us run in chunks to avoid OAuth quota / rate limits.
+    if batch_limit > 0:
+        cached_keys = {p.stem for p in CACHE.glob("*.json")}
+        def key(t):
+            return re.sub(r"[^A-Za-z0-9_-]", "_", f"{t['benchmark']}_{t['setting']}_{t['task_name']}")
+        already = [t for t in triples if key(t) in cached_keys]
+        pending = [t for t in triples if key(t) not in cached_keys]
+        triples = already + pending[:batch_limit]
+        print(f"  batch_limit={batch_limit}: {len(already)} already cached + {min(batch_limit, len(pending))} new (of {len(pending)} pending)")
 
     taxonomy_str = load_taxonomy()
 
