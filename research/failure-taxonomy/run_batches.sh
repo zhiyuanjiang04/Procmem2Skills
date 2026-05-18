@@ -24,6 +24,7 @@ USAGE_LIMIT_WAIT=$((7 * 60 * 60))    # 7 hours
 iter=0
 while true; do
   iter=$((iter + 1))
+  iter_start=$(date +%s)
   cached_before=$(ls "$CACHE" 2>/dev/null | wc -l | tr -d ' ')
   echo ""
   echo "=== iter $iter — cached before: $cached_before / $TARGET — $(date) ==="
@@ -38,6 +39,8 @@ while true; do
   BATCH_LIMIT=$BATCH_LIMIT PARALLEL=$PARALLEL python -u failure-taxonomy/04_pair_compare.py \
       > >(tee "$BATCH_LOG") 2>&1
   rc=$?
+  iter_end=$(date +%s)
+  iter_duration=$((iter_end - iter_start))
 
   cached_after=$(ls "$CACHE" 2>/dev/null | wc -l | tr -d ' ')
   new_this_iter=$((cached_after - cached_before))
@@ -48,7 +51,7 @@ while true; do
   error_lines=$(grep -c "ERROR" "$BATCH_LOG" 2>/dev/null | head -1)
   error_lines=${error_lines:-0}
 
-  echo "  iter $iter rc=$rc new_triples=$new_this_iter (cached_after=$cached_after)"
+  echo "  iter $iter rc=$rc duration=${iter_duration}s new_triples=$new_this_iter (cached_after=$cached_after)"
   echo "  rate-limit signals: $rate_limit_msgs  ERROR lines: $error_lines"
 
   if [ "$cached_after" -ge "$TARGET" ]; then
@@ -56,18 +59,26 @@ while true; do
     break
   fi
 
-  # Decide wait length
+  # Decide WHICH window's reset to target, then compute absolute wake time
+  # so the elapsed iter_duration counts inside the window (no double-counting).
   if [ "$rate_limit_msgs" -gt 0 ] || [ "$new_this_iter" -lt 10 ]; then
-    wait_for=$USAGE_LIMIT_WAIT
+    window=$USAGE_LIMIT_WAIT
     reason="usage-limit detected (rate_msgs=$rate_limit_msgs, new=$new_this_iter)"
   else
-    wait_for=$NORMAL_WAIT
+    window=$NORMAL_WAIT
     reason="normal between-batch wait"
   fi
 
-  next_at=$(date -v+${wait_for}S 2>/dev/null || date -d "+${wait_for}s" 2>/dev/null)
-  echo "  [$reason] sleeping ${wait_for}s — next iter at $next_at"
-  sleep "$wait_for"
+  # Target wake time = iter_start + window (the limit was hit somewhere during this iter,
+  # so we sleep until window-many seconds past iter_start, not past now).
+  target_wake=$((iter_start + window))
+  sleep_for=$((target_wake - iter_end))
+  if [ "$sleep_for" -lt 0 ]; then sleep_for=0; fi
+
+  next_at=$(date -r "$target_wake" 2>/dev/null || date -d "@$target_wake" 2>/dev/null)
+  echo "  [$reason] window=${window}s, already spent ${iter_duration}s in iter, sleeping ${sleep_for}s"
+  echo "  next iter starts at $next_at"
+  sleep "$sleep_for"
 done
 
 echo ""
