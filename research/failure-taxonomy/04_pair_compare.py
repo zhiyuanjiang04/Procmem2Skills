@@ -9,6 +9,10 @@ Outputs one record per (task, setting) triple with:
   - deltas (workflow_vs_raw, skill_vs_raw, skill_vs_workflow)
   - skill_mechanism / workflow_mechanism
 
+Includes auto-stop kill switch: if too many consecutive or total failures occur
+(likely rate-limit hit), pending futures short-circuit. This lets the caller
+set BATCH_LIMIT high (or 0 = unlimited) without wasting time on a dead session.
+
 Env vars:
   PARALLEL=N             concurrent calls (default 1)
   PILOT=1                run pilot mode (24 triples, skillsbench 5s0f only)
@@ -21,9 +25,14 @@ import json
 import os
 import re
 import subprocess
+import threading
 from collections import defaultdict
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
+
+KILL_SWITCH = threading.Event()
+CONSECUTIVE_FAIL_THRESHOLD = 5     # trigger on N consecutive failures
+TOTAL_FAIL_THRESHOLD = 10           # AND at least M total failures
 
 ROOT = Path(__file__).resolve().parent
 DATA_BASE = ROOT.parent.parent
@@ -294,6 +303,8 @@ def main():
 
     def task_fn(idx_t):
         idx, t = idx_t
+        if KILL_SWITCH.is_set():
+            return idx, t, {"error": "skipped (kill switch on, prior failures)"}, "skipped"
         try:
             return idx, t, label_triple(t, taxonomy_str), "ok"
         except Exception as e:
@@ -303,6 +314,8 @@ def main():
     n_done = 0
     n_cached = 0
     n_error = 0
+    n_skipped = 0
+    consecutive_fail = 0
     total_cost = 0.0
     with ThreadPoolExecutor(max_workers=parallel) as pool:
         futures = [pool.submit(task_fn, (i, t)) for i, t in enumerate(triples)]
@@ -311,11 +324,21 @@ def main():
             results[idx] = out
             n_done += 1
             tag_arms = ",".join(out.get("arms_present", [])) if status == "ok" else ""
+            if status == "skipped":
+                n_skipped += 1
+                # don't print per-skipped (too noisy)
+                continue
             if status == "error":
                 n_error += 1
+                consecutive_fail += 1
                 print(f"[{n_done}/{len(triples)}] {t['benchmark']}/{t['setting']}/{t['task_name']} ERROR: {out.get('error', '')[:120]}",
                       flush=True)
+                if consecutive_fail >= CONSECUTIVE_FAIL_THRESHOLD and n_error >= TOTAL_FAIL_THRESHOLD and not KILL_SWITCH.is_set():
+                    KILL_SWITCH.set()
+                    print(f"  >>> KILL SWITCH ON: {consecutive_fail} consecutive failures, {n_error} total. "
+                          f"Pending tasks will be skipped. <<<", flush=True)
             else:
+                consecutive_fail = 0
                 if out.get("_cached"):
                     n_cached += 1
                 cost = (out.get("_meta") or {}).get("cost_usd") or 0
@@ -333,7 +356,7 @@ def main():
                 f.write(json.dumps(r, ensure_ascii=False) + "\n")
 
     print(f"\nsaved {len(results)} paired labels → {out_path}")
-    print(f"  cached: {n_cached}, errors: {n_error}, total cost: ${total_cost:.3f}")
+    print(f"  cached: {n_cached}, errors: {n_error}, skipped: {n_skipped}, total cost: ${total_cost:.3f}")
 
 
 if __name__ == "__main__":

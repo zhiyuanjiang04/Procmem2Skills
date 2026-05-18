@@ -20,7 +20,7 @@ source venv312/bin/activate
 
 CACHE=failure-taxonomy/outputs/_pair_cache
 TARGET=528
-BATCH_LIMIT=50
+BATCH_LIMIT=600           # high enough to cover all remaining; 04 has kill switch on rate-limit
 PARALLEL=2
 
 NEXT_RESET_OFFSET_SEC=${NEXT_RESET_OFFSET_SEC:-$((2 * 3600))}   # how far away the *next* session reset is, in sec
