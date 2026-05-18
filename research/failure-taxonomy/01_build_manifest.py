@@ -147,6 +147,30 @@ def build_record(result_path: Path, skill_index: dict | None = None) -> dict | N
     task_name = data.get("task_name")
     instruction_path = derive_instruction_path(result_path, task_name)
 
+    # Agent execution metrics (for cost/time comparison across arms)
+    agent_result = data.get("agent_result") or {}
+    agent_input_tokens = agent_result.get("n_input_tokens")
+    agent_cache_tokens = agent_result.get("n_cache_tokens")
+    agent_output_tokens = agent_result.get("n_output_tokens")
+    agent_cost_usd = agent_result.get("cost_usd")
+    # Per-phase durations
+    ph = {k: data.get(k) or {} for k in
+          ("environment_setup", "agent_setup", "agent_execution", "verifier")}
+    def phase_dur(p):
+        from datetime import datetime
+        s, f = p.get("started_at"), p.get("finished_at")
+        if not s or not f:
+            return None
+        try:
+            return (datetime.fromisoformat(f.replace("Z", "+00:00"))
+                    - datetime.fromisoformat(s.replace("Z", "+00:00"))).total_seconds()
+        except Exception:
+            return None
+    agent_execution_sec = phase_dur(ph["agent_execution"])
+    agent_setup_sec = phase_dur(ph["agent_setup"])
+    env_setup_sec = phase_dur(ph["environment_setup"])
+    verifier_sec = phase_dur(ph["verifier"])
+
     skill_path = None
     if skill_index is not None and meta["arm"] == "skill":
         skill_path = skill_index.get((meta["benchmark"], meta["setting"], task_name))
@@ -168,6 +192,14 @@ def build_record(result_path: Path, skill_index: dict | None = None) -> dict | N
         "model": agent_cfg.get("model_name"),
         "started_at": started,
         "duration_sec": duration_sec,
+        "agent_input_tokens": agent_input_tokens,
+        "agent_cache_tokens": agent_cache_tokens,
+        "agent_output_tokens": agent_output_tokens,
+        "agent_cost_usd": agent_cost_usd,
+        "agent_execution_sec": agent_execution_sec,
+        "agent_setup_sec": agent_setup_sec,
+        "env_setup_sec": env_setup_sec,
+        "verifier_sec": verifier_sec,
         "result_path": str(result_path.relative_to(base)),
         "codex_path": str(codex_path.relative_to(base)) if codex_path else None,
         "instruction_path": str(instruction_path.relative_to(base)) if instruction_path else None,
