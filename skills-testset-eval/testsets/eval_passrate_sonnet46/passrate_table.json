@@ -1,0 +1,110 @@
+[
+  {
+    "dataset": "sb",
+    "n_noise": 0,
+    "pool_size_avg": 2.7,
+    "n_trials": 88,
+    "pass_rate_selection": 0.9773,
+    "recall": 0.8011,
+    "refusal": 0.0227
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 1,
+    "pool_size_avg": 3.7,
+    "n_trials": 88,
+    "pass_rate_selection": 1.0,
+    "recall": 0.7888,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 5,
+    "pool_size_avg": 7.7,
+    "n_trials": 88,
+    "pass_rate_selection": 0.9773,
+    "recall": 0.7956,
+    "refusal": 0.0114
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 10,
+    "pool_size_avg": 12.7,
+    "n_trials": 88,
+    "pass_rate_selection": 0.9886,
+    "recall": 0.7903,
+    "refusal": 0.0114
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 20,
+    "pool_size_avg": 22.7,
+    "n_trials": 88,
+    "pass_rate_selection": 0.9773,
+    "recall": 0.7852,
+    "refusal": 0.0114
+  },
+  {
+    "dataset": "sb",
+    "n_noise": 50,
+    "pool_size_avg": 52.7,
+    "n_trials": 88,
+    "pass_rate_selection": 0.9773,
+    "recall": 0.7497,
+    "refusal": 0.0114
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 0,
+    "pool_size_avg": 1.6,
+    "n_trials": 62,
+    "pass_rate_selection": 1.0,
+    "recall": 0.8151,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 1,
+    "pool_size_avg": 2.6,
+    "n_trials": 62,
+    "pass_rate_selection": 1.0,
+    "recall": 0.8352,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 5,
+    "pool_size_avg": 6.6,
+    "n_trials": 62,
+    "pass_rate_selection": 1.0,
+    "recall": 0.8419,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 10,
+    "pool_size_avg": 11.6,
+    "n_trials": 62,
+    "pass_rate_selection": 0.9839,
+    "recall": 0.8151,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 20,
+    "pool_size_avg": 21.6,
+    "n_trials": 62,
+    "pass_rate_selection": 1.0,
+    "recall": 0.8231,
+    "refusal": 0.0
+  },
+  {
+    "dataset": "tb",
+    "n_noise": 50,
+    "pool_size_avg": 51.6,
+    "n_trials": 62,
+    "pass_rate_selection": 0.9677,
+    "recall": 0.7774,
+    "refusal": 0.0161
+  }
+]
