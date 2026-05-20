@@ -1,0 +1,753 @@
+{
+  "n_records": 528,
+  "mode_freq_by_arm": [
+    {
+      "mode": "skill_guided_success",
+      "raw": 55,
+      "workflow": 2,
+      "skill": 325
+    },
+    {
+      "mode": "workflow_guided_success",
+      "raw": 0,
+      "workflow": 288,
+      "skill": 0
+    },
+    {
+      "mode": "autonomous_clean_success",
+      "raw": 257,
+      "workflow": 4,
+      "skill": 1
+    },
+    {
+      "mode": "static_verification_without_runtime",
+      "raw": 66,
+      "workflow": 66,
+      "skill": 62
+    },
+    {
+      "mode": "algorithmic_logic_error",
+      "raw": 44,
+      "workflow": 58,
+      "skill": 39
+    },
+    {
+      "mode": "timeout_budget_exhaustion",
+      "raw": 9,
+      "workflow": 56,
+      "skill": 23
+    },
+    {
+      "mode": "output_format_schema_mismatch",
+      "raw": 39,
+      "workflow": 20,
+      "skill": 17
+    },
+    {
+      "mode": "skill_guidance_misapplied_or_ignored",
+      "raw": 4,
+      "workflow": 2,
+      "skill": 53
+    },
+    {
+      "mode": "environment_infrastructure_failure",
+      "raw": 28,
+      "workflow": 9,
+      "skill": 1
+    },
+    {
+      "mode": "background_service_lifecycle_failure",
+      "raw": 14,
+      "workflow": 13,
+      "skill": 4
+    },
+    {
+      "mode": "shell_code_corruption",
+      "raw": 6,
+      "workflow": 10,
+      "skill": 1
+    },
+    {
+      "mode": "capability_or_safety_limit",
+      "raw": 6,
+      "workflow": 0,
+      "skill": 2
+    }
+  ],
+  "paired_mode_delta": {
+    "workflow_vs_raw": {
+      "comparison": "workflow_vs_raw",
+      "n_pairs": 528,
+      "rows": [
+        {
+          "mode": "environment_infrastructure_failure",
+          "fixed_by_treatment": 25,
+          "introduced_by_treatment": 7,
+          "net_delta": 18
+        },
+        {
+          "mode": "output_format_schema_mismatch",
+          "fixed_by_treatment": 21,
+          "introduced_by_treatment": 5,
+          "net_delta": 16
+        },
+        {
+          "mode": "capability_or_safety_limit",
+          "fixed_by_treatment": 6,
+          "introduced_by_treatment": 0,
+          "net_delta": 6
+        },
+        {
+          "mode": "skill_guidance_misapplied_or_ignored",
+          "fixed_by_treatment": 3,
+          "introduced_by_treatment": 2,
+          "net_delta": 1
+        },
+        {
+          "mode": "background_service_lifecycle_failure",
+          "fixed_by_treatment": 8,
+          "introduced_by_treatment": 7,
+          "net_delta": 1
+        },
+        {
+          "mode": "autonomous_clean_success",
+          "fixed_by_treatment": 1,
+          "introduced_by_treatment": 0,
+          "net_delta": 1
+        },
+        {
+          "mode": "workflow_guided_success",
+          "fixed_by_treatment": 0,
+          "introduced_by_treatment": 1,
+          "net_delta": -1
+        },
+        {
+          "mode": "shell_code_corruption",
+          "fixed_by_treatment": 5,
+          "introduced_by_treatment": 9,
+          "net_delta": -4
+        },
+        {
+          "mode": "static_verification_without_runtime",
+          "fixed_by_treatment": 33,
+          "introduced_by_treatment": 44,
+          "net_delta": -11
+        },
+        {
+          "mode": "algorithmic_logic_error",
+          "fixed_by_treatment": 29,
+          "introduced_by_treatment": 43,
+          "net_delta": -14
+        },
+        {
+          "mode": "timeout_budget_exhaustion",
+          "fixed_by_treatment": 2,
+          "introduced_by_treatment": 48,
+          "net_delta": -46
+        }
+      ]
+    },
+    "skill_vs_raw": {
+      "comparison": "skill_vs_raw",
+      "n_pairs": 528,
+      "rows": [
+        {
+          "mode": "environment_infrastructure_failure",
+          "fixed_by_treatment": 27,
+          "introduced_by_treatment": 0,
+          "net_delta": 27
+        },
+        {
+          "mode": "output_format_schema_mismatch",
+          "fixed_by_treatment": 30,
+          "introduced_by_treatment": 8,
+          "net_delta": 22
+        },
+        {
+          "mode": "background_service_lifecycle_failure",
+          "fixed_by_treatment": 10,
+          "introduced_by_treatment": 2,
+          "net_delta": 8
+        },
+        {
+          "mode": "shell_code_corruption",
+          "fixed_by_treatment": 7,
+          "introduced_by_treatment": 1,
+          "net_delta": 6
+        },
+        {
+          "mode": "capability_or_safety_limit",
+          "fixed_by_treatment": 5,
+          "introduced_by_treatment": 1,
+          "net_delta": 4
+        },
+        {
+          "mode": "algorithmic_logic_error",
+          "fixed_by_treatment": 31,
+          "introduced_by_treatment": 28,
+          "net_delta": 3
+        },
+        {
+          "mode": "autonomous_clean_success",
+          "fixed_by_treatment": 2,
+          "introduced_by_treatment": 0,
+          "net_delta": 2
+        },
+        {
+          "mode": "skill_guided_success",
+          "fixed_by_treatment": 0,
+          "introduced_by_treatment": 1,
+          "net_delta": -1
+        },
+        {
+          "mode": "static_verification_without_runtime",
+          "fixed_by_treatment": 28,
+          "introduced_by_treatment": 34,
+          "net_delta": -6
+        },
+        {
+          "mode": "timeout_budget_exhaustion",
+          "fixed_by_treatment": 2,
+          "introduced_by_treatment": 20,
+          "net_delta": -18
+        },
+        {
+          "mode": "skill_guidance_misapplied_or_ignored",
+          "fixed_by_treatment": 4,
+          "introduced_by_treatment": 52,
+          "net_delta": -48
+        }
+      ]
+    },
+    "skill_vs_workflow": {
+      "comparison": "skill_vs_workflow",
+      "n_pairs": 528,
+      "rows": [
+        {
+          "mode": "timeout_budget_exhaustion",
+          "fixed_by_treatment": 33,
+          "introduced_by_treatment": 6,
+          "net_delta": 27
+        },
+        {
+          "mode": "algorithmic_logic_error",
+          "fixed_by_treatment": 31,
+          "introduced_by_treatment": 20,
+          "net_delta": 11
+        },
+        {
+          "mode": "shell_code_corruption",
+          "fixed_by_treatment": 11,
+          "introduced_by_treatment": 1,
+          "net_delta": 10
+        },
+        {
+          "mode": "background_service_lifecycle_failure",
+          "fixed_by_treatment": 11,
+          "introduced_by_treatment": 2,
+          "net_delta": 9
+        },
+        {
+          "mode": "environment_infrastructure_failure",
+          "fixed_by_treatment": 8,
+          "introduced_by_treatment": 1,
+          "net_delta": 7
+        },
+        {
+          "mode": "output_format_schema_mismatch",
+          "fixed_by_treatment": 16,
+          "introduced_by_treatment": 10,
+          "net_delta": 6
+        },
+        {
+          "mode": "static_verification_without_runtime",
+          "fixed_by_treatment": 28,
+          "introduced_by_treatment": 25,
+          "net_delta": 3
+        },
+        {
+          "mode": "workflow_guided_success",
+          "fixed_by_treatment": 1,
+          "introduced_by_treatment": 0,
+          "net_delta": 1
+        },
+        {
+          "mode": "capability_or_safety_limit",
+          "fixed_by_treatment": 0,
+          "introduced_by_treatment": 2,
+          "net_delta": -2
+        },
+        {
+          "mode": "skill_guidance_misapplied_or_ignored",
+          "fixed_by_treatment": 2,
+          "introduced_by_treatment": 40,
+          "net_delta": -38
+        }
+      ]
+    }
+  },
+  "net_effect_dist": {
+    "workflow_vs_raw": {
+      "unchanged": 261,
+      "mixed": 37,
+      "regressed": 130,
+      "fixed": 100
+    },
+    "skill_vs_raw": {
+      "unchanged": 272,
+      "regressed": 108,
+      "fixed": 114,
+      "mixed": 34
+    },
+    "skill_vs_workflow": {
+      "unchanged": 295,
+      "regressed": 89,
+      "fixed": 121,
+      "mixed": 23
+    }
+  },
+  "mechanism_dist": {
+    "skill_mechanism": {
+      "procedural_anchor": 347,
+      "counterproductive": 87,
+      "failure_warning": 64,
+      "knowledge_injection": 24,
+      "none": 6
+    },
+    "workflow_mechanism": {
+      "procedural_anchor": 381,
+      "knowledge_injection": 31,
+      "counterproductive": 65,
+      "none": 41,
+      "failure_warning": 10
+    }
+  },
+  "by_setting": {
+    "1s4f": {
+      "workflow_vs_raw": {
+        "unchanged": 37,
+        "mixed": 6,
+        "regressed": 28,
+        "fixed": 17
+      },
+      "skill_vs_raw": {
+        "unchanged": 48,
+        "regressed": 16,
+        "fixed": 18,
+        "mixed": 6
+      },
+      "skill_vs_workflow": {
+        "unchanged": 49,
+        "regressed": 14,
+        "fixed": 25
+      }
+    },
+    "5s0f": {
+      "workflow_vs_raw": {
+        "mixed": 8,
+        "fixed": 17,
+        "regressed": 18,
+        "unchanged": 45
+      },
+      "skill_vs_raw": {
+        "fixed": 19,
+        "unchanged": 51,
+        "regressed": 12,
+        "mixed": 6
+      },
+      "skill_vs_workflow": {
+        "fixed": 20,
+        "unchanged": 53,
+        "regressed": 13,
+        "mixed": 2
+      }
+    },
+    "3s2f": {
+      "workflow_vs_raw": {
+        "unchanged": 46,
+        "regressed": 17,
+        "fixed": 18,
+        "mixed": 7
+      },
+      "skill_vs_raw": {
+        "unchanged": 38,
+        "regressed": 21,
+        "fixed": 22,
+        "mixed": 7
+      },
+      "skill_vs_workflow": {
+        "unchanged": 49,
+        "regressed": 18,
+        "fixed": 18,
+        "mixed": 3
+      }
+    },
+    "4s1f": {
+      "workflow_vs_raw": {
+        "regressed": 20,
+        "fixed": 18,
+        "unchanged": 45,
+        "mixed": 5
+      },
+      "skill_vs_raw": {
+        "regressed": 16,
+        "unchanged": 46,
+        "fixed": 22,
+        "mixed": 4
+      },
+      "skill_vs_workflow": {
+        "unchanged": 49,
+        "regressed": 12,
+        "fixed": 22,
+        "mixed": 5
+      }
+    },
+    "2s3f": {
+      "workflow_vs_raw": {
+        "fixed": 12,
+        "unchanged": 50,
+        "regressed": 21,
+        "mixed": 5
+      },
+      "skill_vs_raw": {
+        "fixed": 20,
+        "unchanged": 51,
+        "mixed": 2,
+        "regressed": 15
+      },
+      "skill_vs_workflow": {
+        "unchanged": 48,
+        "regressed": 13,
+        "mixed": 5,
+        "fixed": 22
+      }
+    },
+    "0s5f": {
+      "workflow_vs_raw": {
+        "unchanged": 38,
+        "fixed": 18,
+        "regressed": 26,
+        "mixed": 6
+      },
+      "skill_vs_raw": {
+        "unchanged": 38,
+        "mixed": 9,
+        "regressed": 28,
+        "fixed": 13
+      },
+      "skill_vs_workflow": {
+        "unchanged": 47,
+        "regressed": 19,
+        "fixed": 14,
+        "mixed": 8
+      }
+    }
+  },
+  "by_benchmark": {
+    "skillsbench": {
+      "workflow_vs_raw": {
+        "unchanged": 61,
+        "mixed": 16,
+        "regressed": 30,
+        "fixed": 37
+      },
+      "skill_vs_raw": {
+        "unchanged": 69,
+        "regressed": 26,
+        "fixed": 38,
+        "mixed": 11
+      },
+      "skill_vs_workflow": {
+        "unchanged": 77,
+        "regressed": 30,
+        "fixed": 34,
+        "mixed": 3
+      }
+    },
+    "terminalbenchpro": {
+      "workflow_vs_raw": {
+        "unchanged": 124,
+        "regressed": 27,
+        "fixed": 43,
+        "mixed": 4
+      },
+      "skill_vs_raw": {
+        "unchanged": 107,
+        "regressed": 35,
+        "fixed": 48,
+        "mixed": 8
+      },
+      "skill_vs_workflow": {
+        "unchanged": 126,
+        "fixed": 32,
+        "regressed": 35,
+        "mixed": 5
+      }
+    },
+    "terminalbench2": {
+      "workflow_vs_raw": {
+        "regressed": 73,
+        "mixed": 17,
+        "fixed": 20,
+        "unchanged": 76
+      },
+      "skill_vs_raw": {
+        "regressed": 47,
+        "unchanged": 96,
+        "mixed": 15,
+        "fixed": 28
+      },
+      "skill_vs_workflow": {
+        "unchanged": 92,
+        "fixed": 55,
+        "regressed": 24,
+        "mixed": 15
+      }
+    }
+  },
+  "success_rate": {
+    "overall": {
+      "raw": {
+        "success": 312,
+        "total": 528,
+        "rate": 0.5909
+      },
+      "workflow": {
+        "success": 295,
+        "total": 528,
+        "rate": 0.5587
+      },
+      "skill": {
+        "success": 327,
+        "total": 528,
+        "rate": 0.6193
+      }
+    },
+    "per_setting": {
+      "1s4f": {
+        "raw": {
+          "success": 52,
+          "total": 88,
+          "rate": 0.5909
+        },
+        "workflow": {
+          "success": 43,
+          "total": 88,
+          "rate": 0.4886
+        },
+        "skill": {
+          "success": 54,
+          "total": 88,
+          "rate": 0.6136
+        }
+      },
+      "5s0f": {
+        "raw": {
+          "success": 52,
+          "total": 88,
+          "rate": 0.5909
+        },
+        "workflow": {
+          "success": 53,
+          "total": 88,
+          "rate": 0.6023
+        },
+        "skill": {
+          "success": 59,
+          "total": 88,
+          "rate": 0.6705
+        }
+      },
+      "3s2f": {
+        "raw": {
+          "success": 52,
+          "total": 88,
+          "rate": 0.5909
+        },
+        "workflow": {
+          "success": 56,
+          "total": 88,
+          "rate": 0.6364
+        },
+        "skill": {
+          "success": 57,
+          "total": 88,
+          "rate": 0.6477
+        }
+      },
+      "4s1f": {
+        "raw": {
+          "success": 52,
+          "total": 88,
+          "rate": 0.5909
+        },
+        "workflow": {
+          "success": 51,
+          "total": 88,
+          "rate": 0.5795
+        },
+        "skill": {
+          "success": 61,
+          "total": 88,
+          "rate": 0.6932
+        }
+      },
+      "2s3f": {
+        "raw": {
+          "success": 52,
+          "total": 88,
+          "rate": 0.5909
+        },
+        "workflow": {
+          "success": 47,
+          "total": 88,
+          "rate": 0.5341
+        },
+        "skill": {
+          "success": 56,
+          "total": 88,
+          "rate": 0.6364
+        }
+      },
+      "0s5f": {
+        "raw": {
+          "success": 52,
+          "total": 88,
+          "rate": 0.5909
+        },
+        "workflow": {
+          "success": 45,
+          "total": 88,
+          "rate": 0.5114
+        },
+        "skill": {
+          "success": 40,
+          "total": 88,
+          "rate": 0.4545
+        }
+      }
+    }
+  },
+  "cost_token_duration": {
+    "per_arm": {
+      "raw": {
+        "input_tokens": {
+          "n": 528,
+          "mean": 699084.18,
+          "median": 252490.5,
+          "stdev": 1147323.82
+        },
+        "cache_tokens": {
+          "n": 528,
+          "mean": 658644.36,
+          "median": 233088.0,
+          "stdev": 1102657.67
+        },
+        "output_tokens": {
+          "n": 528,
+          "mean": 15389.48,
+          "median": 10687.5,
+          "stdev": 15286.37
+        },
+        "duration_sec": {
+          "n": 528,
+          "mean": 452.16,
+          "median": 259.11,
+          "stdev": 482.25
+        }
+      },
+      "workflow": {
+        "input_tokens": {
+          "n": 528,
+          "mean": 445176.54,
+          "median": 188330.0,
+          "stdev": 762499.53
+        },
+        "cache_tokens": {
+          "n": 528,
+          "mean": 395828.85,
+          "median": 153600.0,
+          "stdev": 738148.15
+        },
+        "output_tokens": {
+          "n": 528,
+          "mean": 8414.75,
+          "median": 7316.5,
+          "stdev": 5951.29
+        },
+        "duration_sec": {
+          "n": 528,
+          "mean": 341.42,
+          "median": 173.14,
+          "stdev": 408.73
+        }
+      },
+      "skill": {
+        "duration_sec": {
+          "n": 528,
+          "mean": 321.79,
+          "median": 161.28,
+          "stdev": 378.31
+        }
+      }
+    },
+    "paired_deltas": {
+      "workflow_vs_raw": {
+        "input_tokens": {
+          "n": 528,
+          "mean": -253907.65,
+          "median": -35692.5,
+          "stdev": 1028863.72
+        },
+        "output_tokens": {
+          "n": 528,
+          "mean": -6974.73,
+          "median": -2494.0,
+          "stdev": 13024.33
+        },
+        "duration_sec": {
+          "n": 528,
+          "mean": -110.73,
+          "median": -46.02,
+          "stdev": 422.28
+        }
+      },
+      "skill_vs_raw": {
+        "duration_sec": {
+          "n": 528,
+          "mean": -130.36,
+          "median": -48.93,
+          "stdev": 418.71
+        }
+      },
+      "skill_vs_workflow": {
+        "duration_sec": {
+          "n": 528,
+          "mean": -19.63,
+          "median": 0.13,
+          "stdev": 435.52
+        }
+      }
+    }
+  },
+  "success_rate_bootstrap": {
+    "workflow_vs_raw": {
+      "mean": -0.0322,
+      "ci_lo": -0.0814,
+      "ci_hi": 0.0208,
+      "n": 528
+    },
+    "skill_vs_raw": {
+      "mean": 0.0284,
+      "ci_lo": -0.0227,
+      "ci_hi": 0.0795,
+      "n": 528
+    },
+    "skill_vs_workflow": {
+      "mean": 0.0606,
+      "ci_lo": 0.0076,
+      "ci_hi": 0.1136,
+      "n": 528
+    }
+  }
+}
