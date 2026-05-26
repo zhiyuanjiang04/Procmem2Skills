@@ -1,0 +1,998 @@
+=== Parallel runner: limit=20, conc=4, trials_per=3, total=240 ===
+[12:55:05] 60/240 unique configs done (240 lines), 180 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__court-form-filling__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__court-form-filling__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__court-form-filling__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__court-form-filling__sz5__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8814.73it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 13176.73it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9079.86it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10504.76it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__court-form-filling__sz50__hard__s0 -> pass=None
+  [START] sb__court-form-filling__sz50__easy__s0
+  [DONE]  sb__court-form-filling__sz50__easy__s0 -> pass=None
+  [START] sb__court-form-filling__sz50__random__s0
+  [DONE]  sb__court-form-filling__sz50__random__s0 -> pass=None
+[1/3 8s] sb__court-form-filling__sz50__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 8s] sb__court-form-filling__sz50__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 8s] sb__court-form-filling__sz50__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__court-form-filling__sz10__hard__s0 -> pass=None
+  [START] sb__court-form-filling__sz10__easy__s0
+  [DONE]  sb__court-form-filling__sz10__easy__s0 -> pass=None
+  [START] sb__court-form-filling__sz10__random__s0
+  [DONE]  sb__court-form-filling__sz10__random__s0 -> pass=None
+[1/3 9s] sb__court-form-filling__sz10__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 9s] sb__court-form-filling__sz10__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 9s] sb__court-form-filling__sz10__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__court-form-filling__sz20__hard__s0 -> pass=None
+  [START] sb__court-form-filling__sz20__easy__s0
+  [DONE]  sb__court-form-filling__sz20__easy__s0 -> pass=None
+  [START] sb__court-form-filling__sz20__random__s0
+  [DONE]  sb__court-form-filling__sz20__random__s0 -> pass=None
+[1/3 10s] sb__court-form-filling__sz20__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__court-form-filling__sz20__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__court-form-filling__sz20__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__court-form-filling__sz5__hard__s0 -> pass=None
+  [START] sb__court-form-filling__sz5__easy__s0
+  [DONE]  sb__court-form-filling__sz5__easy__s0 -> pass=None
+  [START] sb__court-form-filling__sz5__random__s0
+  [DONE]  sb__court-form-filling__sz5__random__s0 -> pass=None
+[1/3 10s] sb__court-form-filling__sz5__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__court-form-filling__sz5__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__court-form-filling__sz5__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +12 unique configs completed
+[12:55:17] 72/240 unique configs done (252 lines), 168 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz50__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8414.83it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10844.75it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11533.48it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz10__hard__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz10__easy__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz10__easy__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz10__random__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz10__random__s0 -> pass=None
+[1/3 9s] sb__crystallographic-wyckoff-position-analysis__sz10__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 9s] sb__crystallographic-wyckoff-position-analysis__sz10__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 9s] sb__crystallographic-wyckoff-position-analysis__sz10__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8891.82it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz50__hard__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz50__easy__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz50__easy__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz50__random__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz50__random__s0 -> pass=None
+[1/3 10s] sb__crystallographic-wyckoff-position-analysis__sz50__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__crystallographic-wyckoff-position-analysis__sz50__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__crystallographic-wyckoff-position-analysis__sz50__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz20__hard__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz20__easy__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz20__easy__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz20__random__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz20__random__s0 -> pass=None
+[1/3 10s] sb__crystallographic-wyckoff-position-analysis__sz20__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__crystallographic-wyckoff-position-analysis__sz20__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__crystallographic-wyckoff-position-analysis__sz20__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz5__hard__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz5__easy__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz5__easy__s0 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz5__random__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz5__random__s0 -> pass=None
+[1/3 11s] sb__crystallographic-wyckoff-position-analysis__sz5__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 11s] sb__crystallographic-wyckoff-position-analysis__sz5__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 11s] sb__crystallographic-wyckoff-position-analysis__sz5__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +12 unique configs completed
+[12:55:29] 84/240 unique configs done (264 lines), 156 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__dapt-intrusion-detection__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__dapt-intrusion-detection__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__dapt-intrusion-detection__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__dapt-intrusion-detection__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10279.14it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 12971.13it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 13045.33it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__dapt-intrusion-detection__sz5__easy__s0
+  [START] sb__dapt-intrusion-detection__sz5__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__dapt-intrusion-detection__sz10__easy__s0
+  [START] sb__dapt-intrusion-detection__sz10__random__s0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7592.99it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__dapt-intrusion-detection__sz50__easy__s0
+  [START] sb__dapt-intrusion-detection__sz50__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__dapt-intrusion-detection__sz20__easy__s0
+  [START] sb__dapt-intrusion-detection__sz20__random__s0
+  [DONE]  sb__dapt-intrusion-detection__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 79s] sb__dapt-intrusion-detection__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz50__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 87s] sb__dapt-intrusion-detection__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 93s] sb__dapt-intrusion-detection__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz5__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 106s] sb__dapt-intrusion-detection__sz5__hard__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz50__easy__s0 -> pass=True
+[2/3 169s] sb__dapt-intrusion-detection__sz50__easy__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz10__easy__s0 -> pass=False
+[2/3 191s] sb__dapt-intrusion-detection__sz10__easy__s0 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz5__easy__s0 -> pass=True
+[2/3 192s] sb__dapt-intrusion-detection__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz20__easy__s0 -> pass=True
+[2/3 235s] sb__dapt-intrusion-detection__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz10__random__s0 -> pass=True
+[3/3 280s] sb__dapt-intrusion-detection__sz10__random__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz50__random__s0 -> pass=True
+[3/3 289s] sb__dapt-intrusion-detection__sz50__random__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz20__random__s0 -> pass=True
+[3/3 319s] sb__dapt-intrusion-detection__sz20__random__s0 -> PASS ()
+  [DONE]  sb__dapt-intrusion-detection__sz5__random__s0 -> pass=False
+[3/3 379s] sb__dapt-intrusion-detection__sz5__random__s0 -> FAIL ()
+  +12 unique configs completed
+[13:01:49] 96/240 unique configs done (276 lines), 144 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=96)
+  [START] sb__data-to-d3__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=96)
+  [START] sb__data-to-d3__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=96)
+  [START] sb__data-to-d3__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=96)
+  [START] sb__data-to-d3__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 15155.91it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9246.33it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10053.44it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 15072.98it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__data-to-d3__sz10__hard__s0 -> pass=None
+  [START] sb__data-to-d3__sz10__easy__s0
+  [DONE]  sb__data-to-d3__sz10__easy__s0 -> pass=None
+  [START] sb__data-to-d3__sz10__random__s0
+  [DONE]  sb__data-to-d3__sz10__random__s0 -> pass=None
+[1/3 9s] sb__data-to-d3__sz10__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 9s] sb__data-to-d3__sz10__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 9s] sb__data-to-d3__sz10__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__data-to-d3__sz20__hard__s0 -> pass=None
+  [START] sb__data-to-d3__sz20__easy__s0
+  [DONE]  sb__data-to-d3__sz20__easy__s0 -> pass=None
+  [START] sb__data-to-d3__sz20__random__s0
+  [DONE]  sb__data-to-d3__sz20__random__s0 -> pass=None
+[1/3 10s] sb__data-to-d3__sz20__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__data-to-d3__sz20__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__data-to-d3__sz20__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__data-to-d3__sz5__hard__s0 -> pass=None
+  [START] sb__data-to-d3__sz5__easy__s0
+  [DONE]  sb__data-to-d3__sz5__easy__s0 -> pass=None
+  [START] sb__data-to-d3__sz5__random__s0
+  [DONE]  sb__data-to-d3__sz5__random__s0 -> pass=None
+[1/3 10s] sb__data-to-d3__sz5__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__data-to-d3__sz5__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__data-to-d3__sz5__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__data-to-d3__sz50__hard__s0 -> pass=None
+  [START] sb__data-to-d3__sz50__easy__s0
+  [DONE]  sb__data-to-d3__sz50__easy__s0 -> pass=None
+  [START] sb__data-to-d3__sz50__random__s0
+  [DONE]  sb__data-to-d3__sz50__random__s0 -> pass=None
+[1/3 10s] sb__data-to-d3__sz50__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__data-to-d3__sz50__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__data-to-d3__sz50__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +12 unique configs completed
+[13:02:00] 108/240 unique configs done (288 lines), 132 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=108)
+  [START] sb__dialogue-parser__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=108)
+  [START] sb__dialogue-parser__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=108)
+  [START] sb__dialogue-parser__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=108)
+  [START] sb__dialogue-parser__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 17107.68it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9652.89it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 13637.00it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10112.51it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__dialogue-parser__sz20__easy__s0
+  [START] sb__dialogue-parser__sz20__random__s0
+  [START] sb__dialogue-parser__sz5__easy__s0
+  [START] sb__dialogue-parser__sz5__random__s0
+  [START] sb__dialogue-parser__sz50__easy__s0
+  [START] sb__dialogue-parser__sz50__random__s0
+  [START] sb__dialogue-parser__sz10__easy__s0
+  [START] sb__dialogue-parser__sz10__random__s0
+  [DONE]  sb__dialogue-parser__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 202s] sb__dialogue-parser__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 271s] sb__dialogue-parser__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz5__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 278s] sb__dialogue-parser__sz5__hard__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz10__easy__s0 -> pass=True
+[2/3 331s] sb__dialogue-parser__sz10__easy__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz50__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 344s] sb__dialogue-parser__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz5__easy__s0 -> pass=True
+[2/3 431s] sb__dialogue-parser__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz50__easy__s0 -> pass=True
+[2/3 582s] sb__dialogue-parser__sz50__easy__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz20__easy__s0 -> pass=True
+[2/3 588s] sb__dialogue-parser__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz10__random__s0 -> pass=True
+[3/3 686s] sb__dialogue-parser__sz10__random__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz5__random__s0 -> pass=True
+[3/3 713s] sb__dialogue-parser__sz5__random__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz20__random__s0 -> pass=True
+[3/3 734s] sb__dialogue-parser__sz20__random__s0 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz50__random__s0 -> pass=False
+[3/3 855s] sb__dialogue-parser__sz50__random__s0 -> FAIL ()
+  +12 unique configs completed
+[13:16:16] 120/240 unique configs done (300 lines), 120 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=120)
+  [START] sb__dynamic-object-aware-egomotion__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=120)
+  [START] sb__dynamic-object-aware-egomotion__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=120)
+  [START] sb__dynamic-object-aware-egomotion__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=120)
+  [START] sb__dynamic-object-aware-egomotion__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7084.49it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9593.10it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 6772.53it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__dynamic-object-aware-egomotion__sz50__hard__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz50__easy__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz50__easy__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz50__random__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz50__random__s0 -> pass=None
+[1/3 9s] sb__dynamic-object-aware-egomotion__sz50__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 9s] sb__dynamic-object-aware-egomotion__sz50__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 9s] sb__dynamic-object-aware-egomotion__sz50__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 12489.02it/s]
+  [DONE]  sb__dynamic-object-aware-egomotion__sz20__hard__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz20__easy__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz20__easy__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz20__random__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz20__random__s0 -> pass=None
+[1/3 10s] sb__dynamic-object-aware-egomotion__sz20__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__dynamic-object-aware-egomotion__sz20__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__dynamic-object-aware-egomotion__sz20__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__dynamic-object-aware-egomotion__sz5__hard__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz5__easy__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz5__easy__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz5__random__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz5__random__s0 -> pass=None
+[1/3 10s] sb__dynamic-object-aware-egomotion__sz5__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__dynamic-object-aware-egomotion__sz5__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__dynamic-object-aware-egomotion__sz5__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__dynamic-object-aware-egomotion__sz10__hard__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz10__easy__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz10__easy__s0 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz10__random__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz10__random__s0 -> pass=None
+[1/3 11s] sb__dynamic-object-aware-egomotion__sz10__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 11s] sb__dynamic-object-aware-egomotion__sz10__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 11s] sb__dynamic-object-aware-egomotion__sz10__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +12 unique configs completed
+[13:16:29] 132/240 unique configs done (312 lines), 108 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=132)
+  [START] sb__earthquake-phase-association__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=132)
+  [START] sb__earthquake-phase-association__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=132)
+  [START] sb__earthquake-phase-association__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=132)
+  [START] sb__earthquake-phase-association__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 14651.24it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10433.46it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__earthquake-phase-association__sz10__easy__s0
+  [START] sb__earthquake-phase-association__sz10__random__s0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9289.24it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__earthquake-phase-association__sz5__easy__s0
+  [START] sb__earthquake-phase-association__sz5__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11937.11it/s]
+  [START] sb__earthquake-phase-association__sz50__easy__s0
+  [START] sb__earthquake-phase-association__sz50__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__earthquake-phase-association__sz20__easy__s0
+  [START] sb__earthquake-phase-association__sz20__random__s0
+  [DONE]  sb__earthquake-phase-association__sz50__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 676s] sb__earthquake-phase-association__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 701s] sb__earthquake-phase-association__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 748s] sb__earthquake-phase-association__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz5__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 921s] sb__earthquake-phase-association__sz5__hard__s0 -> FAIL ()
+  [DONE]  sb__earthquake-phase-association__sz50__easy__s0 -> pass=False
+[2/3 1044s] sb__earthquake-phase-association__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__earthquake-phase-association__sz50__random__s0 -> pass=True
+[3/3 1449s] sb__earthquake-phase-association__sz50__random__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz5__easy__s0 -> pass=True
+[2/3 1532s] sb__earthquake-phase-association__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz20__easy__s0 -> pass=False
+[2/3 1606s] sb__earthquake-phase-association__sz20__easy__s0 -> FAIL ()
+  [DONE]  sb__earthquake-phase-association__sz10__easy__s0 -> pass=True
+[2/3 1656s] sb__earthquake-phase-association__sz10__easy__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz20__random__s0 -> pass=True
+[3/3 2058s] sb__earthquake-phase-association__sz20__random__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz10__random__s0 -> pass=True
+[3/3 2207s] sb__earthquake-phase-association__sz10__random__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz5__random__s0 -> pass=True
+[3/3 2433s] sb__earthquake-phase-association__sz5__random__s0 -> PASS ()
+  +12 unique configs completed
+[13:57:04] 144/240 unique configs done (324 lines), 96 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=144)
+  [START] sb__earthquake-plate-calculation__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=144)
+  [START] sb__earthquake-plate-calculation__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=144)
+  [START] sb__earthquake-plate-calculation__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=144)
+  [START] sb__earthquake-plate-calculation__sz5__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10701.81it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10030.84it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9427.00it/s]
+Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11970.32it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__earthquake-plate-calculation__sz20__easy__s0
+  [START] sb__earthquake-plate-calculation__sz20__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__earthquake-plate-calculation__sz50__easy__s0
+  [START] sb__earthquake-plate-calculation__sz50__random__s0
+  [START] sb__earthquake-plate-calculation__sz5__easy__s0
+  [START] sb__earthquake-plate-calculation__sz5__random__s0
+  [START] sb__earthquake-plate-calculation__sz10__easy__s0
+  [START] sb__earthquake-plate-calculation__sz10__random__s0
+  [DONE]  sb__earthquake-plate-calculation__sz5__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 76s] sb__earthquake-plate-calculation__sz5__hard__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 91s] sb__earthquake-plate-calculation__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 92s] sb__earthquake-plate-calculation__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz5__easy__s0 -> pass=True
+[2/3 148s] sb__earthquake-plate-calculation__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz50__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 152s] sb__earthquake-plate-calculation__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz20__easy__s0 -> pass=True
+[2/3 222s] sb__earthquake-plate-calculation__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz50__easy__s0 -> pass=True
+[2/3 227s] sb__earthquake-plate-calculation__sz50__easy__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz20__random__s0 -> pass=True
+[3/3 301s] sb__earthquake-plate-calculation__sz20__random__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz10__easy__s0 -> pass=True
+[2/3 324s] sb__earthquake-plate-calculation__sz10__easy__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz50__random__s0 -> pass=True
+[3/3 342s] sb__earthquake-plate-calculation__sz50__random__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz5__random__s0 -> pass=True
+[3/3 362s] sb__earthquake-plate-calculation__sz5__random__s0 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz10__random__s0 -> pass=True
+[3/3 436s] sb__earthquake-plate-calculation__sz10__random__s0 -> PASS ()
+  +12 unique configs completed
+[14:04:21] 156/240 unique configs done (336 lines), 84 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=156)
+  [START] sb__econ-detrending-correlation__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=156)
+  [START] sb__econ-detrending-correlation__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=156)
+  [START] sb__econ-detrending-correlation__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=156)
+  [START] sb__econ-detrending-correlation__sz20__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10783.53it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 15332.14it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 15655.08it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 14361.83it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__econ-detrending-correlation__sz5__easy__s0
+  [START] sb__econ-detrending-correlation__sz5__random__s0
+  [START] sb__econ-detrending-correlation__sz50__easy__s0
+  [START] sb__econ-detrending-correlation__sz50__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__econ-detrending-correlation__sz10__easy__s0
+  [START] sb__econ-detrending-correlation__sz10__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__econ-detrending-correlation__sz20__easy__s0
+  [START] sb__econ-detrending-correlation__sz20__random__s0
+  [DONE]  sb__econ-detrending-correlation__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 111s] sb__econ-detrending-correlation__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 152s] sb__econ-detrending-correlation__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz50__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 161s] sb__econ-detrending-correlation__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz5__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 200s] sb__econ-detrending-correlation__sz5__hard__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz10__easy__s0 -> pass=True
+[2/3 210s] sb__econ-detrending-correlation__sz10__easy__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz20__easy__s0 -> pass=True
+[2/3 229s] sb__econ-detrending-correlation__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz5__easy__s0 -> pass=False
+[2/3 274s] sb__econ-detrending-correlation__sz5__easy__s0 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz50__easy__s0 -> pass=False
+[2/3 304s] sb__econ-detrending-correlation__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz20__random__s0 -> pass=True
+[3/3 329s] sb__econ-detrending-correlation__sz20__random__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz50__random__s0 -> pass=True
+[3/3 372s] sb__econ-detrending-correlation__sz50__random__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz10__random__s0 -> pass=True
+[3/3 373s] sb__econ-detrending-correlation__sz10__random__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz5__random__s0 -> pass=False
+[3/3 375s] sb__econ-detrending-correlation__sz5__random__s0 -> FAIL ()
+  +12 unique configs completed
+[14:10:37] 168/240 unique configs done (348 lines), 72 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=168)
+  [START] sb__edit-pdf__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=168)
+  [START] sb__edit-pdf__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=168)
+  [START] sb__edit-pdf__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=168)
+  [START] sb__edit-pdf__sz50__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 12741.83it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 16172.89it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 14182.23it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__edit-pdf__sz10__hard__s0 -> pass=None
+  [START] sb__edit-pdf__sz10__easy__s0
+  [DONE]  sb__edit-pdf__sz10__easy__s0 -> pass=None
+  [START] sb__edit-pdf__sz10__random__s0
+  [DONE]  sb__edit-pdf__sz10__random__s0 -> pass=None
+[1/3 9s] sb__edit-pdf__sz10__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 9s] sb__edit-pdf__sz10__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 9s] sb__edit-pdf__sz10__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__edit-pdf__sz50__hard__s0 -> pass=None
+  [START] sb__edit-pdf__sz50__easy__s0
+  [DONE]  sb__edit-pdf__sz50__easy__s0 -> pass=None
+  [START] sb__edit-pdf__sz50__random__s0
+  [DONE]  sb__edit-pdf__sz50__random__s0 -> pass=None
+[1/3 9s] sb__edit-pdf__sz50__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 9s] sb__edit-pdf__sz50__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 9s] sb__edit-pdf__sz50__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__edit-pdf__sz5__hard__s0 -> pass=None
+  [START] sb__edit-pdf__sz5__easy__s0
+  [DONE]  sb__edit-pdf__sz5__easy__s0 -> pass=None
+  [START] sb__edit-pdf__sz5__random__s0
+  [DONE]  sb__edit-pdf__sz5__random__s0 -> pass=None
+[1/3 10s] sb__edit-pdf__sz5__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__edit-pdf__sz5__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__edit-pdf__sz5__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7284.96it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__edit-pdf__sz20__hard__s0 -> pass=None
+  [START] sb__edit-pdf__sz20__easy__s0
+  [DONE]  sb__edit-pdf__sz20__easy__s0 -> pass=None
+  [START] sb__edit-pdf__sz20__random__s0
+  [DONE]  sb__edit-pdf__sz20__random__s0 -> pass=None
+[1/3 13s] sb__edit-pdf__sz20__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 13s] sb__edit-pdf__sz20__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 13s] sb__edit-pdf__sz20__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +12 unique configs completed
+[14:10:51] 180/240 unique configs done (360 lines), 60 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=180)
+  [START] sb__energy-ac-optimal-power-flow__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=180)
+  [START] sb__energy-ac-optimal-power-flow__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=180)
+  [START] sb__energy-ac-optimal-power-flow__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=180)
+  [START] sb__energy-ac-optimal-power-flow__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10469.45it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 16211.52it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 12183.49it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 15517.71it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-ac-optimal-power-flow__sz5__easy__s0
+  [START] sb__energy-ac-optimal-power-flow__sz5__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-ac-optimal-power-flow__sz10__easy__s0
+  [START] sb__energy-ac-optimal-power-flow__sz10__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-ac-optimal-power-flow__sz20__easy__s0
+  [START] sb__energy-ac-optimal-power-flow__sz20__random__s0
+  [START] sb__energy-ac-optimal-power-flow__sz50__easy__s0
+  [START] sb__energy-ac-optimal-power-flow__sz50__random__s0
+  [DONE]  sb__energy-ac-optimal-power-flow__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 276s] sb__energy-ac-optimal-power-flow__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz50__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 320s] sb__energy-ac-optimal-power-flow__sz50__hard__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz20__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 371s] sb__energy-ac-optimal-power-flow__sz20__hard__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz5__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 574s] sb__energy-ac-optimal-power-flow__sz5__hard__s0 -> PASS ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz50__easy__s0 -> pass=False
+[2/3 591s] sb__energy-ac-optimal-power-flow__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz10__easy__s0 -> pass=False
+[2/3 690s] sb__energy-ac-optimal-power-flow__sz10__easy__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz20__easy__s0 -> pass=True
+[2/3 704s] sb__energy-ac-optimal-power-flow__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz50__random__s0 -> pass=False
+[3/3 787s] sb__energy-ac-optimal-power-flow__sz50__random__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz5__easy__s0 -> pass=False
+[2/3 840s] sb__energy-ac-optimal-power-flow__sz5__easy__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz20__random__s0 -> pass=False
+[3/3 1028s] sb__energy-ac-optimal-power-flow__sz20__random__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz5__random__s0 -> pass=False
+[3/3 1101s] sb__energy-ac-optimal-power-flow__sz5__random__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz10__random__s0 -> pass=True
+[3/3 1222s] sb__energy-ac-optimal-power-flow__sz10__random__s0 -> PASS ()
+  +12 unique configs completed
+[14:31:15] 192/240 unique configs done (372 lines), 48 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=192)
+  [START] sb__energy-market-pricing__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=192)
+  [START] sb__energy-market-pricing__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=192)
+  [START] sb__energy-market-pricing__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=192)
+  [START] sb__energy-market-pricing__sz50__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8193.69it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10605.27it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9994.57it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-market-pricing__sz10__easy__s0
+  [START] sb__energy-market-pricing__sz10__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-market-pricing__sz20__easy__s0
+  [START] sb__energy-market-pricing__sz20__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-market-pricing__sz50__easy__s0
+  [START] sb__energy-market-pricing__sz50__random__s0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 12709.24it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-market-pricing__sz5__easy__s0
+  [START] sb__energy-market-pricing__sz5__random__s0
+  [DONE]  sb__energy-market-pricing__sz5__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 127s] sb__energy-market-pricing__sz5__hard__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 140s] sb__energy-market-pricing__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz50__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 361s] sb__energy-market-pricing__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz5__easy__s0 -> pass=True
+[2/3 442s] sb__energy-market-pricing__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 446s] sb__energy-market-pricing__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz5__random__s0 -> pass=True
+[3/3 555s] sb__energy-market-pricing__sz5__random__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz10__easy__s0 -> pass=True
+[2/3 640s] sb__energy-market-pricing__sz10__easy__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz10__random__s0 -> pass=True
+[3/3 769s] sb__energy-market-pricing__sz10__random__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz20__easy__s0 -> pass=True
+[2/3 1044s] sb__energy-market-pricing__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz50__easy__s0 -> pass=True
+[2/3 1203s] sb__energy-market-pricing__sz50__easy__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz20__random__s0 -> pass=True
+[3/3 1215s] sb__energy-market-pricing__sz20__random__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz50__random__s0 -> pass=True
+[3/3 1681s] sb__energy-market-pricing__sz50__random__s0 -> PASS ()
+  +12 unique configs completed
+[14:59:17] 204/240 unique configs done (384 lines), 36 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=204)
+  [START] sb__enterprise-information-search__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=204)
+  [START] sb__enterprise-information-search__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=204)
+  [START] sb__enterprise-information-search__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=204)
+  [START] sb__enterprise-information-search__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9335.58it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10636.35it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7708.91it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 15955.24it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__enterprise-information-search__sz5__easy__s0
+  [START] sb__enterprise-information-search__sz5__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__enterprise-information-search__sz50__easy__s0
+  [START] sb__enterprise-information-search__sz50__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__enterprise-information-search__sz20__easy__s0
+  [START] sb__enterprise-information-search__sz20__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__enterprise-information-search__sz10__easy__s0
+  [START] sb__enterprise-information-search__sz10__random__s0
+  [DONE]  sb__enterprise-information-search__sz50__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 197s] sb__enterprise-information-search__sz50__hard__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz10__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 232s] sb__enterprise-information-search__sz10__hard__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz20__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 245s] sb__enterprise-information-search__sz20__hard__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz5__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 319s] sb__enterprise-information-search__sz5__hard__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz50__easy__s0 -> pass=False
+[2/3 380s] sb__enterprise-information-search__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz10__easy__s0 -> pass=False
+[2/3 436s] sb__enterprise-information-search__sz10__easy__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz5__easy__s0 -> pass=False
+[2/3 499s] sb__enterprise-information-search__sz5__easy__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz20__easy__s0 -> pass=False
+[2/3 647s] sb__enterprise-information-search__sz20__easy__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz10__random__s0 -> pass=False
+[3/3 651s] sb__enterprise-information-search__sz10__random__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz5__random__s0 -> pass=False
+[3/3 831s] sb__enterprise-information-search__sz5__random__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz20__random__s0 -> pass=False
+[3/3 871s] sb__enterprise-information-search__sz20__random__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz50__random__s0 -> pass=False
+[3/3 1102s] sb__enterprise-information-search__sz50__random__s0 -> FAIL ()
+  +12 unique configs completed
+[15:17:39] 216/240 unique configs done (396 lines), 24 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=216)
+  [START] sb__exceltable-in-ppt__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=216)
+  [START] sb__exceltable-in-ppt__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=216)
+  [START] sb__exceltable-in-ppt__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=216)
+  [START] sb__exceltable-in-ppt__sz50__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9468.81it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11984.76it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 12027.07it/s]
+  [START] sb__exceltable-in-ppt__sz50__easy__s0
+  [START] sb__exceltable-in-ppt__sz50__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__exceltable-in-ppt__sz20__easy__s0
+  [START] sb__exceltable-in-ppt__sz20__random__s0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9005.99it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__exceltable-in-ppt__sz5__easy__s0
+  [START] sb__exceltable-in-ppt__sz5__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__exceltable-in-ppt__sz10__easy__s0
+  [START] sb__exceltable-in-ppt__sz10__random__s0
+  [DONE]  sb__exceltable-in-ppt__sz20__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 66s] sb__exceltable-in-ppt__sz20__hard__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz50__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 98s] sb__exceltable-in-ppt__sz50__hard__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz5__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 103s] sb__exceltable-in-ppt__sz5__hard__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz10__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 142s] sb__exceltable-in-ppt__sz10__hard__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz20__easy__s0 -> pass=True
+[2/3 188s] sb__exceltable-in-ppt__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__exceltable-in-ppt__sz50__easy__s0 -> pass=False
+[2/3 195s] sb__exceltable-in-ppt__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz5__easy__s0 -> pass=False
+[2/3 213s] sb__exceltable-in-ppt__sz5__easy__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz20__random__s0 -> pass=False
+[3/3 286s] sb__exceltable-in-ppt__sz20__random__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz50__random__s0 -> pass=True
+[3/3 386s] sb__exceltable-in-ppt__sz50__random__s0 -> PASS ()
+  [DONE]  sb__exceltable-in-ppt__sz10__easy__s0 -> pass=True
+[2/3 516s] sb__exceltable-in-ppt__sz10__easy__s0 -> PASS ()
+  [DONE]  sb__exceltable-in-ppt__sz10__random__s0 -> pass=False
+[3/3 690s] sb__exceltable-in-ppt__sz10__random__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz5__random__s0 -> pass=True
+[3/3 1113s] sb__exceltable-in-ppt__sz5__random__s0 -> PASS ()
+  +12 unique configs completed
+[15:36:14] 228/240 unique configs done (408 lines), 12 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=228)
+  [START] sb__exoplanet-detection-period__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=228)[SB] tasks=20 trials=3 (done=228)
+  [START] sb__exoplanet-detection-period__sz10__hard__s0
+
+  [START] sb__exoplanet-detection-period__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=228)
+  [START] sb__exoplanet-detection-period__sz20__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11020.88it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9982.97it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 16312.59it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11587.92it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__exoplanet-detection-period__sz20__hard__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz20__easy__s0
+  [DONE]  sb__exoplanet-detection-period__sz20__easy__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz20__random__s0
+  [DONE]  sb__exoplanet-detection-period__sz20__random__s0 -> pass=None
+[1/3 9s] sb__exoplanet-detection-period__sz20__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 9s] sb__exoplanet-detection-period__sz20__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 9s] sb__exoplanet-detection-period__sz20__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__exoplanet-detection-period__sz50__hard__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz50__easy__s0
+  [DONE]  sb__exoplanet-detection-period__sz50__easy__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz50__random__s0
+  [DONE]  sb__exoplanet-detection-period__sz50__random__s0 -> pass=None
+[1/3 10s] sb__exoplanet-detection-period__sz50__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__exoplanet-detection-period__sz50__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__exoplanet-detection-period__sz50__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__exoplanet-detection-period__sz5__hard__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz5__easy__s0
+  [DONE]  sb__exoplanet-detection-period__sz5__easy__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz5__random__s0
+  [DONE]  sb__exoplanet-detection-period__sz5__random__s0 -> pass=None
+[1/3 10s] sb__exoplanet-detection-period__sz5__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__exoplanet-detection-period__sz5__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__exoplanet-detection-period__sz5__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [DONE]  sb__exoplanet-detection-period__sz10__hard__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz10__easy__s0
+  [DONE]  sb__exoplanet-detection-period__sz10__easy__s0 -> pass=None
+  [START] sb__exoplanet-detection-period__sz10__random__s0
+  [DONE]  sb__exoplanet-detection-period__sz10__random__s0 -> pass=None
+[1/3 10s] sb__exoplanet-detection-period__sz10__hard__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 10s] sb__exoplanet-detection-period__sz10__easy__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 10s] sb__exoplanet-detection-period__sz10__random__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +12 unique configs completed
+[15:36:26] All 240 unique configs done!
+=== Aggregating ===
+| dataset | pool_size | noise | n | pass-rate | skip | err | wall_s |
+|---|---|---|---|---|---|---|---|
+| ? | 5 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 5 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 5 | random | 0 | **—** | 6 | 0 | — |
+| ? | 10 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 10 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 10 | random | 0 | **—** | 6 | 0 | — |
+| ? | 20 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 20 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 20 | random | 0 | **—** | 6 | 0 | — |
+| ? | 50 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 50 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 50 | random | 0 | **—** | 6 | 0 | — |
+| sb | 5 | easy | 29 | **37.9%** | 0 | 0 | 74 |
+| sb | 5 | hard | 29 | **44.8%** | 0 | 0 | 84 |
+| sb | 5 | random | 29 | **34.5%** | 0 | 0 | 211 |
+| sb | 10 | easy | 29 | **44.8%** | 0 | 0 | 97 |
+| sb | 10 | hard | 29 | **44.8%** | 0 | 0 | 81 |
+| sb | 10 | random | 29 | **41.4%** | 0 | 0 | 90 |
+| sb | 20 | easy | 29 | **44.8%** | 0 | 0 | 77 |
+| sb | 20 | hard | 29 | **37.9%** | 0 | 0 | 80 |
+| sb | 20 | random | 29 | **41.4%** | 0 | 0 | 86 |
+| sb | 50 | easy | 29 | **34.5%** | 0 | 0 | 79 |
+| sb | 50 | hard | 29 | **41.4%** | 0 | 0 | 142 |
+| sb | 50 | random | 29 | **41.4%** | 0 | 0 | 68 |
+| dataset | pool_size | noise | n | pass-rate | skip | err | wall_s |
+|---|---|---|---|---|---|---|---|
+| ? | 5 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 5 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 5 | random | 0 | **—** | 6 | 0 | — |
+| ? | 10 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 10 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 10 | random | 0 | **—** | 6 | 0 | — |
+| ? | 20 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 20 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 20 | random | 0 | **—** | 6 | 0 | — |
+| ? | 50 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 50 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 50 | random | 0 | **—** | 6 | 0 | — |
+| sb | 5 | easy | 29 | **37.9%** | 0 | 0 | 74 |
+| sb | 5 | hard | 29 | **44.8%** | 0 | 0 | 84 |
+| sb | 5 | random | 29 | **34.5%** | 0 | 0 | 211 |
+| sb | 10 | easy | 29 | **44.8%** | 0 | 0 | 97 |
+| sb | 10 | hard | 29 | **44.8%** | 0 | 0 | 81 |
+| sb | 10 | random | 29 | **41.4%** | 0 | 0 | 90 |
+| sb | 20 | easy | 29 | **44.8%** | 0 | 0 | 77 |
+| sb | 20 | hard | 29 | **37.9%** | 0 | 0 | 80 |
+| sb | 20 | random | 29 | **41.4%** | 0 | 0 | 86 |
+| sb | 50 | easy | 29 | **34.5%** | 0 | 0 | 79 |
+| sb | 50 | hard | 29 | **41.4%** | 0 | 0 | 142 |
+| sb | 50 | random | 29 | **41.4%** | 0 | 0 | 68 |
+=== Done ===

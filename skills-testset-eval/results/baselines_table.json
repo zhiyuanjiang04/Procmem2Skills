@@ -1,0 +1,22 @@
+[
+  {
+    "dataset": "sb",
+    "pool_size": 0,
+    "noise_mode": "gtonly",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.2,
+    "median_wall_s": 335.3
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 0,
+    "noise_mode": "noskill",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.4,
+    "median_wall_s": 208.1
+  }
+]

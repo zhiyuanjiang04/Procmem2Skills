@@ -1,0 +1,17 @@
+FROM skills-testset-eval-eval-pipeline:latest
+
+USER root
+# netCDF4 needs system libs; everything else is pure-pip wheels
+RUN apt-get update && apt-get install -y --no-install-recommends \
+        libhdf5-dev libnetcdf-dev \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN pip install --no-cache-dir \
+        rapidfuzz \
+        openpyxl \
+        netCDF4 \
+        python-pptx \
+        xlrd \
+        scikit-learn
+
+USER evaluser
