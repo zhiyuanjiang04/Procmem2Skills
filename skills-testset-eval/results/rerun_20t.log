@@ -1,0 +1,354 @@
+=== Parallel runner: limit=20, conc=4, trials_per=3, total=240 ===
+[17:45:39] 186/240 unique configs done (253 lines), 54 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=186)
+  [START] sb__azure-bgp-oscillation-route-leak__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=186)
+  [START] sb__azure-bgp-oscillation-route-leak__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=186)
+  [START] sb__azure-bgp-oscillation-route-leak__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=186)
+  [START] sb__azure-bgp-oscillation-route-leak__sz50__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8446.08it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7018.55it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11779.92it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 5896.99it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__azure-bgp-oscillation-route-leak__sz5__easy__s0
+  [START] sb__azure-bgp-oscillation-route-leak__sz5__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__azure-bgp-oscillation-route-leak__sz50__easy__s0
+  [START] sb__azure-bgp-oscillation-route-leak__sz50__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__azure-bgp-oscillation-route-leak__sz20__easy__s0
+  [START] sb__azure-bgp-oscillation-route-leak__sz20__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__azure-bgp-oscillation-route-leak__sz10__easy__s0
+  [START] sb__azure-bgp-oscillation-route-leak__sz10__random__s0
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz50__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 241s] sb__azure-bgp-oscillation-route-leak__sz50__hard__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz20__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 242s] sb__azure-bgp-oscillation-route-leak__sz20__hard__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz5__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 271s] sb__azure-bgp-oscillation-route-leak__sz5__hard__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz20__easy__s0 -> pass=True
+[2/3 427s] sb__azure-bgp-oscillation-route-leak__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz50__easy__s0 -> pass=False
+[2/3 691s] sb__azure-bgp-oscillation-route-leak__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz20__random__s0 -> pass=False
+[3/3 806s] sb__azure-bgp-oscillation-route-leak__sz20__random__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz10__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 845s] sb__azure-bgp-oscillation-route-leak__sz10__hard__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz5__easy__s0 -> pass=False
+[2/3 1171s] sb__azure-bgp-oscillation-route-leak__sz5__easy__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz50__random__s0 -> pass=False
+[3/3 1510s] sb__azure-bgp-oscillation-route-leak__sz50__random__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz10__easy__s0 -> pass=False
+[2/3 1597s] sb__azure-bgp-oscillation-route-leak__sz10__easy__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz5__random__s0 -> pass=False
+[3/3 1675s] sb__azure-bgp-oscillation-route-leak__sz5__random__s0 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz10__random__s0 -> pass=False
+[3/3 2479s] sb__azure-bgp-oscillation-route-leak__sz10__random__s0 -> FAIL ()
+  +12 unique configs completed
+[18:26:59] 198/240 unique configs done (265 lines), 42 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=198)
+  [START] sb__citation-check__sz20__hard__s0
+[SB] tasks=20 trials=3 (done=198)
+  [START] sb__citation-check__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=198)
+  [START] sb__citation-check__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=198)
+  [START] sb__citation-check__sz10__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10891.74it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7555.25it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 7553.75it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__citation-check__sz5__easy__s0
+  [START] sb__citation-check__sz5__random__s0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 13952.73it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__citation-check__sz10__easy__s0
+  [START] sb__citation-check__sz10__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__citation-check__sz20__easy__s0
+  [START] sb__citation-check__sz20__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__citation-check__sz50__easy__s0
+  [START] sb__citation-check__sz50__random__s0
+  [DONE]  sb__citation-check__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 97s] sb__citation-check__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 172s] sb__citation-check__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz50__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 183s] sb__citation-check__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz5__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 209s] sb__citation-check__sz5__hard__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz10__easy__s0 -> pass=True
+[2/3 246s] sb__citation-check__sz10__easy__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz50__easy__s0 -> pass=True
+[2/3 303s] sb__citation-check__sz50__easy__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz5__easy__s0 -> pass=True
+[2/3 348s] sb__citation-check__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz10__random__s0 -> pass=False
+[3/3 351s] sb__citation-check__sz10__random__s0 -> FAIL ()
+  [DONE]  sb__citation-check__sz20__easy__s0 -> pass=True
+[2/3 402s] sb__citation-check__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz50__random__s0 -> pass=True
+[3/3 483s] sb__citation-check__sz50__random__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz5__random__s0 -> pass=True
+[3/3 498s] sb__citation-check__sz5__random__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz20__random__s0 -> pass=True
+[3/3 559s] sb__citation-check__sz20__random__s0 -> PASS ()
+  +12 unique configs completed
+[18:36:19] 210/240 unique configs done (277 lines), 30 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=210)
+  [START] sb__civ6-adjacency-optimizer__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=210)
+  [START] sb__civ6-adjacency-optimizer__sz10__hard__s0
+[SB] tasks=20 trials=3 (done=210)
+  [START] sb__civ6-adjacency-optimizer__sz5__hard__s0
+[SB] tasks=20 trials=3 (done=210)
+  [START] sb__civ6-adjacency-optimizer__sz20__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9096.09it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 9189.73it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8130.00it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__civ6-adjacency-optimizer__sz10__easy__s0
+  [START] sb__civ6-adjacency-optimizer__sz10__random__s0
+  [START] sb__civ6-adjacency-optimizer__sz20__easy__s0
+  [START] sb__civ6-adjacency-optimizer__sz20__random__s0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 11272.12it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__civ6-adjacency-optimizer__sz50__easy__s0
+  [START] sb__civ6-adjacency-optimizer__sz50__random__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__civ6-adjacency-optimizer__sz5__easy__s0
+  [START] sb__civ6-adjacency-optimizer__sz5__random__s0
+  [DONE]  sb__civ6-adjacency-optimizer__sz20__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 328s] sb__civ6-adjacency-optimizer__sz20__hard__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz20__easy__s0 -> pass=False
+[2/3 612s] sb__civ6-adjacency-optimizer__sz20__easy__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz10__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 910s] sb__civ6-adjacency-optimizer__sz10__hard__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz50__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 911s] sb__civ6-adjacency-optimizer__sz50__hard__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz5__hard__s0 -> pass=False
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 913s] sb__civ6-adjacency-optimizer__sz5__hard__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz20__random__s0 -> pass=False
+[3/3 1513s] sb__civ6-adjacency-optimizer__sz20__random__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz50__easy__s0 -> pass=False
+[2/3 1736s] sb__civ6-adjacency-optimizer__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz10__easy__s0 -> pass=False
+[2/3 1811s] sb__civ6-adjacency-optimizer__sz10__easy__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz5__easy__s0 -> pass=True
+[2/3 1814s] sb__civ6-adjacency-optimizer__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz50__random__s0 -> pass=False
+[3/3 2637s] sb__civ6-adjacency-optimizer__sz50__random__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz10__random__s0 -> pass=False
+[3/3 2711s] sb__civ6-adjacency-optimizer__sz10__random__s0 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz5__random__s0 -> pass=False
+[3/3 2714s] sb__civ6-adjacency-optimizer__sz5__random__s0 -> FAIL ()
+  +12 unique configs completed
+[19:21:34] 222/240 unique configs done (289 lines), 18 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=222)
+  [START] sb__energy-ac-optimal-power-flow__sz50__easy__s0
+[SB] tasks=20 trials=3 (done=222)
+  [START] sb__energy-ac-optimal-power-flow__sz10__random__s0
+[SB] tasks=20 trials=3 (done=222)
+  [START] sb__energy-market-pricing__sz5__easy__s0
+[SB] tasks=20 trials=3 (done=222)
+  [START] sb__energy-ac-optimal-power-flow__sz20__easy__s0
+  [START] sb__energy-ac-optimal-power-flow__sz10__easy__s0
+  [START] sb__energy-ac-optimal-power-flow__sz5__random__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 17554.56it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 10610.26it/s]
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 8803.76it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-market-pricing__sz10__hard__s0
+  [START] sb__energy-market-pricing__sz5__hard__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-market-pricing__sz5__random__s0
+  [START] sb__energy-ac-optimal-power-flow__sz50__hard__s0
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-ac-optimal-power-flow__sz50__random__s0
+  [START] sb__energy-ac-optimal-power-flow__sz20__hard__s0
+  [DONE]  sb__energy-ac-optimal-power-flow__sz50__easy__s0 -> pass=False
+[1/3 162s] sb__energy-ac-optimal-power-flow__sz50__easy__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz10__random__s0 -> pass=True
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 13813.26it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 203s] sb__energy-ac-optimal-power-flow__sz10__random__s0 -> PASS ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz20__easy__s0 -> pass=False
+[1/3 263s] sb__energy-ac-optimal-power-flow__sz20__easy__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz50__random__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[2/3 465s] sb__energy-ac-optimal-power-flow__sz50__random__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz5__random__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[2/3 473s] sb__energy-market-pricing__sz5__random__s0 -> PASS ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz10__easy__s0 -> pass=False
+[2/3 546s] sb__energy-ac-optimal-power-flow__sz10__easy__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz20__hard__s0 -> pass=True
+[3/3 688s] sb__energy-ac-optimal-power-flow__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz5__easy__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 696s] sb__energy-market-pricing__sz5__easy__s0 -> PASS ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz50__hard__s0 -> pass=False
+[3/3 718s] sb__energy-ac-optimal-power-flow__sz50__hard__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz5__random__s0 -> pass=False
+[3/3 787s] sb__energy-ac-optimal-power-flow__sz5__random__s0 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz10__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[2/3 809s] sb__energy-market-pricing__sz10__hard__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz5__hard__s0 -> pass=True
+[3/3 940s] sb__energy-market-pricing__sz5__hard__s0 -> PASS ()
+  +12 unique configs completed
+[19:37:15] 234/240 unique configs done (301 lines), 6 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=234)
+  [START] sb__energy-market-pricing__sz50__hard__s0
+[SB] tasks=20 trials=3 (done=234)
+  [START] sb__energy-market-pricing__sz20__hard__s0
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 20342.34it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__enterprise-information-search__sz5__random__s0
+  [START] sb__energy-market-pricing__sz50__random__s0
+Loading weights:   0%|          | 0/199 [00:00<?, ?it/s]Loading weights: 100%|██████████| 199/199 [00:00<00:00, 5441.25it/s]
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+  [START] sb__energy-market-pricing__sz20__easy__s0
+  [START] sb__energy-market-pricing__sz10__easy__s0
+  [DONE]  sb__energy-market-pricing__sz50__hard__s0 -> pass=True
+[1/3 236s] sb__energy-market-pricing__sz50__hard__s0 -> PASS ()
+  [DONE]  sb__enterprise-information-search__sz5__random__s0 -> pass=False
+[2/3 509s] sb__enterprise-information-search__sz5__random__s0 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz20__hard__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[1/3 648s] sb__energy-market-pricing__sz20__hard__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz50__random__s0 -> pass=True
+[3/3 685s] sb__energy-market-pricing__sz50__random__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz20__easy__s0 -> pass=True
+/workspace/procmem2skills/testsets/skill_selection_eval/retrieve.py:108: FutureWarning: The `get_sentence_embedding_dimension` method has been renamed to `get_embedding_dimension`.
+  expected_dim = _load_encoder(model_name).get_sentence_embedding_dimension()
+[2/3 928s] sb__energy-market-pricing__sz20__easy__s0 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz10__easy__s0 -> pass=True
+[3/3 1067s] sb__energy-market-pricing__sz10__easy__s0 -> PASS ()
+  +6 unique configs completed
+[19:55:03] All 240 unique configs done!
+=== Aggregating ===
+| dataset | pool_size | noise | n | pass-rate | skip | err | wall_s |
+|---|---|---|---|---|---|---|---|
+| ? | 5 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 5 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 5 | random | 0 | **—** | 6 | 0 | — |
+| ? | 10 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 10 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 10 | random | 0 | **—** | 6 | 0 | — |
+| ? | 20 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 20 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 20 | random | 0 | **—** | 6 | 0 | — |
+| ? | 50 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 50 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 50 | random | 0 | **—** | 6 | 0 | — |
+| sb | 5 | easy | 20 | **65.0%** | 0 | 0 | 167 |
+| sb | 5 | hard | 20 | **70.0%** | 0 | 0 | 262 |
+| sb | 5 | random | 19 | **57.9%** | 0 | 0 | 272 |
+| sb | 10 | easy | 20 | **70.0%** | 0 | 0 | 218 |
+| sb | 10 | hard | 19 | **68.4%** | 0 | 0 | 187 |
+| sb | 10 | random | 20 | **60.0%** | 0 | 0 | 194 |
+| sb | 20 | easy | 19 | **68.4%** | 0 | 0 | 210 |
+| sb | 20 | hard | 20 | **65.0%** | 0 | 0 | 208 |
+| sb | 20 | random | 20 | **65.0%** | 0 | 0 | 199 |
+| sb | 50 | easy | 20 | **55.0%** | 0 | 0 | 166 |
+| sb | 50 | hard | 19 | **63.2%** | 0 | 0 | 244 |
+| sb | 50 | random | 19 | **68.4%** | 0 | 0 | 191 |
+| dataset | pool_size | noise | n | pass-rate | skip | err | wall_s |
+|---|---|---|---|---|---|---|---|
+| ? | 5 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 5 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 5 | random | 0 | **—** | 6 | 0 | — |
+| ? | 10 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 10 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 10 | random | 0 | **—** | 6 | 0 | — |
+| ? | 20 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 20 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 20 | random | 0 | **—** | 6 | 0 | — |
+| ? | 50 | easy | 0 | **—** | 6 | 0 | — |
+| ? | 50 | hard | 0 | **—** | 6 | 0 | — |
+| ? | 50 | random | 0 | **—** | 6 | 0 | — |
+| sb | 5 | easy | 20 | **65.0%** | 0 | 0 | 167 |
+| sb | 5 | hard | 20 | **70.0%** | 0 | 0 | 262 |
+| sb | 5 | random | 19 | **57.9%** | 0 | 0 | 272 |
+| sb | 10 | easy | 20 | **70.0%** | 0 | 0 | 218 |
+| sb | 10 | hard | 19 | **68.4%** | 0 | 0 | 187 |
+| sb | 10 | random | 20 | **60.0%** | 0 | 0 | 194 |
+| sb | 20 | easy | 19 | **68.4%** | 0 | 0 | 210 |
+| sb | 20 | hard | 20 | **65.0%** | 0 | 0 | 208 |
+| sb | 20 | random | 20 | **65.0%** | 0 | 0 | 199 |
+| sb | 50 | easy | 20 | **55.0%** | 0 | 0 | 166 |
+| sb | 50 | hard | 19 | **63.2%** | 0 | 0 | 244 |
+| sb | 50 | random | 19 | **68.4%** | 0 | 0 | 191 |
+=== Done ===

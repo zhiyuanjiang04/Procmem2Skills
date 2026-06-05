@@ -1,0 +1,122 @@
+[
+  {
+    "dataset": "sb",
+    "pool_size": 5,
+    "noise_mode": "easy",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 116.5
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 5,
+    "noise_mode": "hard",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.8,
+    "median_wall_s": 300.7
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 5,
+    "noise_mode": "random",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.4,
+    "median_wall_s": 395.6
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 10,
+    "noise_mode": "easy",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 423.0
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 10,
+    "noise_mode": "hard",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.4,
+    "median_wall_s": 339.3
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 10,
+    "noise_mode": "random",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 200.6
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 20,
+    "noise_mode": "easy",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.4,
+    "median_wall_s": 172.4
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 20,
+    "noise_mode": "hard",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 218.4
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 20,
+    "noise_mode": "random",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 473.0
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 50,
+    "noise_mode": "easy",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 593.0
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 50,
+    "noise_mode": "hard",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 746.9
+  },
+  {
+    "dataset": "sb",
+    "pool_size": 50,
+    "noise_mode": "random",
+    "n_trials": 5,
+    "n_skipped": 0,
+    "n_errors": 0,
+    "pass_rate": 0.6,
+    "median_wall_s": 180.9
+  }
+]

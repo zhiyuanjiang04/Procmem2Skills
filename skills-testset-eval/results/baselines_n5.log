@@ -1,0 +1,711 @@
+=== N=5 Baselines: limit=20, conc=4, total=200 ===
+=== Baseline: noskill (N=5 seeds) ===
+[17:45:39] noskill: 0/100 done, 100 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=0)
+  [START] sb__3d-scan-calc__sz0__noskill__s1
+[SB] tasks=20 trials=3 (done=0)
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s0
+[SB] tasks=20 trials=3 (done=0)
+  [START] sb__adaptive-cruise-control__sz0__noskill__s2
+  [START] sb__adaptive-cruise-control__sz0__noskill__s3
+  [START] sb__adaptive-cruise-control__sz0__noskill__s1
+[SB] tasks=20 trials=3 (done=0)
+  [START] sb__3d-scan-calc__sz0__noskill__s4
+  [START] sb__3d-scan-calc__sz0__noskill__s2
+  [START] sb__3d-scan-calc__sz0__noskill__s0
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s1
+  [START] sb__adaptive-cruise-control__sz0__noskill__s4
+  [START] sb__adaptive-cruise-control__sz0__noskill__s0
+  [START] sb__3d-scan-calc__sz0__noskill__s3
+  [DONE]  sb__3d-scan-calc__sz0__noskill__s1 -> pass=True
+[1/3 111s] sb__3d-scan-calc__sz0__noskill__s1 -> PASS ()
+  [DONE]  sb__3d-scan-calc__sz0__noskill__s4 -> pass=True
+[1/3 177s] sb__3d-scan-calc__sz0__noskill__s4 -> PASS ()
+  [DONE]  sb__3d-scan-calc__sz0__noskill__s2 -> pass=True
+[2/3 240s] sb__3d-scan-calc__sz0__noskill__s2 -> PASS ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__noskill__s0 -> pass=False
+[1/3 285s] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s0 -> FAIL ()
+  [DONE]  sb__3d-scan-calc__sz0__noskill__s0 -> pass=True
+[3/3 457s] sb__3d-scan-calc__sz0__noskill__s0 -> PASS ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__noskill__s1 -> pass=False
+[2/3 489s] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s1 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__noskill__s2 -> pass=False
+[1/3 901s] sb__adaptive-cruise-control__sz0__noskill__s2 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__noskill__s0 -> pass=True
+[2/3 944s] sb__adaptive-cruise-control__sz0__noskill__s0 -> PASS ()
+  [DONE]  sb__3d-scan-calc__sz0__noskill__s3 -> pass=True
+[3/3 1168s] sb__3d-scan-calc__sz0__noskill__s3 -> PASS ()
+  [DONE]  sb__adaptive-cruise-control__sz0__noskill__s4 -> pass=False
+[3/3 1390s] sb__adaptive-cruise-control__sz0__noskill__s4 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__noskill__s3 -> pass=False
+[2/3 1802s] sb__adaptive-cruise-control__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__noskill__s1 -> pass=False
+[3/3 2702s] sb__adaptive-cruise-control__sz0__noskill__s1 -> FAIL ()
+  +12 unique configs
+[18:30:42] noskill: 12/100 done, 88 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=12)
+  [START] sb__citation-check__sz0__noskill__s4
+[SB] tasks=20 trials=3 (done=12)
+  [START] sb__civ6-adjacency-optimizer__sz0__noskill__s2
+[SB] tasks=20 trials=3 (done=12)
+  [START] sb__citation-check__sz0__noskill__s1
+[SB] tasks=20 trials=3 (done=12)
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s3
+  [START] sb__citation-check__sz0__noskill__s2
+  [START] sb__citation-check__sz0__noskill__s0
+  [START] sb__civ6-adjacency-optimizer__sz0__noskill__s3
+  [START] sb__civ6-adjacency-optimizer__sz0__noskill__s1
+  [START] sb__civ6-adjacency-optimizer__sz0__noskill__s0
+  [START] sb__citation-check__sz0__noskill__s3
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s4
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s2
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__noskill__s3 -> pass=False
+[1/3 136s] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__noskill__s1 -> pass=True
+[1/3 159s] sb__citation-check__sz0__noskill__s1 -> PASS ()
+  [DONE]  sb__citation-check__sz0__noskill__s4 -> pass=True
+[1/3 159s] sb__citation-check__sz0__noskill__s4 -> PASS ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__noskill__s2 -> pass=False
+[1/3 254s] sb__civ6-adjacency-optimizer__sz0__noskill__s2 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__noskill__s2 -> pass=True
+[2/3 274s] sb__citation-check__sz0__noskill__s2 -> PASS ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__noskill__s4 -> pass=False
+[2/3 350s] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s4 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__noskill__s0 -> pass=False
+[2/3 380s] sb__civ6-adjacency-optimizer__sz0__noskill__s0 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__noskill__s0 -> pass=True
+[3/3 413s] sb__citation-check__sz0__noskill__s0 -> PASS ()
+  [DONE]  sb__citation-check__sz0__noskill__s3 -> pass=True
+[3/3 517s] sb__citation-check__sz0__noskill__s3 -> PASS ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__noskill__s2 -> pass=False
+[3/3 730s] sb__azure-bgp-oscillation-route-leak__sz0__noskill__s2 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__noskill__s3 -> pass=False
+[2/3 1154s] sb__civ6-adjacency-optimizer__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__noskill__s1 -> pass=False
+[3/3 1378s] sb__civ6-adjacency-optimizer__sz0__noskill__s1 -> FAIL ()
+  +12 unique configs
+[18:53:40] noskill: 24/100 done, 76 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=24)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s4
+[SB] tasks=20 trials=3 (done=24)
+  [START] sb__court-form-filling__sz0__noskill__s3
+[SB] tasks=20 trials=3 (done=24)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s1
+[SB] tasks=20 trials=3 (done=24)
+  [START] sb__court-form-filling__sz0__noskill__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s4 -> pass=None
+  [START] sb__dapt-intrusion-detection__sz0__noskill__s0
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s3
+[1/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__court-form-filling__sz0__noskill__s0 -> pass=None
+  [START] sb__court-form-filling__sz0__noskill__s1
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s1 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s2
+  [DONE]  sb__court-form-filling__sz0__noskill__s1 -> pass=None
+  [START] sb__civ6-adjacency-optimizer__sz0__noskill__s4
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s2 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s0
+  [DONE]  sb__court-form-filling__sz0__noskill__s3 -> pass=None
+  [START] sb__court-form-filling__sz0__noskill__s4
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s0 -> pass=None
+[1/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__court-form-filling__sz0__noskill__s4 -> pass=None
+  [START] sb__court-form-filling__sz0__noskill__s2
+[1/3 0s] sb__court-form-filling__sz0__noskill__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__court-form-filling__sz0__noskill__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__court-form-filling__sz0__noskill__s2 -> pass=None
+[1/3 0s] sb__court-form-filling__sz0__noskill__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__court-form-filling__sz0__noskill__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__court-form-filling__sz0__noskill__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__dapt-intrusion-detection__sz0__noskill__s0 -> pass=False
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s3 -> pass=None
+[2/3 85s] sb__dapt-intrusion-detection__sz0__noskill__s0 -> FAIL ()
+[3/3 85s] sb__crystallographic-wyckoff-position-analysis__sz0__noskill__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__noskill__s4 -> pass=False
+[3/3 901s] sb__civ6-adjacency-optimizer__sz0__noskill__s4 -> FAIL ()
+  +12 unique configs
+[19:08:41] noskill: 36/100 done, 64 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=36)
+  [START] sb__dapt-intrusion-detection__sz0__noskill__s2
+[SB] tasks=20 trials=3 (done=36)
+  [START] sb__data-to-d3__sz0__noskill__s3
+[SB] tasks=20 trials=3 (done=36)
+  [START] sb__data-to-d3__sz0__noskill__s0
+  [START] sb__dapt-intrusion-detection__sz0__noskill__s3
+  [START] sb__dapt-intrusion-detection__sz0__noskill__s1
+  [DONE]  sb__data-to-d3__sz0__noskill__s3 -> pass=None
+  [START] sb__data-to-d3__sz0__noskill__s4
+  [DONE]  sb__data-to-d3__sz0__noskill__s4 -> pass=None
+  [START] sb__data-to-d3__sz0__noskill__s2
+[SB] tasks=20 trials=3 (done=36)
+  [START] sb__dialogue-parser__sz0__noskill__s1
+  [DONE]  sb__data-to-d3__sz0__noskill__s2 -> pass=None
+[1/3 0s] sb__data-to-d3__sz0__noskill__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__data-to-d3__sz0__noskill__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__data-to-d3__sz0__noskill__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__data-to-d3__sz0__noskill__s0 -> pass=None
+  [START] sb__data-to-d3__sz0__noskill__s1
+  [DONE]  sb__data-to-d3__sz0__noskill__s1 -> pass=None
+  [START] sb__dapt-intrusion-detection__sz0__noskill__s4
+[1/3 0s] sb__data-to-d3__sz0__noskill__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__data-to-d3__sz0__noskill__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [START] sb__dialogue-parser__sz0__noskill__s2
+  [START] sb__dialogue-parser__sz0__noskill__s0
+  [DONE]  sb__dapt-intrusion-detection__sz0__noskill__s2 -> pass=False
+[1/3 78s] sb__dapt-intrusion-detection__sz0__noskill__s2 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz0__noskill__s4 -> pass=False
+[3/3 91s] sb__dapt-intrusion-detection__sz0__noskill__s4 -> FAIL ()
+  [DONE]  sb__dialogue-parser__sz0__noskill__s1 -> pass=False
+[1/3 235s] sb__dialogue-parser__sz0__noskill__s1 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz0__noskill__s3 -> pass=False
+[2/3 257s] sb__dapt-intrusion-detection__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz0__noskill__s1 -> pass=False
+[3/3 418s] sb__dapt-intrusion-detection__sz0__noskill__s1 -> FAIL ()
+  [DONE]  sb__dialogue-parser__sz0__noskill__s2 -> pass=True
+[2/3 582s] sb__dialogue-parser__sz0__noskill__s2 -> PASS ()
+  [DONE]  sb__dialogue-parser__sz0__noskill__s0 -> pass=True
+[3/3 798s] sb__dialogue-parser__sz0__noskill__s0 -> PASS ()
+  +12 unique configs
+[19:21:59] noskill: 48/100 done, 52 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=48)
+  [START] sb__earthquake-phase-association__sz0__noskill__s3
+[SB] tasks=20 trials=3 (done=48)
+  [START] sb__dialogue-parser__sz0__noskill__s4
+[SB] tasks=20 trials=3 (done=48)
+  [START] sb__dynamic-object-aware-egomotion__sz0__noskill__s2
+[SB] tasks=20 trials=3 (done=48)
+  [START] sb__earthquake-phase-association__sz0__noskill__s0
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__noskill__s2 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz0__noskill__s3
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__noskill__s3 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz0__noskill__s1
+  [START] sb__earthquake-phase-association__sz0__noskill__s4
+  [START] sb__earthquake-phase-association__sz0__noskill__s2
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__noskill__s1 -> pass=None
+[1/3 0s] sb__dynamic-object-aware-egomotion__sz0__noskill__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__dynamic-object-aware-egomotion__sz0__noskill__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__dynamic-object-aware-egomotion__sz0__noskill__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [START] sb__dynamic-object-aware-egomotion__sz0__noskill__s0
+  [START] sb__dialogue-parser__sz0__noskill__s3
+  [START] sb__earthquake-phase-association__sz0__noskill__s1
+  [START] sb__dynamic-object-aware-egomotion__sz0__noskill__s4
+  [DONE]  sb__dialogue-parser__sz0__noskill__s4 -> pass=True
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__noskill__s0 -> pass=None
+[1/3 261s] sb__dialogue-parser__sz0__noskill__s4 -> PASS ()
+[2/3 261s] sb__dynamic-object-aware-egomotion__sz0__noskill__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__dialogue-parser__sz0__noskill__s3 -> pass=True
+[3/3 486s] sb__dialogue-parser__sz0__noskill__s3 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz0__noskill__s0 -> pass=True
+[1/3 559s] sb__earthquake-phase-association__sz0__noskill__s0 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz0__noskill__s3 -> pass=True
+[1/3 901s] sb__earthquake-phase-association__sz0__noskill__s3 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz0__noskill__s1 -> pass=True
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__noskill__s4 -> pass=None
+[2/3 979s] sb__earthquake-phase-association__sz0__noskill__s1 -> PASS ()
+[3/3 979s] sb__dynamic-object-aware-egomotion__sz0__noskill__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__earthquake-phase-association__sz0__noskill__s4 -> pass=True
+[2/3 1801s] sb__earthquake-phase-association__sz0__noskill__s4 -> PASS ()
+  [DONE]  sb__earthquake-phase-association__sz0__noskill__s2 -> pass=True
+[3/3 2702s] sb__earthquake-phase-association__sz0__noskill__s2 -> PASS ()
+  +12 unique configs
+[20:07:02] noskill: 60/100 done, 40 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__econ-detrending-correlation__sz0__noskill__s2
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__earthquake-plate-calculation__sz0__noskill__s4
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__earthquake-plate-calculation__sz0__noskill__s1
+[SB] tasks=20 trials=3 (done=60)
+  [START] sb__edit-pdf__sz0__noskill__s0
+  [START] sb__econ-detrending-correlation__sz0__noskill__s0
+  [START] sb__earthquake-plate-calculation__sz0__noskill__s3
+  [START] sb__econ-detrending-correlation__sz0__noskill__s3
+  [START] sb__econ-detrending-correlation__sz0__noskill__s1
+  [START] sb__earthquake-plate-calculation__sz0__noskill__s2
+  [START] sb__earthquake-plate-calculation__sz0__noskill__s0
+  [DONE]  sb__edit-pdf__sz0__noskill__s0 -> pass=None
+  [START] sb__edit-pdf__sz0__noskill__s1
+  [DONE]  sb__edit-pdf__sz0__noskill__s1 -> pass=None
+  [START] sb__econ-detrending-correlation__sz0__noskill__s4
+[1/3 0s] sb__edit-pdf__sz0__noskill__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__edit-pdf__sz0__noskill__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__econ-detrending-correlation__sz0__noskill__s4 -> pass=True
+[3/3 122s] sb__econ-detrending-correlation__sz0__noskill__s4 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz0__noskill__s2 -> pass=True
+[1/3 128s] sb__econ-detrending-correlation__sz0__noskill__s2 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__noskill__s4 -> pass=False
+[1/3 150s] sb__earthquake-plate-calculation__sz0__noskill__s4 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz0__noskill__s3 -> pass=True
+[2/3 202s] sb__econ-detrending-correlation__sz0__noskill__s3 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__noskill__s1 -> pass=False
+[1/3 214s] sb__earthquake-plate-calculation__sz0__noskill__s1 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz0__noskill__s0 -> pass=True
+[2/3 250s] sb__econ-detrending-correlation__sz0__noskill__s0 -> PASS ()
+  [DONE]  sb__econ-detrending-correlation__sz0__noskill__s1 -> pass=True
+[3/3 318s] sb__econ-detrending-correlation__sz0__noskill__s1 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__noskill__s2 -> pass=True
+[2/3 377s] sb__earthquake-plate-calculation__sz0__noskill__s2 -> PASS ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__noskill__s3 -> pass=False
+[3/3 394s] sb__earthquake-plate-calculation__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__noskill__s0 -> pass=False
+[3/3 616s] sb__earthquake-plate-calculation__sz0__noskill__s0 -> FAIL ()
+  +12 unique configs
+[20:17:19] noskill: 72/100 done, 28 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__edit-pdf__sz0__noskill__s3
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__energy-ac-optimal-power-flow__sz0__noskill__s4
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__energy-ac-optimal-power-flow__sz0__noskill__s1
+[SB] tasks=20 trials=3 (done=72)
+  [START] sb__energy-market-pricing__sz0__noskill__s2
+  [DONE]  sb__edit-pdf__sz0__noskill__s3 -> pass=None
+  [START] sb__edit-pdf__sz0__noskill__s4
+  [DONE]  sb__edit-pdf__sz0__noskill__s4 -> pass=None
+  [START] sb__edit-pdf__sz0__noskill__s2
+  [START] sb__energy-market-pricing__sz0__noskill__s0
+  [START] sb__energy-ac-optimal-power-flow__sz0__noskill__s3
+  [DONE]  sb__edit-pdf__sz0__noskill__s2 -> pass=None
+[1/3 0s] sb__edit-pdf__sz0__noskill__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__edit-pdf__sz0__noskill__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__edit-pdf__sz0__noskill__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [START] sb__energy-ac-optimal-power-flow__sz0__noskill__s2
+  [START] sb__energy-ac-optimal-power-flow__sz0__noskill__s0
+  [START] sb__energy-market-pricing__sz0__noskill__s3
+  [START] sb__energy-market-pricing__sz0__noskill__s1
+  [DONE]  sb__energy-market-pricing__sz0__noskill__s2 -> pass=True
+[1/3 277s] sb__energy-market-pricing__sz0__noskill__s2 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz0__noskill__s3 -> pass=False
+[2/3 659s] sb__energy-market-pricing__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__noskill__s1 -> pass=False
+[1/3 901s] sb__energy-ac-optimal-power-flow__sz0__noskill__s1 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__noskill__s4 -> pass=False
+[1/3 901s] sb__energy-ac-optimal-power-flow__sz0__noskill__s4 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz0__noskill__s1 -> pass=True
+[3/3 984s] sb__energy-market-pricing__sz0__noskill__s1 -> PASS ()
+  [DONE]  sb__energy-market-pricing__sz0__noskill__s0 -> pass=False
+[2/3 1282s] sb__energy-market-pricing__sz0__noskill__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__noskill__s2 -> pass=False
+[2/3 1801s] sb__energy-ac-optimal-power-flow__sz0__noskill__s2 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__noskill__s3 -> pass=False
+[3/3 1828s] sb__energy-ac-optimal-power-flow__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__noskill__s0 -> pass=False
+[3/3 2187s] sb__energy-ac-optimal-power-flow__sz0__noskill__s0 -> FAIL ()
+  +12 unique configs
+[20:53:46] noskill: 84/100 done, 16 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__exceltable-in-ppt__sz0__noskill__s1
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__enterprise-information-search__sz0__noskill__s3
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__enterprise-information-search__sz0__noskill__s0
+[SB] tasks=20 trials=3 (done=84)
+  [START] sb__exceltable-in-ppt__sz0__noskill__s4
+  [START] sb__exceltable-in-ppt__sz0__noskill__s2
+  [START] sb__exceltable-in-ppt__sz0__noskill__s0
+  [START] sb__exoplanet-detection-period__sz0__noskill__s0
+  [START] sb__exceltable-in-ppt__sz0__noskill__s3
+  [START] sb__enterprise-information-search__sz0__noskill__s1
+  [START] sb__energy-market-pricing__sz0__noskill__s4
+  [START] sb__enterprise-information-search__sz0__noskill__s4
+  [START] sb__enterprise-information-search__sz0__noskill__s2
+  [DONE]  sb__exceltable-in-ppt__sz0__noskill__s1 -> pass=False
+[1/3 97s] sb__exceltable-in-ppt__sz0__noskill__s1 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__noskill__s4 -> pass=False
+  [DONE]  sb__exoplanet-detection-period__sz0__noskill__s0 -> pass=None
+[1/3 135s] sb__exceltable-in-ppt__sz0__noskill__s4 -> FAIL ()
+[2/3 135s] sb__exoplanet-detection-period__sz0__noskill__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__enterprise-information-search__sz0__noskill__s3 -> pass=False
+[1/3 200s] sb__enterprise-information-search__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__noskill__s3 -> pass=False
+[3/3 204s] sb__exceltable-in-ppt__sz0__noskill__s3 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz0__noskill__s0 -> pass=False
+[1/3 254s] sb__enterprise-information-search__sz0__noskill__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__noskill__s2 -> pass=True
+[2/3 308s] sb__exceltable-in-ppt__sz0__noskill__s2 -> PASS ()
+  [DONE]  sb__enterprise-information-search__sz0__noskill__s4 -> pass=False
+[2/3 451s] sb__enterprise-information-search__sz0__noskill__s4 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__noskill__s0 -> pass=False
+[3/3 456s] sb__exceltable-in-ppt__sz0__noskill__s0 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz0__noskill__s1 -> pass=False
+[2/3 636s] sb__enterprise-information-search__sz0__noskill__s1 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz0__noskill__s2 -> pass=False
+[3/3 694s] sb__enterprise-information-search__sz0__noskill__s2 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz0__noskill__s4 -> pass=False
+[3/3 1150s] sb__energy-market-pricing__sz0__noskill__s4 -> FAIL ()
+  +12 unique configs
+[21:12:57] noskill: 96/100 done, 4 remaining. Launching 4...
+[SB] tasks=20 trials=1 (done=96)
+  [START] sb__exoplanet-detection-period__sz0__noskill__s4
+[SB] tasks=20 trials=3 (done=96)
+  [START] sb__exoplanet-detection-period__sz0__noskill__s2
+  [DONE]  sb__exoplanet-detection-period__sz0__noskill__s4 -> pass=None
+[1/1 0s] sb__exoplanet-detection-period__sz0__noskill__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__exoplanet-detection-period__sz0__noskill__s2 -> pass=None
+  [START] sb__exoplanet-detection-period__sz0__noskill__s3
+  [DONE]  sb__exoplanet-detection-period__sz0__noskill__s3 -> pass=None
+  [START] sb__exoplanet-detection-period__sz0__noskill__s1
+  [DONE]  sb__exoplanet-detection-period__sz0__noskill__s1 -> pass=None
+[1/3 0s] sb__exoplanet-detection-period__sz0__noskill__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__exoplanet-detection-period__sz0__noskill__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__exoplanet-detection-period__sz0__noskill__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +4 unique configs
+[21:12:57] noskill done! (100/100)
+=== Baseline: gtonly (N=5 seeds) ===
+[21:12:58] gtonly: 0/100 done, 100 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=100)
+  [START] sb__3d-scan-calc__sz0__gtonly__s1
+[SB] tasks=20 trials=3 (done=100)
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s0
+[SB] tasks=20 trials=3 (done=100)
+  [START] sb__3d-scan-calc__sz0__gtonly__s4
+[SB] tasks=20 trials=3 (done=100)
+  [START] sb__adaptive-cruise-control__sz0__gtonly__s2
+  [START] sb__3d-scan-calc__sz0__gtonly__s2
+  [START] sb__3d-scan-calc__sz0__gtonly__s0
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s1
+  [START] sb__adaptive-cruise-control__sz0__gtonly__s4
+  [START] sb__adaptive-cruise-control__sz0__gtonly__s0
+  [START] sb__3d-scan-calc__sz0__gtonly__s3
+  [START] sb__adaptive-cruise-control__sz0__gtonly__s3
+  [START] sb__adaptive-cruise-control__sz0__gtonly__s1
+  [DONE]  sb__3d-scan-calc__sz0__gtonly__s1 -> pass=True
+[1/3 67s] sb__3d-scan-calc__sz0__gtonly__s1 -> PASS ()
+  [DONE]  sb__3d-scan-calc__sz0__gtonly__s4 -> pass=True
+[1/3 67s] sb__3d-scan-calc__sz0__gtonly__s4 -> PASS ()
+  [DONE]  sb__3d-scan-calc__sz0__gtonly__s2 -> pass=True
+[2/3 115s] sb__3d-scan-calc__sz0__gtonly__s2 -> PASS ()
+  [DONE]  sb__3d-scan-calc__sz0__gtonly__s0 -> pass=True
+[3/3 160s] sb__3d-scan-calc__sz0__gtonly__s0 -> PASS ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s0 -> pass=False
+[1/3 575s] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s0 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__gtonly__s0 -> pass=True
+[2/3 633s] sb__adaptive-cruise-control__sz0__gtonly__s0 -> PASS ()
+  [DONE]  sb__adaptive-cruise-control__sz0__gtonly__s2 -> pass=False
+[1/3 901s] sb__adaptive-cruise-control__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__3d-scan-calc__sz0__gtonly__s3 -> pass=True
+[3/3 929s] sb__3d-scan-calc__sz0__gtonly__s3 -> PASS ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s1 -> pass=False
+[2/3 1308s] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__gtonly__s3 -> pass=False
+[2/3 1494s] sb__adaptive-cruise-control__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__gtonly__s4 -> pass=False
+[3/3 2209s] sb__adaptive-cruise-control__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__adaptive-cruise-control__sz0__gtonly__s1 -> pass=False
+[3/3 2395s] sb__adaptive-cruise-control__sz0__gtonly__s1 -> FAIL ()
+  +12 unique configs
+[21:52:53] gtonly: 12/100 done, 88 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=112)
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s3
+[SB] tasks=20 trials=3 (done=112)
+  [START] sb__citation-check__sz0__gtonly__s1
+[SB] tasks=20 trials=3 (done=112)
+  [START] sb__civ6-adjacency-optimizer__sz0__gtonly__s2
+[SB] tasks=20 trials=3 (done=112)
+  [START] sb__citation-check__sz0__gtonly__s4
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s4
+  [START] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s2
+  [START] sb__citation-check__sz0__gtonly__s2
+  [START] sb__citation-check__sz0__gtonly__s0
+  [START] sb__civ6-adjacency-optimizer__sz0__gtonly__s3
+  [START] sb__civ6-adjacency-optimizer__sz0__gtonly__s1
+  [START] sb__civ6-adjacency-optimizer__sz0__gtonly__s0
+  [START] sb__citation-check__sz0__gtonly__s3
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s3 -> pass=False
+[1/3 16s] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s4 -> pass=False
+[2/3 17s] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__gtonly__s2 -> pass=False
+[1/3 18s] sb__civ6-adjacency-optimizer__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s2 -> pass=False
+[3/3 18s] sb__azure-bgp-oscillation-route-leak__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__gtonly__s3 -> pass=False
+[2/3 19s] sb__civ6-adjacency-optimizer__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__gtonly__s1 -> pass=False
+[3/3 20s] sb__civ6-adjacency-optimizer__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__gtonly__s4 -> pass=False
+[1/3 58s] sb__citation-check__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__gtonly__s0 -> pass=False
+[2/3 60s] sb__civ6-adjacency-optimizer__sz0__gtonly__s0 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__gtonly__s3 -> pass=False
+[3/3 61s] sb__citation-check__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__gtonly__s1 -> pass=False
+[1/3 69s] sb__citation-check__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__gtonly__s2 -> pass=False
+[2/3 71s] sb__citation-check__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__citation-check__sz0__gtonly__s0 -> pass=False
+[3/3 72s] sb__citation-check__sz0__gtonly__s0 -> FAIL ()
+  +12 unique configs
+[21:54:05] gtonly: 24/100 done, 76 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=124)
+  [START] sb__court-form-filling__sz0__gtonly__s3
+[SB] tasks=20 trials=3 (done=124)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s1
+[SB] tasks=20 trials=3 (done=124)
+  [START] sb__court-form-filling__sz0__gtonly__s0
+  [DONE]  sb__court-form-filling__sz0__gtonly__s3 -> pass=None
+  [START] sb__court-form-filling__sz0__gtonly__s4
+  [DONE]  sb__court-form-filling__sz0__gtonly__s4 -> pass=None
+  [START] sb__court-form-filling__sz0__gtonly__s2
+  [DONE]  sb__court-form-filling__sz0__gtonly__s2 -> pass=None
+[1/3 0s] sb__court-form-filling__sz0__gtonly__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__court-form-filling__sz0__gtonly__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__court-form-filling__sz0__gtonly__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s1 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s2
+[SB] tasks=20 trials=3 (done=127)
+  [START] sb__dapt-intrusion-detection__sz0__gtonly__s2
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s2 -> pass=None
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s0
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s0 -> pass=None
+[1/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__court-form-filling__sz0__gtonly__s0 -> pass=None
+  [START] sb__court-form-filling__sz0__gtonly__s1
+  [DONE]  sb__court-form-filling__sz0__gtonly__s1 -> pass=None
+  [START] sb__civ6-adjacency-optimizer__sz0__gtonly__s4
+[1/3 0s] sb__court-form-filling__sz0__gtonly__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__court-form-filling__sz0__gtonly__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [START] sb__dapt-intrusion-detection__sz0__gtonly__s3
+  [START] sb__dapt-intrusion-detection__sz0__gtonly__s1
+  [DONE]  sb__civ6-adjacency-optimizer__sz0__gtonly__s4 -> pass=False
+[3/3 1s] sb__civ6-adjacency-optimizer__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz0__gtonly__s2 -> pass=False
+[1/3 1s] sb__dapt-intrusion-detection__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz0__gtonly__s3 -> pass=False
+[2/3 3s] sb__dapt-intrusion-detection__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz0__gtonly__s1 -> pass=False
+[3/3 4s] sb__dapt-intrusion-detection__sz0__gtonly__s1 -> FAIL ()
+  +12 unique configs
+[21:54:10] gtonly: 36/100 done, 64 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=136)
+  [START] sb__data-to-d3__sz0__gtonly__s3
+[SB] tasks=20 trials=3 (done=136)
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s4
+[SB] tasks=20 trials=3 (done=136)
+  [START] sb__data-to-d3__sz0__gtonly__s0
+[SB] tasks=20 trials=3 (done=136)
+  [START] sb__dialogue-parser__sz0__gtonly__s1
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s4 -> pass=None
+  [START] sb__dapt-intrusion-detection__sz0__gtonly__s0
+  [DONE]  sb__data-to-d3__sz0__gtonly__s3 -> pass=None
+  [START] sb__data-to-d3__sz0__gtonly__s4
+  [DONE]  sb__data-to-d3__sz0__gtonly__s0 -> pass=None
+  [START] sb__data-to-d3__sz0__gtonly__s1
+  [DONE]  sb__data-to-d3__sz0__gtonly__s4 -> pass=None
+  [START] sb__data-to-d3__sz0__gtonly__s2
+  [START] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s3
+[1/3 0s] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__data-to-d3__sz0__gtonly__s1 -> pass=None
+  [START] sb__dapt-intrusion-detection__sz0__gtonly__s4
+  [DONE]  sb__data-to-d3__sz0__gtonly__s2 -> pass=None
+[1/3 0s] sb__data-to-d3__sz0__gtonly__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__data-to-d3__sz0__gtonly__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__data-to-d3__sz0__gtonly__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [START] sb__dialogue-parser__sz0__gtonly__s2
+  [START] sb__dialogue-parser__sz0__gtonly__s0
+[1/3 0s] sb__data-to-d3__sz0__gtonly__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__data-to-d3__sz0__gtonly__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__dapt-intrusion-detection__sz0__gtonly__s4 -> pass=False
+[3/3 1s] sb__dapt-intrusion-detection__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__dialogue-parser__sz0__gtonly__s1 -> pass=False
+[1/3 2s] sb__dialogue-parser__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__dapt-intrusion-detection__sz0__gtonly__s0 -> pass=False
+  [DONE]  sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s3 -> pass=None
+[2/3 2s] sb__dapt-intrusion-detection__sz0__gtonly__s0 -> FAIL ()
+[3/3 2s] sb__crystallographic-wyckoff-position-analysis__sz0__gtonly__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__dialogue-parser__sz0__gtonly__s2 -> pass=False
+[2/3 3s] sb__dialogue-parser__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__dialogue-parser__sz0__gtonly__s0 -> pass=False
+[3/3 4s] sb__dialogue-parser__sz0__gtonly__s0 -> FAIL ()
+  +12 unique configs
+[21:54:15] gtonly: 48/100 done, 52 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=148)
+  [START] sb__earthquake-phase-association__sz0__gtonly__s0
+[SB] tasks=20 trials=3 (done=148)
+  [START] sb__earthquake-phase-association__sz0__gtonly__s3
+[SB] tasks=20 trials=3 (done=148)
+  [START] sb__dialogue-parser__sz0__gtonly__s4
+[SB] tasks=20 trials=3 (done=148)
+  [START] sb__dynamic-object-aware-egomotion__sz0__gtonly__s2
+  [START] sb__dynamic-object-aware-egomotion__sz0__gtonly__s0
+  [START] sb__dialogue-parser__sz0__gtonly__s3
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__gtonly__s2 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz0__gtonly__s3
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__gtonly__s3 -> pass=None
+  [START] sb__dynamic-object-aware-egomotion__sz0__gtonly__s1
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__gtonly__s1 -> pass=None
+[1/3 0s] sb__dynamic-object-aware-egomotion__sz0__gtonly__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__dynamic-object-aware-egomotion__sz0__gtonly__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__dynamic-object-aware-egomotion__sz0__gtonly__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [START] sb__earthquake-phase-association__sz0__gtonly__s4
+  [START] sb__earthquake-phase-association__sz0__gtonly__s2
+  [START] sb__earthquake-phase-association__sz0__gtonly__s1
+  [START] sb__dynamic-object-aware-egomotion__sz0__gtonly__s4
+  [DONE]  sb__dialogue-parser__sz0__gtonly__s4 -> pass=False
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__gtonly__s0 -> pass=None
+  [DONE]  sb__earthquake-phase-association__sz0__gtonly__s0 -> pass=False
+[1/3 2s] sb__dialogue-parser__sz0__gtonly__s4 -> FAIL ()
+[2/3 2s] sb__dynamic-object-aware-egomotion__sz0__gtonly__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[1/3 2s] sb__earthquake-phase-association__sz0__gtonly__s0 -> FAIL ()
+  [DONE]  sb__earthquake-phase-association__sz0__gtonly__s3 -> pass=False
+[1/3 2s] sb__earthquake-phase-association__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__dialogue-parser__sz0__gtonly__s3 -> pass=False
+[3/3 3s] sb__dialogue-parser__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__earthquake-phase-association__sz0__gtonly__s1 -> pass=False
+  [DONE]  sb__dynamic-object-aware-egomotion__sz0__gtonly__s4 -> pass=None
+[2/3 3s] sb__earthquake-phase-association__sz0__gtonly__s1 -> FAIL ()
+[3/3 3s] sb__dynamic-object-aware-egomotion__sz0__gtonly__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__earthquake-phase-association__sz0__gtonly__s4 -> pass=False
+[2/3 3s] sb__earthquake-phase-association__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__earthquake-phase-association__sz0__gtonly__s2 -> pass=False
+[3/3 5s] sb__earthquake-phase-association__sz0__gtonly__s2 -> FAIL ()
+  +12 unique configs
+[21:54:20] gtonly: 60/100 done, 40 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=160)
+  [START] sb__edit-pdf__sz0__gtonly__s0
+[SB] tasks=20 trials=3 (done=160)
+  [START] sb__econ-detrending-correlation__sz0__gtonly__s2
+[SB] tasks=20 trials=3 (done=160)
+  [START] sb__earthquake-plate-calculation__sz0__gtonly__s1
+[SB] tasks=20 trials=3 (done=160)
+  [START] sb__earthquake-plate-calculation__sz0__gtonly__s4
+  [DONE]  sb__edit-pdf__sz0__gtonly__s0 -> pass=None
+  [START] sb__edit-pdf__sz0__gtonly__s1
+  [DONE]  sb__edit-pdf__sz0__gtonly__s1 -> pass=None
+  [START] sb__econ-detrending-correlation__sz0__gtonly__s4
+  [START] sb__econ-detrending-correlation__sz0__gtonly__s3
+  [START] sb__econ-detrending-correlation__sz0__gtonly__s1
+[1/3 0s] sb__edit-pdf__sz0__gtonly__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__edit-pdf__sz0__gtonly__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [START] sb__econ-detrending-correlation__sz0__gtonly__s0
+  [START] sb__earthquake-plate-calculation__sz0__gtonly__s3
+  [START] sb__earthquake-plate-calculation__sz0__gtonly__s2
+  [START] sb__earthquake-plate-calculation__sz0__gtonly__s0
+  [DONE]  sb__earthquake-plate-calculation__sz0__gtonly__s1 -> pass=False
+  [DONE]  sb__econ-detrending-correlation__sz0__gtonly__s4 -> pass=False
+[3/3 1s] sb__econ-detrending-correlation__sz0__gtonly__s4 -> FAIL ()
+[1/3 1s] sb__earthquake-plate-calculation__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz0__gtonly__s2 -> pass=False
+[1/3 1s] sb__econ-detrending-correlation__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__gtonly__s4 -> pass=False
+[1/3 2s] sb__earthquake-plate-calculation__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__gtonly__s2 -> pass=False
+[2/3 3s] sb__earthquake-plate-calculation__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz0__gtonly__s0 -> pass=False
+[2/3 3s] sb__econ-detrending-correlation__sz0__gtonly__s0 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz0__gtonly__s3 -> pass=False
+[2/3 3s] sb__econ-detrending-correlation__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__gtonly__s0 -> pass=False
+[3/3 4s] sb__earthquake-plate-calculation__sz0__gtonly__s0 -> FAIL ()
+  [DONE]  sb__earthquake-plate-calculation__sz0__gtonly__s3 -> pass=False
+[3/3 4s] sb__earthquake-plate-calculation__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__econ-detrending-correlation__sz0__gtonly__s1 -> pass=False
+[3/3 4s] sb__econ-detrending-correlation__sz0__gtonly__s1 -> FAIL ()
+  +12 unique configs
+[21:54:25] gtonly: 72/100 done, 28 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=172)
+  [START] sb__energy-ac-optimal-power-flow__sz0__gtonly__s4
+[SB] tasks=20 trials=3 (done=172)
+  [START] sb__energy-ac-optimal-power-flow__sz0__gtonly__s1
+[SB] tasks=20 trials=3 (done=172)
+  [START] sb__energy-market-pricing__sz0__gtonly__s2
+[SB] tasks=20 trials=3 (done=172)
+  [START] sb__edit-pdf__sz0__gtonly__s3
+  [START] sb__energy-market-pricing__sz0__gtonly__s0
+  [START] sb__energy-ac-optimal-power-flow__sz0__gtonly__s3
+  [START] sb__energy-ac-optimal-power-flow__sz0__gtonly__s2
+  [START] sb__energy-ac-optimal-power-flow__sz0__gtonly__s0
+  [START] sb__energy-market-pricing__sz0__gtonly__s3
+  [START] sb__energy-market-pricing__sz0__gtonly__s1
+  [DONE]  sb__edit-pdf__sz0__gtonly__s3 -> pass=None
+  [START] sb__edit-pdf__sz0__gtonly__s4
+  [DONE]  sb__edit-pdf__sz0__gtonly__s4 -> pass=None
+  [START] sb__edit-pdf__sz0__gtonly__s2
+  [DONE]  sb__edit-pdf__sz0__gtonly__s2 -> pass=None
+[1/3 0s] sb__edit-pdf__sz0__gtonly__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__edit-pdf__sz0__gtonly__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__edit-pdf__sz0__gtonly__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__energy-market-pricing__sz0__gtonly__s2 -> pass=False
+[1/3 1s] sb__energy-market-pricing__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__gtonly__s4 -> pass=False
+[1/3 2s] sb__energy-ac-optimal-power-flow__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__gtonly__s1 -> pass=False
+[1/3 2s] sb__energy-ac-optimal-power-flow__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz0__gtonly__s3 -> pass=False
+[2/3 3s] sb__energy-market-pricing__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz0__gtonly__s0 -> pass=False
+[2/3 3s] sb__energy-market-pricing__sz0__gtonly__s0 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__gtonly__s2 -> pass=False
+[2/3 3s] sb__energy-ac-optimal-power-flow__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__gtonly__s3 -> pass=False
+[3/3 4s] sb__energy-ac-optimal-power-flow__sz0__gtonly__s3 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz0__gtonly__s1 -> pass=False
+[3/3 4s] sb__energy-market-pricing__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__energy-ac-optimal-power-flow__sz0__gtonly__s0 -> pass=False
+[3/3 5s] sb__energy-ac-optimal-power-flow__sz0__gtonly__s0 -> FAIL ()
+  +12 unique configs
+[21:54:30] gtonly: 84/100 done, 16 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=184)
+  [START] sb__enterprise-information-search__sz0__gtonly__s3
+[SB] tasks=20 trials=3 (done=184)
+  [START] sb__exceltable-in-ppt__sz0__gtonly__s1
+[SB] tasks=20 trials=3 (done=184)
+  [START] sb__enterprise-information-search__sz0__gtonly__s0
+[SB] tasks=20 trials=3 (done=184)
+  [START] sb__exceltable-in-ppt__sz0__gtonly__s4
+  [START] sb__exceltable-in-ppt__sz0__gtonly__s2
+  [START] sb__exceltable-in-ppt__sz0__gtonly__s0
+  [START] sb__enterprise-information-search__sz0__gtonly__s4
+  [START] sb__enterprise-information-search__sz0__gtonly__s2
+  [START] sb__enterprise-information-search__sz0__gtonly__s1
+  [START] sb__energy-market-pricing__sz0__gtonly__s4
+  [START] sb__exoplanet-detection-period__sz0__gtonly__s0
+  [START] sb__exceltable-in-ppt__sz0__gtonly__s3
+  [DONE]  sb__enterprise-information-search__sz0__gtonly__s3 -> pass=False
+  [DONE]  sb__enterprise-information-search__sz0__gtonly__s0 -> pass=False
+[1/3 2s] sb__enterprise-information-search__sz0__gtonly__s3 -> FAIL ()
+[1/3 2s] sb__enterprise-information-search__sz0__gtonly__s0 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__gtonly__s1 -> pass=False
+[1/3 2s] sb__exceltable-in-ppt__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__gtonly__s4 -> pass=False
+  [DONE]  sb__exoplanet-detection-period__sz0__gtonly__s0 -> pass=None
+[1/3 2s] sb__exceltable-in-ppt__sz0__gtonly__s4 -> FAIL ()
+[2/3 2s] sb__exoplanet-detection-period__sz0__gtonly__s0 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__enterprise-information-search__sz0__gtonly__s1 -> pass=False
+[2/3 3s] sb__enterprise-information-search__sz0__gtonly__s1 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz0__gtonly__s4 -> pass=False
+[2/3 3s] sb__enterprise-information-search__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__gtonly__s2 -> pass=False
+  [DONE]  sb__exceltable-in-ppt__sz0__gtonly__s3 -> pass=False
+[3/3 3s] sb__exceltable-in-ppt__sz0__gtonly__s3 -> FAIL ()
+[2/3 3s] sb__exceltable-in-ppt__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__energy-market-pricing__sz0__gtonly__s4 -> pass=False
+[3/3 4s] sb__energy-market-pricing__sz0__gtonly__s4 -> FAIL ()
+  [DONE]  sb__enterprise-information-search__sz0__gtonly__s2 -> pass=False
+[3/3 4s] sb__enterprise-information-search__sz0__gtonly__s2 -> FAIL ()
+  [DONE]  sb__exceltable-in-ppt__sz0__gtonly__s0 -> pass=False
+[3/3 5s] sb__exceltable-in-ppt__sz0__gtonly__s0 -> FAIL ()
+  +12 unique configs
+[21:54:35] gtonly: 96/100 done, 4 remaining. Launching 4...
+[SB] tasks=20 trials=3 (done=196)
+  [START] sb__exoplanet-detection-period__sz0__gtonly__s2
+[SB] tasks=20 trials=1 (done=196)
+  [START] sb__exoplanet-detection-period__sz0__gtonly__s4
+  [DONE]  sb__exoplanet-detection-period__sz0__gtonly__s2 -> pass=None
+  [START] sb__exoplanet-detection-period__sz0__gtonly__s3
+  [DONE]  sb__exoplanet-detection-period__sz0__gtonly__s3 -> pass=None
+  [START] sb__exoplanet-detection-period__sz0__gtonly__s1
+  [DONE]  sb__exoplanet-detection-period__sz0__gtonly__s1 -> pass=None
+[1/3 0s] sb__exoplanet-detection-period__sz0__gtonly__s2 -> SKIP (heavy Dockerfile (host execution unsafe))
+[2/3 0s] sb__exoplanet-detection-period__sz0__gtonly__s3 -> SKIP (heavy Dockerfile (host execution unsafe))
+[3/3 0s] sb__exoplanet-detection-period__sz0__gtonly__s1 -> SKIP (heavy Dockerfile (host execution unsafe))
+  [DONE]  sb__exoplanet-detection-period__sz0__gtonly__s4 -> pass=None
+[1/1 0s] sb__exoplanet-detection-period__sz0__gtonly__s4 -> SKIP (heavy Dockerfile (host execution unsafe))
+  +4 unique configs
+[21:54:36] gtonly done! (100/100)
+=== N=5 Baselines Complete ===
+Total unique configs: 200/200

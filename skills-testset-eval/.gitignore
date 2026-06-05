@@ -6,8 +6,12 @@ data/
 skillsbench_repo/
 original-tasks/
 
-# Results (generated, not source)
-results/
+# Results: app/ subdir contains task-specific working files (excluded)
+results/app/
+results/test.txt
+results/output.mp4
+results/audiobook.mp3
+results/IMG_1424.PNG
 
 # Python
 __pycache__/
