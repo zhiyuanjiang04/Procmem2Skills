@@ -10,7 +10,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="static/css/site.css">
+  <link rel="stylesheet" href="static/css/site.css?v=20260819-32">
 </head>
 <body>
   <header class="site-header">
@@ -23,7 +23,8 @@
         <a href="#representation">Representation</a>
         <a href="#mechanisms">Mechanisms</a>
         <a href="#retrieval">Retrieval</a>
-        <a href="#resources">Resources</a>
+        <a href="#additional">More studies</a>
+        <a href="#bibtex">BibTeX</a>
       </div>
     </nav>
   </header>
@@ -33,19 +34,27 @@
       <div class="hero-copy">
         <p class="kicker">A contrastive study of procedural memory for LLM agents</p>
         <h1 id="paper-title">Demystifying Agent Skills:<br><em>Why They Work - Until They Don't</em></h1>
-        <p class="hero-question" id="hero-question">Aggregate success tells us that a skill helped. It does not tell us why, when, or whether the agent used the right one.</p>
-        <p class="hero-deck">We answer these questions by starting from the same agent experience, building comparable procedural representations, and following them through task execution, trajectory analysis, and independent retrieval tests.</p>
+        <p class="hero-question" id="hero-question">Aggregate success tells us that a skill helped, but not why, when, or whether the agent used the right one. <mark class="signal-highlight">When do skills help, why do they work, and where do they fail?</mark></p>
         <div class="authors" id="authors"></div>
+        <div class="affiliations" id="affiliations"></div>
+        <p class="author-notes">* equal contribution · † corresponding author</p>
         <div class="hero-links" aria-label="Paper resources">
-          <a class="button button-dark" href="https://github.com/zhiyuanjiang04/Procmem2Skills/tree/main" target="_blank" rel="noreferrer">Paper source <span aria-hidden="true">↗</span></a>
+          <a class="button button-dark" href="https://arxiv.org/abs/2608.14036" target="_blank" rel="noreferrer">Paper <span aria-hidden="true">↗</span></a>
           <a class="button button-light" href="https://github.com/zhiyuanjiang04/Procmem2Skills" target="_blank" rel="noreferrer">Code <span aria-hidden="true">↗</span></a>
           <a class="button button-light" href="#bibtex">BibTeX</a>
         </div>
       </div>
-      <div class="hero-aside" aria-label="Study scope">
-        <div class="scope-index"><span>01</span><span>CONTRASTIVE ANALYSIS</span></div>
-        <div class="scope-rule"></div>
-        <p>The study moves from outcome to explanation: first compare representations, then inspect the behavior behind the score, and finally test whether the right skill can be found and used.</p>
+      <div class="study-arc" aria-label="Study path">
+        <div class="study-arc-lead">
+          <p class="kicker">Study path</p>
+          <strong>From outcome to explanation.</strong>
+          <p>We compare representations, inspect the behavior behind the score, then test whether a skill can be found and used.</p>
+        </div>
+        <div class="study-arc-steps">
+          <div><span>01</span><strong>Compare representations</strong><small>Raw · Workflow Memory · Skill</small></div>
+          <div><span>02</span><strong>Inspect behavior</strong><small>Paired trajectories · taxonomy</small></div>
+          <div><span>03</span><strong>Test retrieval and use</strong><small>Find · select · execute</small></div>
+        </div>
         <div class="scope-metrics">
           <div><strong>8,135</strong><span>trial records</span></div>
           <div><strong>238</strong><span>valid labels</span></div>
@@ -56,14 +65,15 @@
 
     <section class="research-gap" aria-label="Research questions">
       <div class="section-shell research-gap-inner">
-        <div>
+        <div class="research-summary">
           <p class="kicker">01 / Research questions</p>
-          <h2>We turn one broad question into three testable comparisons.</h2>
+          <p>Aggregate success tells us whether a skill helps, but not which part of the skill-use process is responsible. We therefore study skills as structured procedural experience and separate representation, outcome annotation, framework transfer, and retrieval from downstream execution.</p>
         </div>
         <div class="question-list">
           <div><span>01</span><p><strong>Representation.</strong> Holding the task and source experience fixed, does Skill outperform Workflow Memory?</p></div>
-          <div><span>02</span><p><strong>Mechanism.</strong> When a skill succeeds or fails, what changes in the agent’s execution?</p></div>
-          <div><span>03</span><p><strong>Retrieval.</strong> As skill pools grow or become confusable, can agents identify and use the right skill?</p></div>
+          <div><span>02</span><p><strong>Outcome annotation.</strong> Do skill gains come from procedural content or from visible success/failure labels?</p></div>
+          <div><span>03</span><p><strong>Framework transfer.</strong> Does guidance distilled by one agent framework remain useful in another?</p></div>
+          <div><span>04</span><p><strong>Retrieval and use.</strong> As skill pools grow or become confusable, can agents identify and use the right skill?</p></div>
         </div>
       </div>
     </section>
@@ -72,7 +82,7 @@
       <div class="section-heading">
         <p class="kicker">02 / Experiment design</p>
         <h2>We trace the effect from experience to execution.</h2>
-        <p class="lead">We begin with repeated agent runs on the target tasks. From a fixed pool of those traces, we build comparable artifacts and evaluate them on the same tasks. Retrieval is tested separately, so its results are not fed into the execution experiment as if this were one serial pipeline.</p>
+        <p class="lead">We answer these questions by starting from the <strong class="signal-text">same agent experience</strong>, building comparable procedural representations, and following them through task execution, trajectory analysis, and independent retrieval tests. We then evaluate the representations on the same tasks; retrieval is tested separately rather than treated as one serial pipeline.</p>
       </div>
       <div class="study-map" aria-label="Study workflow">
         <article class="study-step">
@@ -96,7 +106,7 @@
           <button class="media-button" type="button" data-lightbox="static/images/experimental-pipeline-procmem-skills.png" aria-label="Enlarge skill versus workflow pipeline">
             <img src="static/images/experimental-pipeline-procmem-skills.png" alt="Pipeline comparing raw trajectories, Workflow Memory, and Skill injection.">
           </button>
-          <figcaption><strong>Representation and construction.</strong> One source of prior experience becomes three inputs for the same downstream task.</figcaption>
+          <figcaption><strong>Representation and construction.</strong> One source of prior experience becomes three inputs for the same downstream task. Raw receives no prior experience; Workflow Memory and Skill are built from the same source trajectories and evaluated on the same target tasks.</figcaption>
         </figure>
         <figure class="media-card media-card-wide">
           <button class="media-button" type="button" data-lightbox="static/images/experimental-pipeline-retrieval.png" aria-label="Enlarge retrieval pipeline">
@@ -109,9 +119,62 @@
 
     <section class="finding-strip results-band" id="findings" aria-label="Key findings">
       <div class="section-shell results-header">
-        <p class="kicker">03 / Results at a glance</p>
-        <h2>The controlled comparisons show where the gain comes from - and where it breaks down.</h2>
-        <p>These summaries connect each question to a measured outcome. The sections below expose the underlying benchmark, taxonomy, and retrieval data.</p>
+        <p class="kicker">03 / Findings</p>
+        <h2>Core findings from the controlled study.</h2>
+        <p>Aggregate success is only the starting point. The controlled comparisons and trajectory analysis below identify the conditions and mechanisms behind the result.</p>
+      </div>
+      <div class="section-shell formal-findings">
+        <div class="formal-finding-grid">
+          <article class="formal-finding">
+            <button type="button" class="formal-finding-toggle" aria-expanded="false" aria-controls="finding-detail-01">
+              <span class="formal-finding-index">01 / Representation</span>
+              <span class="formal-finding-title">Skills improve over direct Workflow Memory when the source experience is held fixed.</span><b aria-hidden="true">+</b>
+            </button>
+            <div class="formal-finding-detail" id="finding-detail-01"><p>Skill reaches <strong>61.9%</strong> success versus <strong>55.9%</strong> for Workflow Memory, a <strong>+6.06</strong>-point gain. Because both representations are built from the same source trajectories and evaluated on the same target tasks, this comparison isolates how prior experience is packaged.</p></div>
+          </article>
+          <article class="formal-finding">
+            <button type="button" class="formal-finding-toggle" aria-expanded="false" aria-controls="finding-detail-02">
+              <span class="formal-finding-index">02 / Procedural anchoring</span>
+              <span class="formal-finding-title">Skills work as procedural anchors, not merely external knowledge.</span><b aria-hidden="true">+</b>
+            </button>
+            <div class="formal-finding-detail" id="finding-detail-02"><p><code>procedural_anchor</code> accounts for <strong>65.7%</strong> of skill mechanisms, whereas explicit <code>knowledge_injection</code> accounts for only <strong>4.5%</strong>. Skills stabilize action: which setup steps to run, which tool sequence to follow, what intermediate checks to perform, and which recurring pitfalls to avoid.</p></div>
+          </article>
+          <article class="formal-finding">
+            <button type="button" class="formal-finding-toggle" aria-expanded="false" aria-controls="finding-detail-03">
+              <span class="formal-finding-index">03 / Execution robustness</span>
+              <span class="formal-finding-title">Skills improve execution robustness, but work poorly requiring reformulation or verification.</span><b aria-hidden="true">+</b>
+            </button>
+            <div class="formal-finding-detail" id="finding-detail-03"><p>SC2 modes account for <strong>37.3%</strong> of raw-arm labels and <strong>33.3%</strong> of workflow-arm labels, but only <strong>23.5%</strong> of skill-arm labels. Skills reduce environment setup errors, output-format mismatches, service-lifecycle failures, and shell-command corruption, but do not eliminate failures that require deeper problem reformulation or stronger runtime verification.</p></div>
+          </article>
+          <article class="formal-finding">
+            <button type="button" class="formal-finding-toggle" aria-expanded="false" aria-controls="finding-detail-04">
+              <span class="formal-finding-index">04 / Invocation and applicability</span>
+              <span class="formal-finding-title">Skills introduce invocation and applicability failures.</span><b aria-hidden="true">+</b>
+            </button>
+            <div class="formal-finding-detail" id="finding-detail-04"><p>A skill is not self-executing: the agent must decide whether it applies, which parts to follow, how to adapt it, and when to abandon it. <code>skill_guidance_misapplied_or_ignored</code> appears in <strong>10.0%</strong> of skill-arm cases, compared with <strong>0.8%</strong> for Raw and <strong>0.4%</strong> for Workflow Memory.</p></div>
+          </article>
+          <article class="formal-finding">
+            <button type="button" class="formal-finding-toggle" aria-expanded="false" aria-controls="finding-detail-05">
+              <span class="formal-finding-index">05 / Retrieval and use</span>
+              <span class="formal-finding-title">Retrieval exposes the gap between skill availability and skill use.</span><b aria-hidden="true">+</b>
+            </button>
+            <div class="formal-finding-detail" id="finding-detail-05"><p>Embedding top-1 precision decreases from <strong>88.3%</strong> at pool size 5 to <strong>76.9%</strong> at pool size 100, while parsed actual-use precision falls from <strong>29.6%</strong> to <strong>3.3%</strong>. Downstream success remains around <strong>36--39%</strong>: selecting the correct skill does not guarantee task success, while related non-ground-truth skills can still provide useful procedural support.</p></div>
+          </article>
+          <article class="formal-finding">
+            <button type="button" class="formal-finding-toggle" aria-expanded="false" aria-controls="finding-detail-06">
+              <span class="formal-finding-index">06 / Outcome annotation</span>
+              <span class="formal-finding-title">Outcome annotations become important as failed trajectories enter the source pool.</span><b aria-hidden="true">+</b>
+            </button>
+            <div class="formal-finding-detail" id="finding-detail-06"><p>The same trajectory pools are distilled with and without explicit success/failure labels. For Gemini on Terminal-Bench 2 at <code>3s2f</code>, the normal skill reaches <strong>74.62%</strong> versus <strong>40.00%</strong> without outcome hints; the same pattern holds across the completed Gemini Terminal-Bench 2 and SkillsBench ratios.</p></div>
+          </article>
+          <article class="formal-finding">
+            <button type="button" class="formal-finding-toggle" aria-expanded="false" aria-controls="finding-detail-07">
+              <span class="formal-finding-index">07 / Cross-framework transfer</span>
+              <span class="formal-finding-title">Distilled skills provide a more portable representation than direct Workflow Memory.</span><b aria-hidden="true">+</b>
+            </button>
+            <div class="formal-finding-detail" id="finding-detail-07"><p>Workflow memories and skills constructed from Codex trajectories are held fixed and evaluated with Gemini CLI. The target tasks and source experience remain unchanged while the prompting style, tool interface, and execution loop change, so downstream differences measure portability rather than regeneration.</p></div>
+          </article>
+        </div>
       </div>
       <div class="section-shell finding-grid" id="finding-cards"></div>
     </section>
@@ -137,21 +200,17 @@
       <div class="section-heading">
         <p class="kicker">05 / Mechanisms</p>
         <h2>What changes in the agent’s execution?</h2>
+      </div>
+      <figure class="media-card media-card-taxonomy">
+        <img class="embedded-figure" src="static/images/taxonomy-per-setting.png" alt="Stacked bar chart showing taxonomy label distributions across trajectory mixtures and experimental arms." loading="lazy">
+        <figcaption><strong>Taxonomy distribution.</strong> Stacked bars show trajectory-level labels across mixtures and execution arms. <a class="document-link" href="static/images/taxonomy-per-setting.pdf" target="_blank" rel="noreferrer">Open PDF ↗</a></figcaption>
+      </figure>
+      <div class="section-heading mechanisms-explanation">
         <p class="lead">We read paired trajectories to identify what the skill changed, rather than treating success as a black box. The analysis maps 240 open-coded records into 238 valid labels, three categories, and twelve skill-use modes.</p>
       </div>
       <div class="taxonomy-layout">
         <div class="taxonomy-list" id="taxonomy-list"></div>
-        <div class="taxonomy-side">
-          <div class="quote-mark">“</div>
-          <p>Procedural anchoring accounts for <strong>65.7%</strong> of skill cases, compared with <strong>4.5%</strong> for explicit knowledge injection.</p>
-          <p class="muted">The recurring pattern is stabilized setup, implementation, tool use, and verification - not simply the addition of missing facts.</p>
-        </div>
       </div>
-      <div class="mode-row" id="mode-row" aria-label="Twelve skill-use modes"></div>
-      <figure class="media-card media-card-medium">
-        <a class="document-link" href="static/images/taxonomy-per-setting.pdf" target="_blank" rel="noreferrer">Open full taxonomy distribution <span aria-hidden="true">↗</span></a>
-        <figcaption>The full per-setting taxonomy distribution is available as a paper figure.</figcaption>
-      </figure>
     </section>
 
     <section class="section-shell section-block retrieval-section" id="retrieval">
@@ -159,6 +218,10 @@
         <p class="kicker">06 / Retrieval results</p>
         <h2>Can an agent find the right skill and use it?</h2>
         <p class="lead">The retrieval study has three independent arms over matched candidate pools. Arm 1 tests semantic ranking, Arm 2 tests explicit selection without task execution, and Arm 3 tests what happens when the full pool is available during the task.</p>
+      </div>
+      <div class="retrieval-method-note">
+        <div><strong>Ground truth.</strong> SkillsBench supplies a task-to-skill annotation. Each candidate pool contains that ground-truth set plus distractors.</div>
+        <div><strong>Metrics.</strong> Precision is the fraction of selected skills that are ground truth; recall is the fraction of ground-truth skills selected; F1 is their harmonic mean.</div>
       </div>
       <div class="retrieval-layout">
         <aside class="arm-rail" aria-label="Retrieval arms">
@@ -178,21 +241,25 @@
           <div class="chart-wrap retrieval-chart-wrap" id="retrieval-chart" aria-live="polite"></div>
           <div class="retrieval-highlight" id="retrieval-highlight"></div>
           <div class="data-table-wrap" id="retrieval-table-wrap"></div>
-          <p class="source-note">Arm 1 reports Qwen3-Embedding-0.6B ranking. Arms 2 and 3 average the reported Gemini CLI + Gemini-3.1-Pro-Preview and Codex + GPT-5.4 pairings. Their outputs are not passed into one another.</p>
+          <p class="source-note">Arm 1 reports Qwen3-Embedding-0.6B ranking. Arms 2 and 3 average Gemini CLI + Gemini-3.1-Pro-Preview and Codex + GPT-5.4. GPT-5.3-Codex was unavailable for RQ4, so these values are interpreted within RQ4 rather than compared directly with RQ1--RQ3. The arms do not pass outputs to one another.</p>
         </div>
       </div>
     </section>
 
-    <section class="section-shell section-block resources-section" id="resources">
+    <section class="section-shell section-block" id="additional">
       <div class="section-heading compact-heading">
-        <p class="kicker">07 / Resources</p>
-        <h2>Read the full study.</h2>
+        <p class="kicker">07 / Additional controlled studies</p>
+        <h2>The full study also tests signals, portability, and cost.</h2>
+        <p>These analyses complete the representation and retrieval results without changing the central matched-task design.</p>
       </div>
-      <div class="resource-grid">
-        <a class="resource-card" href="https://github.com/zhiyuanjiang04/Procmem2Skills" target="_blank" rel="noreferrer"><span class="resource-index">A</span><strong>Source repository</strong><span>Code, experiment interfaces, and analysis artifacts ↗</span></a>
-        <a class="resource-card" href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noreferrer"><span class="resource-index">B</span><strong>Page template</strong><span>Nerfies project-page source used as the visual reference ↗</span></a>
-        <a class="resource-card" href="#bibtex"><span class="resource-index">C</span><strong>BibTeX</strong><span>Copy the citation block below</span></a>
+      <div class="additional-grid">
+        <article class="additional-card"><span>Outcome annotation</span><h3>Normal vs no-hint</h3><p>The same trajectory pool is distilled with or without visible success/failure labels. For Gemini on TB2 at <code>3s2f</code>, normal reaches <strong>74.62%</strong> versus <strong>40.00%</strong> without outcome hints.</p><img class="card-figure" src="static/images/outcome-annotation-nohint.png" alt="Normal and no-hint outcome annotation comparison." loading="lazy"><a class="document-link" href="static/images/outcome-annotation-nohint.pdf" target="_blank" rel="noreferrer">Open comparison ↗</a></article>
+        <article class="additional-card"><span>Framework transfer</span><h3>Codex to Gemini CLI</h3><p>Workflow Memory and Skill artifacts built with Codex are held fixed and evaluated with Gemini CLI, separating portability from regeneration.</p><img class="card-figure" src="static/images/cross-framework-transfer.png" alt="Cross-framework transfer comparison from Codex to Gemini CLI." loading="lazy"><a class="document-link" href="static/images/cross-framework-transfer.pdf" target="_blank" rel="noreferrer">Open transfer result ↗</a></article>
+        <article class="additional-card"><span>Token cost</span><h3>Effectiveness versus efficiency</h3><p>On 83 matched tasks, Skill reaches <strong>69.6%</strong> success versus <strong>64.8%</strong> for Workflow Memory and <strong>64.1%</strong> for Raw. Workflow Memory uses fewer total tokens per task: <strong>426.2K</strong> versus <strong>521.5K</strong> for Skill.</p><div class="token-figure" aria-label="Matched token totals"><span style="--token-width:81.7%"><b>Workflow</b><em>426.2K</em></span><span style="--token-width:100%"><b>Skill</b><em>521.5K</em></span></div></article>
       </div>
+    </section>
+
+    <section class="section-shell section-block resources-section" aria-label="BibTeX">
       <div class="bibtex-block" id="bibtex"><div class="bibtex-head"><span>BibTeX</span><button type="button" id="copy-bibtex">Copy</button></div><pre><code id="bibtex-code"></code></pre></div>
     </section>
   </main>
@@ -209,8 +276,8 @@
     </div>
   </footer>
 
-  <script src="static/data/content.js"></script>
-  <script src="static/data/results.js"></script>
-  <script src="static/js/site.js"></script>
+  <script src="static/data/content.js?v=20260819-32"></script>
+  <script src="static/data/results.js?v=20260819-32"></script>
+  <script src="static/js/site.js?v=20260819-32"></script>
 </body>
 </html>

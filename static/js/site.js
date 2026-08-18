@@ -13,6 +13,7 @@
       const marks = author.mark.replace("dagger", "†").replace(",", ", ");
       return `<span class="author">${esc(author.name)}<sup>${esc(marks)}</sup></span>`;
     }).join("");
+    $("#affiliations").innerHTML = content.affiliations.map(affiliation => `<span>${esc(affiliation)}</span>`).join(" <b>·</b> ");
   }
 
   function renderFindings() {
@@ -35,11 +36,35 @@
         <button type="button" class="taxonomy-toggle" aria-expanded="${index === 0}" aria-controls="taxonomy-${item.id}">
           <span class="taxonomy-id">${esc(item.id)}</span><strong>${esc(item.title)}</strong><span aria-hidden="true">+</span>
         </button>
-        <div class="taxonomy-body" id="taxonomy-${item.id}">${esc(item.body)}</div>
+        <div class="taxonomy-body" id="taxonomy-${item.id}">
+          <p>${esc(item.body)}</p>
+          <span class="taxonomy-evidence">${esc(item.evidence)}</span>
+          <div class="taxonomy-mode-grid" aria-label="${esc(item.id)} skill-use modes">
+            ${item.modes.map((mode, modeIndex) => `
+              <div class="taxonomy-mode">
+                <button type="button" class="taxonomy-mode-toggle" aria-expanded="false" aria-controls="${esc(item.id)}-mode-${modeIndex}">
+                  <span>${esc(mode.title)}</span><b aria-hidden="true">+</b>
+                </button>
+                <p class="taxonomy-mode-description" id="${esc(item.id)}-mode-${modeIndex}">${esc(mode.description)}</p>
+              </div>`).join("")}
+          </div>
+        </div>
       </article>`).join("");
-    $("#mode-row").innerHTML = content.modes.map(mode => `<span class="mode-pill">${esc(mode)}</span>`).join("");
+    $$(".taxonomy-mode-toggle").forEach(button => button.addEventListener("click", () => {
+      const item = button.closest(".taxonomy-mode");
+      const open = item.classList.toggle("is-open");
+      button.setAttribute("aria-expanded", String(open));
+    }));
     $$(".taxonomy-toggle").forEach(button => button.addEventListener("click", () => {
       const item = button.closest(".taxonomy-item");
+      const open = item.classList.toggle("is-open");
+      button.setAttribute("aria-expanded", String(open));
+    }));
+  }
+
+  function setupFormalFindings() {
+    $$(".formal-finding-toggle").forEach(button => button.addEventListener("click", () => {
+      const item = button.closest(".formal-finding");
       const open = item.classList.toggle("is-open");
       button.setAttribute("aria-expanded", String(open));
     }));
@@ -70,7 +95,6 @@
         <span class="key-item"><i class="key-swatch skill"></i>Skill</span>
       </div>
       <div class="bar-chart" role="img" aria-label="Grouped horizontal bars comparing Workflow Memory and Skill against Raw across source-trace mixtures">
-        <div></div><div class="chart-axis">0</div><div class="chart-axis">50</div><div class="chart-axis">100</div>
         ${results.settings.map((setting, index) => `
           <div class="chart-setting">${setting}</div>
           <div class="bar-track" style="--raw:${row.raw}%"><div class="bar workflow" style="width:${row.workflow[index]}%"><span class="bar-label">${pct(row.workflow[index])}</span></div></div>
@@ -197,10 +221,11 @@
 
   function init() {
     $("#paper-title").innerHTML = content.title.replace(": ", ":<br><em>").replace(" - Until They Don't", " - Until They Don't</em>");
-    $("#hero-question").textContent = content.question;
+    // Keep the lead question's emphasis markup in the page so the signal words remain visible.
     renderAuthors();
     renderFindings();
     renderTaxonomy();
+    setupFormalFindings();
     setupRepresentationControls();
     setupRetrievalControls();
     setupLightbox();

@@ -25,7 +25,7 @@ window.siteContent = {
       eyebrow: "Representation",
       value: "61.9% vs 55.9%",
       title: "Skill vs Workflow Memory",
-      body: "Matched downstream success when the same source experience is packaged in two different procedural forms.",
+      body: "Oracle-status success across 528 paired triples when the same source experience is packaged in two different procedural forms.",
       evidence: [{ label: "Skill", value: "61.9%", width: 61.9, tone: "skill" }, { label: "Workflow", value: "55.9%", width: 55.9, tone: "workflow" }],
       note: "+6.06 points for Skill over Workflow Memory."
     },
@@ -33,7 +33,7 @@ window.siteContent = {
       eyebrow: "Mechanism",
       value: "65.7% vs 4.5%",
       title: "Procedural anchoring vs knowledge injection",
-      body: "Share of skill mechanisms in the taxonomy, showing what the agent behavior actually changed.",
+      body: "Mechanism-label share across the paired taxonomy analysis, not task success: it shows what the agent behavior actually changed.",
       evidence: [{ label: "Procedural anchor", value: "65.7%", width: 65.7, tone: "skill" }, { label: "Knowledge injection", value: "4.5%", width: 4.5, tone: "orange" }],
       note: "Skill cases are primarily about stabilizing action, not adding facts."
     },
@@ -41,23 +41,57 @@ window.siteContent = {
       eyebrow: "Retrieval",
       value: "29.6% -> 3.3%",
       title: "Actual-use precision, k=5 -> k=100",
-      body: "Exact ground-truth skill use during independent execution experiments as the candidate pool grows.",
-      evidence: [{ label: "k=5", value: "29.6%", width: 29.6, tone: "skill" }, { label: "k=100", value: "3.3%", width: 3.3, tone: "orange" }],
+      body: "Average exact ground-truth skill use across the two RQ4 execution pairings as the candidate pool grows.",
+      evidence: [
+        { label: "k=5", value: "29.6%", width: 29.6, tone: "skill" },
+        { label: "k=10", value: "21.5%", width: 21.5, tone: "skill" },
+        { label: "k=20", value: "14.7%", width: 14.7, tone: "skill" },
+        { label: "k=50", value: "6.8%", width: 6.8, tone: "skill" },
+        { label: "k=100", value: "3.3%", width: 3.3, tone: "skill" }
+      ],
       note: "Downstream success stays comparatively stable: 36.4% -> 39.3%."
     }
   ],
   taxonomy: [
-    { id: "SC1", title: "Procedural anchoring", body: "The agent follows a reusable sequence or verification routine that makes execution more reliable." },
-    { id: "SC2", title: "Execution and verification failures", body: "The artifact is present, but setup, implementation, runtime, or final checking still breaks down." },
-    { id: "SC3", title: "Invocation, applicability, and boundary failures", body: "The guidance is ignored, over-applied, mismatched to the task, or limited by an external bottleneck." }
-  ],
-  modes: [
-    "Procedural anchoring", "Environment setup", "Output compliance", "Service lifecycle",
-    "Shell execution", "Algorithmic implementation", "Runtime validation", "Failure warning",
-    "No meaningful use", "Counterproductive guidance", "Applicability mismatch", "External boundary"
+    {
+      id: "SC1",
+      title: "Guided success",
+      body: "The agent succeeds with procedural support from the available artifact, or succeeds autonomously when no guidance is needed.",
+      evidence: "Separate mechanism analysis: procedural anchoring accounts for 65.7% of Skill cases, versus 4.5% for explicit knowledge injection.",
+      modes: [
+        { title: "Skill-guided success", description: "The agent follows reusable procedural guidance from SKILL.md and completes the task successfully." },
+        { title: "Workflow-guided success", description: "Workflow Memory supplies reusable commands, parameter choices, or debugging evidence that supports a successful execution." },
+        { title: "Autonomous success", description: "The agent succeeds without a meaningful contribution from the injected artifact or prior procedural memory." }
+      ]
+    },
+    {
+      id: "SC2",
+      title: "Execution & verification",
+      body: "This category captures execution-layer and verification failures: setup, output formatting, service management, shell execution, algorithmic implementation, or runtime checking still breaks down.",
+      evidence: "SC2 share: 23.5% for Skill, compared with 37.3% for Raw and 33.3% for Workflow Memory.",
+      modes: [
+        { title: "Algorithmic logic error", description: "The implementation's core logic is incorrect even if the surrounding execution proceeds." },
+        { title: "Static verify w/o runtime", description: "The agent relies on static inspection without running the system, so runtime failures remain undetected." },
+        { title: "Output format/schema mismatch", description: "The produced output does not satisfy the required format or schema." },
+        { title: "Env infrastructure failure", description: "The execution environment, dependencies, or required infrastructure is not configured or available." },
+        { title: "Background service failure", description: "A required background service fails to start, remain available, or complete its expected lifecycle." },
+        { title: "Shell code corruption", description: "Shell commands or generated shell code are malformed and cannot carry out the intended operation." }
+      ]
+    },
+    {
+      id: "SC3",
+      title: "Invocation & budget",
+      body: "This category captures invocation, applicability, and boundary failures: guidance is misused, over-applied, ignored, or constrained by an external limit.",
+      evidence: "Skill guidance misapplied or ignored: 10.0% of skill-arm cases; Workflow timeout exhaustion: 10.6%.",
+      modes: [
+        { title: "Timeout/budget exhaustion", description: "The agent reaches a time, token, or process budget before completing the task." },
+        { title: "Skill guidance misapplied", description: "Relevant guidance is ignored, over-applied, or followed despite changed task conditions, making it harmful to the current task." },
+        { title: "Capability/safety limit", description: "The task is blocked by a capability restriction or a safety boundary outside the procedure itself." }
+      ]
+    }
   ],
   resources: {
-    paper: "https://arxiv.org/",
+    paper: "https://arxiv.org/abs/2608.14036",
     code: "https://github.com/zhiyuanjiang04/Procmem2Skills",
     template: "https://github.com/nerfies/nerfies.github.io"
   },
