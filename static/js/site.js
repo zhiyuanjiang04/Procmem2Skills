@@ -21,7 +21,11 @@
         <p class="eyebrow">${esc(item.eyebrow)}</p>
         <div class="finding-value">${esc(item.value)}</div>
         <h3>${esc(item.title)}</h3>
-        <p>${esc(item.body)}</p>
+        <p class="finding-body">${esc(item.body)}</p>
+        <div class="finding-evidence" aria-label="${esc(item.title)} evidence">
+          ${item.evidence.map(evidence => `<div class="evidence-row"><span>${esc(evidence.label)}</span><i><b class="${esc(evidence.tone)}" style="width:${evidence.width}%"></b></i><strong>${esc(evidence.value)}</strong></div>`).join("")}
+        </div>
+        <p class="finding-note">${esc(item.note)}</p>
       </article>`).join("");
   }
 
