@@ -75,6 +75,9 @@ h1 em { color: var(--teal); font-style: normal; }
 .scope-metrics strong { color: var(--navy); font: 500 20px var(--mono); }
 .scope-metrics span { color: var(--muted); font-size: 11px; line-height: 1.25; }
 .finding-strip { border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); background: var(--paper-deep); }
+.results-header { padding-top: 58px; }
+.results-header h2 { max-width: 760px; margin: 0 0 12px; color: var(--navy-dark); font-size: clamp(28px, 3.7vw, 44px); line-height: 1.25; }
+.results-header > p:not(.kicker) { max-width: 700px; margin: 0 0 30px; color: var(--muted); font-size: 15px; line-height: 1.55; }
 .finding-grid { display: grid; grid-template-columns: repeat(3, 1fr); }
 .finding-card { min-height: 190px; padding: 28px 28px 27px 0; border-right: 1px solid var(--line); }
 .finding-card + .finding-card { padding-left: 28px; }
@@ -248,6 +251,7 @@ select:focus-visible, button:focus-visible, a:focus-visible { outline: 3px solid
   h1 { font-size: clamp(36px, 12vw, 56px); }
   .hero-question { font-size: 17px; }
   .finding-grid, .resource-grid { grid-template-columns: 1fr; }
+  .results-header { padding-top: 48px; }
   .study-map { grid-template-columns: 1fr; }
   .research-gap-inner { grid-template-columns: 1fr; gap: 32px; padding: 52px 0 55px; }
   .finding-card, .finding-card + .finding-card { min-height: auto; padding: 22px 0; border-right: 0; border-bottom: 1px solid var(--line); }

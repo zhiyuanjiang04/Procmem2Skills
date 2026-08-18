@@ -1,6 +1,6 @@
 window.siteContent = {
   title: "Demystifying Agent Skills: Why They Work - Until They Don't",
-  question: "When do skills help, why do they work, and where do they fail?",
+  question: "Aggregate success tells us that a skill helped. It does not tell us why, when, or whether the agent used the right one.",
   authors: [
     { name: "Zhiyuan Jiang", aff: "Princeton University", mark: "1,*" },
     { name: "Fangrui Huang", aff: "Stanford University", mark: "3,*" },

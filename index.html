@@ -19,6 +19,7 @@
       <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
       <div class="nav-links" id="nav-links">
         <a href="#overview">Overview</a>
+        <a href="#findings">Findings</a>
         <a href="#representation">Representation</a>
         <a href="#mechanisms">Mechanisms</a>
         <a href="#retrieval">Retrieval</a>
@@ -32,8 +33,8 @@
       <div class="hero-copy">
         <p class="kicker">A contrastive study of procedural memory for LLM agents</p>
         <h1 id="paper-title">Demystifying Agent Skills:<br><em>Why They Work - Until They Don't</em></h1>
-        <p class="hero-question" id="hero-question">When do skills help, why do they work, and where do they fail?</p>
-        <p class="hero-deck">We collect agent execution traces, distill matched Workflow Memory and <em>SKILL.md</em> artifacts from the same experience, and rerun the same tasks to measure what changes.</p>
+        <p class="hero-question" id="hero-question">Aggregate success tells us that a skill helped. It does not tell us why, when, or whether the agent used the right one.</p>
+        <p class="hero-deck">We answer these questions by starting from the same agent experience, building comparable procedural representations, and following them through task execution, trajectory analysis, and independent retrieval tests.</p>
         <div class="authors" id="authors"></div>
         <div class="hero-links" aria-label="Paper resources">
           <a class="button button-dark" href="https://github.com/zhiyuanjiang04/Procmem2Skills/tree/main" target="_blank" rel="noreferrer">Paper source <span aria-hidden="true">↗</span></a>
@@ -44,7 +45,7 @@
       <div class="hero-aside" aria-label="Study scope">
         <div class="scope-index"><span>01</span><span>CONTRASTIVE ANALYSIS</span></div>
         <div class="scope-rule"></div>
-        <p>We ask three concrete questions: does packaging prior experience help, what behavior changes, and can an agent find and use the resulting skill?</p>
+        <p>The study moves from outcome to explanation: first compare representations, then inspect the behavior behind the score, and finally test whether the right skill can be found and used.</p>
         <div class="scope-metrics">
           <div><strong>8,135</strong><span>trial records</span></div>
           <div><strong>238</strong><span>valid labels</span></div>
@@ -53,45 +54,41 @@
       </div>
     </section>
 
-    <section class="finding-strip" aria-label="Key findings">
-      <div class="section-shell finding-grid" id="finding-cards"></div>
-    </section>
-
     <section class="research-gap" aria-label="Research questions">
       <div class="section-shell research-gap-inner">
         <div>
-          <p class="kicker">The question behind the score</p>
-          <h2>Aggregate success tells us <em>that</em> a skill helped. It does not tell us why, when, or whether the agent used the right one.</h2>
+          <p class="kicker">01 / Research questions</p>
+          <h2>We turn one broad question into three testable comparisons.</h2>
         </div>
         <div class="question-list">
-          <div><span>01</span><p><strong>Representation.</strong> Does packaging the same prior experience as a skill change downstream execution?</p></div>
-          <div><span>02</span><p><strong>Mechanism.</strong> Which behaviors account for the improvement, and where does the guidance fail?</p></div>
-          <div><span>03</span><p><strong>Retrieval.</strong> Can an agent identify and use the relevant skill as its library grows?</p></div>
+          <div><span>01</span><p><strong>Representation.</strong> Holding the task and source experience fixed, does Skill outperform Workflow Memory?</p></div>
+          <div><span>02</span><p><strong>Mechanism.</strong> When a skill succeeds or fails, what changes in the agent’s execution?</p></div>
+          <div><span>03</span><p><strong>Retrieval.</strong> As skill pools grow or become confusable, can agents identify and use the right skill?</p></div>
         </div>
       </div>
     </section>
 
     <section class="section-shell section-block" id="overview">
       <div class="section-heading">
-        <p class="kicker">01 / Study overview</p>
-        <h2>From execution traces to controlled skill experiments.</h2>
-        <p class="lead">The study asks what a skill adds beyond the experience it was distilled from. We hold the target task and source experience fixed, then separate representation, mechanism, and retrieval effects.</p>
+        <p class="kicker">02 / Experiment design</p>
+        <h2>We trace the effect from experience to execution.</h2>
+        <p class="lead">We begin with repeated agent runs on the target tasks. From a fixed pool of those traces, we build comparable artifacts and evaluate them on the same tasks. Retrieval is tested separately, so its results are not fed into the execution experiment as if this were one serial pipeline.</p>
       </div>
       <div class="study-map" aria-label="Study workflow">
         <article class="study-step">
           <span class="study-step-index">01</span>
-          <h3>Collect experience</h3>
-          <p>Run agents on the target tasks and retain successful and failed execution traces as the source experience.</p>
+          <h3>Start with traces</h3>
+          <p>Run agents on the target tasks and keep successful and failed executions as the prior experience.</p>
         </article>
         <article class="study-step">
           <span class="study-step-index">02</span>
-          <h3>Change the representation</h3>
-          <p>Expose the same prior experience as raw trajectories, Workflow Memory, or a standardized <em>SKILL.md</em>.</p>
+          <h3>Build matched artifacts</h3>
+          <p>Expose that same experience as raw trajectories, Workflow Memory, or a standardized <em>SKILL.md</em>.</p>
         </article>
         <article class="study-step">
           <span class="study-step-index">03</span>
-          <h3>Measure use and failure</h3>
-          <p>Compare downstream success, inspect trajectory mechanisms, and independently test whether agents can find and use skills.</p>
+          <h3>Explain the outcome</h3>
+          <p>Compare task success, inspect what changed in the trajectories, and independently test skill selection and use.</p>
         </article>
       </div>
       <div class="pipeline-stack">
@@ -99,22 +96,31 @@
           <button class="media-button" type="button" data-lightbox="static/images/experimental-pipeline-procmem-skills.png" aria-label="Enlarge skill versus workflow pipeline">
             <img src="static/images/experimental-pipeline-procmem-skills.png" alt="Pipeline comparing raw trajectories, Workflow Memory, and Skill injection.">
           </button>
-          <figcaption><strong>Representation and construction.</strong> The same source experience is packaged as raw trajectories, Workflow Memory, or a standardized skill before matched execution.</figcaption>
+          <figcaption><strong>Representation and construction.</strong> One source of prior experience becomes three inputs for the same downstream task.</figcaption>
         </figure>
         <figure class="media-card media-card-wide">
           <button class="media-button" type="button" data-lightbox="static/images/experimental-pipeline-retrieval.png" aria-label="Enlarge retrieval pipeline">
             <img src="static/images/experimental-pipeline-retrieval.png" alt="Three independent retrieval experiments: embedding ranking, agent selection, and real execution.">
           </button>
-          <figcaption><strong>Retrieval and execution.</strong> Embedding ranking, explicit selection, and full-pool execution are independent experiments rather than a serial pipeline.</figcaption>
+          <figcaption><strong>Retrieval and execution.</strong> The three arms answer different questions and are evaluated independently.</figcaption>
         </figure>
       </div>
     </section>
 
+    <section class="finding-strip results-band" id="findings" aria-label="Key findings">
+      <div class="section-shell results-header">
+        <p class="kicker">03 / Results at a glance</p>
+        <h2>The controlled comparisons show where the gain comes from - and where it breaks down.</h2>
+        <p>These summaries connect each question to a measured outcome. The sections below expose the underlying benchmark, taxonomy, and retrieval data.</p>
+      </div>
+      <div class="section-shell finding-grid" id="finding-cards"></div>
+    </section>
+
     <section class="section-shell section-block split-section" id="representation">
       <div class="section-heading compact-heading">
-        <p class="kicker">02 / Representation</p>
+        <p class="kicker">04 / Representation results</p>
         <h2>Does the format change what the agent can do?</h2>
-        <p>Choose a benchmark and agent-model pairing to compare three inputs built from the same source traces: raw trajectories, Workflow Memory, and Skill. The chart reports downstream task success across source-trace mixtures.</p>
+        <p>Choose a benchmark and agent-model pairing to compare three inputs built from the same traces: Raw, Workflow Memory, and Skill. Each row reports downstream task success for one source-trace mixture.</p>
       </div>
       <div class="explorer-panel">
         <div class="control-row">
@@ -129,9 +135,9 @@
 
     <section class="section-shell section-block" id="mechanisms">
       <div class="section-heading">
-        <p class="kicker">03 / Mechanisms</p>
+        <p class="kicker">05 / Mechanisms</p>
         <h2>What changes in the agent’s execution?</h2>
-        <p class="lead">We compare paired trajectories rather than treating success as a black box, mapping 240 open-coded records into 238 valid labels, three high-level categories, and twelve skill-use modes.</p>
+        <p class="lead">We read paired trajectories to identify what the skill changed, rather than treating success as a black box. The analysis maps 240 open-coded records into 238 valid labels, three categories, and twelve skill-use modes.</p>
       </div>
       <div class="taxonomy-layout">
         <div class="taxonomy-list" id="taxonomy-list"></div>
@@ -150,9 +156,9 @@
 
     <section class="section-shell section-block retrieval-section" id="retrieval">
       <div class="section-heading">
-        <p class="kicker">04 / Retrieval</p>
+        <p class="kicker">06 / Retrieval results</p>
         <h2>Can an agent find the right skill and use it?</h2>
-        <p class="lead">RQ4 contains three independent experiments on matched candidate pools. Arm 1 tests semantic ranking, Arm 2 tests explicit agent selection without execution, and Arm 3 tests skill use when the full pool is available during the task.</p>
+        <p class="lead">The retrieval study has three independent arms over matched candidate pools. Arm 1 tests semantic ranking, Arm 2 tests explicit selection without task execution, and Arm 3 tests what happens when the full pool is available during the task.</p>
       </div>
       <div class="retrieval-layout">
         <aside class="arm-rail" aria-label="Retrieval arms">
@@ -179,7 +185,7 @@
 
     <section class="section-shell section-block resources-section" id="resources">
       <div class="section-heading compact-heading">
-        <p class="kicker">05 / Resources</p>
+        <p class="kicker">07 / Resources</p>
         <h2>Read the full study.</h2>
       </div>
       <div class="resource-grid">
