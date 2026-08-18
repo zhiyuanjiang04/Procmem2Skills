@@ -1,0 +1,196 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Demystifying Agent Skills: why they work, until they don't.">
+  <meta name="theme-color" content="#f7f7f3">
+  <title>Demystifying Agent Skills</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='16' fill='%231f3a5f'/%3E%3Cpath d='M18 22h28v8H18zm0 12h20v8H18z' fill='%23f7f7f3'/%3E%3C/svg%3E">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Libre+Baskerville:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="static/css/site.css">
+</head>
+<body>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="brand" href="#top" aria-label="Back to top">AGENT SKILLS</a>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="nav-links">Menu</button>
+      <div class="nav-links" id="nav-links">
+        <a href="#overview">Overview</a>
+        <a href="#representation">Representation</a>
+        <a href="#mechanisms">Mechanisms</a>
+        <a href="#retrieval">Retrieval</a>
+        <a href="#resources">Resources</a>
+      </div>
+    </nav>
+  </header>
+
+  <main id="top">
+    <section class="hero section-shell">
+      <div class="hero-copy">
+        <p class="kicker">A contrastive study of procedural memory for LLM agents</p>
+        <h1 id="paper-title">Demystifying Agent Skills:<br><em>Why They Work - Until They Don't</em></h1>
+        <p class="hero-question" id="hero-question">When do skills help, why do they work, and where do they fail?</p>
+        <p class="hero-deck">We collect agent execution traces, distill matched Workflow Memory and <em>SKILL.md</em> artifacts from the same experience, and rerun the same tasks to measure what changes.</p>
+        <div class="authors" id="authors"></div>
+        <div class="hero-links" aria-label="Paper resources">
+          <a class="button button-dark" href="https://github.com/zhiyuanjiang04/Procmem2Skills/tree/main" target="_blank" rel="noreferrer">Paper source <span aria-hidden="true">↗</span></a>
+          <a class="button button-light" href="https://github.com/zhiyuanjiang04/Procmem2Skills" target="_blank" rel="noreferrer">Code <span aria-hidden="true">↗</span></a>
+          <a class="button button-light" href="#bibtex">BibTeX</a>
+        </div>
+      </div>
+      <div class="hero-aside" aria-label="Study scope">
+        <div class="scope-index"><span>01</span><span>CONTRASTIVE ANALYSIS</span></div>
+        <div class="scope-rule"></div>
+        <p>We ask three concrete questions: does packaging prior experience help, what behavior changes, and can an agent find and use the resulting skill?</p>
+        <div class="scope-metrics">
+          <div><strong>8,135</strong><span>trial records</span></div>
+          <div><strong>238</strong><span>valid labels</span></div>
+          <div><strong>12</strong><span>skill-use modes</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="finding-strip" aria-label="Key findings">
+      <div class="section-shell finding-grid" id="finding-cards"></div>
+    </section>
+
+    <section class="section-shell section-block" id="overview">
+      <div class="section-heading">
+        <p class="kicker">01 / Study overview</p>
+        <h2>From execution traces to controlled skill experiments.</h2>
+        <p class="lead">The study asks what a skill adds beyond the experience it was distilled from. We hold the target task and source experience fixed, then separate representation, mechanism, and retrieval effects.</p>
+      </div>
+      <div class="study-map" aria-label="Study workflow">
+        <article class="study-step">
+          <span class="study-step-index">01</span>
+          <h3>Collect experience</h3>
+          <p>Run agents on the target tasks and retain successful and failed execution traces as the source experience.</p>
+        </article>
+        <article class="study-step">
+          <span class="study-step-index">02</span>
+          <h3>Change the representation</h3>
+          <p>Expose the same prior experience as raw trajectories, Workflow Memory, or a standardized <em>SKILL.md</em>.</p>
+        </article>
+        <article class="study-step">
+          <span class="study-step-index">03</span>
+          <h3>Measure use and failure</h3>
+          <p>Compare downstream success, inspect trajectory mechanisms, and independently test whether agents can find and use skills.</p>
+        </article>
+      </div>
+      <div class="pipeline-stack">
+        <figure class="media-card media-card-wide">
+          <button class="media-button" type="button" data-lightbox="static/images/experimental-pipeline-procmem-skills.png" aria-label="Enlarge skill versus workflow pipeline">
+            <img src="static/images/experimental-pipeline-procmem-skills.png" alt="Pipeline comparing raw trajectories, Workflow Memory, and Skill injection.">
+          </button>
+          <figcaption><strong>Representation and construction.</strong> The same source experience is packaged as raw trajectories, Workflow Memory, or a standardized skill before matched execution.</figcaption>
+        </figure>
+        <figure class="media-card media-card-wide">
+          <button class="media-button" type="button" data-lightbox="static/images/experimental-pipeline-retrieval.png" aria-label="Enlarge retrieval pipeline">
+            <img src="static/images/experimental-pipeline-retrieval.png" alt="Three independent retrieval experiments: embedding ranking, agent selection, and real execution.">
+          </button>
+          <figcaption><strong>Retrieval and execution.</strong> Embedding ranking, explicit selection, and full-pool execution are independent experiments rather than a serial pipeline.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section-shell section-block split-section" id="representation">
+      <div class="section-heading compact-heading">
+        <p class="kicker">02 / Representation</p>
+        <h2>Does the format change what the agent can do?</h2>
+        <p>Choose a benchmark and agent-model pairing to compare three inputs built from the same source traces: raw trajectories, Workflow Memory, and Skill. The chart reports downstream task success across source-trace mixtures.</p>
+      </div>
+      <div class="explorer-panel">
+        <div class="control-row">
+          <label>Benchmark <select id="representation-benchmark"></select></label>
+          <label>Agent / model <select id="representation-model"></select></label>
+        </div>
+        <div class="chart-wrap" id="representation-chart" aria-live="polite"></div>
+        <div class="data-table-wrap" id="representation-table-wrap"></div>
+        <p class="source-note">Values are task success percentages. The gray reference line is the matched Raw baseline; each setting contains the same source-trace budget.</p>
+      </div>
+    </section>
+
+    <section class="section-shell section-block" id="mechanisms">
+      <div class="section-heading">
+        <p class="kicker">03 / Mechanisms</p>
+        <h2>What changes in the agent’s execution?</h2>
+        <p class="lead">We compare paired trajectories rather than treating success as a black box, mapping 240 open-coded records into 238 valid labels, three high-level categories, and twelve skill-use modes.</p>
+      </div>
+      <div class="taxonomy-layout">
+        <div class="taxonomy-list" id="taxonomy-list"></div>
+        <div class="taxonomy-side">
+          <div class="quote-mark">“</div>
+          <p>Procedural anchoring accounts for <strong>65.7%</strong> of skill cases, compared with <strong>4.5%</strong> for explicit knowledge injection.</p>
+          <p class="muted">The recurring pattern is stabilized setup, implementation, tool use, and verification - not simply the addition of missing facts.</p>
+        </div>
+      </div>
+      <div class="mode-row" id="mode-row" aria-label="Twelve skill-use modes"></div>
+      <figure class="media-card media-card-medium">
+        <a class="document-link" href="static/images/taxonomy-per-setting.pdf" target="_blank" rel="noreferrer">Open full taxonomy distribution <span aria-hidden="true">↗</span></a>
+        <figcaption>The full per-setting taxonomy distribution is available as a paper figure.</figcaption>
+      </figure>
+    </section>
+
+    <section class="section-shell section-block retrieval-section" id="retrieval">
+      <div class="section-heading">
+        <p class="kicker">04 / Retrieval</p>
+        <h2>Can an agent find the right skill and use it?</h2>
+        <p class="lead">RQ4 contains three independent experiments on matched candidate pools. Arm 1 tests semantic ranking, Arm 2 tests explicit agent selection without execution, and Arm 3 tests skill use when the full pool is available during the task.</p>
+      </div>
+      <div class="retrieval-layout">
+        <aside class="arm-rail" aria-label="Retrieval arms">
+          <button class="arm-button is-active" type="button" data-arm="embedding"><span>Arm 1</span><strong>Embedding ranking</strong><small>Offline similarity diagnostic</small></button>
+          <button class="arm-button" type="button" data-arm="selection"><span>Arm 2</span><strong>Let agents pick</strong><small>Offline explicit selection</small></button>
+          <button class="arm-button" type="button" data-arm="execution"><span>Arm 3</span><strong>Real execution</strong><small>Full pool + parsed use</small></button>
+        </aside>
+        <div class="explorer-panel retrieval-panel">
+          <div class="retrieval-topline">
+            <div><p class="eyebrow" id="retrieval-arm-label">ARM 1 / EMBEDDING RANKING</p><p id="retrieval-arm-copy">Task instructions are matched to skill descriptions with Qwen3-Embedding-0.6B. No downstream task is executed.</p></div>
+            <label>Composition <select id="retrieval-composition"><option>Random</option><option>Similar</option><option>Dissimilar</option></select></label>
+          </div>
+          <div class="control-row retrieval-controls">
+            <label>Metric <select id="retrieval-metric"></select></label>
+            <label>Pool size <select id="retrieval-k"><option value="5">5</option><option value="10">10</option><option value="20">20</option><option value="50">50</option><option value="100">100</option></select></label>
+          </div>
+          <div class="chart-wrap retrieval-chart-wrap" id="retrieval-chart" aria-live="polite"></div>
+          <div class="retrieval-highlight" id="retrieval-highlight"></div>
+          <div class="data-table-wrap" id="retrieval-table-wrap"></div>
+          <p class="source-note">Arm 1 reports Qwen3-Embedding-0.6B ranking. Arms 2 and 3 average the reported Gemini CLI + Gemini-3.1-Pro-Preview and Codex + GPT-5.4 pairings. Their outputs are not passed into one another.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section-shell section-block resources-section" id="resources">
+      <div class="section-heading compact-heading">
+        <p class="kicker">05 / Resources</p>
+        <h2>Read the full study.</h2>
+      </div>
+      <div class="resource-grid">
+        <a class="resource-card" href="https://github.com/zhiyuanjiang04/Procmem2Skills" target="_blank" rel="noreferrer"><span class="resource-index">A</span><strong>Source repository</strong><span>Code, experiment interfaces, and analysis artifacts ↗</span></a>
+        <a class="resource-card" href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noreferrer"><span class="resource-index">B</span><strong>Page template</strong><span>Nerfies project-page source used as the visual reference ↗</span></a>
+        <a class="resource-card" href="#bibtex"><span class="resource-index">C</span><strong>BibTeX</strong><span>Copy the citation block below</span></a>
+      </div>
+      <div class="bibtex-block" id="bibtex"><div class="bibtex-head"><span>BibTeX</span><button type="button" id="copy-bibtex">Copy</button></div><pre><code id="bibtex-code"></code></pre></div>
+    </section>
+  </main>
+
+  <div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-label="Expanded figure" hidden>
+    <button type="button" class="lightbox-close" id="lightbox-close" aria-label="Close expanded figure">Close</button>
+    <img id="lightbox-image" src="" alt="">
+  </div>
+
+  <footer class="site-footer">
+    <div class="section-shell footer-inner">
+      <p>Demystifying Agent Skills · Project page</p>
+      <p>Visual structure adapted from <a href="https://github.com/nerfies/nerfies.github.io" target="_blank" rel="noreferrer">Nerfies</a>.</p>
+    </div>
+  </footer>
+
+  <script src="static/data/content.js"></script>
+  <script src="static/data/results.js"></script>
+  <script src="static/js/site.js"></script>
+</body>
+</html>
