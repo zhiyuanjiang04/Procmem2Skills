@@ -2,6 +2,12 @@
 
 Research code and artifacts for the paper [Demystifying Agent Skills: Why They Work - Until They Don't](https://arxiv.org/abs/2608.14036).
 
+**Zhiyuan Jiang**<sup>1,*</sup>, **Fangrui Huang**<sup>3,*</sup>, **Hanwen Xing**<sup>4</sup>, **Xander Wu**<sup>3</sup>, **Yipeng Gao**<sup>4</sup>, **Rui Cao**<sup>5</sup>, **Mengdi Wang**<sup>1,†</sup>, **Shilong Liu**<sup>1,†</sup>, **Yijiang Li**<sup>2,†</sup>
+
+<sup>1</sup>Princeton University · <sup>2</sup>UC San Diego · <sup>3</sup>Stanford University · <sup>4</sup>University of Southern California · <sup>5</sup>Johns Hopkins University
+
+<sup>*</sup>Equal contribution · <sup>†</sup>Corresponding authors
+
 This repository is the reproducibility companion to the project website. The website is optimized for a fast research overview and visual communication; this README is organized around code entrypoints, input/output contracts, credentials, and the steps needed to reproduce the experiments.
 
 **Links:** [Paper](https://arxiv.org/abs/2608.14036) | [Project website](https://zhiyuanjiang04.github.io/demystify-agent-skills/) | [Website source](https://github.com/zhiyuanjiang04/demystify-agent-skills/tree/website)
@@ -71,7 +77,7 @@ The figures below are the paper and website result views kept as local repositor
 
 ![Cross-framework transfer](assets/cross-framework-transfer.png)
 
-The mixture-specific plots are available as assets/5s0f.pdf through assets/0s5f.pdf. The remaining PDF figures in assets/ provide vector-quality versions for paper use.
+The mixture-specific plots are available as <code>assets/5s0f.pdf</code> through <code>assets/0s5f.pdf</code>. The remaining PDF figures in <code>assets/</code> provide vector-quality versions for paper use.
 
 ## Repository layout
 
