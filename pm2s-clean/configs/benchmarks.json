@@ -1,0 +1,22 @@
+{
+  "benchmarks": [
+    {
+      "id": "skillsbench",
+      "dataset": "skillsbench",
+      "runner": "skillsbench",
+      "optional": false
+    },
+    {
+      "id": "terminal-bench-2",
+      "dataset": "terminal-bench@2.0",
+      "runner": "terminal",
+      "optional": false
+    },
+    {
+      "id": "terminal-bench-pro-1",
+      "dataset": "terminal-bench-pro@1.0",
+      "runner": "terminal",
+      "optional": false
+    }
+  ]
+}
