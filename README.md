@@ -1,16 +1,16 @@
 # Demystifying Agent Skills: Why They Work - Until They Don't
 
-Research code and artifacts for the paper [Demystifying Agent Skills: Why They Work - Until They Don't](https://arxiv.org/abs/2608.14036).
+**Zhiyuan Jiang**<sup>&#42;</sup>, **Fangrui Huang**<sup>&#42;</sup>, **Hanwen Xing**, **Xander Wu**, **Yipeng Gao**, **Rui Cao**, **Mengdi Wang**<sup>&#8224;</sup>, **Shilong Liu**<sup>&#8224;</sup>, **Yijiang Li**<sup>&#8224;</sup>
 
-**Zhiyuan Jiang** <sup>*</sup>, **Fangrui Huang** <sup>*</sup>, **Hanwen Xing**, **Xander Wu**, **Yipeng Gao**, **Rui Cao**, **Mengdi Wang** <sup>†</sup>, **Shilong Liu** <sup>†</sup>, **Yijiang Li** <sup>†</sup>
+<sup>&#42;</sup>Equal contribution · <sup>&#8224;</sup>Corresponding authors
 
-<sup>*</sup>Equal contribution · <sup>†</sup>Corresponding authors
+[![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b?style=flat-square&logo=arxiv)](https://arxiv.org/abs/2608.14036) [![Project Website](https://img.shields.io/badge/Project%20Website-live-2563eb?style=flat-square&logo=googlechrome)](https://zhiyuanjiang04.github.io/demystify-agent-skills/) [![Website Source](https://img.shields.io/badge/Website%20Source-website-111827?style=flat-square&logo=github)](https://github.com/zhiyuanjiang04/demystify-agent-skills/tree/website)
 
 ![Representation and construction pipeline](assets/experimental_pipeline_procmem_skills.png)
 
 ![Retrieval and execution pipeline](assets/experimental_pipeline_retrieval.png)
 
-[![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b?style=flat-square&logo=arxiv)](https://arxiv.org/abs/2608.14036) [![Project Website](https://img.shields.io/badge/Project%20Website-live-2563eb?style=flat-square&logo=googlechrome)](https://zhiyuanjiang04.github.io/demystify-agent-skills/) [![Website Source](https://img.shields.io/badge/Website%20Source-website-111827?style=flat-square&logo=github)](https://github.com/zhiyuanjiang04/demystify-agent-skills/tree/website)
+Research code and artifacts for the paper [Demystifying Agent Skills: Why They Work - Until They Don't](https://arxiv.org/abs/2608.14036).
 
 ## What the study asks
 
