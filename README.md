@@ -2,9 +2,7 @@
 
 Research code and artifacts for the paper [Demystifying Agent Skills: Why They Work - Until They Don't](https://arxiv.org/abs/2608.14036).
 
-**Zhiyuan Jiang**<sup>1,*</sup>, **Fangrui Huang**<sup>3,*</sup>, **Hanwen Xing**<sup>4</sup>, **Xander Wu**<sup>3</sup>, **Yipeng Gao**<sup>4</sup>, **Rui Cao**<sup>5</sup>, **Mengdi Wang**<sup>1,†</sup>, **Shilong Liu**<sup>1,†</sup>, **Yijiang Li**<sup>2,†</sup>
-
-<sup>1</sup>Princeton University · <sup>2</sup>UC San Diego · <sup>3</sup>Stanford University · <sup>4</sup>University of Southern California · <sup>5</sup>Johns Hopkins University
+**Zhiyuan Jiang**<sup>*</sup>, **Fangrui Huang**<sup>*</sup>, **Hanwen Xing**, **Xander Wu**, **Yipeng Gao**, **Rui Cao**, **Mengdi Wang**<sup>†</sup>, **Shilong Liu**<sup>†</sup>, **Yijiang Li**<sup>†</sup>
 
 <sup>*</sup>Equal contribution · <sup>†</sup>Corresponding authors
 
