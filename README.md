@@ -2,13 +2,15 @@
 
 Research code and artifacts for the paper [Demystifying Agent Skills: Why They Work - Until They Don't](https://arxiv.org/abs/2608.14036).
 
-**Zhiyuan Jiang**<sup>*</sup>, **Fangrui Huang**<sup>*</sup>, **Hanwen Xing**, **Xander Wu**, **Yipeng Gao**, **Rui Cao**, **Mengdi Wang**<sup>†</sup>, **Shilong Liu**<sup>†</sup>, **Yijiang Li**<sup>†</sup>
+**Zhiyuan Jiang** <sup>*</sup>, **Fangrui Huang** <sup>*</sup>, **Hanwen Xing**, **Xander Wu**, **Yipeng Gao**, **Rui Cao**, **Mengdi Wang** <sup>†</sup>, **Shilong Liu** <sup>†</sup>, **Yijiang Li** <sup>†</sup>
 
 <sup>*</sup>Equal contribution · <sup>†</sup>Corresponding authors
 
-This repository is the reproducibility companion to the project website. The website is optimized for a fast research overview and visual communication; this README is organized around code entrypoints, input/output contracts, credentials, and the steps needed to reproduce the experiments.
+![Representation and construction pipeline](assets/experimental_pipeline_procmem_skills.png)
 
-**Links:** [Paper](https://arxiv.org/abs/2608.14036) | [Project website](https://zhiyuanjiang04.github.io/demystify-agent-skills/) | [Website source](https://github.com/zhiyuanjiang04/demystify-agent-skills/tree/website)
+![Retrieval and execution pipeline](assets/experimental_pipeline_retrieval.png)
+
+[![Paper](https://img.shields.io/badge/Paper-arXiv-b31b1b?style=flat-square&logo=arxiv)](https://arxiv.org/abs/2608.14036) [![Project Website](https://img.shields.io/badge/Project%20Website-live-2563eb?style=flat-square&logo=googlechrome)](https://zhiyuanjiang04.github.io/demystify-agent-skills/) [![Website Source](https://img.shields.io/badge/Website%20Source-website-111827?style=flat-square&logo=github)](https://github.com/zhiyuanjiang04/demystify-agent-skills/tree/website)
 
 ## What the study asks
 
@@ -35,44 +37,31 @@ The retrieval arms are independent diagnostics. Embedding ranking, explicit agen
 
 The pipeline starts with raw agent trajectories, selects source experiences, builds comparable procedural artifacts, and evaluates them on the same target tasks. The taxonomy and retrieval analyses explain changes that aggregate success alone cannot expose.
 
-### Representation and construction
-
-![Representation and construction pipeline](assets/experimental_pipeline_procmem_skills.png)
-
-Raw receives no prior experience. Workflow Memory and Skill are built from the same source trajectories and evaluated on the same target tasks.
-
-### Retrieval and execution
-
-![Retrieval and execution pipeline](assets/experimental_pipeline_retrieval.png)
-
-![Retrieval pipeline precision overview](assets/retrieval_pipeline_precision.png)
-
 ## Result figures
 
-The figures below are the paper and website result views kept as local repository assets. PDF versions are included alongside the plots when available.
+The selected figures below are paper result views kept as local repository assets. PDF versions are included alongside the plots when available.
 
-### Representation, mechanisms, and taxonomy
+### Taxonomy
 
-![Mechanisms and success](assets/mechanisms-and-success.png)
+The paired trajectory analysis maps behavior into three high-level categories and twelve skill-use modes. The taxonomy explains which execution failures are reduced by procedural guidance and which failures arise from invocation, verification, or task boundaries.
 
 ![Taxonomy distribution by setting](assets/taxonomy-per-setting.png)
 
-![Paired mode deltas](assets/paired-mode-deltas.png)
+### Retrieval: identification versus use
 
-### Retrieval
+Offline identification degrades as pools grow, while execution-time actual-use precision drops much more sharply. Downstream success remains comparatively stable, showing that exact ground-truth skill invocation and task completion are related but not equivalent.
 
-![Embedding-based retrieval](assets/retrieval_arm1_embedding.png)
+<p align="center">
+  <img src="assets/retrieval_pipeline_precision.png" alt="Offline retrieval precision" width="49%" />
+  <img src="assets/retrieval_arm3_precision_success.png" alt="Execution-time skill use precision and success" width="49%" />
+</p>
 
-![Agent selection retrieval](assets/retrieval_arm2_agent_pick.png)
+### Outcome annotation and transfer
 
-![Real execution precision and success](assets/retrieval_arm3_precision_success.png)
-
-![Real execution retrieval](assets/retrieval_arm3_real_execution.png)
-
-### Additional controlled analyses
-
+Outcome annotations can matter when failed traces enter the source pool: at the 3s2f Terminal-Bench 2 mixture, normal skills reach 74.62% versus 40.00% for no-hint skills.
 ![Outcome annotation comparison](assets/outcome-annotation-nohint.png)
 
+Distilled artifacts can transfer across frameworks when the source experience and artifacts are held fixed.
 ![Cross-framework transfer](assets/cross-framework-transfer.png)
 
 The mixture-specific plots are available as <code>assets/5s0f.pdf</code> through <code>assets/0s5f.pdf</code>. The remaining PDF figures in <code>assets/</code> provide vector-quality versions for paper use.
